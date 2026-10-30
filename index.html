@@ -46,10 +46,10 @@
     .a4-page {
       width: 210mm;
       min-height: 297mm;
-      padding: 15mm 15mm 18mm 15mm;
-      margin: 0 auto 20px auto;
+      padding: 15mm 15mm 16mm 15mm;
+      margin: 0 auto 25px auto;
       background: white;
-      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
       position: relative;
       box-sizing: border-box;
       display: flex;
@@ -62,7 +62,7 @@
         background: white !important;
         margin: 0 !important;
         padding: 0 !important;
-        font-size: 9.5pt;
+        font-size: 10pt;
         -webkit-print-color-adjust: exact !important;
         print-color-adjust: exact !important;
       }
@@ -71,8 +71,8 @@
       
       .a4-page {
         width: 100% !important;
-        min-height: 100vh !important;
-        height: auto !important;
+        min-height: 297mm !important;
+        height: 297mm !important;
         margin: 0 !important;
         padding: 12mm 14mm 14mm 14mm !important;
         box-shadow: none !important;
@@ -135,44 +135,82 @@
     <!-- ==================== TAB 1: FORM SOẠN THẢO BÁO GIÁ ==================== -->
     <div id="sectionForm" class="no-print space-y-6">
       
-      <!-- Card Thông tin khách hàng & Báo giá -->
+      <!-- Card 1: Thông tin Đơn Vị Phát Hành (Tùy biến thương hiệu của bạn) -->
       <div class="bg-white rounded-2xl shadow-sm border border-slate-200/80 p-5 sm:p-7">
         <div class="flex items-center justify-between pb-3.5 border-b border-slate-100 mb-5">
           <h2 class="text-base sm:text-lg font-bold text-[#2F3742] flex items-center gap-2.5">
             <span class="w-8 h-8 rounded-lg bg-red-50 text-[#D62828] flex items-center justify-center text-sm">
-              <i class="fa-solid fa-address-card"></i>
+              <i class="fa-solid fa-building-flag"></i>
             </span>
-            <span>Thông Tin Khách Hàng & Thông Số Dự Án</span>
+            <span>Thông Tin Công Ty Báo Giá (Đơn Vị Phát Hành)</span>
           </h2>
           <span class="text-xs bg-red-50 text-[#D62828] font-semibold px-3 py-1 rounded-full border border-red-200">
-            <i class="fa-solid fa-certificate mr-1"></i> SANWAY Brand Guidelines
+            <i class="fa-solid fa-pen-nib mr-1"></i> Có thể tùy biến toàn bộ
+          </span>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+          <div>
+            <label class="block text-xs font-bold text-[#2F3742] mb-1.5 uppercase tracking-wider">Tên công ty phát hành</label>
+            <input type="text" id="inputCompanyFullName" value="CÔNG TY CỔ PHẦN SANWAY" class="w-full px-3.5 py-2.5 border rounded-xl text-sm border-slate-200 focus:ring-2 focus:ring-[#D62828] focus:outline-none transition">
+          </div>
+          <div>
+            <label class="block text-xs font-bold text-[#2F3742] mb-1.5 uppercase tracking-wider">Số điện thoại Hotline</label>
+            <input type="text" id="inputCompanyHotline" value="0936.888.666" class="w-full px-3.5 py-2.5 border rounded-xl text-sm border-slate-200 focus:ring-2 focus:ring-[#D62828] focus:outline-none transition">
+          </div>
+          <div>
+            <label class="block text-xs font-bold text-[#2F3742] mb-1.5 uppercase tracking-wider">Email liên hệ</label>
+            <input type="text" id="inputCompanyEmail" value="contact@sanway.vn" class="w-full px-3.5 py-2.5 border rounded-xl text-sm border-slate-200 focus:ring-2 focus:ring-[#D62828] focus:outline-none transition">
+          </div>
+          <div class="lg:col-span-2">
+            <label class="block text-xs font-bold text-[#2F3742] mb-1.5 uppercase tracking-wider">Địa chỉ trụ sở / Văn phòng</label>
+            <input type="text" id="inputCompanyAddress" value="Khu Công Nghiệp Nomura, Huyện An Dương, TP. Hải Phòng" class="w-full px-3.5 py-2.5 border rounded-xl text-sm border-slate-200 focus:ring-2 focus:ring-[#D62828] focus:outline-none transition">
+          </div>
+          <div>
+            <label class="block text-xs font-bold text-[#2F3742] mb-1.5 uppercase tracking-wider">Tên Giám đốc / Đại diện ký</label>
+            <input type="text" id="inputDirectorName" value="Nguyễn Văn A" placeholder="VD: Nguyễn Văn A" class="w-full px-3.5 py-2.5 border rounded-xl text-sm border-slate-200 focus:ring-2 focus:ring-[#D62828] focus:outline-none transition font-semibold text-[#D62828]">
+          </div>
+        </div>
+      </div>
+
+      <!-- Card 2: Thông tin khách hàng & Báo giá -->
+      <div class="bg-white rounded-2xl shadow-sm border border-slate-200/80 p-5 sm:p-7">
+        <div class="flex items-center justify-between pb-3.5 border-b border-slate-100 mb-5">
+          <h2 class="text-base sm:text-lg font-bold text-[#2F3742] flex items-center gap-2.5">
+            <span class="w-8 h-8 rounded-lg bg-blue-50 text-blue-600 flex items-center justify-center text-sm">
+              <i class="fa-solid fa-address-card"></i>
+            </span>
+            <span>Thông Tin Khách Hàng & Dự Án</span>
+          </h2>
+          <span class="text-xs bg-slate-100 text-slate-600 font-semibold px-3 py-1 rounded-full border border-slate-200">
+            Khổ in A4 Tiêu Chuẩn
           </span>
         </div>
 
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
           <div>
             <label class="block text-xs font-bold text-[#2F3742] mb-1.5 uppercase tracking-wider">Kính gửi Khách hàng</label>
-            <input type="text" id="inputCustomerName" value="CÔNG TY TNHH TÂN HUY HOÀNG" class="w-full px-3.5 py-2.5 border rounded-xl text-sm border-slate-200 focus:ring-2 focus:ring-[#D62828] focus:outline-none transition">
+            <input type="text" id="inputCustomerName" value="CÔNG TY TNHH TÂN HUY HOÀNG" class="w-full px-3.5 py-2.5 border rounded-xl text-sm border-slate-200 focus:ring-2 focus:ring-[#D62828] focus:outline-none transition font-semibold">
           </div>
           <div>
             <label class="block text-xs font-bold text-[#2F3742] mb-1.5 uppercase tracking-wider">Hạng mục báo giá</label>
-            <input type="text" id="inputProjectTitle" value="BẢO DƯỠNG HỆ THỐNG PCCC" class="w-full px-3.5 py-2.5 border rounded-xl text-sm border-slate-200 focus:ring-2 focus:ring-[#D62828] focus:outline-none transition">
+            <input type="text" id="inputProjectTitle" value="BẢO DƯỠNG HỆ THỐNG PCCC" class="w-full px-3.5 py-2.5 border rounded-xl text-sm border-slate-200 focus:ring-2 focus:ring-[#D62828] focus:outline-none transition font-semibold">
           </div>
           <div>
             <label class="block text-xs font-bold text-[#2F3742] mb-1.5 uppercase tracking-wider">Địa điểm & Ngày lập</label>
             <input type="text" id="inputQuoteDate" value="Hải Phòng, ngày 21 tháng 10 năm 2026" class="w-full px-3.5 py-2.5 border rounded-xl text-sm border-slate-200 focus:ring-2 focus:ring-[#D62828] focus:outline-none transition">
           </div>
           <div>
-            <label class="block text-xs font-bold text-[#2F3742] mb-1.5 uppercase tracking-wider">Đơn vị báo giá / Đại diện</label>
-            <input type="text" id="inputSigner" value="CÔNG TY CỔ PHẦN SANWAY" class="w-full px-3.5 py-2.5 border rounded-xl text-sm border-slate-200 focus:ring-2 focus:ring-[#D62828] focus:outline-none transition">
+            <label class="block text-xs font-bold text-[#2F3742] mb-1.5 uppercase tracking-wider">Chức danh người ký</label>
+            <input type="text" id="inputSignerTitle" value="GIÁM ĐỐC" class="w-full px-3.5 py-2.5 border rounded-xl text-sm border-slate-200 focus:ring-2 focus:ring-[#D62828] focus:outline-none transition font-semibold">
           </div>
           <div>
             <label class="block text-xs font-bold text-[#2F3742] mb-1.5 uppercase tracking-wider">Thuế suất VAT (%)</label>
-            <input type="number" id="inputVatRate" value="8" min="0" max="100" onchange="updateFormSummary()" class="w-full px-3.5 py-2.5 border rounded-xl text-sm border-slate-200 focus:ring-2 focus:ring-[#D62828] focus:outline-none transition">
+            <input type="number" id="inputVatRate" value="8" min="0" max="100" onchange="updateFormSummary()" class="w-full px-3.5 py-2.5 border rounded-xl text-sm border-slate-200 focus:ring-2 focus:ring-[#D62828] focus:outline-none transition font-bold">
           </div>
           <div>
             <label class="block text-xs font-bold text-[#2F3742] mb-1.5 uppercase tracking-wider">Tùy chọn dấu mộc đỏ</label>
-            <select id="inputShowStamp" class="w-full px-3.5 py-2.5 border rounded-xl text-sm border-slate-200 focus:ring-2 focus:ring-[#D62828] focus:outline-none bg-white transition">
+            <select id="inputShowStamp" class="w-full px-3.5 py-2.5 border rounded-xl text-sm border-slate-200 focus:ring-2 focus:ring-[#D62828] focus:outline-none bg-white transition font-medium">
               <option value="yes" selected>Có hiển thị con dấu công ty</option>
               <option value="no">Không hiển thị con dấu (Ký tươi trực tiếp)</option>
             </select>
@@ -193,7 +231,7 @@
               </h2>
               <span id="selectedBadgeCount" class="bg-red-50 text-[#D62828] text-xs px-2.5 py-0.5 rounded-full font-bold border border-red-200">47 mục</span>
             </div>
-            <p class="text-xs text-[#6B737D] mt-1 ml-10">Tích chọn để thêm/bớt thiết bị vào báo giá. Hệ thống sẽ tự động chia trang A4 và đánh số trang chuẩn xác khi in/xuất PDF.</p>
+            <p class="text-xs text-[#6B737D] mt-1 ml-10">Tích chọn để thêm/bớt thiết bị vào báo giá. Các trang sẽ tự động phân bổ đầy đặn, không bị ngắt dòng cụt lửng.</p>
           </div>
 
           <div class="flex flex-wrap items-center gap-2">
@@ -287,7 +325,7 @@
           <button onclick="switchTab('form')" class="px-4 py-2 rounded-xl border border-slate-300 hover:bg-slate-50 text-[#2F3742] text-xs sm:text-sm font-bold transition flex items-center gap-2">
             <i class="fa-solid fa-sliders text-[#D62828]"></i> <span>Quay lại chỉnh sửa</span>
           </button>
-          <span class="text-xs sm:text-sm text-[#6B737D] hidden md:inline">| Xem trước chuẩn tỷ lệ in ấn A4 (210mm x 297mm) • Tự động phân trang & đánh số trang</span>
+          <span class="text-xs sm:text-sm text-[#6B737D] hidden md:inline">| Xem trước chuẩn tỷ lệ in ấn A4 (210mm x 297mm) • Bố cục đầy đặn, đẹp mắt</span>
         </div>
         <div class="flex items-center gap-3">
           <button onclick="handlePrint()" class="px-6 py-2.5 rounded-xl bg-[#D62828] hover:bg-[#B91C1C] text-white text-xs sm:text-sm font-bold shadow-md transition flex items-center gap-2">
@@ -306,7 +344,6 @@
   </main>
 
   <script>
-    // Dữ liệu ban đầu
     let itemsData = JSON.parse(JSON.stringify(INITIAL_CATALOG));
 
     itemsData.forEach(item => {
@@ -316,7 +353,6 @@
     });
 
     document.addEventListener('DOMContentLoaded', () => {
-      // Gán logo SANWAY
       if (typeof ASSETS !== 'undefined') {
         document.getElementById('navLogo').src = ASSETS.logo_horizontal || ASSETS.logo_official;
       }
@@ -476,12 +512,20 @@
       document.getElementById('statGrandTotal').textContent = formatVND(grandTotal) + ' đ';
     }
 
-    // ==================== CHIA TRANG A4 TỰ ĐỘNG & ĐÁNH SỐ TRANG ====================
+    // ==================== TỰ ĐỘNG CHIA TRANG A4 VỚI SỐ LƯỢNG DÒNG ĐẦY ĐẶN ====================
     function renderPreview() {
+      // Đọc thông tin công ty phát hành
+      const companyName = document.getElementById('inputCompanyFullName').value;
+      const companyHotline = document.getElementById('inputCompanyHotline').value;
+      const companyEmail = document.getElementById('inputCompanyEmail').value;
+      const companyAddress = document.getElementById('inputCompanyAddress').value;
+      const directorName = document.getElementById('inputDirectorName').value;
+
+      // Đọc thông tin khách hàng & dự án
       const custName = document.getElementById('inputCustomerName').value;
       const projTitle = document.getElementById('inputProjectTitle').value;
       const quoteDate = document.getElementById('inputQuoteDate').value;
-      const signer = document.getElementById('inputSigner').value;
+      const signerTitle = document.getElementById('inputSignerTitle').value;
       const vatRate = parseFloat(document.getElementById('inputVatRate').value) || 0;
       const showStamp = document.getElementById('inputShowStamp').value === 'yes';
 
@@ -491,7 +535,7 @@
       const grandTotal = subtotal + vatAmount;
       const totalInWords = numberToWordsVietnamese(grandTotal);
 
-      // Chuẩn bị các dòng bảng (Hàng nhóm + hàng sản phẩm)
+      // Chuẩn bị toàn bộ dòng dữ liệu (Nhóm + Item)
       const grouped = {};
       selectedItems.forEach(item => {
         if (!grouped[item.category]) grouped[item.category] = [];
@@ -506,14 +550,12 @@
         const roman = romanNumerals[romanIndex] || (romanIndex + 1);
         romanIndex++;
 
-        // Hàng nhóm
         allRows.push({
           type: 'group',
           roman: roman,
           name: catName
         });
 
-        // Hàng vật tư
         let subIndex = 1;
         catItems.forEach(item => {
           allRows.push({
@@ -528,30 +570,25 @@
         });
       }
 
-      // Thuật toán chia dòng cho từng trang A4
-      // Trang 1 có Header công ty + Thông tin khách hàng nên chứa khoảng 12 dòng
-      // Các trang giữa chứa khoảng 19 dòng
-      // Trang cuối cần không gian cho Bảng Tổng kết + Chữ ký + Ghi chú nên chứa khoảng 10-12 dòng
+      // THUẬT TOÁN PHÂN TRANG A4 ĐẦY ĐẶN
+      // Trang 1: Chứa 20 dòng bảng
+      // Trang 2, 3...: Chứa 28 dòng bảng
+      // Nếu còn lại ít dòng cần chừa chỗ cho bảng tổng kết & chữ ký
       const pageChunks = [];
       let currentRowIdx = 0;
       let pageNum = 1;
 
       while (currentRowIdx < allRows.length) {
-        let capacity = 19;
-        if (pageNum === 1) {
-          capacity = 12; // Trang 1 có header lớn
-        }
-        
+        let capacity = (pageNum === 1) ? 20 : 28;
         let remainingRows = allRows.length - currentRowIdx;
-        // Nếu số dòng còn lại ít hơn hoặc bằng dung lượng
+
         if (remainingRows <= capacity) {
           pageChunks.push(allRows.slice(currentRowIdx, currentRowIdx + remainingRows));
           currentRowIdx += remainingRows;
         } else {
-          // Tránh để 1 nhóm đứng trơ trọi ở cuối trang nếu dòng tiếp theo là group
           let take = capacity;
           if (currentRowIdx + take < allRows.length && allRows[currentRowIdx + take - 1].type === 'group') {
-            take--; // Đẩy header group sang trang kế tiếp
+            take--; // Đẩy dòng tiêu đề group sang trang kế nếu nó bị lẻ loi ở đáy trang
           }
           pageChunks.push(allRows.slice(currentRowIdx, currentRowIdx + take));
           currentRowIdx += take;
@@ -559,7 +596,6 @@
         pageNum++;
       }
 
-      // Nếu không có sản phẩm nào
       if (pageChunks.length === 0) {
         pageChunks.push([]);
       }
@@ -577,51 +613,51 @@
         pageEl.className = 'a4-page';
 
         let pageHtml = `
-          <!-- PHẦN THÂN TRÊN CỦA TRANG -->
-          <div>
+          <!-- PHẦN THÂN TRÊN CỦA TRANG A4 -->
+          <div class="flex-1 flex flex-col justify-start">
         `;
 
         if (isFirstPage) {
-          // HEADER ĐẦY ĐỦ TRANG 1
+          // HEADER ĐẦY ĐỦ TRANG 1 VỚI THÔNG TIN CÔNG TY TÙY BIẾN
           pageHtml += `
             <div class="border-b-2 border-[#D62828] pb-3 mb-4">
               <div class="flex items-center justify-between gap-4">
                 <div class="w-1/2">
-                  <img src="${ASSETS.logo_horizontal || ASSETS.logo_official}" alt="SANWAY Brand Logo" class="h-12 sm:h-14 w-auto object-contain">
+                  <img src="${ASSETS.logo_horizontal || ASSETS.logo_official}" alt="SANWAY Brand Logo" class="h-14 sm:h-16 w-auto object-contain">
                 </div>
-                <div class="w-1/2 text-right text-[10px] text-[#6B737D] leading-tight space-y-0.5">
-                  <p class="font-extrabold text-[#2F3742] text-xs uppercase tracking-tight">CÔNG TY CỔ PHẦN SANWAY</p>
-                  <p>Hotline: 09xx.xxx.xxx • Email: contact@sanway.vn</p>
-                  <p>Địa chỉ: Hải Phòng - Hà Nội - TP. Hồ Chí Minh</p>
+                <div class="w-1/2 text-right text-[10.5px] text-[#6B737D] leading-tight space-y-1">
+                  <p class="font-extrabold text-[#2F3742] text-xs uppercase tracking-tight">${escapeHtml(companyName)}</p>
+                  <p>Hotline: <span class="font-semibold text-slate-800">${escapeHtml(companyHotline)}</span> • Email: ${escapeHtml(companyEmail)}</p>
+                  <p>Địa chỉ: ${escapeHtml(companyAddress)}</p>
                   <p class="italic text-[#D62828] font-semibold pt-0.5">${escapeHtml(quoteDate)}</p>
                 </div>
               </div>
             </div>
 
             <!-- TIÊU ĐỀ BÁO GIÁ -->
-            <div class="text-center my-4">
+            <div class="text-center my-3">
               <h1 class="text-xl sm:text-2xl font-black tracking-wide text-[#D62828] uppercase mb-0.5">BẢNG BÁO GIÁ</h1>
               <h2 class="text-xs font-extrabold text-[#2F3742] uppercase tracking-wider">HẠNG MỤC : ${escapeHtml(projTitle.replace(/^HẠNG MỤC\s*:\s*/i, ''))}</h2>
             </div>
 
             <!-- THÔNG TIN KHÁCH HÀNG & LỜI MỞ ĐẦU -->
-            <div class="text-[11px] text-slate-700 mb-4 space-y-1 bg-[#F5F7FA] p-3 rounded-xl border border-slate-200">
-              <p><span class="font-bold text-[#2F3742]">Kính gửi Quý khách hàng:</span> <span class="font-black text-[#D62828] uppercase text-xs">${escapeHtml(custName)}</span></p>
+            <div class="text-[11px] text-slate-700 mb-3 space-y-1 bg-[#F5F7FA] p-3 rounded-xl border border-slate-200">
+              <p><span class="font-bold text-[#2F3742]">Kính gửi Quý khách hàng:</span> <span class="font-black text-[#D62828] uppercase text-xs sm:text-sm">${escapeHtml(custName)}</span></p>
               <p class="text-justify leading-relaxed text-[#6B737D]">
-                Công ty SANWAY xin trân trọng gửi tới Quý khách hàng lời cảm ơn chân thành vì sự hợp tác và quan tâm đến dịch vụ kỹ thuật an toàn PCCC của chúng tôi. Chúng tôi xin gửi bảng báo giá chi tiết cho các hạng mục như sau:
+                ${escapeHtml(companyName)} xin trân trọng gửi tới Quý khách hàng lời cảm ơn chân thành vì sự hợp tác và quan tâm đến dịch vụ kỹ thuật an toàn PCCC của chúng tôi. Chúng tôi xin gửi bảng báo giá chi tiết cho các hạng mục như sau:
               </p>
             </div>
           `;
         } else {
-          // HEADER RÚT GỌN CHO CÁC TRANG TIẾP THEO (TRANG 2, 3,...)
+          // HEADER GỌN CHO CÁC TRANG TIẾP THEO
           pageHtml += `
-            <div class="border-b border-slate-300 pb-2 mb-4 flex justify-between items-center text-[10px] text-[#6B737D]">
+            <div class="border-b border-slate-300 pb-2 mb-3 flex justify-between items-center text-[10.5px] text-[#6B737D]">
               <div class="flex items-center gap-2">
                 <img src="${ASSETS.logo_horizontal || ASSETS.logo_official}" alt="SANWAY Logo" class="h-6 w-auto object-contain">
-                <span class="font-bold text-[#2F3742] uppercase">CÔNG TY CỔ PHẦN SANWAY</span>
+                <span class="font-bold text-[#2F3742] uppercase">${escapeHtml(companyName)}</span>
               </div>
               <div class="text-right italic">
-                <span>Báo giá: ${escapeHtml(projTitle)} (Tiếp theo)</span>
+                <span>Báo giá: ${escapeHtml(projTitle)} (Trang ${currentPage})</span>
               </div>
             </div>
           `;
@@ -658,7 +694,7 @@
               <tr class="text-[#2F3742] hover:bg-slate-50">
                 <td class="p-1.5 border border-slate-300 text-center font-mono">${row.index}</td>
                 <td class="p-1.5 border border-slate-300">${escapeHtml(row.name)}</td>
-                <td class="p-1.5 border border-slate-300 text-center">${escapeHtml(row.unit)}</td>
+                <td class="p-1.5 border border-slate-300 text-center">${escapeHtml(itemUnit(row.unit))}</td>
                 <td class="p-1.5 border border-slate-300 text-center font-semibold">${row.quantity}</td>
                 <td class="p-1.5 border border-slate-300 text-right font-mono">${formatVND(row.price)}</td>
                 <td class="p-1.5 border border-slate-300 text-right font-bold text-slate-900 font-mono">${formatVND(row.subtotal)}</td>
@@ -668,7 +704,6 @@
           }
         });
 
-        // NẾU LÀ TRANG CUỐI CÙNG -> HIỂN THỊ TỔNG TIỀN VÀO TFOOT
         if (isLastPage) {
           pageHtml += `
               </tbody>
@@ -697,13 +732,13 @@
               </tbody>
             </table>
           </div>
-          <div class="text-right text-[10px] italic text-[#6B737D] mb-2">
-            (Còn tiếp sang trang ${currentPage + 1}...)
+          <div class="text-right text-[10.5px] italic text-[#6B737D] mt-1 mb-2">
+            (Xem tiếp các hạng mục tiếp theo ở Trang ${currentPage + 1}...)
           </div>
           `;
         }
 
-        // NẾU LÀ TRANG CUỐI -> THÊM SỐ TIỀN BẰNG CHỮ + GHI CHÚ + CHỮ KÝ & MỘC ĐỎ
+        // PHẦN KẾT BÁO GIÁ (CHỈ HIỆN Ở TRANG CUỐI)
         if (isLastPage) {
           pageHtml += `
             <!-- BẰNG CHỮ -->
@@ -723,15 +758,18 @@
             <div class="flex justify-between items-start text-xs pt-2 border-t border-slate-200">
               <div class="text-center w-1/2 pr-4">
                 <p class="font-bold text-[#2F3742] uppercase text-[11px]">ĐẠI DIỆN KHÁCH HÀNG</p>
-                <p class="italic text-[#6B737D] text-[10px] mb-14">(Ký, ghi rõ họ tên & đóng dấu)</p>
+                <p class="italic text-[#6B737D] text-[10px] mb-16">(Ký, ghi rõ họ tên & đóng dấu)</p>
               </div>
               <div class="text-center w-1/2 pl-4">
                 <p class="italic text-[#6B737D] text-[10px] mb-0.5">${escapeHtml(quoteDate)}</p>
-                <p class="font-bold text-[#2F3742] uppercase text-[11px]">${escapeHtml(signer)}</p>
-                <p class="italic text-[#6B737D] text-[10px] mb-1">SANWAY CORPORATION</p>
+                <p class="font-bold text-[#2F3742] uppercase text-[11px]">${escapeHtml(companyName)}</p>
+                <p class="font-semibold text-slate-700 text-[10.5px] uppercase tracking-wide">${escapeHtml(signerTitle)}</p>
+                
                 <div class="my-1 min-h-[85px] flex items-center justify-center" style="display: ${showStamp ? 'flex' : 'none'}">
                   <img src="${ASSETS.stamp}" alt="Mộc đỏ công ty" class="max-h-20 object-contain mx-auto">
                 </div>
+
+                <p class="font-bold text-[#2F3742] text-[11.5px] mt-1">${escapeHtml(directorName)}</p>
               </div>
             </div>
           `;
@@ -743,9 +781,9 @@
           <!-- FOOTER CHÂN TRANG ĐÁNH SỐ TRANG CHUẨN A4 -->
           <div class="mt-4 pt-2 border-t border-slate-200 flex justify-between items-center text-[10px] text-[#6B737D]">
             <div>
-              <span class="font-bold text-[#2F3742]">SANWAY</span> • Cho mỗi bước tiến thêm vững vàng
+              <span class="font-bold text-[#2F3742]">${escapeHtml(companyName)}</span> • Cho mỗi bước tiến thêm vững vàng
             </div>
-            <div class="font-semibold text-slate-700 bg-slate-100 px-2 py-0.5 rounded border border-slate-200">
+            <div class="font-semibold text-slate-700 bg-slate-100 px-2.5 py-0.5 rounded border border-slate-200">
               Trang ${currentPage} / ${totalPages}
             </div>
           </div>
@@ -754,6 +792,10 @@
         pageEl.innerHTML = pageHtml;
         pagesContainer.appendChild(pageEl);
       });
+    }
+
+    function itemUnit(u) {
+      return u || 'Chiếc';
     }
 
     function handlePrint() {
@@ -770,7 +812,7 @@
 
     function escapeHtml(text) {
       if (!text) return '';
-      return text.replace(/[&<>"']/g, function(match) {
+      return String(text).replace(/[&<>"']/g, function(match) {
         return {'&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#039;'}[match];
       });
     }
