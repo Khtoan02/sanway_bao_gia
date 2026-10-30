@@ -49,9 +49,8 @@
     /* ĐỊNH DẠNG KHỔ GIẤY A4 CHUẨN IN ẤN (210mm x 297mm) */
     .a4-page {
       width: 210mm;
-      height: 297mm;
-      max-height: 297mm;
-      padding: 16mm 18mm 16mm 18mm;
+      min-height: 297mm;
+      padding: 18mm 18mm 18mm 18mm;
       margin: 0 auto 30px auto;
       background: #FFFFFF;
       box-shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.1), 0 4px 12px -2px rgba(0, 0, 0, 0.05);
@@ -59,18 +58,18 @@
       display: flex;
       flex-direction: column;
       justify-content: space-between;
-      overflow: hidden;
+      overflow: visible;
     }
 
-    /* WATERMARK LOGO VUÔNG CHÌM 10% TO TOÀN TRANG (ĐƯỜNG KÍNH 520PX) */
+    /* WATERMARK LOGO VUÔNG CHÌM 10% TO TOÀN TRANG */
     .a4-watermark {
       position: absolute;
-      top: 52%;
+      top: 50%;
       left: 50%;
       transform: translate(-50%, -50%);
-      width: 520px;
-      max-width: 85%;
-      opacity: 0.08;
+      width: 480px;
+      max-width: 80%;
+      opacity: 0.07;
       pointer-events: none;
       z-index: 0;
       user-select: none;
@@ -91,7 +90,7 @@
     }
 
     .sanway-table thead th {
-      padding: 10px 4px;
+      padding: 8px 4px;
       font-size: 8pt;
       font-weight: 700;
       text-transform: uppercase;
@@ -101,7 +100,7 @@
     }
 
     .sanway-table tbody tr.group-row td {
-      padding: 8px 4px 6px 4px;
+      padding: 7px 4px 5px 4px;
       border-bottom: 1.5px solid #CBD5E1;
       font-weight: 700;
       font-size: 8.5pt;
@@ -110,7 +109,7 @@
     }
 
     .sanway-table tbody tr.item-row td {
-      padding: 6.5px 4px;
+      padding: 5.5px 4px;
       border-bottom: 1px solid #F1F4F8;
       color: #2F3742;
       font-size: 8.5pt;
@@ -130,17 +129,17 @@
       .print-only { display: block !important; }
       
       .a4-page {
-        width: 210mm !important;
-        height: 297mm !important;
-        max-height: 297mm !important;
-        margin: 0 auto !important;
-        padding: 14mm 16mm 14mm 16mm !important;
+        width: 100% !important;
+        min-height: 297mm !important;
+        height: auto !important;
+        margin: 0 !important;
+        padding: 16mm 18mm 16mm 18mm !important;
         box-shadow: none !important;
         border: none !important;
         border-radius: 0 !important;
         page-break-after: always !important;
         break-after: page !important;
-        overflow: hidden !important;
+        overflow: visible !important;
       }
 
       .a4-page:last-child {
@@ -149,7 +148,7 @@
       }
 
       .a4-watermark {
-        opacity: 0.08 !important;
+        opacity: 0.07 !important;
       }
 
       @page {
@@ -404,7 +403,7 @@
           <button onclick="switchTab('form')" class="px-4 py-2 rounded-xl border border-slate-300 hover:bg-slate-50 text-[#2F3742] text-xs sm:text-sm font-bold transition flex items-center gap-2">
             <i class="fa-solid fa-sliders text-[#D62828]"></i> <span>Quay lại chỉnh sửa</span>
           </button>
-          <span class="text-xs sm:text-sm text-[#6B737D] hidden md:inline">| Khổ A4 Quốc Tế (210mm x 297mm) • Căn lề chuẩn mực • Watermark logo vuông chìm 10%</span>
+          <span class="text-xs sm:text-sm text-[#6B737D] hidden md:inline">| Khổ A4 Quốc Tế (210mm x 297mm) • Căn lề chuẩn mực • Footer không bị đè</span>
         </div>
         <div class="flex items-center gap-3">
           <button onclick="handlePrint()" class="px-6 py-2.5 rounded-xl bg-[#D62828] hover:bg-[#B91C1C] text-white text-xs sm:text-sm font-bold shadow-md transition flex items-center gap-2">
@@ -649,13 +648,15 @@
         });
       }
 
-      // ĐỊNH LƯỢNG SỐ DÒNG CHUẨN A4 ĐỂ ĐẦY ĐẶN
+      // ĐỊNH LƯỢNG SỐ DÒNG CHUẨN ĐỂ ĐẢM BẢO KHÔNG BỊ TRÀN VÀO FOOTER
+      // Trang 1: Chứa tối đa 20 dòng để chừa chỗ an toàn 40px trước Footer
+      // Trang 2, 3...: Chứa tối đa 28 dòng
       const pageChunks = [];
       let currentRowIdx = 0;
       let pageNum = 1;
 
       while (currentRowIdx < allRows.length) {
-        let capacity = (pageNum === 1) ? 23 : 33;
+        let capacity = (pageNum === 1) ? 20 : 28;
         let remainingRows = allRows.length - currentRowIdx;
 
         if (remainingRows <= capacity) {
@@ -688,7 +689,6 @@
         const pageEl = document.createElement('div');
         pageEl.className = 'a4-page';
 
-        // SỬ DỤNG LOGO VUÔNG / OFFICIAL LOGO CHO WATERMARK ĐỂ TO TOÀN TRANG
         let watermarkSrc = ASSETS.logo_official || ASSETS.logo_horizontal;
 
         let pageHtml = `
@@ -731,7 +731,7 @@
             </div>
 
             <!-- THÔNG TIN KHÁCH HÀNG & LỜI MỞ ĐẦU TINH TẾ -->
-            <div class="text-[10px] text-[#6B737D] mb-3 bg-[#F8FAFC]/90 p-2.5 rounded-xl border border-slate-200/70 flex items-start gap-2.5 backdrop-blur-[1px]">
+            <div class="text-[10px] text-[#6B737D] mb-4 bg-[#F8FAFC]/90 p-2.5 rounded-xl border border-slate-200/70 flex items-start gap-2.5 backdrop-blur-[1px]">
               <div class="w-1 bg-[#D62828] self-stretch rounded-full"></div>
               <div class="space-y-0.5">
                 <p class="text-[10.5px]"><span class="font-bold text-[#2F3742]">Kính gửi Quý đối tác / Khách hàng:</span> <span class="font-extrabold text-[#D62828] uppercase">${escapeHtml(custName)}</span></p>
@@ -742,7 +742,7 @@
             </div>
           `;
         } else {
-          // HEADER TỪ TRANG 2 TRỞ ĐI: CHỈ CÓ LOGO BÊN TRÁI VÀ BÁO GIÁ (TRANG ...) BÊN PHẢI
+          // HEADER TỪ TRANG 2 TRỞ ĐI
           pageHtml += `
             <div class="pb-2 mb-3 border-b border-slate-200 flex justify-between items-center text-[10.5px]">
               <div class="flex items-center">
@@ -755,9 +755,9 @@
           `;
         }
 
-        // BẢNG BÁO GIÁ CĂN LỀ GỌN GÀNG, KHÔNG THỤT THÒ
+        // BẢNG BÁO GIÁ CĂN LỀ GỌN GÀNG
         pageHtml += `
-          <div class="mb-1 flex-1">
+          <div class="mb-2 flex-1">
             <table class="sanway-table">
               <thead>
                 <tr>
@@ -804,7 +804,7 @@
 
         if (!isLastPage) {
           pageHtml += `
-            <div class="text-right text-[9.5px] italic text-[#6B737D] mt-1 mb-1">
+            <div class="text-right text-[9.5px] italic text-[#6B737D] mt-2 mb-2">
               (Bảng báo giá tiếp tục ở Trang ${currentPage + 1}...)
             </div>
           `;
@@ -867,13 +867,12 @@
           `;
         }
 
-        // FOOTER CHÂN TRANG ĐỒNG NHẤT TOÀN BỘ THEO YÊU CẦU:
-        // Bên trái: CÔNG TY CỔ PHẦN SANWAY • Cho mỗi bước tiến thêm vững vàng
-        // Bên phải: Trang x/x (không đóng khung)
+        // FOOTER CHÂN TRANG ĐỒNG NHẤT TOÀN BỘ:
+        // Đã đảm bảo khoảng đệm an toàn, không bị đè chữ
         pageHtml += `
           </div> <!-- KẾT THÚC PHẦN THÂN TRÊN -->
 
-          <div class="mt-3 pt-2 border-t border-slate-100 flex justify-between items-center text-[10px] text-[#6B737D] relative z-10">
+          <div class="mt-4 pt-3 border-t border-slate-200 flex justify-between items-center text-[10px] text-[#6B737D] relative z-10 bg-white">
             <div>
               <span class="font-bold text-[#2F3742]">CÔNG TY CỔ PHẦN SANWAY</span> • Cho mỗi bước tiến thêm vững vàng
             </div>
