@@ -23,3 +23,4 @@ Mở trực tiếp file `index.html` bằng trình duyệt hoặc khởi chạy 
 python3 -m http.server 3000
 ```
 Truy cập: `http://localhost:3000`
+

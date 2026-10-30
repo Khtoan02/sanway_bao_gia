@@ -98,11 +98,11 @@
 
     .sanway-table thead th {
       padding: 7px 4px;
-      font-size: 8pt;
+      font-size: 11pt;
       font-weight: 700;
       text-transform: uppercase;
       letter-spacing: 0.04em;
-      color: #6B737D;
+      color: #475569;
       vertical-align: middle;
     }
 
@@ -110,8 +110,8 @@
       padding: 6.5px 4px 5.5px 4px;
       border-bottom: 1.5px solid #CBD5E1;
       font-weight: 700;
-      font-size: 8.5pt;
-      color: #2F3742;
+      font-size: 11.5pt;
+      color: #1E293B;
       letter-spacing: 0.02em;
     }
 
@@ -119,7 +119,7 @@
       padding: 5.5px 4px;
       border-bottom: 1px solid #F1F4F8;
       color: #2F3742;
-      font-size: 8.5pt;
+      font-size: 11pt;
       line-height: 1.3;
       vertical-align: middle;
     }
@@ -715,20 +715,20 @@
                   <p class="text-[9pt] font-bold text-[#D62828] tracking-widest uppercase">HỆ THỐNG AN TOÀN PCCC & CÔNG TRÌNH</p>
                 </div>
                 <!-- Thông tin liên hệ công ty -->
-                <div class="w-1/2 text-right text-[9.5pt] text-[#6B737D] leading-snug">
-                  <p class="font-extrabold text-[#2F3742] text-[11pt] uppercase tracking-tight">${escapeHtml(companyName)}</p>
+                <div class="w-1/2 text-right text-[10pt] text-[#6B737D] leading-snug">
+                  <p class="font-extrabold text-[#2F3742] text-[13pt] uppercase tracking-tight">${escapeHtml(companyName)}</p>
                   <p><span class="font-medium text-[#2F3742]">Hotline:</span> ${escapeHtml(companyHotline)} • <span class="font-medium text-[#2F3742]">Email:</span> ${escapeHtml(companyEmail)}</p>
                   <p class="truncate">${escapeHtml(companyAddress)}</p>
-                  <p class="text-[#D62828] font-bold text-[9pt] mt-0.5">${escapeHtml(quoteDate)}</p>
+                  <p class="text-[#D62828] font-bold text-[10pt] mt-0.5">${escapeHtml(quoteDate)}</p>
                 </div>
               </div>
             </div>
 
             <!-- TIÊU ĐỀ BÁO GIÁ CHUYÊN NGHIỆP: TO, CÓ TIẾNG ANH & MÃ BÁO GIÁ -->
             <div class="text-center my-2">
-              <h1 class="text-2xl font-black tracking-tight text-[#2F3742] uppercase mb-0.5">BÁO GIÁ ${escapeHtml(projTitle.replace(/^HẠNG MỤC\s*:\s*/i, ''))}</h1>
-              <p class="text-[9.5pt] font-semibold tracking-wider text-[#6B737D] uppercase italic mb-1">${escapeHtml(projTitleEn)}</p>
-              <div class="inline-flex items-center gap-3 text-[9.5pt] text-[#2F3742] font-semibold">
+              <h1 class="text-[18pt] font-black tracking-tight text-[#2F3742] uppercase mb-0.5">BÁO GIÁ ${escapeHtml(projTitle.replace(/^HẠNG MỤC\s*:\s*/i, ''))}</h1>
+              <p class="text-[11pt] font-semibold tracking-wider text-[#6B737D] uppercase italic mb-1">${escapeHtml(projTitleEn)}</p>
+              <div class="inline-flex items-center gap-3 text-[11pt] text-[#2F3742] font-semibold">
                 <span>Số: <b class="font-bold text-[#D62828]">${escapeHtml(quoteCode)}</b></span>
                 <span class="text-slate-300">|</span>
                 <span>Ngày: <b class="font-medium text-slate-700">${escapeHtml(quoteDate)}</b></span>
@@ -736,10 +736,10 @@
             </div>
 
             <!-- THÔNG TIN KHÁCH HÀNG & LỜI MỞ ĐẦU TINH TẾ -->
-            <div class="text-[9.5pt] text-[#6B737D] mb-2.5 bg-[#F8FAFC]/90 p-2.5 rounded-xl border border-slate-200/70 flex items-start gap-2.5 backdrop-blur-[1px]">
-              <div class="w-1 bg-[#D62828] self-stretch rounded-full"></div>
+            <div class="text-[12pt] text-[#475569] mb-2.5 bg-[#F8FAFC]/90 p-2.5 rounded-xl border border-slate-200/70 flex items-start gap-2.5 backdrop-blur-[1px]">
+              <div class="w-1.5 bg-[#D62828] self-stretch rounded-full"></div>
               <div class="space-y-0.5">
-                <p class="text-[10pt]"><span class="font-bold text-[#2F3742]">Kính gửi Quý đối tác / Khách hàng:</span> <span class="font-extrabold text-[#D62828] uppercase">${escapeHtml(custName)}</span></p>
+                <p class="text-[13pt]"><span class="font-bold text-[#2F3742]">1. Kính gửi Quý đối tác / Khách hàng:</span> <span class="font-extrabold text-[#D62828] uppercase">${escapeHtml(custName)}</span></p>
                 <p class="text-justify leading-snug">
                   ${escapeHtml(companyName)} trân trọng gửi lời cảm ơn sâu sắc vì sự tín nhiệm của Quý công ty. Chúng tôi xin kính gửi bảng dự toán chi phí chi tiết cho các hạng mục kỹ thuật như sau:
                 </p>
@@ -789,9 +789,9 @@
           } else {
             pageHtml += `
               <tr class="item-row">
-                <td style="text-align: left; color: #94A3B8; font-size: 8pt;">${row.index}</td>
+                <td style="text-align: left; color: #94A3B8; font-size: 11pt;">${row.index}</td>
                 <td style="font-weight: 500; color: #2F3742;">${escapeHtml(row.name)}</td>
-                <td style="text-align: center; color: #6B737D; font-size: 8pt;">${escapeHtml(row.unit)}</td>
+                <td style="text-align: center; color: #6B737D; font-size: 11pt;">${escapeHtml(row.unit)}</td>
                 <td style="text-align: center; font-weight: 600; color: #2F3742;">${row.quantity}</td>
                 <td style="text-align: right; color: #6B737D; font-family: monospace;">${formatVND(row.price)}</td>
                 <td style="text-align: right; font-weight: 700; color: #1E242C; font-family: monospace;">${formatVND(row.subtotal)}</td>
@@ -821,10 +821,10 @@
             <!-- KHỐI TỔNG KẾT TÀI CHÍNH CAO CẤP -->
             <div class="mt-1.5 mb-2 bg-[#F8FAFC]/90 rounded-xl p-2.5 border border-slate-200/80 backdrop-blur-[1px]">
               <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-1 pb-1.5 border-b border-slate-200">
-                <div class="text-[10pt] text-[#6B737D]">
+                <div class="text-[12pt] text-[#475569]">
                   <p><span class="font-semibold text-[#2F3742]">Số tiền bằng chữ:</span> <span class="italic font-bold text-[#D62828]">${escapeHtml(totalInWords)}</span></p>
                 </div>
-                <div class="text-right space-y-0.5 text-[10pt]">
+                <div class="text-right space-y-0.5 text-[12pt]">
                   <div class="flex justify-between sm:justify-end gap-6 text-[#6B737D]">
                     <span>Tổng cộng trước thuế:</span>
                     <span class="font-bold text-[#2F3742] font-mono">${formatVND(subtotal)} đ</span>
@@ -838,14 +838,14 @@
 
               <!-- DÒNG TỔNG CỘNG SAU THUẾ NỔI BẬT -->
               <div class="pt-1.5 flex items-center justify-between">
-                <span class="text-[10pt] font-bold uppercase tracking-wider text-[#2F3742]">TỔNG GIÁ TRỊ THANH TOÁN (ĐÃ GỒM VAT):</span>
-                <span class="text-base font-black text-[#D62828] font-mono tracking-tight">${formatVND(grandTotal)} VNĐ</span>
+                <span class="text-[12pt] font-bold uppercase tracking-wider text-[#2F3742]">TỔNG GIÁ TRỊ THANH TOÁN (ĐÃ GỒM VAT):</span>
+                <span class="text-[14pt] font-black text-[#D62828] font-mono tracking-tight">${formatVND(grandTotal)} VNĐ</span>
               </div>
             </div>
 
             <!-- GHI CHÚ ĐIỀU KHOẢN KỸ THUẬT -->
-            <div class="mb-2.5 text-[9pt] text-[#6B737D] leading-snug space-y-0.5 pl-2.5 border-l-2 border-[#D62828]">
-              <p class="font-bold uppercase tracking-wider text-[#2F3742]">Ghi chú & Cam kết kỹ thuật:</p>
+            <div class="mb-2 text-[11pt] text-[#475569] leading-snug space-y-0.5 pl-2.5 border-l-2 border-[#D62828]">
+              <p class="font-bold uppercase tracking-wider text-[#2F3742] text-[12pt]">Ghi chú & Cam kết kỹ thuật:</p>
               <p>• Nghiệm thu và thanh toán căn cứ theo khối lượng thực tế thi công tại công trình.</p>
               <p>• Trường hợp phát hiện thiết bị hư hỏng không thể phục hồi, SANWAY sẽ lập biên bản hiện trường và gửi đề xuất thay thế kèm báo giá bổ sung.</p>
               <p>• Toàn bộ linh kiện, thiết bị thay thế được bảo hành chính hãng tiêu chuẩn 12 tháng kể từ ngày ký biên bản bàn giao.</p>
@@ -854,19 +854,19 @@
             <!-- KHỐI CHỮ KÝ PHÁP NHÂN -->
             <div class="flex justify-between items-start text-xs pt-1 border-t border-slate-200">
               <div class="text-center w-1/2 pr-3">
-                <p class="font-bold text-[#2F3742] uppercase text-[10pt] tracking-wide">ĐẠI DIỆN KHÁCH HÀNG</p>
-                <p class="italic text-[#94A3B8] text-[8.5pt] mb-11">(Ký, ghi rõ họ tên & đóng dấu)</p>
+                <p class="font-bold text-[#2F3742] uppercase text-[12pt] tracking-wide">ĐẠI DIỆN KHÁCH HÀNG</p>
+                <p class="italic text-[#94A3B8] text-[10pt] mb-11">(Ký, ghi rõ họ tên & đóng dấu)</p>
               </div>
               <div class="text-center w-1/2 pl-3">
-                <p class="italic text-[#94A3B8] text-[9pt] mb-0.5">${escapeHtml(quoteDate)}</p>
-                <p class="font-bold text-[#2F3742] uppercase text-[10pt] tracking-wide">${escapeHtml(companyName)}</p>
-                <p class="font-semibold text-[#6B737D] text-[9pt] uppercase tracking-wider">${escapeHtml(signerTitle)}</p>
+                <p class="italic text-[#94A3B8] text-[10.5pt] mb-0.5">${escapeHtml(quoteDate)}</p>
+                <p class="font-bold text-[#2F3742] uppercase text-[12pt] tracking-wide">${escapeHtml(companyName)}</p>
+                <p class="font-semibold text-[#6B737D] text-[11pt] uppercase tracking-wider">${escapeHtml(signerTitle)}</p>
                 
                 <div class="my-0.5 min-h-[70px] flex items-center justify-center" style="display: ${showStamp ? 'flex' : 'none'}">
                   <img src="${ASSETS.stamp}" alt="Mộc đỏ công ty" class="max-h-16 object-contain mx-auto drop-shadow-sm">
                 </div>
 
-                <p class="font-bold text-[#2F3742] text-[10.5pt] mt-0.5">${escapeHtml(directorName)}</p>
+                <p class="font-bold text-[#2F3742] text-[12.5pt] mt-0.5">${escapeHtml(directorName)}</p>
               </div>
             </div>
           `;
@@ -877,11 +877,11 @@
         pageHtml += `
           </div> <!-- KẾT THÚC PHẦN THÂN TRÊN -->
 
-          <div class="mt-2 pt-2 border-t border-slate-100 flex justify-between items-center text-[9pt] text-[#6B737D] relative z-10">
-            <div>
-              <span class="font-bold text-[#2F3742]">CÔNG TY CỔ PHẦN SANWAY</span> • Cho mỗi bước tiến thêm vững vàng
+          <div class="mt-2 pt-2 border-t border-slate-100 flex justify-between items-center text-[10.5pt] text-[#6B737D] relative z-10">
+            <div class="italic">
+              <span class="font-bold text-[#2F3742] not-italic">CÔNG TY CỔ PHẦN SANWAY</span> • Cho mỗi bước tiến thêm vững vàng
             </div>
-            <div class="text-[#6B737D] font-medium">
+            <div class="text-[#6B737D] font-medium italic">
               Trang ${currentPage} / ${totalPages}
             </div>
           </div>
