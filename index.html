@@ -112,7 +112,7 @@
     /* ĐỊNH DẠNG KHỔ GIẤY A4 THEO NGHỊ ĐỊNH 30/2020/NĐ-CP
        - Khổ giấy: A4 (210mm x 297mm)
        - Lề trên (Top): 20mm (2.0 cm)
-       - Lề dưới (Bottom): 20mm (2.0 cm)
+       - Lề dưới (Bottom): 24mm (2.4 cm - chuẩn 20-25mm, tạo khoảng thở thoáng đãng ở chân trang)
        - Lề trái (Left): 30mm (3.0 cm) - đóng gáy hồ sơ
        - Lề phải (Right): 15mm (1.5 cm)
     */
@@ -120,7 +120,7 @@
       width: 210mm;
       height: 297mm;
       max-height: 297mm;
-      padding: 20mm 15mm 20mm 30mm;
+      padding: 20mm 15mm 24mm 30mm;
       margin: 0 auto 30px auto;
       background: #FFFFFF;
       box-shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.1), 0 4px 12px -2px rgba(0, 0, 0, 0.05);
@@ -215,7 +215,7 @@
         height: 297mm !important;
         max-height: 297mm !important;
         margin: 0 auto !important;
-        padding: 20mm 15mm 20mm 30mm !important;
+        padding: 20mm 15mm 24mm 30mm !important;
         box-shadow: none !important;
         border: none !important;
         border-radius: 0 !important;
@@ -287,7 +287,7 @@
         height: 297mm !important;
         max-height: 297mm !important;
         margin: 0 auto !important;
-        padding: 20mm 15mm 20mm 30mm !important;
+        padding: 20mm 15mm 24mm 30mm !important;
       }
     }
 
@@ -2172,26 +2172,64 @@
         });
       }
 
-      // ĐỊNH LƯỢNG SỐ DÒNG CHUẨN A4 KHI ÁP DỤNG HỆ THỐNG TYPOGRAPHY PHÂN CẤP CÂN ĐỐI
+      // THUẬT TOÁN CHIA TRANG A4 THÔNG MINH THEO CHIỀU CAO THỰC TẾ (ĐẢM BẢO LỀ DƯỚI 24MM LUÔN THOÁNG ĐÃNG, KHÔNG BỊ SÁT MÉP DƯỚI)
+      function estimateRowHeightPx(row) {
+        if (row.type === 'group') return 30;
+        const nameLen = (row.name || '').length;
+        if (nameLen > 110) return 60;
+        if (nameLen > 58) return 44;
+        return 28.5;
+      }
+
+      // Chiều cao tối đa dành cho phần thân bảng trên mỗi trang (đã trừ Header, Tiêu đề, Khối chữ ký trang cuối và Lề dưới 24mm)
+      const MAX_P1_MID = 525;  // Trang 1 (khi còn trang tiếp theo): ~18 dòng
+      const MAX_P1_LAST = 220; // Trang 1 (khi báo giá ngắn chỉ có 1 trang kèm Tổng kết & Chữ ký): ~7 dòng
+      const MAX_PN_MID = 715;  // Trang 2+ (khi còn trang tiếp theo): ~24 dòng
+      const MAX_PN_LAST = 435; // Trang 2+ (trang cuối kèm Tổng kết, Ghi chú & Chữ ký đóng dấu): ~15 dòng
+
       const pageChunks = [];
       let currentRowIdx = 0;
       let pageNum = 1;
 
       while (currentRowIdx < allRows.length) {
-        let capacity = (pageNum === 1) ? 21 : 30;
-        let remainingRows = allRows.length - currentRowIdx;
+        const maxMid = (pageNum === 1) ? MAX_P1_MID : MAX_PN_MID;
+        const maxLast = (pageNum === 1) ? MAX_P1_LAST : MAX_PN_LAST;
 
-        if (remainingRows <= capacity) {
-          pageChunks.push(allRows.slice(currentRowIdx, currentRowIdx + remainingRows));
-          currentRowIdx += remainingRows;
-        } else {
-          let take = capacity;
-          if (currentRowIdx + take < allRows.length && allRows[currentRowIdx + take - 1].type === 'group') {
-            take--;
-          }
-          pageChunks.push(allRows.slice(currentRowIdx, currentRowIdx + take));
-          currentRowIdx += take;
+        let remainingHeight = 0;
+        for (let i = currentRowIdx; i < allRows.length; i++) {
+          remainingHeight += estimateRowHeightPx(allRows[i]);
         }
+
+        // Trường hợp toàn bộ số dòng còn lại + Khối Tổng kết & Chữ ký vừa khít trong trang hiện tại
+        if (remainingHeight <= maxLast) {
+          pageChunks.push(allRows.slice(currentRowIdx));
+          currentRowIdx = allRows.length;
+          break;
+        }
+
+        // Trường hợp cần sang trang tiếp theo: nếu số dòng còn lại ít hơn maxMid nhưng vượt quá maxLast,
+        // giữ lại khoảng 4-5 dòng cho trang cuối để trang cuối luôn cân đối, không bị lẻ 1 dòng
+        let targetMax = maxMid;
+        if (remainingHeight <= maxMid && (allRows.length - currentRowIdx) >= 5) {
+          targetMax = Math.max(120, remainingHeight - 130);
+        }
+
+        let curH = 0;
+        let take = 0;
+        while (currentRowIdx + take < allRows.length) {
+          const rh = estimateRowHeightPx(allRows[currentRowIdx + take]);
+          if (curH + rh > targetMax && take > 0) break;
+          curH += rh;
+          take++;
+        }
+
+        // Không để dòng tiêu đề nhóm (La Mã) nằm lẻ loi ở cuối trang
+        if (take > 1 && allRows[currentRowIdx + take - 1].type === 'group') {
+          take--;
+        }
+
+        pageChunks.push(allRows.slice(currentRowIdx, currentRowIdx + take));
+        currentRowIdx += take;
         pageNum++;
       }
 
@@ -2219,8 +2257,8 @@
           <!-- WATERMARK LOGO VUÔNG CHÌM TINH TẾ TÂM TRANG -->
           <img src="${watermarkSrc}" alt="Watermark" class="a4-watermark">
 
-          <!-- PHẦN THÂN TRÊN CỦA TRANG A4 -->
-          <div class="flex-1 flex flex-col justify-start relative z-10">
+          <!-- PHẦN THÂN TRÊN CỦA TRANG A4 (min-h-0 overflow-hidden giữ chặt khoảng cách lề dưới) -->
+          <div class="flex-1 min-h-0 overflow-hidden flex flex-col justify-start relative z-10">
         `;
 
         if (isFirstPage) {
@@ -2387,11 +2425,11 @@
           `;
         }
 
-        // FOOTER CHÂN TRANG ĐỒNG NHẤT TOÀN BỘ: LỀ DƯỚI 20MM CHUẨN NGHỊ ĐỊNH
+        // FOOTER CHÂN TRANG ĐỒNG NHẤT TOÀN BỘ: LỀ DƯỚI 24MM CHUẨN NGHỊ ĐỊNH 30/2020/NĐ-CP
         pageHtml += `
           </div> <!-- KẾT THÚC PHẦN THÂN TRÊN -->
 
-          <div class="mt-2 pt-2 border-t border-slate-200/80 flex justify-between items-center text-[8.5pt] text-[#64748B] relative z-10">
+          <div class="shrink-0 mt-3 pt-2 border-t border-slate-200/80 flex justify-between items-center text-[8.5pt] text-[#64748B] relative z-10">
             <div>
               <span class="font-bold text-[#1E293B] uppercase">${escapeHtml(companyName)}</span> <span class="mx-1 text-slate-300">•</span> <span class="italic">Cho mỗi bước tiến thêm vững vàng</span>
             </div>
