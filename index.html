@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>SANWAY - Phần Mềm Tạo Báo Giá Chuyên Nghiệp</title>
+  <title>SANWAY - Báo Giá Kỹ Thuật PCCC & Công Trình</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -16,12 +16,15 @@
       theme: {
         extend: {
           colors: {
-            sanway: {
+            brand: {
               red: '#D62828',
               redHover: '#B91C1C',
+              redSoft: '#FEF2F2',
               dark: '#2F3742',
+              darker: '#1E242C',
               gray: '#6B737D',
-              light: '#F5F7FA',
+              lightGray: '#F1F4F8',
+              surface: '#F8FAFC',
               border: '#E2E8F0',
             }
           },
@@ -36,25 +39,78 @@
   <style>
     * {
       font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif !important;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
     }
 
     body {
-      background-color: #F5F7FA;
+      background-color: #F8FAFC;
     }
 
-    /* KÍCH THƯỚC TRANG A4 CHUẨN IN ẤN (210mm x 297mm) */
+    /* KÍCH THƯỚC TRANG IN CHUẨN A4 QUỐC TẾ (210mm x 297mm) */
     .a4-page {
       width: 210mm;
       min-height: 297mm;
-      padding: 15mm 15mm 16mm 15mm;
-      margin: 0 auto 25px auto;
-      background: white;
-      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+      padding: 16mm 16mm 18mm 16mm;
+      margin: 0 auto 30px auto;
+      background: #FFFFFF;
+      box-shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.06), 0 4px 10px -3px rgba(0, 0, 0, 0.03);
       position: relative;
       box-sizing: border-box;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
+      border-radius: 8px;
+    }
+
+    /* STYLING BẢNG HIỆN ĐẠI (MINIMALIST BORDERLESS / AIRY LUXURY TABLE) */
+    .sanway-table {
+      width: 100%;
+      border-collapse: separate;
+      border-spacing: 0;
+      font-size: 10pt;
+    }
+
+    .sanway-table thead tr {
+      background-color: #F8FAFC;
+    }
+
+    .sanway-table thead th {
+      padding: 10px 12px;
+      font-size: 8pt;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: #6B737D;
+      border-top: 1px solid #E2E8F0;
+      border-bottom: 1.5px solid #2F3742;
+    }
+
+    .sanway-table tbody tr.group-row td {
+      padding: 9px 12px;
+      background-color: #F8FAFC;
+      border-bottom: 1px solid #E2E8F0;
+      font-weight: 700;
+      font-size: 9pt;
+      color: #2F3742;
+      letter-spacing: 0.02em;
+    }
+
+    .sanway-table tbody tr.item-row td {
+      padding: 8px 12px;
+      border-bottom: 1px solid #F1F4F8;
+      color: #2F3742;
+      font-size: 9.5pt;
+      line-height: 1.4;
+      transition: background-color 0.15s ease;
+    }
+
+    .sanway-table tbody tr.item-row:hover {
+      background-color: #FAFCFE;
+    }
+
+    .sanway-table tbody tr.item-row:last-child td {
+      border-bottom: 1.5px solid #E2E8F0;
     }
 
     @media print {
@@ -62,7 +118,7 @@
         background: white !important;
         margin: 0 !important;
         padding: 0 !important;
-        font-size: 10pt;
+        font-size: 9.5pt;
         -webkit-print-color-adjust: exact !important;
         print-color-adjust: exact !important;
       }
@@ -74,9 +130,10 @@
         min-height: 297mm !important;
         height: 297mm !important;
         margin: 0 !important;
-        padding: 12mm 14mm 14mm 14mm !important;
+        padding: 14mm 16mm 16mm 16mm !important;
         box-shadow: none !important;
         border: none !important;
+        border-radius: 0 !important;
         page-break-after: always !important;
         break-after: page !important;
       }
@@ -94,35 +151,35 @@
       tr { page-break-inside: avoid; }
     }
 
-    .custom-scroll::-webkit-scrollbar { width: 6px; height: 6px; }
-    .custom-scroll::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
-    .custom-scroll::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+    .custom-scroll::-webkit-scrollbar { width: 5px; height: 5px; }
+    .custom-scroll::-webkit-scrollbar-thumb { background: #CBD5E1; border-radius: 9999px; }
+    .custom-scroll::-webkit-scrollbar-thumb:hover { background: #94A3B8; }
   </style>
 </head>
-<body class="text-slate-800 antialiased min-h-screen">
+<body class="text-brand-dark antialiased min-h-screen">
 
   <!-- TOPBAR CÔNG CỤ (ẨN KHI IN) -->
-  <header class="no-print bg-[#2F3742] text-white sticky top-0 z-50 shadow-md border-b border-slate-700">
+  <header class="no-print bg-[#2F3742] text-white sticky top-0 z-50 shadow-md">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
       
       <!-- Brand Logo in Topbar -->
-      <div class="flex items-center space-x-3">
-        <img id="navLogo" src="" alt="SANWAY Logo" class="h-9 w-auto bg-white/10 px-2 py-1 rounded-lg backdrop-blur-sm object-contain">
-        <div class="border-l border-slate-600 pl-3 hidden sm:block">
-          <h1 class="text-sm font-bold tracking-wide uppercase text-white">BÁO GIÁ PCCC & CÔNG TRÌNH</h1>
-          <p class="text-[11px] text-slate-300 italic font-normal tracking-wide">Cho mỗi bước tiến thêm vững vàng</p>
+      <div class="flex items-center space-x-3.5">
+        <img id="navLogo" src="" alt="SANWAY Logo" class="h-8 w-auto bg-white/10 px-2.5 py-1 rounded-lg backdrop-blur-sm object-contain">
+        <div class="border-l border-slate-600 pl-3.5 hidden sm:block">
+          <h1 class="text-xs sm:text-sm font-bold tracking-wider uppercase text-white">HỆ THỐNG BÁO GIÁ KỸ THUẬT</h1>
+          <p class="text-[11px] text-slate-300 italic font-light tracking-wide">Cho mỗi bước tiến thêm vững vàng</p>
         </div>
       </div>
 
       <!-- Actions Tabs -->
       <div class="flex items-center space-x-2 sm:space-x-3">
-        <button id="tabBtnForm" onclick="switchTab('form')" class="px-3.5 py-2 rounded-lg text-xs sm:text-sm font-bold transition bg-[#D62828] text-white shadow-sm flex items-center gap-1.5 hover:bg-[#B91C1C]">
+        <button id="tabBtnForm" onclick="switchTab('form')" class="px-3.5 py-2 rounded-xl text-xs sm:text-sm font-semibold transition bg-[#D62828] text-white shadow-sm flex items-center gap-1.5 hover:bg-[#B91C1C]">
           <i class="fa-solid fa-sliders"></i> <span class="hidden sm:inline">Soạn Thảo</span>
         </button>
-        <button id="tabBtnPreview" onclick="switchTab('preview')" class="px-3.5 py-2 rounded-lg text-xs sm:text-sm font-semibold transition bg-slate-700 text-slate-200 hover:bg-slate-600 flex items-center gap-1.5">
+        <button id="tabBtnPreview" onclick="switchTab('preview')" class="px-3.5 py-2 rounded-xl text-xs sm:text-sm font-medium transition bg-slate-700/80 text-slate-200 hover:bg-slate-600 flex items-center gap-1.5">
           <i class="fa-solid fa-file-invoice"></i> <span>Xem Báo Giá (A4)</span>
         </button>
-        <button onclick="handlePrint()" class="px-4 py-2 rounded-lg text-xs sm:text-sm font-bold transition bg-[#D62828] hover:bg-[#B91C1C] text-white shadow-md flex items-center gap-2">
+        <button onclick="handlePrint()" class="px-4 py-2 rounded-xl text-xs sm:text-sm font-bold transition bg-[#D62828] hover:bg-[#B91C1C] text-white shadow-md flex items-center gap-2">
           <i class="fa-solid fa-file-pdf"></i> <span>Xuất PDF / In</span>
         </button>
       </div>
@@ -138,14 +195,17 @@
       <!-- Card 1: Thông tin Đơn Vị Phát Hành (Tùy biến thương hiệu của bạn) -->
       <div class="bg-white rounded-2xl shadow-sm border border-slate-200/80 p-5 sm:p-7">
         <div class="flex items-center justify-between pb-3.5 border-b border-slate-100 mb-5">
-          <h2 class="text-base sm:text-lg font-bold text-[#2F3742] flex items-center gap-2.5">
-            <span class="w-8 h-8 rounded-lg bg-red-50 text-[#D62828] flex items-center justify-center text-sm">
+          <div class="flex items-center gap-3">
+            <span class="w-9 h-9 rounded-xl bg-red-50 text-[#D62828] flex items-center justify-center text-sm">
               <i class="fa-solid fa-building-flag"></i>
             </span>
-            <span>Thông Tin Công Ty Báo Giá (Đơn Vị Phát Hành)</span>
-          </h2>
+            <div>
+              <h2 class="text-base sm:text-lg font-bold text-[#2F3742]">Đơn Vị Báo Giá (Phát Hành)</h2>
+              <p class="text-xs text-[#6B737D]">Tùy biến tên pháp nhân, hotline, địa chỉ và thông tin người ký trên Header/Footer</p>
+            </div>
+          </div>
           <span class="text-xs bg-red-50 text-[#D62828] font-semibold px-3 py-1 rounded-full border border-red-200">
-            <i class="fa-solid fa-pen-nib mr-1"></i> Có thể tùy biến toàn bộ
+            <i class="fa-solid fa-palette mr-1"></i> SANWAY Brand System
           </span>
         </div>
 
@@ -164,11 +224,11 @@
           </div>
           <div class="lg:col-span-2">
             <label class="block text-xs font-bold text-[#2F3742] mb-1.5 uppercase tracking-wider">Địa chỉ trụ sở / Văn phòng</label>
-            <input type="text" id="inputCompanyAddress" value="Khu Công Nghiệp Nomura, Huyện An Dương, TP. Hải Phòng" class="w-full px-3.5 py-2.5 border rounded-xl text-sm border-slate-200 focus:ring-2 focus:ring-[#D62828] focus:outline-none transition">
+            <input type="text" id="inputCompanyAddress" value="KCN Nomura, Huyện An Dương, TP. Hải Phòng" class="w-full px-3.5 py-2.5 border rounded-xl text-sm border-slate-200 focus:ring-2 focus:ring-[#D62828] focus:outline-none transition">
           </div>
           <div>
-            <label class="block text-xs font-bold text-[#2F3742] mb-1.5 uppercase tracking-wider">Tên Giám đốc / Đại diện ký</label>
-            <input type="text" id="inputDirectorName" value="Nguyễn Văn A" placeholder="VD: Nguyễn Văn A" class="w-full px-3.5 py-2.5 border rounded-xl text-sm border-slate-200 focus:ring-2 focus:ring-[#D62828] focus:outline-none transition font-semibold text-[#D62828]">
+            <label class="block text-xs font-bold text-[#2F3742] mb-1.5 uppercase tracking-wider">Họ và tên Giám đốc</label>
+            <input type="text" id="inputDirectorName" value="Nguyễn Văn A" class="w-full px-3.5 py-2.5 border rounded-xl text-sm border-slate-200 focus:ring-2 focus:ring-[#D62828] focus:outline-none transition font-semibold text-[#D62828]">
           </div>
         </div>
       </div>
@@ -176,15 +236,15 @@
       <!-- Card 2: Thông tin khách hàng & Báo giá -->
       <div class="bg-white rounded-2xl shadow-sm border border-slate-200/80 p-5 sm:p-7">
         <div class="flex items-center justify-between pb-3.5 border-b border-slate-100 mb-5">
-          <h2 class="text-base sm:text-lg font-bold text-[#2F3742] flex items-center gap-2.5">
-            <span class="w-8 h-8 rounded-lg bg-blue-50 text-blue-600 flex items-center justify-center text-sm">
+          <div class="flex items-center gap-3">
+            <span class="w-9 h-9 rounded-xl bg-slate-100 text-[#2F3742] flex items-center justify-center text-sm">
               <i class="fa-solid fa-address-card"></i>
             </span>
-            <span>Thông Tin Khách Hàng & Dự Án</span>
-          </h2>
-          <span class="text-xs bg-slate-100 text-slate-600 font-semibold px-3 py-1 rounded-full border border-slate-200">
-            Khổ in A4 Tiêu Chuẩn
-          </span>
+            <div>
+              <h2 class="text-base sm:text-lg font-bold text-[#2F3742]">Khách Hàng & Thông Tin Dự Án</h2>
+              <p class="text-xs text-[#6B737D]">Thông tin hợp tác gửi đến khách hàng và các điều khoản thuế suất</p>
+            </div>
+          </div>
         </div>
 
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
@@ -222,16 +282,18 @@
       <div class="bg-white rounded-2xl shadow-sm border border-slate-200/80 p-5 sm:p-7">
         <div class="flex flex-col md:flex-row md:items-center justify-between pb-4 border-b border-slate-100 gap-3">
           <div>
-            <div class="flex items-center gap-2">
-              <span class="w-8 h-8 rounded-lg bg-slate-100 text-[#2F3742] flex items-center justify-center text-sm">
+            <div class="flex items-center gap-2.5">
+              <span class="w-9 h-9 rounded-xl bg-slate-100 text-[#2F3742] flex items-center justify-center text-sm">
                 <i class="fa-solid fa-boxes-stacked"></i>
               </span>
-              <h2 class="text-base sm:text-lg font-bold text-[#2F3742]">
-                Danh Sách Sản Phẩm & Vật Tư Báo Giá
-              </h2>
-              <span id="selectedBadgeCount" class="bg-red-50 text-[#D62828] text-xs px-2.5 py-0.5 rounded-full font-bold border border-red-200">47 mục</span>
+              <div>
+                <h2 class="text-base sm:text-lg font-bold text-[#2F3742]">
+                  Danh Sách Sản Phẩm & Vật Tư Báo Giá
+                </h2>
+                <p class="text-xs text-[#6B737D]">Tích chọn mục cần báo giá. Bảng in A4 sẽ tự động phân trang liền mạch, sang trọng.</p>
+              </div>
+              <span id="selectedBadgeCount" class="bg-red-50 text-[#D62828] text-xs px-2.5 py-0.5 rounded-full font-bold border border-red-200 ml-2">47 mục</span>
             </div>
-            <p class="text-xs text-[#6B737D] mt-1 ml-10">Tích chọn để thêm/bớt thiết bị vào báo giá. Các trang sẽ tự động phân bổ đầy đặn, không bị ngắt dòng cụt lửng.</p>
           </div>
 
           <div class="flex flex-wrap items-center gap-2">
@@ -283,7 +345,7 @@
         </div>
 
         <!-- Tóm tắt chi phí nổi bật -->
-        <div class="mt-5 bg-gradient-to-r from-slate-50 via-slate-100 to-red-50/50 p-5 rounded-2xl border border-slate-200 flex flex-col md:flex-row items-center justify-between gap-4">
+        <div class="mt-5 bg-gradient-to-r from-slate-50 via-slate-100/70 to-red-50/40 p-5 rounded-2xl border border-slate-200/80 flex flex-col md:flex-row items-center justify-between gap-4">
           <div class="text-xs text-[#2F3742]">
             Đã chọn: <b id="statSelectedItems" class="text-[#D62828] font-bold text-sm">47</b> / <span id="statTotalItems">47</span> thiết bị & dịch vụ
           </div>
@@ -307,7 +369,7 @@
         <div class="mt-6 flex flex-col sm:flex-row justify-end gap-3">
           <button onclick="switchTab('preview')" class="w-full sm:w-auto px-7 py-3.5 rounded-xl bg-[#D62828] hover:bg-[#B91C1C] text-white font-bold text-sm shadow-md transition flex items-center justify-center gap-2 tracking-wide">
             <i class="fa-solid fa-receipt"></i>
-            <span>TẠO BÁO GIÁ & XEM PREVIEW A4 CHUẨN SANWAY</span>
+            <span>TẠO BÁO GIÁ & XEM PREVIEW A4 CAO CẤP</span>
             <i class="fa-solid fa-arrow-right"></i>
           </button>
         </div>
@@ -325,7 +387,7 @@
           <button onclick="switchTab('form')" class="px-4 py-2 rounded-xl border border-slate-300 hover:bg-slate-50 text-[#2F3742] text-xs sm:text-sm font-bold transition flex items-center gap-2">
             <i class="fa-solid fa-sliders text-[#D62828]"></i> <span>Quay lại chỉnh sửa</span>
           </button>
-          <span class="text-xs sm:text-sm text-[#6B737D] hidden md:inline">| Xem trước chuẩn tỷ lệ in ấn A4 (210mm x 297mm) • Bố cục đầy đặn, đẹp mắt</span>
+          <span class="text-xs sm:text-sm text-[#6B737D] hidden md:inline">| Xem trước khổ A4 chuẩn ấn phẩm (Minimalist Table, Thoáng đãng, Cao cấp)</span>
         </div>
         <div class="flex items-center gap-3">
           <button onclick="handlePrint()" class="px-6 py-2.5 rounded-xl bg-[#D62828] hover:bg-[#B91C1C] text-white text-xs sm:text-sm font-bold shadow-md transition flex items-center gap-2">
@@ -371,15 +433,15 @@
       if (tab === 'form') {
         sectionForm.classList.remove('hidden');
         sectionPreview.classList.add('hidden');
-        btnForm.className = "px-3.5 py-2 rounded-lg text-xs sm:text-sm font-bold transition bg-[#D62828] text-white shadow-sm flex items-center gap-1.5 hover:bg-[#B91C1C]";
-        btnPreview.className = "px-3.5 py-2 rounded-lg text-xs sm:text-sm font-semibold transition bg-slate-700 text-slate-200 hover:bg-slate-600 flex items-center gap-1.5";
+        btnForm.className = "px-3.5 py-2 rounded-xl text-xs sm:text-sm font-bold transition bg-[#D62828] text-white shadow-sm flex items-center gap-1.5 hover:bg-[#B91C1C]";
+        btnPreview.className = "px-3.5 py-2 rounded-xl text-xs sm:text-sm font-medium transition bg-slate-700/80 text-slate-200 hover:bg-slate-600 flex items-center gap-1.5";
         window.scrollTo({ top: 0, behavior: 'smooth' });
       } else {
         renderPreview();
         sectionForm.classList.add('hidden');
         sectionPreview.classList.remove('hidden');
-        btnPreview.className = "px-3.5 py-2 rounded-lg text-xs sm:text-sm font-bold transition bg-[#D62828] text-white shadow-sm flex items-center gap-1.5 hover:bg-[#B91C1C]";
-        btnForm.className = "px-3.5 py-2 rounded-lg text-xs sm:text-sm font-semibold transition bg-slate-700 text-slate-200 hover:bg-slate-600 flex items-center gap-1.5";
+        btnPreview.className = "px-3.5 py-2 rounded-xl text-xs sm:text-sm font-bold transition bg-[#D62828] text-white shadow-sm flex items-center gap-1.5 hover:bg-[#B91C1C]";
+        btnForm.className = "px-3.5 py-2 rounded-xl text-xs sm:text-sm font-medium transition bg-slate-700/80 text-slate-200 hover:bg-slate-600 flex items-center gap-1.5";
         window.scrollTo({ top: 0, behavior: 'smooth' });
       }
     }
@@ -512,16 +574,14 @@
       document.getElementById('statGrandTotal').textContent = formatVND(grandTotal) + ' đ';
     }
 
-    // ==================== TỰ ĐỘNG CHIA TRANG A4 VỚI SỐ LƯỢNG DÒNG ĐẦY ĐẶN ====================
+    // ==================== TẠO BẢN XEM TRƯỚC A4 CAO CẤP ====================
     function renderPreview() {
-      // Đọc thông tin công ty phát hành
       const companyName = document.getElementById('inputCompanyFullName').value;
       const companyHotline = document.getElementById('inputCompanyHotline').value;
       const companyEmail = document.getElementById('inputCompanyEmail').value;
       const companyAddress = document.getElementById('inputCompanyAddress').value;
       const directorName = document.getElementById('inputDirectorName').value;
 
-      // Đọc thông tin khách hàng & dự án
       const custName = document.getElementById('inputCustomerName').value;
       const projTitle = document.getElementById('inputProjectTitle').value;
       const quoteDate = document.getElementById('inputQuoteDate').value;
@@ -535,7 +595,7 @@
       const grandTotal = subtotal + vatAmount;
       const totalInWords = numberToWordsVietnamese(grandTotal);
 
-      // Chuẩn bị toàn bộ dòng dữ liệu (Nhóm + Item)
+      // Phân nhóm
       const grouped = {};
       selectedItems.forEach(item => {
         if (!grouped[item.category]) grouped[item.category] = [];
@@ -570,10 +630,7 @@
         });
       }
 
-      // THUẬT TOÁN PHÂN TRANG A4 ĐẦY ĐẶN
-      // Trang 1: Chứa 20 dòng bảng
-      // Trang 2, 3...: Chứa 28 dòng bảng
-      // Nếu còn lại ít dòng cần chừa chỗ cho bảng tổng kết & chữ ký
+      // Sức chứa phân trang A4
       const pageChunks = [];
       let currentRowIdx = 0;
       let pageNum = 1;
@@ -588,7 +645,7 @@
         } else {
           let take = capacity;
           if (currentRowIdx + take < allRows.length && allRows[currentRowIdx + take - 1].type === 'group') {
-            take--; // Đẩy dòng tiêu đề group sang trang kế nếu nó bị lẻ loi ở đáy trang
+            take--; // Không để group lẻ loi ở cuối trang
           }
           pageChunks.push(allRows.slice(currentRowIdx, currentRowIdx + take));
           currentRowIdx += take;
@@ -618,64 +675,73 @@
         `;
 
         if (isFirstPage) {
-          // HEADER ĐẦY ĐỦ TRANG 1 VỚI THÔNG TIN CÔNG TY TÙY BIẾN
+          // HEADER CAO CẤP TRANG 1
           pageHtml += `
-            <div class="border-b-2 border-[#D62828] pb-3 mb-4">
-              <div class="flex items-center justify-between gap-4">
+            <div class="pb-4 mb-5 border-b border-slate-200">
+              <div class="flex items-start justify-between gap-6">
+                <!-- Logo & Brand Statement -->
                 <div class="w-1/2">
-                  <img src="${ASSETS.logo_horizontal || ASSETS.logo_official}" alt="SANWAY Brand Logo" class="h-14 sm:h-16 w-auto object-contain">
+                  <img src="${ASSETS.logo_horizontal || ASSETS.logo_official}" alt="SANWAY" class="h-13 sm:h-15 w-auto object-contain mb-1.5">
+                  <p class="text-[10.5px] font-bold text-[#D62828] tracking-widest uppercase pl-0.5">HỆ THỐNG AN TOÀN PCCC & CÔNG TRÌNH</p>
                 </div>
-                <div class="w-1/2 text-right text-[10.5px] text-[#6B737D] leading-tight space-y-1">
-                  <p class="font-extrabold text-[#2F3742] text-xs uppercase tracking-tight">${escapeHtml(companyName)}</p>
-                  <p>Hotline: <span class="font-semibold text-slate-800">${escapeHtml(companyHotline)}</span> • Email: ${escapeHtml(companyEmail)}</p>
-                  <p>Địa chỉ: ${escapeHtml(companyAddress)}</p>
-                  <p class="italic text-[#D62828] font-semibold pt-0.5">${escapeHtml(quoteDate)}</p>
+                <!-- Thông tin liên hệ công ty -->
+                <div class="w-1/2 text-right text-[10.5px] text-[#6B737D] leading-relaxed">
+                  <p class="font-extrabold text-[#2F3742] text-[12px] uppercase tracking-tight">${escapeHtml(companyName)}</p>
+                  <p><span class="font-medium text-[#2F3742]">Hotline:</span> ${escapeHtml(companyHotline)} • <span class="font-medium text-[#2F3742]">Email:</span> ${escapeHtml(companyEmail)}</p>
+                  <p class="truncate">${escapeHtml(companyAddress)}</p>
+                  <p class="text-[#D62828] font-bold text-[10px] mt-0.5">${escapeHtml(quoteDate)}</p>
                 </div>
               </div>
             </div>
 
-            <!-- TIÊU ĐỀ BÁO GIÁ -->
+            <!-- TIÊU ĐỀ BÁO GIÁ HIỆN ĐẠI -->
             <div class="text-center my-3">
-              <h1 class="text-xl sm:text-2xl font-black tracking-wide text-[#D62828] uppercase mb-0.5">BẢNG BÁO GIÁ</h1>
-              <h2 class="text-xs font-extrabold text-[#2F3742] uppercase tracking-wider">HẠNG MỤC : ${escapeHtml(projTitle.replace(/^HẠNG MỤC\s*:\s*/i, ''))}</h2>
+              <h1 class="text-2xl font-extrabold tracking-tight text-[#2F3742] uppercase mb-1">BẢNG BÁO GIÁ</h1>
+              <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-red-50 text-[#D62828] text-[10.5px] font-bold tracking-wide">
+                <i class="fa-solid fa-shield-halved text-[9px]"></i>
+                <span>HẠNG MỤC: ${escapeHtml(projTitle.replace(/^HẠNG MỤC\s*:\s*/i, ''))}</span>
+              </div>
             </div>
 
-            <!-- THÔNG TIN KHÁCH HÀNG & LỜI MỞ ĐẦU -->
-            <div class="text-[11px] text-slate-700 mb-3 space-y-1 bg-[#F5F7FA] p-3 rounded-xl border border-slate-200">
-              <p><span class="font-bold text-[#2F3742]">Kính gửi Quý khách hàng:</span> <span class="font-black text-[#D62828] uppercase text-xs sm:text-sm">${escapeHtml(custName)}</span></p>
-              <p class="text-justify leading-relaxed text-[#6B737D]">
-                ${escapeHtml(companyName)} xin trân trọng gửi tới Quý khách hàng lời cảm ơn chân thành vì sự hợp tác và quan tâm đến dịch vụ kỹ thuật an toàn PCCC của chúng tôi. Chúng tôi xin gửi bảng báo giá chi tiết cho các hạng mục như sau:
-              </p>
+            <!-- THÔNG TIN KHÁCH HÀNG & LỜI MỞ ĐẦU TINH TẾ -->
+            <div class="text-[10.5px] text-[#6B737D] mb-4 bg-[#F8FAFC] p-3.5 rounded-xl border border-slate-100 flex items-start gap-3">
+              <div class="w-1 bg-[#D62828] self-stretch rounded-full"></div>
+              <div class="space-y-1">
+                <p class="text-[11px]"><span class="font-bold text-[#2F3742]">Kính gửi Quý đối tác / Khách hàng:</span> <span class="font-extrabold text-[#D62828] uppercase">${escapeHtml(custName)}</span></p>
+                <p class="text-justify leading-relaxed">
+                  ${escapeHtml(companyName)} trân trọng gửi lời cảm ơn sâu sắc vì sự tín nhiệm của Quý công ty. Chúng tôi xin kính gửi bảng dự toán chi phí chi tiết cho các hạng mục kỹ thuật như sau:
+                </p>
+              </div>
             </div>
           `;
         } else {
-          // HEADER GỌN CHO CÁC TRANG TIẾP THEO
+          // HEADER TINH GỌN TRANG 2, 3...
           pageHtml += `
-            <div class="border-b border-slate-300 pb-2 mb-3 flex justify-between items-center text-[10.5px] text-[#6B737D]">
+            <div class="pb-3 mb-4 border-b border-slate-200 flex justify-between items-center text-[10px] text-[#6B737D]">
               <div class="flex items-center gap-2">
-                <img src="${ASSETS.logo_horizontal || ASSETS.logo_official}" alt="SANWAY Logo" class="h-6 w-auto object-contain">
-                <span class="font-bold text-[#2F3742] uppercase">${escapeHtml(companyName)}</span>
+                <img src="${ASSETS.logo_horizontal || ASSETS.logo_official}" alt="SANWAY" class="h-6 w-auto object-contain">
+                <span class="font-bold text-[#2F3742] uppercase text-[11px]">${escapeHtml(companyName)}</span>
               </div>
-              <div class="text-right italic">
-                <span>Báo giá: ${escapeHtml(projTitle)} (Trang ${currentPage})</span>
+              <div class="text-right font-medium">
+                <span class="text-[#2F3742] font-semibold">${escapeHtml(projTitle)}</span> • <span class="text-[#D62828] font-bold">Trang ${currentPage}</span>
               </div>
             </div>
           `;
         }
 
-        // BẢNG DỮ LIỆU CỦA TRANG NÀY
+        // BẢNG BÁO GIÁ MINIMALIST BORDERLESS (ÍT VIỀN, THOÁNG ĐÃNG)
         pageHtml += `
-          <div class="mb-3">
-            <table class="w-full border-collapse text-[10.5px] border border-slate-300">
+          <div class="mb-2">
+            <table class="sanway-table">
               <thead>
-                <tr class="bg-[#2F3742] text-white font-bold text-center">
-                  <th class="p-1.5 border border-slate-400 w-9">STT</th>
-                  <th class="p-1.5 border border-slate-400 text-left">Tên hạng mục, vật tư thiết bị</th>
-                  <th class="p-1.5 border border-slate-400 w-12">ĐVT</th>
-                  <th class="p-1.5 border border-slate-400 w-14">Khối lượng</th>
-                  <th class="p-1.5 border border-slate-400 w-24 text-right">Đơn giá (đ)</th>
-                  <th class="p-1.5 border border-slate-400 w-28 text-right">Thành tiền (đ)</th>
-                  <th class="p-1.5 border border-slate-400 w-16 text-center">Ghi chú</th>
+                <tr>
+                  <th style="width: 36px; text-align: center;">STT</th>
+                  <th style="text-align: left;">Tên hạng mục, vật tư thiết bị</th>
+                  <th style="width: 48px; text-align: center;">ĐVT</th>
+                  <th style="width: 55px; text-align: center;">Khối lượng</th>
+                  <th style="width: 95px; text-align: right;">Đơn giá (đ)</th>
+                  <th style="width: 110px; text-align: right;">Thành tiền (đ)</th>
+                  <th style="width: 60px; text-align: center;">Ghi chú</th>
                 </tr>
               </thead>
               <tbody>
@@ -684,89 +750,89 @@
         chunk.forEach(row => {
           if (row.type === 'group') {
             pageHtml += `
-              <tr class="bg-slate-100 font-bold text-[#2F3742]">
-                <td class="p-1.5 text-center border border-slate-300 font-bold text-[#D62828]">${row.roman}</td>
-                <td colspan="6" class="p-1.5 border border-slate-300 uppercase font-bold tracking-wide text-[#2F3742]">${escapeHtml(row.name)}</td>
+              <tr class="group-row">
+                <td style="text-align: center; color: #D62828; font-weight: 800;">${row.roman}</td>
+                <td colspan="6" style="color: #2F3742; text-transform: uppercase;">${escapeHtml(row.name)}</td>
               </tr>
             `;
           } else {
             pageHtml += `
-              <tr class="text-[#2F3742] hover:bg-slate-50">
-                <td class="p-1.5 border border-slate-300 text-center font-mono">${row.index}</td>
-                <td class="p-1.5 border border-slate-300">${escapeHtml(row.name)}</td>
-                <td class="p-1.5 border border-slate-300 text-center">${escapeHtml(itemUnit(row.unit))}</td>
-                <td class="p-1.5 border border-slate-300 text-center font-semibold">${row.quantity}</td>
-                <td class="p-1.5 border border-slate-300 text-right font-mono">${formatVND(row.price)}</td>
-                <td class="p-1.5 border border-slate-300 text-right font-bold text-slate-900 font-mono">${formatVND(row.subtotal)}</td>
-                <td class="p-1.5 border border-slate-300 text-center text-slate-400"></td>
+              <tr class="item-row">
+                <td style="text-align: center; color: #94A3B8; font-size: 8.5pt;">${row.index}</td>
+                <td style="font-weight: 500; color: #2F3742;">${escapeHtml(row.name)}</td>
+                <td style="text-align: center; color: #6B737D; font-size: 8.5pt;">${escapeHtml(row.unit)}</td>
+                <td style="text-align: center; font-weight: 600; color: #2F3742;">${row.quantity}</td>
+                <td style="text-align: right; color: #6B737D; font-family: monospace;">${formatVND(row.price)}</td>
+                <td style="text-align: right; font-weight: 700; color: #1E242C; font-family: monospace;">${formatVND(row.subtotal)}</td>
+                <td style="text-align: center; color: #CBD5E1;">—</td>
               </tr>
             `;
           }
         });
 
-        if (isLastPage) {
-          pageHtml += `
-              </tbody>
-              <tfoot>
-                <tr class="font-bold bg-slate-50 border-t-2 border-slate-400">
-                  <td colspan="5" class="p-1.5 border border-slate-300 text-right uppercase text-[#2F3742]">TỔNG CỘNG TRƯỚC THUẾ:</td>
-                  <td class="p-1.5 border border-slate-300 text-right text-slate-900 font-mono font-bold">${formatVND(subtotal)}</td>
-                  <td class="p-1.5 border border-slate-300 text-center text-slate-500 font-normal">đồng</td>
-                </tr>
-                <tr class="font-bold bg-slate-50">
-                  <td colspan="5" class="p-1.5 border border-slate-300 text-right uppercase text-[#2F3742]">THUẾ VAT ${vatRate}%:</td>
-                  <td class="p-1.5 border border-slate-300 text-right text-slate-900 font-mono font-bold">${formatVND(vatAmount)}</td>
-                  <td class="p-1.5 border border-slate-300 text-center text-slate-500 font-normal">đồng</td>
-                </tr>
-                <tr class="font-black bg-red-50/60 border-t-2 border-[#D62828]">
-                  <td colspan="5" class="p-1.5 border border-slate-300 text-right uppercase text-xs text-[#D62828]">TỔNG CỘNG SAU THUẾ:</td>
-                  <td class="p-1.5 border border-slate-300 text-right text-sm text-[#D62828] font-mono font-extrabold">${formatVND(grandTotal)}</td>
-                  <td class="p-1.5 border border-slate-300 text-center text-[#D62828] font-bold">đồng</td>
-                </tr>
-              </tfoot>
-            </table>
-          </div>
-          `;
-        } else {
-          pageHtml += `
+        pageHtml += `
               </tbody>
             </table>
           </div>
-          <div class="text-right text-[10.5px] italic text-[#6B737D] mt-1 mb-2">
-            (Xem tiếp các hạng mục tiếp theo ở Trang ${currentPage + 1}...)
-          </div>
+        `;
+
+        if (!isLastPage) {
+          pageHtml += `
+            <div class="text-right text-[10px] italic text-[#6B737D] mt-2 mb-1">
+              (Bảng báo giá tiếp tục ở Trang ${currentPage + 1}...)
+            </div>
           `;
         }
 
-        // PHẦN KẾT BÁO GIÁ (CHỈ HIỆN Ở TRANG CUỐI)
+        // TỔNG KẾT & CHỮ KÝ TRANG CUỐI
         if (isLastPage) {
           pageHtml += `
-            <!-- BẰNG CHỮ -->
-            <div class="mb-3 p-2.5 rounded-lg bg-[#F5F7FA] border border-slate-200 text-[11px]">
-              <p><span class="font-medium text-[#2F3742]">(Bằng chữ: </span><span class="italic font-bold text-[#D62828]">${escapeHtml(totalInWords)}</span><span class="font-medium text-[#2F3742]">)</span></p>
+            <!-- KHỐI TỔNG KẾT TÀI CHÍNH CAO CẤP (FINANCIAL SUMMARY CARD) -->
+            <div class="mt-2 mb-3 bg-[#F8FAFC] rounded-xl p-3.5 border border-slate-200/80">
+              <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-2.5 border-b border-slate-200">
+                <div class="text-xs text-[#6B737D]">
+                  <p><span class="font-semibold text-[#2F3742]">Số tiền bằng chữ:</span> <span class="italic font-bold text-[#D62828]">${escapeHtml(totalInWords)}</span></p>
+                </div>
+                <div class="text-right space-y-1 text-xs">
+                  <div class="flex justify-between sm:justify-end gap-6 text-[#6B737D]">
+                    <span>Tổng cộng trước thuế:</span>
+                    <span class="font-bold text-[#2F3742] font-mono">${formatVND(subtotal)} đ</span>
+                  </div>
+                  <div class="flex justify-between sm:justify-end gap-6 text-[#6B737D]">
+                    <span>Thuế VAT (${vatRate}%):</span>
+                    <span class="font-bold text-[#2F3742] font-mono">${formatVND(vatAmount)} đ</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- DÒNG TỔNG CỘNG SAU THUẾ NỔI BẬT -->
+              <div class="pt-2.5 flex items-center justify-between">
+                <span class="text-xs font-bold uppercase tracking-wider text-[#2F3742]">TỔNG GIÁ TRỊ THANH TOÁN (ĐÃ GỒM VAT):</span>
+                <span class="text-base sm:text-lg font-black text-[#D62828] font-mono tracking-tight">${formatVND(grandTotal)} VNĐ</span>
+              </div>
             </div>
 
-            <!-- GHI CHÚ VÀ ĐIỀU KHOẢN -->
-            <div class="mb-4 text-[10.5px] text-[#2F3742] space-y-0.5 border-l-2 border-[#D62828] pl-2.5 py-1 bg-slate-50/50">
-              <p class="font-bold uppercase tracking-wider text-[#D62828] text-[10px]">Ghi chú & Điều khoản thanh toán:</p>
-              <p>• Thanh quyết toán theo khối lượng nghiệm thu thực tế tại công trình.</p>
-              <p>• Trong quá trình kiểm tra, bảo dưỡng, nếu có thiết bị hư hỏng không thể sửa chữa được sẽ báo lại bên chủ đầu tư biết và thay thế kèm theo bảng báo giá.</p>
-              <p>• Thiết bị thay thế bảo hành tiêu chuẩn 12 tháng kể từ ngày nghiệm thu bàn giao.</p>
+            <!-- GHI CHÚ ĐIỀU KHOẢN KỸ THUẬT -->
+            <div class="mb-4 text-[10px] text-[#6B737D] leading-relaxed space-y-0.5 pl-3 border-l-2 border-[#D62828]">
+              <p class="font-bold uppercase tracking-wider text-[#2F3742]">Ghi chú & Cam kết kỹ thuật:</p>
+              <p>• Nghiệm thu và thanh toán căn cứ theo khối lượng thực tế thi công tại công trình.</p>
+              <p>• Trường hợp phát hiện thiết bị hư hỏng không thể phục hồi, SANWAY sẽ lập biên bản hiện trường và gửi đề xuất thay thế kèm báo giá bổ sung.</p>
+              <p>• Toàn bộ linh kiện, thiết bị thay thế được bảo hành chính hãng tiêu chuẩn 12 tháng kể từ ngày ký biên bản bàn giao.</p>
             </div>
 
-            <!-- FOOTER KÝ TÊN VÀ CON DẤU MỘC -->
-            <div class="flex justify-between items-start text-xs pt-2 border-t border-slate-200">
+            <!-- KHỐI CHỮ KÝ PHÁP NHÂN -->
+            <div class="flex justify-between items-start text-xs pt-1 border-t border-slate-200">
               <div class="text-center w-1/2 pr-4">
-                <p class="font-bold text-[#2F3742] uppercase text-[11px]">ĐẠI DIỆN KHÁCH HÀNG</p>
-                <p class="italic text-[#6B737D] text-[10px] mb-16">(Ký, ghi rõ họ tên & đóng dấu)</p>
+                <p class="font-bold text-[#2F3742] uppercase text-[11px] tracking-wide">ĐẠI DIỆN KHÁCH HÀNG</p>
+                <p class="italic text-[#94A3B8] text-[9.5px] mb-14">(Ký, ghi rõ họ tên & đóng dấu)</p>
               </div>
               <div class="text-center w-1/2 pl-4">
-                <p class="italic text-[#6B737D] text-[10px] mb-0.5">${escapeHtml(quoteDate)}</p>
-                <p class="font-bold text-[#2F3742] uppercase text-[11px]">${escapeHtml(companyName)}</p>
-                <p class="font-semibold text-slate-700 text-[10.5px] uppercase tracking-wide">${escapeHtml(signerTitle)}</p>
+                <p class="italic text-[#94A3B8] text-[10px] mb-0.5">${escapeHtml(quoteDate)}</p>
+                <p class="font-bold text-[#2F3742] uppercase text-[11px] tracking-wide">${escapeHtml(companyName)}</p>
+                <p class="font-semibold text-[#6B737D] text-[10px] uppercase tracking-wider">${escapeHtml(signerTitle)}</p>
                 
                 <div class="my-1 min-h-[85px] flex items-center justify-center" style="display: ${showStamp ? 'flex' : 'none'}">
-                  <img src="${ASSETS.stamp}" alt="Mộc đỏ công ty" class="max-h-20 object-contain mx-auto">
+                  <img src="${ASSETS.stamp}" alt="Mộc đỏ công ty" class="max-h-20 object-contain mx-auto drop-shadow-sm">
                 </div>
 
                 <p class="font-bold text-[#2F3742] text-[11.5px] mt-1">${escapeHtml(directorName)}</p>
@@ -778,12 +844,12 @@
         pageHtml += `
           </div> <!-- KẾT THÚC PHẦN THÂN TRÊN -->
 
-          <!-- FOOTER CHÂN TRANG ĐÁNH SỐ TRANG CHUẨN A4 -->
-          <div class="mt-4 pt-2 border-t border-slate-200 flex justify-between items-center text-[10px] text-[#6B737D]">
+          <!-- FOOTER CHÂN TRANG ĐÁNH SỐ TRANG A4 -->
+          <div class="mt-4 pt-2.5 border-t border-slate-100 flex justify-between items-center text-[9.5px] text-[#94A3B8]">
             <div>
               <span class="font-bold text-[#2F3742]">${escapeHtml(companyName)}</span> • Cho mỗi bước tiến thêm vững vàng
             </div>
-            <div class="font-semibold text-slate-700 bg-slate-100 px-2.5 py-0.5 rounded border border-slate-200">
+            <div class="font-semibold text-slate-600 bg-slate-100 px-2.5 py-0.5 rounded-full">
               Trang ${currentPage} / ${totalPages}
             </div>
           </div>
@@ -792,10 +858,6 @@
         pageEl.innerHTML = pageHtml;
         pagesContainer.appendChild(pageEl);
       });
-    }
-
-    function itemUnit(u) {
-      return u || 'Chiếc';
     }
 
     function handlePrint() {
