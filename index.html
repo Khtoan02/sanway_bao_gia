@@ -717,16 +717,16 @@
         `;
 
         if (isFirstPage) {
-          // HEADER TRANG 1: LOGO TO NỔI BẬT BÊN TRÁI & THÔNG TIN PHÁP NHÂN 4 DÒNG CẤU TRÚC RÕ RÀNG BÊN PHẢI
+          // HEADER TRANG 1: LOGO TO NỔI BẬT BÊN TRÁI NGANG BẰNG VỚI KHỐI 4 DÒNG BÊN PHẢI
           pageHtml += `
             <div class="pb-3 border-b border-slate-200">
               <div class="flex items-center justify-between gap-4">
-                <!-- Logo SANWAY kích thước lớn, sắc nét -->
-                <div class="w-5/12 flex items-center">
-                  <img src="${ASSETS.logo_horizontal || ASSETS.logo_official}" alt="SANWAY" class="h-16 sm:h-[68px] w-auto object-contain">
+                <!-- Logo SANWAY kích thước lớn (chiều rộng 275px, cao ~92px ngang bằng 4 dòng thông tin phải) -->
+                <div class="w-1/2 flex items-center">
+                  <img src="${ASSETS.logo_horizontal || ASSETS.logo_official}" alt="SANWAY" style="width: 275px; height: auto; margin-left: -4px;" class="object-contain object-left">
                 </div>
                 <!-- Thông tin liên hệ công ty tách 4 dòng gọn gàng theo chuẩn -->
-                <div class="w-7/12 text-right leading-snug space-y-0.5 text-[8.5pt] text-[#475569]">
+                <div class="w-1/2 text-right leading-snug space-y-0.5 text-[8.5pt] text-[#475569]">
                   <p class="text-[11pt] font-extrabold text-[#0F172A] uppercase tracking-tight mb-0.5">${escapeHtml(companyName)}</p>
                   <p><span class="font-semibold text-[#1E293B]">Hotline:</span> ${escapeHtml(companyHotline)}</p>
                   <p><span class="font-semibold text-[#1E293B]">Email:</span> ${escapeHtml(companyEmail)}</p>
