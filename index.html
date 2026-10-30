@@ -289,11 +289,11 @@
           </div>
           <div>
             <label class="block text-xs font-bold text-[#2F3742] mb-1.5 uppercase tracking-wider">Số / Mã Báo Giá (Quote Code)</label>
-            <input type="text" id="inputQuoteCode" value="BG-SANWAY/2026/001" class="w-full px-3.5 py-2.5 border rounded-xl text-sm border-slate-200 focus:ring-2 focus:ring-[#D62828] focus:outline-none transition font-bold text-[#D62828]">
+            <input type="text" id="inputQuoteCode" value="BGSW/2026/001" class="w-full px-3.5 py-2.5 border rounded-xl text-sm border-slate-200 focus:ring-2 focus:ring-[#D62828] focus:outline-none transition font-bold text-[#D62828]">
           </div>
           <div>
             <label class="block text-xs font-bold text-[#2F3742] mb-1.5 uppercase tracking-wider">Địa điểm & Ngày lập</label>
-            <input type="text" id="inputQuoteDate" value="Hải Phòng, ngày 21 tháng 10 năm 2026" class="w-full px-3.5 py-2.5 border rounded-xl text-sm border-slate-200 focus:ring-2 focus:ring-[#D62828] focus:outline-none transition">
+            <input type="text" id="inputQuoteDate" value="Hải Phòng, 21/10/2026" class="w-full px-3.5 py-2.5 border rounded-xl text-sm border-slate-200 focus:ring-2 focus:ring-[#D62828] focus:outline-none transition">
           </div>
           <div>
             <label class="block text-xs font-bold text-[#2F3742] mb-1.5 uppercase tracking-wider">Chức danh người ký</label>
@@ -735,15 +735,13 @@
               </div>
             </div>
 
-            <!-- TIÊU ĐỀ LỚN (HERO): MÀU ĐỎ THƯƠNG HIỆU SANWAY (#D62828) -->
-            <div class="text-center my-3">
-              <h1 class="text-[17.5pt] font-black tracking-tight text-[#D62828] uppercase leading-tight mb-1">BÁO GIÁ ${escapeHtml(projTitle.replace(/^HẠNG MỤC\s*:\s*/i, ''))}</h1>
-              <p class="text-[8.5pt] font-semibold tracking-[0.14em] text-[#64748B] uppercase mb-2">${escapeHtml(projTitleEn)}</p>
-              <div class="inline-flex items-center gap-2.5 px-3 py-1 rounded-full bg-slate-100/90 border border-slate-200/80 text-[8.5pt] text-[#475569]">
-                <span>Số: <b class="font-bold text-[#D62828]">${escapeHtml(quoteCode)}</b></span>
-                <span class="text-slate-300">•</span>
-                <span>${escapeHtml(quoteDate)}</span>
-              </div>
+            <!-- KHỐI TIÊU ĐỀ LỚN (HERO): 3 HÀNG GẮN KẾT CHẶT CHẼ THÀNH 1 KHỐI THỐNG NHẤT -->
+            <div class="text-center my-3 space-y-0.5">
+              <h1 class="text-[17.5pt] font-black tracking-tight text-[#D62828] uppercase leading-snug">BÁO GIÁ ${escapeHtml(projTitle.replace(/^HẠNG MỤC\s*:\s*/i, ''))}</h1>
+              <p class="text-[8.5pt] font-semibold tracking-[0.12em] text-[#64748B] uppercase leading-snug">${escapeHtml(projTitleEn)}</p>
+              <p class="text-[9pt] font-bold text-[#0F172A] leading-snug pt-0.5">
+                Số: ${escapeHtml(quoteCode)} <span class="mx-1.5 font-normal text-slate-400">|</span> ${escapeHtml(quoteDate)}
+              </p>
             </div>
 
             <!-- KHỐI KÍNH GỬI KHÁCH HÀNG: CALLOUT BOX TƯƠNG PHẢN NHẸ, RÕ TRỌNG TÂM -->
