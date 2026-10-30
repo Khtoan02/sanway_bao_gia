@@ -43,7 +43,7 @@
     }
 
     body {
-      background-color: #F1F5F9;
+      background-color: #E2E8F0;
     }
 
     /* ĐỊNH DẠNG KHỔ GIẤY A4 CHUẨN IN ẤN (210mm x 297mm) */
@@ -51,10 +51,10 @@
       width: 210mm;
       height: 297mm;
       max-height: 297mm;
-      padding: 14mm 16mm 14mm 16mm;
+      padding: 16mm 18mm 16mm 18mm;
       margin: 0 auto 30px auto;
       background: #FFFFFF;
-      box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.08), 0 8px 10px -6px rgba(0, 0, 0, 0.04);
+      box-shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.1), 0 4px 12px -2px rgba(0, 0, 0, 0.05);
       position: relative;
       display: flex;
       flex-direction: column;
@@ -62,22 +62,22 @@
       overflow: hidden;
     }
 
-    /* WATERMARK LOGO CHÌM 10% Ở CHÍNH GIỮA MỖI TRANG */
+    /* WATERMARK LOGO VUÔNG CHÌM 10% TO TOÀN TRANG (ĐƯỜNG KÍNH 520PX) */
     .a4-watermark {
       position: absolute;
-      top: 50%;
+      top: 52%;
       left: 50%;
       transform: translate(-50%, -50%);
-      width: 320px;
-      max-width: 60%;
-      opacity: 0.07;
+      width: 520px;
+      max-width: 85%;
+      opacity: 0.08;
       pointer-events: none;
       z-index: 0;
       user-select: none;
       filter: grayscale(100%);
     }
 
-    /* BẢNG BÁO GIÁ MINIMALIST CÂN ĐỐI, CHỈN CHU */
+    /* BẢNG BÁO GIÁ MINIMALIST CÂN ĐỐI, CĂN LỀ GỌN GÀNG */
     .sanway-table {
       width: 100%;
       border-collapse: collapse;
@@ -87,22 +87,22 @@
     }
 
     .sanway-table thead tr {
-      border-bottom: 1.5px solid #2F3742;
+      border-bottom: 2px solid #2F3742;
     }
 
     .sanway-table thead th {
-      padding: 8px 6px;
+      padding: 10px 4px;
       font-size: 8pt;
       font-weight: 700;
       text-transform: uppercase;
       letter-spacing: 0.04em;
       color: #6B737D;
-      vertical-align: bottom;
+      vertical-align: middle;
     }
 
     .sanway-table tbody tr.group-row td {
-      padding: 7px 6px;
-      border-bottom: 1px solid #E2E8F0;
+      padding: 8px 4px 6px 4px;
+      border-bottom: 1.5px solid #CBD5E1;
       font-weight: 700;
       font-size: 8.5pt;
       color: #2F3742;
@@ -110,7 +110,7 @@
     }
 
     .sanway-table tbody tr.item-row td {
-      padding: 6.5px 6px;
+      padding: 6.5px 4px;
       border-bottom: 1px solid #F1F4F8;
       color: #2F3742;
       font-size: 8.5pt;
@@ -262,8 +262,16 @@
             <input type="text" id="inputCustomerName" value="CÔNG TY TNHH TÂN HUY HOÀNG" class="w-full px-3.5 py-2.5 border rounded-xl text-sm border-slate-200 focus:ring-2 focus:ring-[#D62828] focus:outline-none transition font-semibold">
           </div>
           <div>
-            <label class="block text-xs font-bold text-[#2F3742] mb-1.5 uppercase tracking-wider">Hạng mục báo giá</label>
+            <label class="block text-xs font-bold text-[#2F3742] mb-1.5 uppercase tracking-wider">Hạng mục báo giá (Tiếng Việt)</label>
             <input type="text" id="inputProjectTitle" value="BẢO DƯỠNG HỆ THỐNG PCCC" class="w-full px-3.5 py-2.5 border rounded-xl text-sm border-slate-200 focus:ring-2 focus:ring-[#D62828] focus:outline-none transition font-semibold">
+          </div>
+          <div>
+            <label class="block text-xs font-bold text-[#2F3742] mb-1.5 uppercase tracking-wider">Tiêu đề phụ Tiếng Anh (English Subtitle)</label>
+            <input type="text" id="inputProjectTitleEn" value="FIRE PROTECTION SYSTEM MAINTENANCE QUOTATION" class="w-full px-3.5 py-2.5 border rounded-xl text-sm border-slate-200 focus:ring-2 focus:ring-[#D62828] focus:outline-none transition font-semibold text-slate-600">
+          </div>
+          <div>
+            <label class="block text-xs font-bold text-[#2F3742] mb-1.5 uppercase tracking-wider">Số / Mã Báo Giá (Quote Code)</label>
+            <input type="text" id="inputQuoteCode" value="BG-SANWAY/2026/001" class="w-full px-3.5 py-2.5 border rounded-xl text-sm border-slate-200 focus:ring-2 focus:ring-[#D62828] focus:outline-none transition font-bold text-[#D62828]">
           </div>
           <div>
             <label class="block text-xs font-bold text-[#2F3742] mb-1.5 uppercase tracking-wider">Địa điểm & Ngày lập</label>
@@ -396,7 +404,7 @@
           <button onclick="switchTab('form')" class="px-4 py-2 rounded-xl border border-slate-300 hover:bg-slate-50 text-[#2F3742] text-xs sm:text-sm font-bold transition flex items-center gap-2">
             <i class="fa-solid fa-sliders text-[#D62828]"></i> <span>Quay lại chỉnh sửa</span>
           </button>
-          <span class="text-xs sm:text-sm text-[#6B737D] hidden md:inline">| Khổ in chuẩn A4 (210mm x 297mm) • Watermark chìm 10% • Footer chuẩn mực</span>
+          <span class="text-xs sm:text-sm text-[#6B737D] hidden md:inline">| Khổ A4 Quốc Tế (210mm x 297mm) • Căn lề chuẩn mực • Watermark logo vuông chìm 10%</span>
         </div>
         <div class="flex items-center gap-3">
           <button onclick="handlePrint()" class="px-6 py-2.5 rounded-xl bg-[#D62828] hover:bg-[#B91C1C] text-white text-xs sm:text-sm font-bold shadow-md transition flex items-center gap-2">
@@ -406,7 +414,7 @@
       </div>
 
       <!-- KHU VỰC CÁC TRANG A4 ĐƯỢC SINH TỰ ĐỘNG -->
-      <div id="pagesContainer" class="space-y-6 print:space-y-0">
+      <div id="pagesContainer" class="space-y-8 print:space-y-0">
         <!-- Rendered dynamically by renderPreview() -->
       </div>
 
@@ -593,6 +601,8 @@
 
       const custName = document.getElementById('inputCustomerName').value;
       const projTitle = document.getElementById('inputProjectTitle').value;
+      const projTitleEn = document.getElementById('inputProjectTitleEn').value;
+      const quoteCode = document.getElementById('inputQuoteCode').value;
       const quoteDate = document.getElementById('inputQuoteDate').value;
       const signerTitle = document.getElementById('inputSignerTitle').value;
       const vatRate = parseFloat(document.getElementById('inputVatRate').value) || 0;
@@ -645,7 +655,7 @@
       let pageNum = 1;
 
       while (currentRowIdx < allRows.length) {
-        let capacity = (pageNum === 1) ? 24 : 34;
+        let capacity = (pageNum === 1) ? 23 : 33;
         let remainingRows = allRows.length - currentRowIdx;
 
         if (remainingRows <= capacity) {
@@ -678,9 +688,12 @@
         const pageEl = document.createElement('div');
         pageEl.className = 'a4-page';
 
+        // SỬ DỤNG LOGO VUÔNG / OFFICIAL LOGO CHO WATERMARK ĐỂ TO TOÀN TRANG
+        let watermarkSrc = ASSETS.logo_official || ASSETS.logo_horizontal;
+
         let pageHtml = `
-          <!-- WATERMARK LOGO CHÌM Ở GIỮA TRANG -->
-          <img src="${ASSETS.logo_horizontal || ASSETS.logo_official}" alt="Watermark" class="a4-watermark">
+          <!-- WATERMARK LOGO VUÔNG CHÌM 10% TO TOÀN TRANG -->
+          <img src="${watermarkSrc}" alt="Watermark" class="a4-watermark">
 
           <!-- PHẦN THÂN TRÊN CỦA TRANG A4 -->
           <div class="flex-1 flex flex-col justify-start relative z-10">
@@ -694,7 +707,7 @@
                 <!-- Logo SANWAY & Slogan -->
                 <div class="w-1/2">
                   <img src="${ASSETS.logo_horizontal || ASSETS.logo_official}" alt="SANWAY" class="h-11 w-auto object-contain mb-1">
-                  <p class="text-[9.5px] font-bold text-[#D62828] tracking-widest uppercase pl-0.5">HỆ THỐNG AN TOÀN PCCC & CÔNG TRÌNH</p>
+                  <p class="text-[9.5px] font-bold text-[#D62828] tracking-widest uppercase">HỆ THỐNG AN TOÀN PCCC & CÔNG TRÌNH</p>
                 </div>
                 <!-- Thông tin liên hệ công ty -->
                 <div class="w-1/2 text-right text-[10px] text-[#6B737D] leading-snug">
@@ -706,17 +719,19 @@
               </div>
             </div>
 
-            <!-- TIÊU ĐỀ BÁO GIÁ HIỆN ĐẠI -->
-            <div class="text-center my-2">
-              <h1 class="text-xl font-extrabold tracking-tight text-[#2F3742] uppercase mb-0.5">BẢNG BÁO GIÁ</h1>
-              <div class="inline-flex items-center gap-1.5 px-3 py-0.5 rounded-full bg-red-50 text-[#D62828] text-[10px] font-bold tracking-wide">
-                <i class="fa-solid fa-shield-halved text-[8.5px]"></i>
-                <span>HẠNG MỤC: ${escapeHtml(projTitle.replace(/^HẠNG MỤC\s*:\s*/i, ''))}</span>
+            <!-- TIÊU ĐỀ BÁO GIÁ CHUYÊN NGHIỆP: TO HƠN, CÓ TIẾNG ANH & MÃ BÁO GIÁ -->
+            <div class="text-center my-3">
+              <h1 class="text-2xl sm:text-[26px] font-black tracking-tight text-[#2F3742] uppercase mb-0.5">BÁO GIÁ ${escapeHtml(projTitle.replace(/^HẠNG MỤC\s*:\s*/i, ''))}</h1>
+              <p class="text-[10.5px] font-semibold tracking-widest text-[#6B737D] uppercase italic mb-1.5">${escapeHtml(projTitleEn)}</p>
+              <div class="inline-flex items-center gap-3 text-[10.5px] text-[#2F3742] font-semibold">
+                <span>Số: <b class="font-bold text-[#D62828]">${escapeHtml(quoteCode)}</b></span>
+                <span class="text-slate-300">|</span>
+                <span>Ngày: <b class="font-medium text-slate-700">${escapeHtml(quoteDate)}</b></span>
               </div>
             </div>
 
             <!-- THÔNG TIN KHÁCH HÀNG & LỜI MỞ ĐẦU TINH TẾ -->
-            <div class="text-[10px] text-[#6B737D] mb-3 bg-[#F8FAFC]/80 p-2.5 rounded-xl border border-slate-100 flex items-start gap-2.5 backdrop-blur-[1px]">
+            <div class="text-[10px] text-[#6B737D] mb-3 bg-[#F8FAFC]/90 p-2.5 rounded-xl border border-slate-200/70 flex items-start gap-2.5 backdrop-blur-[1px]">
               <div class="w-1 bg-[#D62828] self-stretch rounded-full"></div>
               <div class="space-y-0.5">
                 <p class="text-[10.5px]"><span class="font-bold text-[#2F3742]">Kính gửi Quý đối tác / Khách hàng:</span> <span class="font-extrabold text-[#D62828] uppercase">${escapeHtml(custName)}</span></p>
@@ -727,7 +742,7 @@
             </div>
           `;
         } else {
-          // HEADER TỪ TRANG 2 TRỞ ĐI: CHỈ CÓ LOGO BÊN TRÁI VÀ BÁO GIÁ (TRANG ...) BÊN PHẢI (KHÔNG CẦN TÊN CÔNG TY)
+          // HEADER TỪ TRANG 2 TRỞ ĐI: CHỈ CÓ LOGO BÊN TRÁI VÀ BÁO GIÁ (TRANG ...) BÊN PHẢI
           pageHtml += `
             <div class="pb-2 mb-3 border-b border-slate-200 flex justify-between items-center text-[10.5px]">
               <div class="flex items-center">
@@ -740,19 +755,19 @@
           `;
         }
 
-        // BẢNG BÁO GIÁ MINIMALIST CÂN ĐỐI, CĂN CHỈNH KỸ LƯỠNG
+        // BẢNG BÁO GIÁ CĂN LỀ GỌN GÀNG, KHÔNG THỤT THÒ
         pageHtml += `
           <div class="mb-1 flex-1">
             <table class="sanway-table">
               <thead>
                 <tr>
-                  <th style="width: 32px; text-align: center;">STT</th>
-                  <th style="text-align: left; padding-left: 4px;">TÊN HẠNG MỤC, VẬT TƯ THIẾT BỊ</th>
+                  <th style="width: 32px; text-align: left;">STT</th>
+                  <th style="text-align: left;">TÊN HẠNG MỤC, VẬT TƯ THIẾT BỊ</th>
                   <th style="width: 44px; text-align: center;">ĐVT</th>
                   <th style="width: 48px; text-align: center;">KHỐI LƯỢNG</th>
-                  <th style="width: 95px; text-align: right; padding-right: 6px;">ĐƠN GIÁ (Đ)</th>
-                  <th style="width: 105px; text-align: right; padding-right: 4px;">THÀNH TIỀN (Đ)</th>
-                  <th style="width: 50px; text-align: center;">GHI CHÚ</th>
+                  <th style="width: 95px; text-align: right;">ĐƠN GIÁ (Đ)</th>
+                  <th style="width: 105px; text-align: right;">THÀNH TIỀN (Đ)</th>
+                  <th style="width: 48px; text-align: right;">GHI CHÚ</th>
                 </tr>
               </thead>
               <tbody>
@@ -762,20 +777,20 @@
           if (row.type === 'group') {
             pageHtml += `
               <tr class="group-row">
-                <td style="text-align: center; color: #D62828; font-weight: 800;">${row.roman}</td>
-                <td colspan="6" style="color: #2F3742; text-transform: uppercase; padding-left: 4px;">${escapeHtml(row.name)}</td>
+                <td style="text-align: left; color: #D62828; font-weight: 800;">${row.roman}</td>
+                <td colspan="6" style="color: #2F3742; text-transform: uppercase;">${escapeHtml(row.name)}</td>
               </tr>
             `;
           } else {
             pageHtml += `
               <tr class="item-row">
-                <td style="text-align: center; color: #94A3B8; font-size: 8pt;">${row.index}</td>
-                <td style="font-weight: 500; color: #2F3742; padding-left: 4px;">${escapeHtml(row.name)}</td>
+                <td style="text-align: left; color: #94A3B8; font-size: 8pt;">${row.index}</td>
+                <td style="font-weight: 500; color: #2F3742;">${escapeHtml(row.name)}</td>
                 <td style="text-align: center; color: #6B737D; font-size: 8pt;">${escapeHtml(row.unit)}</td>
                 <td style="text-align: center; font-weight: 600; color: #2F3742;">${row.quantity}</td>
-                <td style="text-align: right; color: #6B737D; font-family: monospace; padding-right: 6px;">${formatVND(row.price)}</td>
-                <td style="text-align: right; font-weight: 700; color: #1E242C; font-family: monospace; padding-right: 4px;">${formatVND(row.subtotal)}</td>
-                <td style="text-align: center; color: #CBD5E1;">—</td>
+                <td style="text-align: right; color: #6B737D; font-family: monospace;">${formatVND(row.price)}</td>
+                <td style="text-align: right; font-weight: 700; color: #1E242C; font-family: monospace;">${formatVND(row.subtotal)}</td>
+                <td style="text-align: right; color: #CBD5E1;">—</td>
               </tr>
             `;
           }
