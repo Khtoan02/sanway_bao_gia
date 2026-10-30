@@ -1,0 +1,706 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SANWAY - Phần Mềm Tạo Báo Giá Chuyên Nghiệp</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+  <script src="app_data.js"></script>
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            sanway: {
+              red: '#D62828',
+              redHover: '#B91C1C',
+              dark: '#2F3742',
+              gray: '#6B737D',
+              light: '#F5F7FA',
+              border: '#E2E8F0',
+            }
+          },
+          fontFamily: {
+            sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+            display: ['"Space Grotesk"', 'sans-serif']
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      background-color: #F5F7FA;
+    }
+
+    @media print {
+      body {
+        background: #ffffff !important;
+        color: #1a202c !important;
+        font-size: 10pt;
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+      }
+      .no-print { display: none !important; }
+      .print-only { display: block !important; }
+      .page-break { page-break-after: always; break-after: page; }
+      .print-shadow-none {
+        box-shadow: none !important;
+        border: none !important;
+        padding: 0 !important;
+        margin: 0 !important;
+        max-width: 100% !important;
+      }
+      @page {
+        size: A4 portrait;
+        margin: 12mm 12mm 15mm 12mm;
+      }
+      tr { page-break-inside: avoid; }
+    }
+
+    .custom-scroll::-webkit-scrollbar { width: 6px; height: 6px; }
+    .custom-scroll::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
+    .custom-scroll::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+  </style>
+</head>
+<body class="text-slate-800 antialiased min-h-screen">
+
+  <!-- TOPBAR CÔNG CỤ (ẨN KHI IN) -->
+  <header class="no-print bg-[#2F3742] text-white sticky top-0 z-50 shadow-md border-b border-slate-700">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
+      
+      <!-- Brand Logo in Topbar -->
+      <div class="flex items-center space-x-3">
+        <img id="navLogo" src="" alt="SANWAY Logo" class="h-9 w-auto bg-white/10 px-2 py-1 rounded-lg backdrop-blur-sm object-contain">
+        <div class="border-l border-slate-600 pl-3 hidden sm:block">
+          <h1 class="text-sm font-bold tracking-wide uppercase font-display text-white">BÁO GIÁ PCCC & CÔNG TRÌNH</h1>
+          <p class="text-[11px] text-slate-300 italic font-light tracking-wide">Cho mỗi bước tiến thêm vững vàng</p>
+        </div>
+      </div>
+
+      <!-- Actions Tabs -->
+      <div class="flex items-center space-x-2 sm:space-x-3">
+        <button id="tabBtnForm" onclick="switchTab('form')" class="px-3.5 py-2 rounded-lg text-xs sm:text-sm font-bold transition bg-[#D62828] text-white shadow-sm flex items-center gap-1.5 hover:bg-[#B91C1C]">
+          <i class="fa-solid fa-sliders"></i> <span class="hidden sm:inline">Soạn Thảo</span>
+        </button>
+        <button id="tabBtnPreview" onclick="switchTab('preview')" class="px-3.5 py-2 rounded-lg text-xs sm:text-sm font-semibold transition bg-slate-700 text-slate-200 hover:bg-slate-600 flex items-center gap-1.5">
+          <i class="fa-solid fa-eye"></i> <span>Xem Báo Giá</span>
+        </button>
+        <button onclick="handlePrint()" class="px-4 py-2 rounded-lg text-xs sm:text-sm font-bold transition bg-[#D62828] hover:bg-[#B91C1C] text-white shadow-md flex items-center gap-2">
+          <i class="fa-solid fa-file-pdf"></i> <span>Xuất PDF / In</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- NỘI DUNG CONTAINER CHÍNH -->
+  <main class="max-w-7xl mx-auto p-4 sm:p-6 lg:p-8">
+
+    <!-- ==================== TAB 1: FORM SOẠN THẢO BÁO GIÁ ==================== -->
+    <div id="sectionForm" class="no-print space-y-6">
+      
+      <!-- Card Thông tin khách hàng & Báo giá -->
+      <div class="bg-white rounded-2xl shadow-sm border border-slate-200/80 p-5 sm:p-7">
+        <div class="flex items-center justify-between pb-3.5 border-b border-slate-100 mb-5">
+          <h2 class="text-base sm:text-lg font-bold text-[#2F3742] flex items-center gap-2.5">
+            <span class="w-8 h-8 rounded-lg bg-red-100 text-[#D62828] flex items-center justify-center text-sm">
+              <i class="fa-solid fa-address-card"></i>
+            </span>
+            <span>Thông Tin Khách Hàng & Thông Số Dự Án</span>
+          </h2>
+          <span class="text-xs bg-red-50 text-[#D62828] font-semibold px-3 py-1 rounded-full border border-red-200">
+            <i class="fa-solid fa-certificate mr-1"></i> SANWAY Brand Guidelines
+          </span>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+          <div>
+            <label class="block text-xs font-bold text-[#2F3742] mb-1.5 uppercase tracking-wider">Kính gửi Khách hàng</label>
+            <input type="text" id="inputCustomerName" value="CÔNG TY TNHH TÂN HUY HOÀNG" class="w-full px-3.5 py-2.5 border rounded-xl text-sm border-slate-200 focus:ring-2 focus:ring-[#D62828] focus:outline-none transition">
+          </div>
+          <div>
+            <label class="block text-xs font-bold text-[#2F3742] mb-1.5 uppercase tracking-wider">Hạng mục báo giá</label>
+            <input type="text" id="inputProjectTitle" value="BẢO DƯỠNG HỆ THỐNG PCCC" class="w-full px-3.5 py-2.5 border rounded-xl text-sm border-slate-200 focus:ring-2 focus:ring-[#D62828] focus:outline-none transition">
+          </div>
+          <div>
+            <label class="block text-xs font-bold text-[#2F3742] mb-1.5 uppercase tracking-wider">Địa điểm & Ngày lập</label>
+            <input type="text" id="inputQuoteDate" value="Hải Phòng, ngày 21 tháng 10 năm 2026" class="w-full px-3.5 py-2.5 border rounded-xl text-sm border-slate-200 focus:ring-2 focus:ring-[#D62828] focus:outline-none transition">
+          </div>
+          <div>
+            <label class="block text-xs font-bold text-[#2F3742] mb-1.5 uppercase tracking-wider">Đơn vị báo giá / Đại diện</label>
+            <input type="text" id="inputSigner" value="CÔNG TY SANWAY" class="w-full px-3.5 py-2.5 border rounded-xl text-sm border-slate-200 focus:ring-2 focus:ring-[#D62828] focus:outline-none transition">
+          </div>
+          <div>
+            <label class="block text-xs font-bold text-[#2F3742] mb-1.5 uppercase tracking-wider">Thuế suất VAT (%)</label>
+            <input type="number" id="inputVatRate" value="8" min="0" max="100" onchange="updateFormSummary()" class="w-full px-3.5 py-2.5 border rounded-xl text-sm border-slate-200 focus:ring-2 focus:ring-[#D62828] focus:outline-none transition">
+          </div>
+          <div>
+            <label class="block text-xs font-bold text-[#2F3742] mb-1.5 uppercase tracking-wider">Tùy chọn dấu mộc đỏ</label>
+            <select id="inputShowStamp" class="w-full px-3.5 py-2.5 border rounded-xl text-sm border-slate-200 focus:ring-2 focus:ring-[#D62828] focus:outline-none bg-white transition">
+              <option value="yes" selected>Có hiển thị con dấu công ty</option>
+              <option value="no">Không hiển thị con dấu (Ký tươi trực tiếp)</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <!-- Bảng chọn & tùy chỉnh danh mục vật tư sản phẩm -->
+      <div class="bg-white rounded-2xl shadow-sm border border-slate-200/80 p-5 sm:p-7">
+        <div class="flex flex-col md:flex-row md:items-center justify-between pb-4 border-b border-slate-100 gap-3">
+          <div>
+            <div class="flex items-center gap-2">
+              <span class="w-8 h-8 rounded-lg bg-slate-100 text-[#2F3742] flex items-center justify-center text-sm">
+                <i class="fa-solid fa-boxes-stacked"></i>
+              </span>
+              <h2 class="text-base sm:text-lg font-bold text-[#2F3742]">
+                Danh Sách Sản Phẩm & Vật Tư Báo Giá
+              </h2>
+              <span id="selectedBadgeCount" class="bg-red-50 text-[#D62828] text-xs px-2.5 py-0.5 rounded-full font-bold border border-red-200">47 mục</span>
+            </div>
+            <p class="text-xs text-[#6B737D] mt-1 ml-10">Tích chọn để thêm/bớt thiết bị vào báo giá. Có thể sửa số lượng và đơn giá theo từng công trình.</p>
+          </div>
+
+          <div class="flex flex-wrap items-center gap-2">
+            <button onclick="selectAll(true)" class="text-xs px-3.5 py-2 rounded-xl bg-slate-100 hover:bg-slate-200 text-[#2F3742] font-semibold transition">
+              <i class="fa-solid fa-check-double mr-1 text-[#D62828]"></i> Chọn tất cả
+            </button>
+            <button onclick="selectAll(false)" class="text-xs px-3.5 py-2 rounded-xl bg-slate-100 hover:bg-slate-200 text-[#2F3742] font-semibold transition">
+              <i class="fa-solid fa-square-minus mr-1 text-slate-500"></i> Bỏ chọn hết
+            </button>
+            <button onclick="addNewCustomItem()" class="text-xs px-3.5 py-2 rounded-xl bg-[#2F3742] hover:bg-black text-white font-semibold transition flex items-center gap-1.5 shadow-sm">
+              <i class="fa-solid fa-plus text-[#D62828]"></i> Thêm vật tư mới
+            </button>
+          </div>
+        </div>
+
+        <!-- Bộ lọc phân loại & tìm kiếm -->
+        <div class="my-4 flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
+          <div class="flex items-center gap-2 flex-1">
+            <span class="text-xs font-bold text-[#6B737D] whitespace-nowrap"><i class="fa-solid fa-filter"></i> Lọc phân loại:</span>
+            <select id="categoryFilter" onchange="filterTable()" class="text-xs px-3.5 py-2.5 border rounded-xl border-slate-200 bg-white focus:outline-none w-full sm:w-auto font-medium">
+              <option value="ALL">-- Tất cả phân loại hệ thống (47 mục) --</option>
+            </select>
+          </div>
+          <div class="w-full sm:w-80">
+            <input type="text" id="searchItemInput" oninput="filterTable()" placeholder="Tìm nhanh tên thiết bị, vật tư..." class="w-full text-xs px-3.5 py-2.5 border rounded-xl border-slate-200 focus:ring-2 focus:ring-[#D62828] focus:outline-none">
+          </div>
+        </div>
+
+        <!-- Bảng danh mục sản phẩm -->
+        <div class="overflow-x-auto custom-scroll border rounded-xl border-slate-200 max-h-[520px]">
+          <table class="w-full text-left border-collapse text-sm">
+            <thead class="sticky top-0 bg-slate-100/95 backdrop-blur-sm z-10">
+              <tr class="text-[#2F3742] text-xs uppercase font-extrabold tracking-wider border-b border-slate-200">
+                <th class="p-3.5 text-center w-12">Chọn</th>
+                <th class="p-3.5 w-12 text-center">STT</th>
+                <th class="p-3.5">Tên hạng mục, vật tư thiết bị</th>
+                <th class="p-3.5 w-40">Phân nhóm</th>
+                <th class="p-3.5 w-20 text-center">ĐVT</th>
+                <th class="p-3.5 w-24 text-center">Khối lượng</th>
+                <th class="p-3.5 w-32 text-right">Đơn giá (đ)</th>
+                <th class="p-3.5 w-36 text-right">Thành tiền (đ)</th>
+                <th class="p-3.5 w-12 text-center">Xóa</th>
+              </tr>
+            </thead>
+            <tbody id="quoteItemsTableBody" class="divide-y divide-slate-100 bg-white">
+              <!-- Rendered by JS -->
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Tóm tắt chi phí nổi bật -->
+        <div class="mt-5 bg-gradient-to-r from-slate-50 via-slate-100 to-red-50/50 p-5 rounded-2xl border border-slate-200 flex flex-col md:flex-row items-center justify-between gap-4">
+          <div class="text-xs text-[#2F3742]">
+            Đã chọn: <b id="statSelectedItems" class="text-[#D62828] font-bold text-sm">47</b> / <span id="statTotalItems">47</span> thiết bị & dịch vụ
+          </div>
+          <div class="flex flex-wrap items-center gap-4 sm:gap-6 text-xs sm:text-sm">
+            <div>
+              <span class="text-[#6B737D] font-medium">Trước thuế:</span>
+              <span id="statSubtotal" class="font-bold text-[#2F3742] ml-1">190,010,000 đ</span>
+            </div>
+            <div>
+              <span class="text-[#6B737D] font-medium">VAT (<span id="statVatPercent">8%</span>):</span>
+              <span id="statVatAmount" class="font-bold text-[#2F3742] ml-1">15,200,800 đ</span>
+            </div>
+            <div class="text-base sm:text-lg font-black text-[#D62828] bg-white px-4 py-2 rounded-xl border border-red-200 shadow-sm">
+              <span>Tổng cộng:</span>
+              <span id="statGrandTotal" class="ml-1">205,210,800 đ</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Nút Tạo báo giá -->
+        <div class="mt-6 flex flex-col sm:flex-row justify-end gap-3">
+          <button onclick="switchTab('preview')" class="w-full sm:w-auto px-7 py-3.5 rounded-xl bg-[#D62828] hover:bg-[#B91C1C] text-white font-bold text-sm shadow-md transition flex items-center justify-center gap-2 tracking-wide">
+            <i class="fa-solid fa-receipt"></i>
+            <span>TẠO BÁO GIÁ & XEM PREVIEW CHUẨN SANWAY</span>
+            <i class="fa-solid fa-arrow-right"></i>
+          </button>
+        </div>
+
+      </div>
+
+    </div>
+
+    <!-- ==================== TAB 2: PREVIEW BÁO GIÁ CHUẨN XUẤT PDF ==================== -->
+    <div id="sectionPreview" class="hidden print:block">
+      
+      <!-- Toolbar thao tác nhanh trên Preview (Ẩn khi in) -->
+      <div class="no-print mb-6 bg-white p-4 sm:p-5 rounded-2xl shadow-sm border border-slate-200 flex flex-wrap items-center justify-between gap-4">
+        <div class="flex items-center gap-3">
+          <button onclick="switchTab('form')" class="px-4 py-2 rounded-xl border border-slate-300 hover:bg-slate-50 text-[#2F3742] text-xs sm:text-sm font-bold transition flex items-center gap-2">
+            <i class="fa-solid fa-sliders text-[#D62828]"></i> <span>Quay lại chỉnh sửa</span>
+          </button>
+          <span class="text-xs sm:text-sm text-[#6B737D] hidden md:inline">| Khung xem trước chuẩn tỷ lệ in ấn A4 (Portrait)</span>
+        </div>
+        <div class="flex items-center gap-3">
+          <button onclick="handlePrint()" class="px-6 py-2.5 rounded-xl bg-[#D62828] hover:bg-[#B91C1C] text-white text-xs sm:text-sm font-bold shadow-md transition flex items-center gap-2">
+            <i class="fa-solid fa-file-pdf"></i> <span>Xuất File PDF / In Ngay</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- TỜ BÁO GIÁ A4 CHÍNH THỨC THEO BỘ NHẬN DIỆN SANWAY -->
+      <div id="printDocument" class="bg-white max-w-[850px] mx-auto p-8 sm:p-12 shadow-xl rounded-2xl border border-slate-200 print-shadow-none text-slate-900 leading-normal">
+        
+        <!-- HEADER DOANH NGHIỆP SANWAY CHUYÊN NGHIỆP -->
+        <div class="border-b-2 border-[#D62828] pb-4 mb-6">
+          <div class="flex items-center justify-between gap-4">
+            <!-- Logo Chính Hãng SANWAY -->
+            <div class="w-1/2">
+              <img id="quoteLogoHorizontal" src="" alt="SANWAY Brand Logo" class="h-14 sm:h-16 w-auto object-contain">
+            </div>
+            <!-- Thông Tin Liên Hệ & Pháp Nhân -->
+            <div class="w-1/2 text-right text-[11px] text-[#6B737D] leading-tight space-y-1">
+              <p class="font-extrabold text-[#2F3742] text-xs sm:text-sm uppercase tracking-tight">CÔNG TY CỔ PHẦN SANWAY</p>
+              <p>Hotline: 09xx.xxx.xxx • Email: contact@sanway.vn</p>
+              <p>Địa chỉ: Hải Phòng - Hà Nội - TP. Hồ Chí Minh</p>
+              <p class="italic text-[#D62828] font-semibold pt-0.5" id="previewDateHeader">Hải Phòng, ngày 21 tháng 10 năm 2026</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- TIÊU ĐỀ BÁO GIÁ -->
+        <div class="text-center my-6">
+          <h1 class="text-2xl sm:text-3xl font-black tracking-wide text-[#D62828] uppercase mb-1 font-display">BẢNG BÁO GIÁ</h1>
+          <h2 id="previewProjectTitle" class="text-xs sm:text-sm font-extrabold text-[#2F3742] uppercase tracking-wider">HẠNG MỤC : BẢO DƯỠNG HỆ THỐNG PCCC</h2>
+        </div>
+
+        <!-- THÔNG TIN KHÁCH HÀNG & LỜI MỞ ĐẦU -->
+        <div class="text-xs text-slate-700 mb-5 space-y-1.5 bg-[#F5F7FA] p-4 rounded-xl border border-slate-200">
+          <p><span class="font-bold text-[#2F3742]">Kính gửi Quý khách hàng:</span> <span id="previewCustomerName" class="font-black text-[#D62828] uppercase text-xs sm:text-sm">CÔNG TY TNHH TÂN HUY HOÀNG</span></p>
+          <p class="text-justify leading-relaxed text-[#6B737D]">
+            Công ty SANWAY xin trân trọng gửi tới Quý khách hàng lời cảm ơn chân thành vì sự hợp tác và quan tâm đến dịch vụ kỹ thuật an toàn PCCC của chúng tôi. Chúng tôi xin gửi bảng báo giá chi tiết cho các hạng mục như sau:
+          </p>
+        </div>
+
+        <!-- BẢNG BÁO GIÁ NỘI DUNG -->
+        <div class="mb-5">
+          <table class="w-full border-collapse text-xs border border-slate-300">
+            <thead>
+              <tr class="bg-[#2F3742] text-white font-bold text-center">
+                <th class="p-2 border border-slate-400 w-10">STT</th>
+                <th class="p-2 border border-slate-400 text-left">Tên hạng mục, vật tư thiết bị</th>
+                <th class="p-2 border border-slate-400 w-14">Đơn vị</th>
+                <th class="p-2 border border-slate-400 w-16">Khối lượng</th>
+                <th class="p-2 border border-slate-400 w-24 text-right">Đơn giá (đ)</th>
+                <th class="p-2 border border-slate-400 w-28 text-right">Thành tiền (đ)</th>
+                <th class="p-2 border border-slate-400 w-16 text-center">Ghi chú</th>
+              </tr>
+            </thead>
+            <tbody id="previewTableBody">
+              <!-- Rendered rows grouped by sections -->
+            </tbody>
+            <tfoot>
+              <!-- Tổng cộng trước thuế -->
+              <tr class="font-bold bg-slate-50 border-t-2 border-slate-400">
+                <td colspan="5" class="p-2 border border-slate-300 text-right uppercase text-[#2F3742]">TỔNG CỘNG TRƯỚC THUẾ:</td>
+                <td class="p-2 border border-slate-300 text-right text-slate-900 font-mono font-bold" id="previewSubtotal">0</td>
+                <td class="p-2 border border-slate-300 text-center text-slate-500 font-normal">đồng</td>
+              </tr>
+              <!-- Thuế VAT -->
+              <tr class="font-bold bg-slate-50">
+                <td colspan="5" class="p-2 border border-slate-300 text-right uppercase text-[#2F3742]">THUẾ VAT <span id="previewVatRateText">8%</span>:</td>
+                <td class="p-2 border border-slate-300 text-right text-slate-900 font-mono font-bold" id="previewVatAmount">0</td>
+                <td class="p-2 border border-slate-300 text-center text-slate-500 font-normal">đồng</td>
+              </tr>
+              <!-- Tổng sau thuế -->
+              <tr class="font-black bg-red-50/60 border-t-2 border-[#D62828]">
+                <td colspan="5" class="p-2 border border-slate-300 text-right uppercase text-xs sm:text-sm text-[#D62828]">TỔNG CỘNG SAU THUẾ:</td>
+                <td class="p-2 border border-slate-300 text-right text-sm sm:text-base text-[#D62828] font-mono font-extrabold" id="previewGrandTotal">0</td>
+                <td class="p-2 border border-slate-300 text-center text-[#D62828] font-bold">đồng</td>
+              </tr>
+            </tfoot>
+          </table>
+        </div>
+
+        <!-- BẰNG CHỮ -->
+        <div class="mb-5 p-3 rounded-lg bg-[#F5F7FA] border border-slate-200 text-xs sm:text-sm">
+          <p><span class="font-medium text-[#2F3742]">(Bằng chữ: </span><span id="previewTotalInWords" class="italic font-bold text-[#D62828]">...</span><span class="font-medium text-[#2F3742]">)</span></p>
+        </div>
+
+        <!-- GHI CHÚ VÀ ĐIỀU KHOẢN -->
+        <div class="mb-8 text-xs text-[#2F3742] space-y-1 border-l-2 border-[#D62828] pl-3 py-1 bg-slate-50/50">
+          <p class="font-bold uppercase tracking-wider text-[#D62828]">Ghi chú & Điều khoản thanh toán:</p>
+          <p>• Thanh quyết toán theo khối lượng nghiệm thu thực tế tại công trình.</p>
+          <p>• Trong quá trình kiểm tra, bảo dưỡng, nếu có thiết bị hư hỏng không thể sửa chữa được sẽ báo lại bên chủ đầu tư biết và thay thế kèm theo bảng báo giá.</p>
+          <p>• Thiết bị thay thế bảo hành tiêu chuẩn 12 tháng kể từ ngày nghiệm thu bàn giao.</p>
+        </div>
+
+        <!-- FOOTER KÝ TÊN VÀ CON DẤU MỘC -->
+        <div class="flex justify-between items-start text-xs sm:text-sm pt-4 border-t border-slate-200">
+          <div class="text-center w-1/2 pr-4">
+            <p class="font-bold text-[#2F3742] uppercase">ĐẠI DIỆN KHÁCH HÀNG</p>
+            <p class="italic text-[#6B737D] text-xs mb-16">(Ký, ghi rõ họ tên & đóng dấu)</p>
+          </div>
+          <div class="text-center w-1/2 pl-4">
+            <p class="italic text-[#6B737D] text-xs mb-1" id="previewDateFooter">Hải Phòng, ngày 21 tháng 10 năm 2026</p>
+            <p class="font-bold text-[#2F3742] uppercase" id="previewSignerTitle">ĐƠN VỊ BÁO GIÁ</p>
+            <p class="italic text-[#6B737D] text-[11px] mb-2">SANWAY CORPORATION</p>
+            <div id="previewStampContainer" class="my-2 min-h-[90px] flex items-center justify-center">
+              <img id="quoteStampImg" src="" alt="Mộc đỏ công ty" class="max-h-24 object-contain mx-auto">
+            </div>
+          </div>
+        </div>
+
+        <!-- CHÂN TRANG BRAND GUIDELINE FOOTER -->
+        <div class="mt-12 text-center text-[10px] text-[#6B737D] border-t border-slate-100 pt-3">
+          <span class="font-bold text-[#2F3742]">SANWAY</span> • Cho mỗi bước tiến thêm vững vàng • Báo giá có hiệu lực trong vòng 30 ngày
+        </div>
+
+      </div>
+
+    </div>
+
+  </main>
+
+  <script>
+    // Dữ liệu ban đầu
+    let itemsData = JSON.parse(JSON.stringify(INITIAL_CATALOG));
+
+    itemsData.forEach(item => {
+      item.selected = true;
+      item.quantity = item.default_qty;
+      item.price = item.default_price;
+    });
+
+    document.addEventListener('DOMContentLoaded', () => {
+      // Gán logo SANWAY
+      if (typeof ASSETS !== 'undefined') {
+        document.getElementById('navLogo').src = ASSETS.logo_horizontal || ASSETS.logo_official;
+        document.getElementById('quoteLogoHorizontal').src = ASSETS.logo_horizontal || ASSETS.logo_official;
+        if (ASSETS.stamp) {
+          document.getElementById('quoteStampImg').src = ASSETS.stamp;
+        }
+      }
+
+      initCategoryFilter();
+      renderFormTable();
+      updateFormSummary();
+    });
+
+    function switchTab(tab) {
+      const sectionForm = document.getElementById('sectionForm');
+      const sectionPreview = document.getElementById('sectionPreview');
+      const btnForm = document.getElementById('tabBtnForm');
+      const btnPreview = document.getElementById('tabBtnPreview');
+
+      if (tab === 'form') {
+        sectionForm.classList.remove('hidden');
+        sectionPreview.classList.add('hidden');
+        btnForm.className = "px-3.5 py-2 rounded-lg text-xs sm:text-sm font-bold transition bg-[#D62828] text-white shadow-sm flex items-center gap-1.5 hover:bg-[#B91C1C]";
+        btnPreview.className = "px-3.5 py-2 rounded-lg text-xs sm:text-sm font-semibold transition bg-slate-700 text-slate-200 hover:bg-slate-600 flex items-center gap-1.5";
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      } else {
+        renderPreview();
+        sectionForm.classList.add('hidden');
+        sectionPreview.classList.remove('hidden');
+        btnPreview.className = "px-3.5 py-2 rounded-lg text-xs sm:text-sm font-bold transition bg-[#D62828] text-white shadow-sm flex items-center gap-1.5 hover:bg-[#B91C1C]";
+        btnForm.className = "px-3.5 py-2 rounded-lg text-xs sm:text-sm font-semibold transition bg-slate-700 text-slate-200 hover:bg-slate-600 flex items-center gap-1.5";
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }
+    }
+
+    function initCategoryFilter() {
+      const select = document.getElementById('categoryFilter');
+      const categories = [...new Set(itemsData.map(i => i.category))];
+      categories.forEach(cat => {
+        const opt = document.createElement('option');
+        opt.value = cat;
+        opt.textContent = cat;
+        select.appendChild(opt);
+      });
+    }
+
+    function renderFormTable() {
+      const tbody = document.getElementById('quoteItemsTableBody');
+      const catFilter = document.getElementById('categoryFilter').value;
+      const searchTxt = document.getElementById('searchItemInput').value.toLowerCase().trim();
+
+      tbody.innerHTML = '';
+
+      let displayIndex = 0;
+      itemsData.forEach((item, index) => {
+        if (catFilter !== 'ALL' && item.category !== catFilter) return;
+        if (searchTxt && !item.name.toLowerCase().includes(searchTxt) && !item.category.toLowerCase().includes(searchTxt)) return;
+
+        displayIndex++;
+        const tr = document.createElement('tr');
+        tr.className = item.selected ? "hover:bg-red-50/20 transition" : "hover:bg-slate-50 bg-slate-50/60 opacity-60";
+
+        const subtotal = item.quantity * item.price;
+
+        tr.innerHTML = `
+          <td class="p-3 text-center">
+            <input type="checkbox" ${item.selected ? 'checked' : ''} onchange="toggleItemSelect(${index}, this.checked)" class="w-4 h-4 rounded text-[#D62828] focus:ring-[#D62828] cursor-pointer">
+          </td>
+          <td class="p-3 text-center text-xs text-slate-500 font-mono">${displayIndex}</td>
+          <td class="p-3">
+            <input type="text" value="${escapeHtml(item.name)}" onchange="updateItemField(${index}, 'name', this.value)" class="w-full text-xs font-semibold text-[#2F3742] bg-transparent border border-transparent hover:border-slate-300 focus:border-[#D62828] focus:bg-white rounded px-2 py-1 transition">
+          </td>
+          <td class="p-3 text-xs text-[#6B737D] truncate max-w-[140px]" title="${item.category}">
+            <span class="px-2 py-0.5 rounded text-[11px] bg-slate-100 text-[#2F3742] font-medium">${item.category}</span>
+          </td>
+          <td class="p-3 text-center">
+            <input type="text" value="${escapeHtml(item.unit)}" onchange="updateItemField(${index}, 'unit', this.value)" class="w-16 text-center text-xs bg-transparent border border-transparent hover:border-slate-300 focus:border-[#D62828] focus:bg-white rounded px-1 py-1">
+          </td>
+          <td class="p-3 text-center">
+            <input type="number" value="${item.quantity}" min="1" onchange="updateItemField(${index}, 'quantity', parseFloat(this.value) || 0)" class="w-20 text-center font-bold text-xs bg-white border border-slate-300 focus:border-[#D62828] rounded px-1.5 py-1">
+          </td>
+          <td class="p-3 text-right">
+            <input type="number" value="${item.price}" min="0" step="1000" onchange="updateItemField(${index}, 'price', parseFloat(this.value) || 0)" class="w-28 text-right font-medium text-xs bg-white border border-slate-300 focus:border-[#D62828] rounded px-2 py-1">
+          </td>
+          <td class="p-3 text-right font-bold text-[#2F3742] text-xs font-mono">
+            ${formatVND(subtotal)}
+          </td>
+          <td class="p-3 text-center">
+            <button onclick="deleteItem(${index})" class="text-slate-400 hover:text-[#D62828] transition p-1" title="Xóa dòng">
+              <i class="fa-regular fa-trash-can text-sm"></i>
+            </button>
+          </td>
+        `;
+        tbody.appendChild(tr);
+      });
+    }
+
+    function filterTable() {
+      renderFormTable();
+    }
+
+    function toggleItemSelect(index, isChecked) {
+      itemsData[index].selected = isChecked;
+      renderFormTable();
+      updateFormSummary();
+    }
+
+    function updateItemField(index, field, value) {
+      itemsData[index][field] = value;
+      renderFormTable();
+      updateFormSummary();
+    }
+
+    function deleteItem(index) {
+      if (confirm('Bạn có chắc muốn xóa hạng mục này khỏi báo giá?')) {
+        itemsData.splice(index, 1);
+        renderFormTable();
+        updateFormSummary();
+      }
+    }
+
+    function selectAll(val) {
+      itemsData.forEach(item => item.selected = val);
+      renderFormTable();
+      updateFormSummary();
+    }
+
+    function addNewCustomItem() {
+      const cat = prompt("Nhập tên phân nhóm cho mục mới:", "Hạng mục phát sinh / bổ sung") || "Hạng mục bổ sung";
+      const name = prompt("Nhập tên thiết bị / công việc:", "Kiểm tra, bảo dưỡng thiết bị mới") || "Thiết bị mới";
+      const newItem = {
+        id: Date.now(),
+        category: cat,
+        name: name,
+        unit: "Chiếc",
+        default_price: 100000,
+        default_qty: 1,
+        quantity: 1,
+        price: 100000,
+        selected: true
+      };
+      itemsData.unshift(newItem);
+      renderFormTable();
+      updateFormSummary();
+    }
+
+    function updateFormSummary() {
+      const selectedItems = itemsData.filter(i => i.selected);
+      const subtotal = selectedItems.reduce((sum, i) => sum + (i.quantity * i.price), 0);
+      const vatRate = parseFloat(document.getElementById('inputVatRate').value) || 0;
+      const vatAmount = Math.round(subtotal * (vatRate / 100));
+      const grandTotal = subtotal + vatAmount;
+
+      document.getElementById('selectedBadgeCount').textContent = `${selectedItems.length} mục`;
+      document.getElementById('statSelectedItems').textContent = selectedItems.length;
+      document.getElementById('statTotalItems').textContent = itemsData.length;
+      
+      document.getElementById('statSubtotal').textContent = formatVND(subtotal) + ' đ';
+      document.getElementById('statVatPercent').textContent = vatRate + '%';
+      document.getElementById('statVatAmount').textContent = formatVND(vatAmount) + ' đ';
+      document.getElementById('statGrandTotal').textContent = formatVND(grandTotal) + ' đ';
+    }
+
+    function renderPreview() {
+      const custName = document.getElementById('inputCustomerName').value;
+      const projTitle = document.getElementById('inputProjectTitle').value;
+      const quoteDate = document.getElementById('inputQuoteDate').value;
+      const signer = document.getElementById('inputSigner').value;
+      const vatRate = parseFloat(document.getElementById('inputVatRate').value) || 0;
+      const showStamp = document.getElementById('inputShowStamp').value === 'yes';
+
+      document.getElementById('previewCustomerName').textContent = custName;
+      document.getElementById('previewProjectTitle').textContent = "HẠNG MỤC : " + projTitle.replace(/^HẠNG MỤC\s*:\s*/i, '');
+      document.getElementById('previewDateHeader').textContent = quoteDate;
+      document.getElementById('previewDateFooter').textContent = quoteDate;
+      document.getElementById('previewSignerTitle').textContent = signer;
+      document.getElementById('previewStampContainer').style.display = showStamp ? 'flex' : 'none';
+
+      const tbody = document.getElementById('previewTableBody');
+      tbody.innerHTML = '';
+
+      const selectedItems = itemsData.filter(i => i.selected);
+
+      // Nhóm theo category
+      const grouped = {};
+      selectedItems.forEach(item => {
+        if (!grouped[item.category]) grouped[item.category] = [];
+        grouped[item.category].push(item);
+      });
+
+      let sttIndex = 1;
+      let romanIndex = 1;
+      const romanNumerals = ["I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX", "X"];
+
+      for (const [catName, catItems] of Object.entries(grouped)) {
+        // Hàng nhóm
+        const trGroup = document.createElement('tr');
+        trGroup.className = "bg-slate-100 font-bold text-[#2F3742]";
+        const roman = romanNumerals[romanIndex - 1] || romanIndex;
+        trGroup.innerHTML = `
+          <td class="p-1.5 text-center border border-slate-300 font-bold text-[#D62828]">${roman}</td>
+          <td colspan="6" class="p-1.5 border border-slate-300 uppercase font-bold tracking-wide text-[#2F3742]">${escapeHtml(catName)}</td>
+        `;
+        tbody.appendChild(trGroup);
+        romanIndex++;
+
+        // Các hàng con
+        let subIndex = 1;
+        catItems.forEach(item => {
+          const subtotal = item.quantity * item.price;
+          const tr = document.createElement('tr');
+          tr.className = "text-[#2F3742] hover:bg-slate-50";
+          tr.innerHTML = `
+            <td class="p-1.5 border border-slate-300 text-center font-mono">${subIndex++}</td>
+            <td class="p-1.5 border border-slate-300">${escapeHtml(item.name)}</td>
+            <td class="p-1.5 border border-slate-300 text-center">${escapeHtml(item.unit)}</td>
+            <td class="p-1.5 border border-slate-300 text-center font-semibold">${item.quantity}</td>
+            <td class="p-1.5 border border-slate-300 text-right font-mono">${formatVND(item.price)}</td>
+            <td class="p-1.5 border border-slate-300 text-right font-bold text-slate-900 font-mono">${formatVND(subtotal)}</td>
+            <td class="p-1.5 border border-slate-300 text-center text-slate-400"></td>
+          `;
+          tbody.appendChild(tr);
+        });
+      }
+
+      // Tính tổng
+      const subtotal = selectedItems.reduce((sum, i) => sum + (i.quantity * i.price), 0);
+      const vatAmount = Math.round(subtotal * (vatRate / 100));
+      const grandTotal = subtotal + vatAmount;
+
+      document.getElementById('previewSubtotal').textContent = formatVND(subtotal);
+      document.getElementById('previewVatRateText').textContent = vatRate + '%';
+      document.getElementById('previewVatAmount').textContent = formatVND(vatAmount);
+      document.getElementById('previewGrandTotal').textContent = formatVND(grandTotal);
+
+      document.getElementById('previewTotalInWords').textContent = numberToWordsVietnamese(grandTotal);
+    }
+
+    function handlePrint() {
+      renderPreview();
+      switchTab('preview');
+      setTimeout(() => {
+        window.print();
+      }, 200);
+    }
+
+    function formatVND(number) {
+      return new Intl.NumberFormat('vi-VN').format(number);
+    }
+
+    function escapeHtml(text) {
+      if (!text) return '';
+      return text.replace(/[&<>"']/g, function(match) {
+        return {'&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#039;'}[match];
+      });
+    }
+
+    function numberToWordsVietnamese(num) {
+      if (!num || num === 0) return "Không đồng./";
+      const units = ["", "nghìn", "triệu", "tỷ", "nghìn tỷ", "triệu tỷ"];
+      const digits = ["không", "một", "hai", "ba", "bốn", "năm", "sáu", "bảy", "tám", "chín"];
+
+      function readThreeDigits(n, full) {
+        let h = Math.floor(n / 100);
+        let t = Math.floor((n % 100) / 10);
+        let u = n % 10;
+        let res = "";
+
+        if (h > 0 || full) {
+          res += digits[h] + " trăm ";
+        }
+
+        if (t > 1) {
+          res += digits[t] + " mươi ";
+          if (u === 1) res += "mốt ";
+          else if (u === 5) res += "lăm ";
+          else if (u > 0) res += digits[u] + " ";
+        } else if (t === 1) {
+          res += "mười ";
+          if (u === 1) res += "một ";
+          else if (u === 5) res += "lăm ";
+          else if (u > 0) res += digits[u] + " ";
+        } else if (t === 0 && u > 0) {
+          if (h > 0 || full) res += "linh ";
+          res += digits[u] + " ";
+        }
+        return res;
+      }
+
+      let str = Math.round(num).toString();
+      let chunks = [];
+      while (str.length > 0) {
+        chunks.push(parseInt(str.slice(-3)));
+        str = str.slice(0, -3);
+      }
+
+      let res = "";
+      for (let i = chunks.length - 1; i >= 0; i--) {
+        let c = chunks[i];
+        if (c > 0) {
+          let full = i < chunks.length - 1;
+          res += readThreeDigits(c, full) + units[i] + " ";
+        }
+      }
+
+      res = res.trim();
+      return res.charAt(0).toUpperCase() + res.slice(1) + " đồng./";
+    }
+  </script>
+</body>
+</html>

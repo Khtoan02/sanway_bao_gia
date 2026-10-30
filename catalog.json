@@ -1,0 +1,378 @@
+[
+  {
+    "id": 1,
+    "category": "Hệ thống Giai đoạn I - Báo cháy",
+    "name": "Kiểm tra, bảo dưỡng tủ trung tâm báo cháy 30 kênh",
+    "unit": "Chiếc",
+    "default_price": 1500000,
+    "default_qty": 1
+  },
+  {
+    "id": 2,
+    "category": "Hệ thống Giai đoạn I - Báo cháy",
+    "name": "Kiểm tra, bảo dưỡng thiết bị cuối nguồn",
+    "unit": "Chiếc",
+    "default_price": 50000,
+    "default_qty": 17
+  },
+  {
+    "id": 3,
+    "category": "Hệ thống Giai đoạn I - Báo cháy",
+    "name": "Kiểm tra, bảo dưỡng đầu báo khói",
+    "unit": "Chiếc",
+    "default_price": 50000,
+    "default_qty": 178
+  },
+  {
+    "id": 4,
+    "category": "Hệ thống Giai đoạn I - Báo cháy",
+    "name": "Kiểm tra, bảo dưỡng đầu báo nhiệt",
+    "unit": "Chiếc",
+    "default_price": 40000,
+    "default_qty": 8
+  },
+  {
+    "id": 5,
+    "category": "Hệ thống Giai đoạn I - Báo cháy",
+    "name": "Kiểm tra, bảo dưỡng đầu báo BEAM",
+    "unit": "Bộ",
+    "default_price": 200000,
+    "default_qty": 2
+  },
+  {
+    "id": 6,
+    "category": "Hệ thống Giai đoạn I - Báo cháy",
+    "name": "Kiểm tra, bảo dưỡng đèn, chuông, nút ấn báo cháy",
+    "unit": "Chiếc",
+    "default_price": 100000,
+    "default_qty": 32
+  },
+  {
+    "id": 7,
+    "category": "Hệ thống Giai đoạn I - Báo cháy",
+    "name": "Kiểm tra, bảo dưỡng đèn thoát nạn",
+    "unit": "Chiếc",
+    "default_price": 50000,
+    "default_qty": 25
+  },
+  {
+    "id": 8,
+    "category": "Hệ thống Giai đoạn I - Báo cháy",
+    "name": "Kiểm tra, bảo dưỡng đèn sự cố",
+    "unit": "Chiếc",
+    "default_price": 50000,
+    "default_qty": 19
+  },
+  {
+    "id": 9,
+    "category": "Hệ thống Giai đoạn I - Báo cháy",
+    "name": "Nhân công hiệu chỉnh, check thử hệ thống",
+    "unit": "HT",
+    "default_price": 1500000,
+    "default_qty": 1
+  },
+  {
+    "id": 10,
+    "category": "Hệ thống Giai đoạn I - Chữa cháy",
+    "name": "Kiểm tra, bảo dưỡng cụm vòi, van, lăng phun",
+    "unit": "Chiếc",
+    "default_price": 120000,
+    "default_qty": 34
+  },
+  {
+    "id": 11,
+    "category": "Hệ thống Giai đoạn I - Chữa cháy",
+    "name": "Nhân công hiệu chỉnh, check thử hệ thống",
+    "unit": "HT",
+    "default_price": 2000000,
+    "default_qty": 1
+  },
+  {
+    "id": 12,
+    "category": "Hệ thống Giai đoạn I - Bình xách tay",
+    "name": "Bảo dưỡng, nạp bình MFZL4",
+    "unit": "Bình",
+    "default_price": 130000,
+    "default_qty": 166
+  },
+  {
+    "id": 13,
+    "category": "Hệ thống Giai đoạn I - Bình xách tay",
+    "name": "Bảo dưỡng, nạp bình MT3",
+    "unit": "Bình",
+    "default_price": 180000,
+    "default_qty": 83
+  },
+  {
+    "id": 14,
+    "category": "Hệ thống Giai đoạn I - Bình xách tay",
+    "name": "Bảo dưỡng, nạp bình MFZ35",
+    "unit": "Bình",
+    "default_price": 270000,
+    "default_qty": 10
+  },
+  {
+    "id": 15,
+    "category": "Hệ thống Giai đoạn I - Bình xách tay",
+    "name": "Vận chuyển phương tiện",
+    "unit": "Chuyến",
+    "default_price": 1000000,
+    "default_qty": 3
+  },
+  {
+    "id": 16,
+    "category": "Xưởng số 7 - Báo cháy tự động",
+    "name": "Kiểm tra, bảo dưỡng tủ trung tâm báo cháy",
+    "unit": "Chiếc",
+    "default_price": 1500000,
+    "default_qty": 1
+  },
+  {
+    "id": 17,
+    "category": "Xưởng số 7 - Báo cháy tự động",
+    "name": "Kiểm tra, bảo dưỡng thiết bị cuối nguồn",
+    "unit": "Chiếc",
+    "default_price": 50000,
+    "default_qty": 13
+  },
+  {
+    "id": 18,
+    "category": "Xưởng số 7 - Báo cháy tự động",
+    "name": "Kiểm tra, bảo dưỡng đầu báo khói",
+    "unit": "Chiếc",
+    "default_price": 40000,
+    "default_qty": 195
+  },
+  {
+    "id": 19,
+    "category": "Xưởng số 7 - Báo cháy tự động",
+    "name": "Kiểm tra, bảo dưỡng đèn, chuông, nút ấn báo cháy",
+    "unit": "Chiếc",
+    "default_price": 100000,
+    "default_qty": 11
+  },
+  {
+    "id": 20,
+    "category": "Xưởng số 7 - Báo cháy tự động",
+    "name": "Kiểm tra, bảo dưỡng đèn thoát nạn",
+    "unit": "Chiếc",
+    "default_price": 50000,
+    "default_qty": 15
+  },
+  {
+    "id": 21,
+    "category": "Xưởng số 7 - Báo cháy tự động",
+    "name": "Kiểm tra, bảo dưỡng đèn sự cố",
+    "unit": "Chiếc",
+    "default_price": 50000,
+    "default_qty": 18
+  },
+  {
+    "id": 22,
+    "category": "Xưởng số 7 - Báo cháy tự động",
+    "name": "Nhân công hiệu chỉnh, check thử hệ thống",
+    "unit": "HT",
+    "default_price": 1000000,
+    "default_qty": 1
+  },
+  {
+    "id": 23,
+    "category": "Xưởng số 7 - Chữa cháy",
+    "name": "Kiểm tra, bảo dưỡng đầu phun Sprinkler",
+    "unit": "Chiếc",
+    "default_price": 25000,
+    "default_qty": 828
+  },
+  {
+    "id": 24,
+    "category": "Xưởng số 7 - Chữa cháy",
+    "name": "Kiểm tra, bảo dưỡng cụm vòi, van, lăng phun",
+    "unit": "Chiếc",
+    "default_price": 120000,
+    "default_qty": 9
+  },
+  {
+    "id": 25,
+    "category": "Xưởng số 7 - Chữa cháy",
+    "name": "Nhân công hiệu chỉnh, check thử hệ thống",
+    "unit": "HT",
+    "default_price": 2000000,
+    "default_qty": 1
+  },
+  {
+    "id": 26,
+    "category": "Xưởng số 7 - Bình xách tay",
+    "name": "Bảo dưỡng, nạp bình MFZL4",
+    "unit": "Bình",
+    "default_price": 130000,
+    "default_qty": 111
+  },
+  {
+    "id": 27,
+    "category": "Xưởng số 7 - Bình xách tay",
+    "name": "Vận chuyển phương tiện",
+    "unit": "Chuyến",
+    "default_price": 1000000,
+    "default_qty": 2
+  },
+  {
+    "id": 28,
+    "category": "Xưởng số 7 - Trạm bơm PCCC",
+    "name": "Kiểm tra, bảo dưỡng máy bơm chữa cháy động cơ điện",
+    "unit": "Chiếc",
+    "default_price": 750000,
+    "default_qty": 6
+  },
+  {
+    "id": 29,
+    "category": "Xưởng số 7 - Trạm bơm PCCC",
+    "name": "Kiểm tra, bảo dưỡng máy bơm bù áp H≥123.8 mm; P=4kw",
+    "unit": "Chiếc",
+    "default_price": 750000,
+    "default_qty": 1
+  },
+  {
+    "id": 30,
+    "category": "Xưởng số 7 - Trạm bơm PCCC",
+    "name": "Kiểm tra, bảo dưỡng tủ điện điều khiển máy bơm điện, máy bơm xăng, máy bơm bù (bằng tay, tự động)",
+    "unit": "Chiếc",
+    "default_price": 1000000,
+    "default_qty": 1
+  },
+  {
+    "id": 31,
+    "category": "Xưởng số 7 - Trạm bơm PCCC",
+    "name": "Kiểm tra, bảo dưỡng hệ thống dây tín hiệu",
+    "unit": "HT",
+    "default_price": 500000,
+    "default_qty": 1
+  },
+  {
+    "id": 32,
+    "category": "Xưởng số 7 - Trạm bơm PCCC",
+    "name": "Kiểm tra, bảo dưỡng hệ thống đường ống phòng bơm",
+    "unit": "HT",
+    "default_price": 500000,
+    "default_qty": 1
+  },
+  {
+    "id": 33,
+    "category": "Xưởng số 7 - Trạm bơm PCCC",
+    "name": "Nhân công thử áp lực đường ống",
+    "unit": "HT",
+    "default_price": 1000000,
+    "default_qty": 1
+  },
+  {
+    "id": 34,
+    "category": "Xưởng sản xuất - Báo cháy tự động",
+    "name": "Kiểm tra, bảo dưỡng tủ trung tâm báo cháy 20 kênh",
+    "unit": "Chiếc",
+    "default_price": 1500000,
+    "default_qty": 1
+  },
+  {
+    "id": 35,
+    "category": "Xưởng sản xuất - Báo cháy tự động",
+    "name": "Kiểm tra, bảo dưỡng thiết bị cuối nguồn",
+    "unit": "Chiếc",
+    "default_price": 50000,
+    "default_qty": 19
+  },
+  {
+    "id": 36,
+    "category": "Xưởng sản xuất - Báo cháy tự động",
+    "name": "Kiểm tra, bảo dưỡng đầu báo khói",
+    "unit": "Chiếc",
+    "default_price": 50000,
+    "default_qty": 64
+  },
+  {
+    "id": 37,
+    "category": "Xưởng sản xuất - Báo cháy tự động",
+    "name": "Kiểm tra, bảo dưỡng đầu báo nhiệt",
+    "unit": "Chiếc",
+    "default_price": 50000,
+    "default_qty": 550
+  },
+  {
+    "id": 38,
+    "category": "Xưởng sản xuất - Báo cháy tự động",
+    "name": "Kiểm tra, bảo dưỡng đèn, chuông, nút ấn báo cháy",
+    "unit": "Chiếc",
+    "default_price": 100000,
+    "default_qty": 18
+  },
+  {
+    "id": 39,
+    "category": "Xưởng sản xuất - Báo cháy tự động",
+    "name": "Kiểm tra, bảo dưỡng đèn thoát nạn",
+    "unit": "Chiếc",
+    "default_price": 50000,
+    "default_qty": 15
+  },
+  {
+    "id": 40,
+    "category": "Xưởng sản xuất - Báo cháy tự động",
+    "name": "Kiểm tra, bảo dưỡng đèn sự cố",
+    "unit": "Chiếc",
+    "default_price": 50000,
+    "default_qty": 31
+  },
+  {
+    "id": 41,
+    "category": "Xưởng sản xuất - Báo cháy tự động",
+    "name": "Nhân công hiệu chỉnh, check thử hệ thống",
+    "unit": "HT",
+    "default_price": 3500000,
+    "default_qty": 1
+  },
+  {
+    "id": 42,
+    "category": "Xưởng sản xuất - Chữa cháy",
+    "name": "Kiểm tra, bảo dưỡng cụm vòi, van, lăng phun d65",
+    "unit": "Chiếc",
+    "default_price": 120000,
+    "default_qty": 25
+  },
+  {
+    "id": 43,
+    "category": "Xưởng sản xuất - Chữa cháy",
+    "name": "Nhân công hiệu chỉnh, check thử hệ thống",
+    "unit": "HT",
+    "default_price": 2000000,
+    "default_qty": 1
+  },
+  {
+    "id": 44,
+    "category": "Xưởng sản xuất - Bình xách tay & Phụ trợ",
+    "name": "Bảo dưỡng, nạp bình MFZL4",
+    "unit": "Bình",
+    "default_price": 130000,
+    "default_qty": 59
+  },
+  {
+    "id": 45,
+    "category": "Xưởng sản xuất - Bình xách tay & Phụ trợ",
+    "name": "Bảo dưỡng, nạp bình MT3",
+    "unit": "Bình",
+    "default_price": 180000,
+    "default_qty": 7
+  },
+  {
+    "id": 46,
+    "category": "Xưởng sản xuất - Bình xách tay & Phụ trợ",
+    "name": "Vận chuyển phương tiện",
+    "unit": "Chuyến",
+    "default_price": 500000,
+    "default_qty": 2
+  },
+  {
+    "id": 47,
+    "category": "Xưởng sản xuất - Bình xách tay & Phụ trợ",
+    "name": "Chi phí giàn giáo xe nâng",
+    "unit": "Gói",
+    "default_price": 5000000,
+    "default_qty": 1
+  }
+]
