@@ -719,7 +719,7 @@
         if (isFirstPage) {
           // HEADER TRANG 1: LOGO TO NỔI BẬT BÊN TRÁI & THÔNG TIN PHÁP NHÂN 4 DÒNG CẤU TRÚC RÕ RÀNG BÊN PHẢI
           pageHtml += `
-            <div class="pb-3 mb-3.5 border-b border-slate-200">
+            <div class="pb-3 border-b border-slate-200">
               <div class="flex items-center justify-between gap-4">
                 <!-- Logo SANWAY kích thước lớn, sắc nét -->
                 <div class="w-5/12 flex items-center">
@@ -735,8 +735,8 @@
               </div>
             </div>
 
-            <!-- KHỐI TIÊU ĐỀ LỚN (HERO): 3 HÀNG GẮN KẾT CHẶT CHẼ THÀNH 1 KHỐI THỐNG NHẤT -->
-            <div class="text-center my-3 space-y-0.5">
+            <!-- KHỐI TIÊU ĐỀ LỚN (HERO): GAP TRÊN & DƯỚI BẰNG NHAU TUYỆT ĐỐI (py-4), 3 HÀNG SÁT NHAU -->
+            <div class="text-center py-4 space-y-0.5">
               <h1 class="text-[17.5pt] font-black tracking-tight text-[#D62828] uppercase leading-snug">BÁO GIÁ ${escapeHtml(projTitle.replace(/^HẠNG MỤC\s*:\s*/i, ''))}</h1>
               <p class="text-[8.5pt] font-semibold tracking-[0.12em] text-[#64748B] uppercase leading-snug">${escapeHtml(projTitleEn)}</p>
               <p class="text-[9pt] font-bold text-[#0F172A] leading-snug pt-0.5">
