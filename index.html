@@ -185,30 +185,94 @@
 </head>
 <body class="text-brand-dark antialiased min-h-screen">
 
+  <!-- ==================== MÀN HÌNH ĐĂNG NHẬP BẰNG MẬT KHẨU (KHÔNG CẦN USERNAME) ==================== -->
+  <div id="loginModal" class="no-print fixed inset-0 z-[100] bg-[#0F172A]/85 backdrop-blur-md flex items-center justify-center p-4">
+    <div class="bg-white w-full max-w-md rounded-3xl shadow-2xl border border-slate-200 overflow-hidden animate-fade-in">
+      <!-- Header Login -->
+      <div class="bg-[#2F3742] px-6 py-7 text-center relative overflow-hidden">
+        <div class="absolute -right-8 -top-8 w-32 h-32 rounded-full bg-[#D62828]/15 blur-xl"></div>
+        <img id="loginLogo" src="" alt="SANWAY" class="h-12 mx-auto object-contain bg-white/95 px-4 py-1.5 rounded-xl shadow-sm mb-3">
+        <h2 class="text-white font-extrabold text-base tracking-wider uppercase">Hệ Thống Báo Giá Nội Bộ</h2>
+        <p class="text-slate-300 text-xs mt-1">Chỉ cần nhập Mật khẩu phân quyền để truy cập</p>
+      </div>
+
+      <!-- Body Login -->
+      <form onsubmit="handleLogin(event)" class="p-6 sm:p-8 space-y-5">
+        <div>
+          <label class="block text-xs font-bold text-[#2F3742] uppercase tracking-wider mb-2">
+            <i class="fa-solid fa-key text-[#D62828] mr-1"></i> Mật khẩu truy cập (Admin / Lãnh đạo / Sale)
+          </label>
+          <div class="relative">
+            <input type="password" id="loginPasswordInput" required autofocus placeholder="Nhập mật khẩu được cấp..." class="w-full pl-4 pr-11 py-3.5 border-2 border-slate-200 rounded-xl text-sm font-bold text-[#0F172A] focus:border-[#D62828] focus:outline-none transition tracking-widest">
+            <button type="button" onclick="togglePasswordVisibility('loginPasswordInput', 'loginEyeIcon')" class="absolute right-3.5 top-1/2 -translate-y-1/2 text-slate-400 hover:text-[#2F3742] p-1">
+              <i id="loginEyeIcon" class="fa-regular fa-eye"></i>
+            </button>
+          </div>
+          <p id="loginErrorMsg" class="hidden text-xs font-semibold text-[#D62828] mt-2 flex items-center gap-1.5">
+            <i class="fa-solid fa-circle-exclamation"></i> <span>Mật khẩu không chính xác. Vui lòng kiểm tra lại!</span>
+          </p>
+        </div>
+
+        <button type="submit" class="w-full py-3.5 rounded-xl bg-[#D62828] hover:bg-[#B91C1C] text-white font-extrabold text-sm uppercase tracking-wider shadow-lg shadow-red-600/20 transition flex items-center justify-center gap-2">
+          <span>Đăng Nhập Hệ Thống</span>
+          <i class="fa-solid fa-arrow-right-to-bracket"></i>
+        </button>
+
+        <!-- Gợi ý nhanh mật khẩu mặc định cho lần đầu khởi chạy -->
+        <div class="pt-3 border-t border-slate-100 text-[11px] text-slate-500 space-y-1 bg-slate-50 p-3 rounded-xl">
+          <div class="font-bold text-[#2F3742] flex items-center justify-between">
+            <span><i class="fa-solid fa-shield-halved text-[#D62828] mr-1"></i> Phân quyền tự động theo Mật khẩu:</span>
+            <span id="cloudStatusBadgeLogin" class="text-[10px] px-2 py-0.5 rounded-full bg-slate-200 text-slate-700 font-semibold">Local Mode</span>
+          </div>
+          <p>• <b>Lãnh đạo / Admin:</b> Toàn quyền cấu hình công ty, bảng giá gốc, con dấu & cấp mật khẩu nhân viên.</p>
+          <p>• <b>Nhân viên Sale:</b> Chỉ lập báo giá cho khách hàng (khóa đơn giá gốc & cấu hình công ty).</p>
+          <div id="defaultPassHint" class="pt-1 text-[10.5px] text-slate-400 italic">
+            Mặc định lần đầu: Admin (<code class="text-[#D62828] font-bold">admin2026</code>) | Lãnh đạo (<code class="text-[#D62828] font-bold">lanhdao2026</code>) | Sale (<code class="text-[#0F172A] font-bold">sale01</code>)
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+
   <!-- TOPBAR CÔNG CỤ (ẨN KHI IN) -->
   <header class="no-print bg-[#2F3742] text-white sticky top-0 z-50 shadow-md">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between gap-2">
       
       <!-- Brand Logo in Topbar -->
-      <div class="flex items-center space-x-3.5">
+      <div class="flex items-center space-x-3">
         <img id="navLogo" src="" alt="SANWAY Logo" class="h-8 w-auto bg-white/10 px-2.5 py-1 rounded-lg backdrop-blur-sm object-contain">
-        <div class="border-l border-slate-600 pl-3.5 hidden sm:block">
+        <div class="border-l border-slate-600 pl-3 hidden md:block">
           <h1 class="text-xs sm:text-sm font-bold tracking-wider uppercase text-white">HỆ THỐNG BÁO GIÁ KỸ THUẬT</h1>
           <p class="text-[11px] text-slate-300 italic font-light tracking-wide">Cho mỗi bước tiến thêm vững vàng</p>
         </div>
       </div>
 
-      <!-- Actions Tabs -->
-      <div class="flex items-center space-x-2 sm:space-x-3">
-        <button id="tabBtnForm" onclick="switchTab('form')" class="px-3.5 py-2 rounded-xl text-xs sm:text-sm font-semibold transition bg-[#D62828] text-white shadow-sm flex items-center gap-1.5 hover:bg-[#B91C1C]">
-          <i class="fa-solid fa-sliders"></i> <span class="hidden sm:inline">Soạn Thảo</span>
+      <!-- Actions Tabs & User Role Badge -->
+      <div class="flex items-center space-x-1.5 sm:space-x-2.5">
+        <button id="tabBtnForm" onclick="switchTab('form')" class="px-3 py-2 rounded-xl text-xs sm:text-sm font-bold transition bg-[#D62828] text-white shadow-sm flex items-center gap-1.5 hover:bg-[#B91C1C]">
+          <i class="fa-solid fa-sliders"></i> <span class="hidden sm:inline">Lập Báo Giá</span>
         </button>
-        <button id="tabBtnPreview" onclick="switchTab('preview')" class="px-3.5 py-2 rounded-xl text-xs sm:text-sm font-medium transition bg-slate-700/80 text-slate-200 hover:bg-slate-600 flex items-center gap-1.5">
-          <i class="fa-solid fa-file-invoice"></i> <span>Xem Báo Giá (A4)</span>
+        <button id="tabBtnPreview" onclick="switchTab('preview')" class="px-3 py-2 rounded-xl text-xs sm:text-sm font-medium transition bg-slate-700/80 text-slate-200 hover:bg-slate-600 flex items-center gap-1.5">
+          <i class="fa-solid fa-file-invoice"></i> <span class="hidden sm:inline">Xem Báo Giá (A4)</span>
         </button>
-        <button onclick="handlePrint()" class="px-4 py-2 rounded-xl text-xs sm:text-sm font-bold transition bg-[#D62828] hover:bg-[#B91C1C] text-white shadow-md flex items-center gap-2">
-          <i class="fa-solid fa-file-pdf"></i> <span>Xuất PDF / In</span>
+        <!-- Tab Quản Trị Hệ Thống (Chỉ hiển thị cho Admin / Lãnh đạo) -->
+        <button id="tabBtnAdmin" onclick="switchTab('admin')" class="hidden px-3 py-2 rounded-xl text-xs sm:text-sm font-medium transition bg-slate-700/80 text-amber-300 hover:bg-slate-600 items-center gap-1.5 border border-amber-400/30">
+          <i class="fa-solid fa-user-shield"></i> <span class="hidden lg:inline">Quản Trị & Phân Quyền</span>
         </button>
+        <button onclick="handlePrint()" class="px-3.5 py-2 rounded-xl text-xs sm:text-sm font-bold transition bg-emerald-600 hover:bg-emerald-700 text-white shadow-md flex items-center gap-1.5">
+          <i class="fa-solid fa-file-pdf"></i> <span class="hidden sm:inline">Xuất PDF</span>
+        </button>
+
+        <!-- Thông tin người đang đăng nhập & Đăng xuất -->
+        <div class="flex items-center gap-2 pl-2 ml-1 border-l border-slate-600">
+          <div class="text-right hidden sm:block leading-tight">
+            <div id="currentUserName" class="text-xs font-bold text-white">Chưa đăng nhập</div>
+            <div id="currentUserRoleBadge" class="text-[10px] font-semibold text-amber-300 uppercase tracking-wider">—</div>
+          </div>
+          <button onclick="handleLogout()" title="Đổi tài khoản / Đăng xuất" class="p-2 rounded-xl bg-slate-700 hover:bg-[#D62828] text-slate-200 hover:text-white transition text-xs flex items-center gap-1">
+            <i class="fa-solid fa-power-off"></i>
+          </button>
+        </div>
       </div>
     </div>
   </header>
@@ -219,48 +283,84 @@
     <!-- ==================== TAB 1: FORM SOẠN THẢO BÁO GIÁ ==================== -->
     <div id="sectionForm" class="no-print space-y-6">
       
-      <!-- Card 1: Thông tin Đơn Vị Phát Hành -->
-      <div class="bg-white rounded-2xl shadow-sm border border-slate-200/80 p-5 sm:p-7">
-        <div class="flex items-center justify-between pb-3.5 border-b border-slate-100 mb-5">
+      <!-- Banner thông báo chế độ phân quyền cho Sale (Chỉ hiện khi đăng nhập là Sale) -->
+      <div id="saleRoleBanner" class="hidden bg-gradient-to-r from-slate-800 to-[#2F3742] text-white rounded-2xl p-4 sm:px-6 shadow-sm flex flex-col sm:flex-row sm:items-center justify-between gap-3 border border-slate-700">
+        <div class="flex items-center gap-3">
+          <span class="w-10 h-10 rounded-xl bg-white/10 text-amber-300 flex items-center justify-center text-base shrink-0">
+            <i class="fa-solid fa-user-tie"></i>
+          </span>
+          <div>
+            <h3 class="text-sm font-bold text-white flex items-center gap-2">
+              <span>Chế độ Nhân Viên Kinh Doanh (Sale)</span>
+              <span class="text-[10px] px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-400/30 font-semibold">Đã khóa đơn giá niêm yết</span>
+            </h3>
+            <p class="text-xs text-slate-300 mt-0.5">Bạn được phép nhập <b>Thông tin Khách hàng, Dự án, Tùy chọn con dấu</b> và tích chọn <b>Sản phẩm + Khối lượng</b>. Thông tin công ty và Đơn giá gốc do Lãnh đạo/Admin thiết lập.</p>
+          </div>
+        </div>
+        <div class="text-right shrink-0">
+          <span class="text-[11px] bg-white/10 px-3 py-1.5 rounded-lg text-slate-200 font-medium inline-block">
+            <i class="fa-solid fa-building-shield text-[#D62828] mr-1"></i> Đơn vị: <b id="saleBannerCompanyName" class="text-white">CÔNG TY CỔ PHẦN SANWAY</b>
+          </span>
+        </div>
+      </div>
+
+      <!-- Card 1: Thông tin Đơn Vị Phát Hành (CHỈ ADMIN / LÃNH ĐẠO MỚI ĐƯỢC CHỈNH SỬA) -->
+      <div id="companyConfigCard" class="bg-white rounded-2xl shadow-sm border border-slate-200/80 p-5 sm:p-7">
+        <div class="flex flex-wrap items-center justify-between pb-3.5 border-b border-slate-100 mb-5 gap-2">
           <div class="flex items-center gap-3">
             <span class="w-9 h-9 rounded-xl bg-red-50 text-[#D62828] flex items-center justify-center text-sm">
               <i class="fa-solid fa-building-flag"></i>
             </span>
             <div>
-              <h2 class="text-base sm:text-lg font-bold text-[#2F3742]">Đơn Vị Báo Giá (Phát Hành)</h2>
-              <p class="text-xs text-[#6B737D]">Tùy biến tên pháp nhân, hotline, địa chỉ và thông tin người ký trên Header/Footer</p>
+              <h2 class="text-base sm:text-lg font-bold text-[#2F3742]">Cấu Hình Đơn Vị Phát Hành & Pháp Nhân</h2>
+              <p class="text-xs text-[#6B737D]">Thiết lập thông tin công ty, người ký, chức danh và thuế suất mặc định (Quyền Admin / Lãnh đạo)</p>
             </div>
           </div>
-          <span class="text-xs bg-red-50 text-[#D62828] font-semibold px-3 py-1 rounded-full border border-red-200">
-            <i class="fa-solid fa-palette mr-1"></i> Chuẩn Nghị Định 30/2020/NĐ-CP
-          </span>
+          <div class="flex items-center gap-2">
+            <button type="button" onclick="saveMasterSystemData(true)" class="text-xs bg-[#D62828] hover:bg-[#B91C1C] text-white font-bold px-3.5 py-2 rounded-xl shadow-sm transition flex items-center gap-1.5">
+              <i class="fa-solid fa-floppy-disk"></i> Lưu Cấu Hình Gốc
+            </button>
+          </div>
         </div>
 
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
           <div>
             <label class="block text-xs font-bold text-[#2F3742] mb-1.5 uppercase tracking-wider">Tên công ty phát hành</label>
-            <input type="text" id="inputCompanyFullName" value="CÔNG TY CỔ PHẦN SANWAY" class="w-full px-3.5 py-2.5 border rounded-xl text-sm border-slate-200 focus:ring-2 focus:ring-[#D62828] focus:outline-none transition font-semibold">
+            <input type="text" id="inputCompanyFullName" onchange="saveMasterSystemData(false)" value="CÔNG TY CỔ PHẦN SANWAY" class="w-full px-3.5 py-2.5 border rounded-xl text-sm border-slate-200 focus:ring-2 focus:ring-[#D62828] focus:outline-none transition font-semibold">
           </div>
           <div>
             <label class="block text-xs font-bold text-[#2F3742] mb-1.5 uppercase tracking-wider">Số điện thoại Hotline</label>
-            <input type="text" id="inputCompanyHotline" value="0936.888.666" class="w-full px-3.5 py-2.5 border rounded-xl text-sm border-slate-200 focus:ring-2 focus:ring-[#D62828] focus:outline-none transition">
+            <input type="text" id="inputCompanyHotline" onchange="saveMasterSystemData(false)" value="0936.888.666" class="w-full px-3.5 py-2.5 border rounded-xl text-sm border-slate-200 focus:ring-2 focus:ring-[#D62828] focus:outline-none transition">
           </div>
           <div>
             <label class="block text-xs font-bold text-[#2F3742] mb-1.5 uppercase tracking-wider">Email liên hệ</label>
-            <input type="text" id="inputCompanyEmail" value="contact@sanway.vn" class="w-full px-3.5 py-2.5 border rounded-xl text-sm border-slate-200 focus:ring-2 focus:ring-[#D62828] focus:outline-none transition">
+            <input type="text" id="inputCompanyEmail" onchange="saveMasterSystemData(false)" value="contact@sanway.vn" class="w-full px-3.5 py-2.5 border rounded-xl text-sm border-slate-200 focus:ring-2 focus:ring-[#D62828] focus:outline-none transition">
           </div>
           <div class="lg:col-span-2">
             <label class="block text-xs font-bold text-[#2F3742] mb-1.5 uppercase tracking-wider">Địa chỉ trụ sở / Văn phòng</label>
-            <input type="text" id="inputCompanyAddress" value="KCN Nomura, Huyện An Dương, TP. Hải Phòng" class="w-full px-3.5 py-2.5 border rounded-xl text-sm border-slate-200 focus:ring-2 focus:ring-[#D62828] focus:outline-none transition">
+            <input type="text" id="inputCompanyAddress" onchange="saveMasterSystemData(false)" value="KCN Nomura, Huyện An Dương, TP. Hải Phòng" class="w-full px-3.5 py-2.5 border rounded-xl text-sm border-slate-200 focus:ring-2 focus:ring-[#D62828] focus:outline-none transition">
           </div>
           <div>
-            <label class="block text-xs font-bold text-[#2F3742] mb-1.5 uppercase tracking-wider">Họ và tên Giám đốc</label>
-            <input type="text" id="inputDirectorName" value="Nguyễn Văn A" class="w-full px-3.5 py-2.5 border rounded-xl text-sm border-slate-200 focus:ring-2 focus:ring-[#D62828] focus:outline-none transition font-semibold text-[#D62828]">
+            <label class="block text-xs font-bold text-[#2F3742] mb-1.5 uppercase tracking-wider">Họ và tên Người ký (Giám đốc)</label>
+            <input type="text" id="inputDirectorName" onchange="saveMasterSystemData(false)" value="Nguyễn Văn A" class="w-full px-3.5 py-2.5 border rounded-xl text-sm border-slate-200 focus:ring-2 focus:ring-[#D62828] focus:outline-none transition font-semibold text-[#D62828]">
+          </div>
+          <div>
+            <label class="block text-xs font-bold text-[#2F3742] mb-1.5 uppercase tracking-wider">Chức danh người ký</label>
+            <input type="text" id="inputSignerTitle" onchange="saveMasterSystemData(false)" value="GIÁM ĐỐC" class="w-full px-3.5 py-2.5 border rounded-xl text-sm border-slate-200 focus:ring-2 focus:ring-[#D62828] focus:outline-none transition font-semibold">
+          </div>
+          <div>
+            <label class="block text-xs font-bold text-[#2F3742] mb-1.5 uppercase tracking-wider">Thuế suất VAT mặc định (%)</label>
+            <input type="number" id="inputVatRate" value="8" min="0" max="100" onchange="updateFormSummary(); saveMasterSystemData(false);" class="w-full px-3.5 py-2.5 border rounded-xl text-sm border-slate-200 focus:ring-2 focus:ring-[#D62828] focus:outline-none transition font-bold">
+          </div>
+          <div class="flex items-end">
+            <button type="button" onclick="switchTab('admin')" class="w-full px-3.5 py-2.5 rounded-xl border border-amber-300 bg-amber-50 hover:bg-amber-100 text-[#2F3742] text-xs font-bold transition flex items-center justify-center gap-2">
+              <i class="fa-solid fa-stamp text-[#D62828]"></i> <span>Tải lên Logo / Con dấu & Quản lý Nhân viên</span>
+            </button>
           </div>
         </div>
       </div>
 
-      <!-- Card 2: Thông tin khách hàng & Báo giá -->
+      <!-- Card 2: Thông tin khách hàng & Báo giá (SALE & ADMIN ĐỀU ĐƯỢC SỬA) -->
       <div class="bg-white rounded-2xl shadow-sm border border-slate-200/80 p-5 sm:p-7">
         <div class="flex items-center justify-between pb-3.5 border-b border-slate-100 mb-5">
           <div class="flex items-center gap-3">
@@ -268,16 +368,19 @@
               <i class="fa-solid fa-address-card"></i>
             </span>
             <div>
-              <h2 class="text-base sm:text-lg font-bold text-[#2F3742]">Khách Hàng & Thông Tin Dự Án</h2>
-              <p class="text-xs text-[#6B737D]">Thông tin hợp tác gửi đến khách hàng và các điều khoản thuế suất</p>
+              <h2 class="text-base sm:text-lg font-bold text-[#2F3742]">Thông Tin Khách Hàng & Hồ Sơ Báo Giá</h2>
+              <p class="text-xs text-[#6B737D]">Nhập tên khách hàng, tên dự án/hạng mục, số báo giá, ngày lập và tùy chọn đóng dấu</p>
             </div>
           </div>
+          <span class="text-xs bg-emerald-50 text-emerald-700 font-bold px-3 py-1 rounded-full border border-emerald-200">
+            <i class="fa-solid fa-pen-to-square mr-1"></i> Thông tin báo giá
+          </span>
         </div>
 
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
           <div>
-            <label class="block text-xs font-bold text-[#2F3742] mb-1.5 uppercase tracking-wider">Kính gửi Khách hàng</label>
-            <input type="text" id="inputCustomerName" value="CÔNG TY TNHH TÂN HUY HOÀNG" class="w-full px-3.5 py-2.5 border rounded-xl text-sm border-slate-200 focus:ring-2 focus:ring-[#D62828] focus:outline-none transition font-semibold">
+            <label class="block text-xs font-bold text-[#2F3742] mb-1.5 uppercase tracking-wider">Kính gửi Khách hàng <span class="text-[#D62828]">*</span></label>
+            <input type="text" id="inputCustomerName" value="CÔNG TY TNHH TÂN HUY HOÀNG" class="w-full px-3.5 py-2.5 border rounded-xl text-sm border-slate-200 focus:ring-2 focus:ring-[#D62828] focus:outline-none transition font-bold text-[#0F172A]">
           </div>
           <div>
             <label class="block text-xs font-bold text-[#2F3742] mb-1.5 uppercase tracking-wider">Hạng mục báo giá (Tiếng Việt)</label>
@@ -296,18 +399,10 @@
             <input type="text" id="inputQuoteDate" value="Hải Phòng, 21/10/2026" class="w-full px-3.5 py-2.5 border rounded-xl text-sm border-slate-200 focus:ring-2 focus:ring-[#D62828] focus:outline-none transition">
           </div>
           <div>
-            <label class="block text-xs font-bold text-[#2F3742] mb-1.5 uppercase tracking-wider">Chức danh người ký</label>
-            <input type="text" id="inputSignerTitle" value="GIÁM ĐỐC" class="w-full px-3.5 py-2.5 border rounded-xl text-sm border-slate-200 focus:ring-2 focus:ring-[#D62828] focus:outline-none transition font-semibold">
-          </div>
-          <div>
-            <label class="block text-xs font-bold text-[#2F3742] mb-1.5 uppercase tracking-wider">Thuế suất VAT (%)</label>
-            <input type="number" id="inputVatRate" value="8" min="0" max="100" onchange="updateFormSummary()" class="w-full px-3.5 py-2.5 border rounded-xl text-sm border-slate-200 focus:ring-2 focus:ring-[#D62828] focus:outline-none transition font-bold">
-          </div>
-          <div>
-            <label class="block text-xs font-bold text-[#2F3742] mb-1.5 uppercase tracking-wider">Tùy chọn dấu mộc đỏ</label>
-            <select id="inputShowStamp" class="w-full px-3.5 py-2.5 border rounded-xl text-sm border-slate-200 focus:ring-2 focus:ring-[#D62828] focus:outline-none bg-white transition font-medium">
+            <label class="block text-xs font-bold text-[#2F3742] mb-1.5 uppercase tracking-wider">Tùy chọn dấu mộc đỏ khi xuất PDF</label>
+            <select id="inputShowStamp" class="w-full px-3.5 py-2.5 border rounded-xl text-sm border-slate-200 focus:ring-2 focus:ring-[#D62828] focus:outline-none bg-white transition font-semibold text-[#2F3742]">
               <option value="yes" selected>Có hiển thị con dấu công ty</option>
-              <option value="no">Không hiển thị con dấu (Ký tươi trực tiếp)</option>
+              <option value="no">Không hiển thị con dấu (Để ký tươi trực tiếp)</option>
             </select>
           </div>
         </div>
@@ -325,7 +420,7 @@
                 <h2 class="text-base sm:text-lg font-bold text-[#2F3742]">
                   Danh Sách Sản Phẩm & Vật Tư Báo Giá
                 </h2>
-                <p class="text-xs text-[#6B737D]">Tích chọn mục cần báo giá. Bảng in A4 sẽ tự động phân trang liền mạch, sang trọng.</p>
+                <p id="catalogRoleSubtitle" class="text-xs text-[#6B737D]">Tích chọn mục cần báo giá và nhập khối lượng thực tế.</p>
               </div>
               <span id="selectedBadgeCount" class="bg-red-50 text-[#D62828] text-xs px-2.5 py-0.5 rounded-full font-bold border border-red-200 ml-2">47 mục</span>
             </div>
@@ -338,8 +433,12 @@
             <button onclick="selectAll(false)" class="text-xs px-3.5 py-2 rounded-xl bg-slate-100 hover:bg-slate-200 text-[#2F3742] font-semibold transition">
               <i class="fa-solid fa-square-minus mr-1 text-slate-500"></i> Bỏ chọn hết
             </button>
-            <button onclick="addNewCustomItem()" class="text-xs px-3.5 py-2 rounded-xl bg-[#2F3742] hover:bg-black text-white font-semibold transition flex items-center gap-1.5 shadow-sm">
-              <i class="fa-solid fa-plus text-[#D62828]"></i> Thêm vật tư mới
+            <!-- Chỉ Admin / Lãnh đạo mới thấy nút Thêm vật tư mới & Lưu bảng giá gốc -->
+            <button id="btnAdminAddItem" onclick="addNewCustomItem()" class="hidden text-xs px-3.5 py-2 rounded-xl bg-[#2F3742] hover:bg-black text-white font-semibold transition items-center gap-1.5 shadow-sm">
+              <i class="fa-solid fa-plus text-[#D62828]"></i> Thêm vật tư vào danh mục gốc
+            </button>
+            <button id="btnAdminSaveCatalog" onclick="saveMasterSystemData(true)" class="hidden text-xs px-3.5 py-2 rounded-xl bg-[#D62828] hover:bg-[#B91C1C] text-white font-bold transition items-center gap-1.5 shadow-sm">
+              <i class="fa-solid fa-floppy-disk"></i> Lưu Bảng Giá Niêm Yết
             </button>
           </div>
         </div>
@@ -349,7 +448,7 @@
           <div class="flex items-center gap-2 flex-1">
             <span class="text-xs font-bold text-[#6B737D] whitespace-nowrap"><i class="fa-solid fa-filter"></i> Lọc phân loại:</span>
             <select id="categoryFilter" onchange="filterTable()" class="text-xs px-3.5 py-2.5 border rounded-xl border-slate-200 bg-white focus:outline-none w-full sm:w-auto font-medium">
-              <option value="ALL">-- Tất cả phân loại hệ thống (47 mục) --</option>
+              <option value="ALL">-- Tất cả phân loại hệ thống --</option>
             </select>
           </div>
           <div class="w-full sm:w-80">
@@ -365,12 +464,12 @@
                 <th class="p-3.5 text-center w-12">Chọn</th>
                 <th class="p-3.5 w-12 text-center">STT</th>
                 <th class="p-3.5">Tên hạng mục, vật tư thiết bị</th>
-                <th class="p-3.5 w-40">Phân nhóm</th>
+                <th class="p-3.5 w-44">Phân nhóm</th>
                 <th class="p-3.5 w-20 text-center">ĐVT</th>
                 <th class="p-3.5 w-24 text-center">Khối lượng</th>
                 <th class="p-3.5 w-32 text-right">Đơn giá (đ)</th>
                 <th class="p-3.5 w-36 text-right">Thành tiền (đ)</th>
-                <th class="p-3.5 w-12 text-center">Xóa</th>
+                <th id="thAdminDeleteCol" class="p-3.5 w-12 text-center">Xóa</th>
               </tr>
             </thead>
             <tbody id="quoteItemsTableBody" class="divide-y divide-slate-100 bg-white">
@@ -413,6 +512,184 @@
 
     </div>
 
+    <!-- ==================== TAB 3: QUẢN TRỊ HỆ THỐNG, CON DẤU & MẬT KHẨU NHÂN VIÊN (CHỈ ADMIN / LÃNH ĐẠO) ==================== -->
+    <div id="sectionAdmin" class="hidden no-print space-y-6">
+      
+      <!-- Header Quản trị -->
+      <div class="bg-[#2F3742] text-white rounded-2xl p-6 shadow-md flex flex-col md:flex-row md:items-center justify-between gap-4">
+        <div class="flex items-center gap-4">
+          <div class="w-12 h-12 rounded-2xl bg-[#D62828] flex items-center justify-center text-xl shadow-inner">
+            <i class="fa-solid fa-user-shield"></i>
+          </div>
+          <div>
+            <h2 class="text-lg sm:text-xl font-extrabold uppercase tracking-wide">Trung Tâm Quản Trị & Phân Quyền Hệ Thống</h2>
+            <p class="text-xs sm:text-sm text-slate-300 mt-0.5">Dành riêng cho Lãnh đạo & Admin: Quản lý mật khẩu nhân viên, con dấu pháp nhân, logo và đồng bộ dữ liệu Cloud</p>
+          </div>
+        </div>
+        <div class="flex items-center gap-2.5">
+          <button onclick="exportSystemConfigFile()" class="px-3.5 py-2 rounded-xl bg-white/10 hover:bg-white/20 text-white text-xs font-semibold transition flex items-center gap-1.5 border border-white/15">
+            <i class="fa-solid fa-download text-amber-300"></i> Xuất File Cấu Hình (.json)
+          </button>
+          <label class="px-3.5 py-2 rounded-xl bg-white/10 hover:bg-white/20 text-white text-xs font-semibold transition flex items-center gap-1.5 border border-white/15 cursor-pointer">
+            <i class="fa-solid fa-upload text-emerald-300"></i> Nhập Cấu Hình
+            <input type="file" accept=".json" onchange="importSystemConfigFile(event)" class="hidden">
+          </label>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+        
+        <!-- Cột trái (7 cols): Quản lý Mật khẩu Nhân viên & Lãnh đạo -->
+        <div class="lg:col-span-7 bg-white rounded-2xl shadow-sm border border-slate-200/80 p-5 sm:p-7 flex flex-col justify-between">
+          <div>
+            <div class="flex items-center justify-between pb-3.5 border-b border-slate-100 mb-5">
+              <div class="flex items-center gap-3">
+                <span class="w-9 h-9 rounded-xl bg-amber-50 text-amber-600 flex items-center justify-center text-sm">
+                  <i class="fa-solid fa-key"></i>
+                </span>
+                <div>
+                  <h3 class="text-base font-bold text-[#2F3742]">Quản Lý Mật Khẩu Đăng Nhập (Không Cần Username)</h3>
+                  <p class="text-xs text-[#6B737D]">Mỗi nhân viên hoặc lãnh đạo có 1 mật khẩu riêng. Nhập đúng mật khẩu nào sẽ vào đúng quyền của người đó.</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Form thêm người dùng / mật khẩu mới -->
+            <form onsubmit="handleAddStaffPass(event)" class="bg-slate-50 p-4 rounded-xl border border-slate-200/80 mb-5">
+              <div class="text-xs font-bold text-[#2F3742] uppercase tracking-wider mb-3">
+                <i class="fa-solid fa-user-plus text-[#D62828] mr-1"></i> Cấp mật khẩu mới cho Nhân viên / Lãnh đạo
+              </div>
+              <div class="grid grid-cols-1 sm:grid-cols-12 gap-3">
+                <div class="sm:col-span-5">
+                  <label class="block text-[11px] font-semibold text-slate-600 mb-1">Họ tên / Biệt danh hiển thị</label>
+                  <input type="text" id="newStaffName" required placeholder="VD: Nguyễn Văn B (Sale)" class="w-full px-3 py-2 border border-slate-300 rounded-lg text-xs font-semibold focus:border-[#D62828] focus:outline-none">
+                </div>
+                <div class="sm:col-span-3">
+                  <label class="block text-[11px] font-semibold text-slate-600 mb-1">Vai trò phân quyền</label>
+                  <select id="newStaffRole" class="w-full px-2.5 py-2 border border-slate-300 rounded-lg text-xs font-bold bg-white focus:border-[#D62828] focus:outline-none">
+                    <option value="sale">Nhân viên Sale</option>
+                    <option value="leader">Lãnh đạo (Toàn quyền)</option>
+                    <option value="admin">Admin (Toàn quyền)</option>
+                  </select>
+                </div>
+                <div class="sm:col-span-4">
+                  <label class="block text-[11px] font-semibold text-slate-600 mb-1">Mật khẩu đăng nhập riêng</label>
+                  <input type="text" id="newStaffPass" required placeholder="VD: sale_vanb2026" class="w-full px-3 py-2 border border-slate-300 rounded-lg text-xs font-mono font-bold text-[#D62828] focus:border-[#D62828] focus:outline-none">
+                </div>
+              </div>
+              <div class="mt-3 flex justify-end">
+                <button type="submit" class="px-4 py-2 rounded-lg bg-[#D62828] hover:bg-[#B91C1C] text-white text-xs font-bold shadow-sm transition flex items-center gap-1.5">
+                  <i class="fa-solid fa-plus"></i> Thêm Mật Khẩu Truy Cập
+                </button>
+              </div>
+            </form>
+
+            <!-- Danh sách mật khẩu hiện hành -->
+            <div class="overflow-x-auto border rounded-xl border-slate-200">
+              <table class="w-full text-left border-collapse text-xs">
+                <thead class="bg-slate-100 text-[#2F3742] uppercase font-bold">
+                  <tr>
+                    <th class="p-3">Nhân sự</th>
+                    <th class="p-3">Quyền hạn</th>
+                    <th class="p-3">Mật khẩu đăng nhập</th>
+                    <th class="p-3 text-right">Thao tác</th>
+                  </tr>
+                </thead>
+                <tbody id="staffPasswordsTableBody" class="divide-y divide-slate-100">
+                  <!-- Rendered by JS -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <div class="mt-4 text-[11px] text-slate-500 bg-amber-50/70 border border-amber-200/80 rounded-xl p-3 flex items-start gap-2">
+            <i class="fa-solid fa-lightbulb text-amber-500 mt-0.5"></i>
+            <span><b>Lưu ý bảo mật:</b> Không được đặt trùng mật khẩu giữa các thành viên. Khi nhân viên nghỉ việc, Lãnh đạo/Admin chỉ cần xóa hoặc đổi mật khẩu của nhân viên đó tại bảng trên.</span>
+          </div>
+        </div>
+
+        <!-- Cột phải (5 cols): Quản lý Con dấu mộc đỏ, Logo & Đồng bộ Cloud -->
+        <div class="lg:col-span-5 space-y-6">
+          
+          <!-- Quản lý Con dấu & Logo -->
+          <div class="bg-white rounded-2xl shadow-sm border border-slate-200/80 p-5 sm:p-7">
+            <div class="flex items-center gap-3 pb-3.5 border-b border-slate-100 mb-4">
+              <span class="w-9 h-9 rounded-xl bg-red-50 text-[#D62828] flex items-center justify-center text-sm">
+                <i class="fa-solid fa-stamp"></i>
+              </span>
+              <div>
+                <h3 class="text-base font-bold text-[#2F3742]">Con Dấu Pháp Nhân & Logo Công Ty</h3>
+                <p class="text-xs text-[#6B737D]">Tải ảnh PNG/JPG mới để thay đổi con dấu hoặc logo trên báo giá</p>
+              </div>
+            </div>
+
+            <div class="grid grid-cols-2 gap-4">
+              <!-- Con dấu -->
+              <div class="border border-slate-200 rounded-xl p-3 text-center bg-slate-50/50 flex flex-col justify-between">
+                <div class="text-[11px] font-bold text-[#2F3742] uppercase mb-2">Con dấu mộc đỏ</div>
+                <div class="h-20 flex items-center justify-center bg-white rounded-lg border border-dashed border-slate-300 p-2 mb-2">
+                  <img id="adminPreviewStamp" src="" alt="Con dấu" class="max-h-16 object-contain">
+                </div>
+                <label class="w-full py-1.5 px-2 rounded-lg bg-[#2F3742] hover:bg-black text-white text-[11px] font-semibold cursor-pointer transition inline-block">
+                  <i class="fa-solid fa-upload mr-1"></i> Đổi ảnh con dấu
+                  <input type="file" accept="image/*" onchange="handleAssetUpload(event, 'stamp')" class="hidden">
+                </label>
+              </div>
+
+              <!-- Logo ngang -->
+              <div class="border border-slate-200 rounded-xl p-3 text-center bg-slate-50/50 flex flex-col justify-between">
+                <div class="text-[11px] font-bold text-[#2F3742] uppercase mb-2">Logo Header</div>
+                <div class="h-20 flex items-center justify-center bg-white rounded-lg border border-dashed border-slate-300 p-2 mb-2">
+                  <img id="adminPreviewLogo" src="" alt="Logo" class="max-h-14 object-contain">
+                </div>
+                <label class="w-full py-1.5 px-2 rounded-lg bg-[#2F3742] hover:bg-black text-white text-[11px] font-semibold cursor-pointer transition inline-block">
+                  <i class="fa-solid fa-upload mr-1"></i> Đổi ảnh Logo
+                  <input type="file" accept="image/*" onchange="handleAssetUpload(event, 'logo_horizontal')" class="hidden">
+                </label>
+              </div>
+            </div>
+          </div>
+
+          <!-- Cấu hình Cloud Sync (JSONBin / REST Endpoint tùy chọn cho GitHub Pages) -->
+          <div class="bg-white rounded-2xl shadow-sm border border-slate-200/80 p-5 sm:p-7">
+            <div class="flex items-center justify-between pb-3.5 border-b border-slate-100 mb-4">
+              <div class="flex items-center gap-3">
+                <span class="w-9 h-9 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center text-sm">
+                  <i class="fa-solid fa-cloud-arrow-up"></i>
+                </span>
+                <div>
+                  <h3 class="text-base font-bold text-[#2F3742]">Đồng Bộ Cloud Đa Thiết Bị (Tùy chọn)</h3>
+                  <p class="text-xs text-[#6B737D]">Kết nối Supabase / JSONBin / REST API để đồng bộ tức thì cho mọi máy</p>
+                </div>
+              </div>
+              <span id="cloudSyncActiveIndicator" class="text-[10px] font-bold px-2.5 py-1 rounded-full bg-slate-100 text-slate-600">Local Storage</span>
+            </div>
+
+            <div class="space-y-3 text-xs">
+              <div>
+                <label class="block font-bold text-[#2F3742] mb-1">Cloud Storage URL (JSONBin / REST / Firebase DB URL)</label>
+                <input type="url" id="cloudEndpointInput" placeholder="https://api.jsonbin.io/v3/b/YOUR_BIN_ID hoặc Firebase/Supabase URL" class="w-full px-3 py-2 border border-slate-200 rounded-lg text-xs focus:border-[#D62828] focus:outline-none">
+              </div>
+              <div>
+                <label class="block font-bold text-[#2F3742] mb-1">API Key / Secret Token (Nếu có)</label>
+                <input type="password" id="cloudApiKeyInput" placeholder="X-Master-Key hoặc Bearer Token..." class="w-full px-3 py-2 border border-slate-200 rounded-lg text-xs focus:border-[#D62828] focus:outline-none">
+              </div>
+              <div class="flex items-center justify-between gap-2 pt-1">
+                <button type="button" onclick="saveCloudSettingsAndSync()" class="flex-1 py-2.5 px-3 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-bold transition flex items-center justify-center gap-1.5 shadow-sm">
+                  <i class="fa-solid fa-rotate"></i> Lưu & Đồng Bộ Lên Cloud
+                </button>
+                <button type="button" onclick="resetToFactoryDefaults()" class="py-2.5 px-3 rounded-xl border border-slate-200 hover:bg-red-50 hover:text-[#D62828] text-slate-600 font-semibold transition" title="Khôi phục dữ liệu gốc ban đầu">
+                  <i class="fa-solid fa-rotate-left"></i> Khôi phục gốc
+                </button>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </div>
+
     <!-- ==================== TAB 2: PREVIEW BÁO GIÁ CHUẨN A4 XUẤT PDF ==================== -->
     <div id="sectionPreview" class="hidden print:block">
       
@@ -440,49 +717,615 @@
 
   </main>
 
+  <!-- Toast Notification -->
+  <div id="toastNotif" class="no-print fixed bottom-5 right-5 z-[110] hidden bg-[#0F172A] text-white px-4 py-3 rounded-xl shadow-xl border border-slate-700 text-xs font-semibold items-center gap-2.5 transition-all">
+    <i id="toastIcon" class="fa-solid fa-circle-check text-emerald-400 text-sm"></i>
+    <span id="toastMessage">Đã lưu cấu hình thành công!</span>
+  </div>
+
   <script>
-    let itemsData = JSON.parse(JSON.stringify(INITIAL_CATALOG));
+    // ==================== HỆ THỐNG LƯU TRỮ & PHÂN QUYỀN (RBAC PASSWORD-ONLY) ====================
+    const STORAGE_KEY_MASTER = 'SANWAY_MASTER_DATA_V1';
+    const STORAGE_KEY_SESSION = 'SANWAY_AUTH_SESSION_V1';
+    const STORAGE_KEY_CLOUD = 'SANWAY_CLOUD_CONFIG_V1';
 
-    itemsData.forEach(item => {
-      item.selected = true;
-      item.quantity = item.default_qty;
-      item.price = item.default_price;
-    });
+    const DEFAULT_USERS = [
+      { id: 'u_admin', name: 'Quản Trị Viên (Admin)', role: 'admin', password: 'admin2026' },
+      { id: 'u_leader', name: 'Ban Giám Đốc (Lãnh Đạo)', role: 'leader', password: 'lanhdao2026' },
+      { id: 'u_sale1', name: 'Nhân Viên Kinh Doanh 01', role: 'sale', password: 'sale01' },
+      { id: 'u_sale2', name: 'Nhân Viên Kinh Doanh 02', role: 'sale', password: 'sale02' }
+    ];
 
-    document.addEventListener('DOMContentLoaded', () => {
-      if (typeof ASSETS !== 'undefined') {
-        document.getElementById('navLogo').src = ASSETS.logo_horizontal || ASSETS.logo_official;
+    const DEFAULT_COMPANY = {
+      fullName: 'CÔNG TY CỔ PHẦN SANWAY',
+      hotline: '0936.888.666',
+      email: 'contact@sanway.vn',
+      address: 'KCN Nomura, Huyện An Dương, TP. Hải Phòng',
+      directorName: 'Nguyễn Văn A',
+      signerTitle: 'GIÁM ĐỐC',
+      vatRate: 8
+    };
+
+    let currentUser = null; // { id, name, role, password }
+    let masterData = {
+      company: { ...DEFAULT_COMPANY },
+      users: JSON.parse(JSON.stringify(DEFAULT_USERS)),
+      catalog: JSON.parse(JSON.stringify(INITIAL_CATALOG)),
+      customAssets: {
+        stamp: null,
+        logo_horizontal: null,
+        logo_official: null
+      },
+      updatedAt: new Date().toISOString()
+    };
+
+    let itemsData = [];
+
+    function isManagerRole() {
+      return currentUser && (currentUser.role === 'admin' || currentUser.role === 'leader');
+    }
+
+    function showToast(msg, isError = false) {
+      const toast = document.getElementById('toastNotif');
+      const icon = document.getElementById('toastIcon');
+      const text = document.getElementById('toastMessage');
+      text.textContent = msg;
+      icon.className = isError
+        ? 'fa-solid fa-triangle-exclamation text-rose-400 text-sm'
+        : 'fa-solid fa-circle-check text-emerald-400 text-sm';
+      toast.classList.remove('hidden');
+      toast.classList.add('flex');
+      clearTimeout(window._toastTimer);
+      window._toastTimer = setTimeout(() => {
+        toast.classList.add('hidden');
+        toast.classList.remove('flex');
+      }, 3200);
+    }
+
+    function getActiveAsset(key) {
+      if (masterData.customAssets && masterData.customAssets[key]) {
+        return masterData.customAssets[key];
       }
+      return (typeof ASSETS !== 'undefined' && ASSETS[key]) ? ASSETS[key] : '';
+    }
+
+    function syncBrandingImages() {
+      const logoH = getActiveAsset('logo_horizontal') || getActiveAsset('logo_official');
+      const stampImg = getActiveAsset('stamp');
+      if (document.getElementById('navLogo')) document.getElementById('navLogo').src = logoH;
+      if (document.getElementById('loginLogo')) document.getElementById('loginLogo').src = logoH;
+      if (document.getElementById('adminPreviewLogo')) document.getElementById('adminPreviewLogo').src = logoH;
+      if (document.getElementById('adminPreviewStamp')) document.getElementById('adminPreviewStamp').src = stampImg;
+    }
+
+    // Khởi tạo dữ liệu từ LocalStorage + Cloud (nếu có)
+    async function initSystemDatabase() {
+      const savedLocal = localStorage.getItem(STORAGE_KEY_MASTER);
+      if (savedLocal) {
+        try {
+          const parsed = JSON.parse(savedLocal);
+          if (parsed && parsed.company && Array.isArray(parsed.users) && Array.isArray(parsed.catalog)) {
+            masterData = parsed;
+          }
+        } catch (e) {
+          console.warn('Không thể đọc LocalStorage, dùng mặc định:', e);
+        }
+      }
+
+      // Kiểm tra cấu hình Cloud Sync
+      const cloudCfgRaw = localStorage.getItem(STORAGE_KEY_CLOUD);
+      if (cloudCfgRaw) {
+        try {
+          const cloudCfg = JSON.parse(cloudCfgRaw);
+          if (cloudCfg.endpoint) {
+            document.getElementById('cloudEndpointInput').value = cloudCfg.endpoint;
+            document.getElementById('cloudApiKeyInput').value = cloudCfg.apiKey || '';
+            updateCloudStatusBadges(true);
+            await pullFromCloudStorage(cloudCfg.endpoint, cloudCfg.apiKey);
+          }
+        } catch (e) {
+          console.warn('Lỗi tải cấu hình Cloud:', e);
+        }
+      }
+
+      applyMasterDataToWorkspace();
+      syncBrandingImages();
+
+      // Kiểm tra phiên đăng nhập hiện hành
+      const savedSession = sessionStorage.getItem(STORAGE_KEY_SESSION);
+      if (savedSession) {
+        try {
+          const sessionUser = JSON.parse(savedSession);
+          const matched = masterData.users.find(u => u.password === sessionUser.password);
+          if (matched) {
+            loginSuccess(matched, false);
+            return;
+          }
+        } catch (e) {}
+      }
+      showLoginModal();
+    }
+
+    function applyMasterDataToWorkspace() {
+      // Đổ thông tin công ty vào các input
+      const c = masterData.company || DEFAULT_COMPANY;
+      document.getElementById('inputCompanyFullName').value = c.fullName || DEFAULT_COMPANY.fullName;
+      document.getElementById('inputCompanyHotline').value = c.hotline || DEFAULT_COMPANY.hotline;
+      document.getElementById('inputCompanyEmail').value = c.email || DEFAULT_COMPANY.email;
+      document.getElementById('inputCompanyAddress').value = c.address || DEFAULT_COMPANY.address;
+      document.getElementById('inputDirectorName').value = c.directorName || DEFAULT_COMPANY.directorName;
+      document.getElementById('inputSignerTitle').value = c.signerTitle || DEFAULT_COMPANY.signerTitle;
+      document.getElementById('inputVatRate').value = (c.vatRate !== undefined) ? c.vatRate : 8;
+      if (document.getElementById('saleBannerCompanyName')) {
+        document.getElementById('saleBannerCompanyName').textContent = c.fullName || DEFAULT_COMPANY.fullName;
+      }
+
+      // Khởi tạo bảng vật tư cho phiên báo giá từ catalog gốc
+      itemsData = JSON.parse(JSON.stringify(masterData.catalog)).map(item => ({
+        ...item,
+        selected: item.selected !== undefined ? item.selected : true,
+        quantity: item.default_qty !== undefined ? item.default_qty : (item.quantity || 1),
+        price: item.default_price !== undefined ? item.default_price : (item.price || 0)
+      }));
 
       initCategoryFilter();
       renderFormTable();
       updateFormSummary();
+      renderStaffPasswordsTable();
+    }
+
+    function saveMasterSystemData(notify = true) {
+      if (!isManagerRole()) {
+        showToast('Chỉ Lãnh đạo hoặc Admin mới có quyền lưu cấu hình gốc!', true);
+        return;
+      }
+
+      // Thu thập thông tin công ty từ form
+      masterData.company = {
+        fullName: document.getElementById('inputCompanyFullName').value.trim(),
+        hotline: document.getElementById('inputCompanyHotline').value.trim(),
+        email: document.getElementById('inputCompanyEmail').value.trim(),
+        address: document.getElementById('inputCompanyAddress').value.trim(),
+        directorName: document.getElementById('inputDirectorName').value.trim(),
+        signerTitle: document.getElementById('inputSignerTitle').value.trim(),
+        vatRate: parseFloat(document.getElementById('inputVatRate').value) || 0
+      };
+
+      // Cập nhật bảng giá gốc từ itemsData
+      masterData.catalog = itemsData.map(it => ({
+        id: it.id,
+        category: it.category,
+        name: it.name,
+        unit: it.unit,
+        default_qty: it.quantity,
+        default_price: it.price
+      }));
+
+      masterData.updatedAt = new Date().toISOString();
+      localStorage.setItem(STORAGE_KEY_MASTER, JSON.stringify(masterData));
+
+      if (document.getElementById('saleBannerCompanyName')) {
+        document.getElementById('saleBannerCompanyName').textContent = masterData.company.fullName;
+      }
+
+      pushToCloudStorageIfConfigured();
+      if (notify) {
+        showToast('Đã lưu Cấu hình Công ty & Bảng giá niêm yết!');
+      }
+    }
+
+    // ==================== XỬ LÝ ĐĂNG NHẬP & PHÂN QUYỀN GIAO DIỆN ====================
+    function togglePasswordVisibility(inputId, iconId) {
+      const inp = document.getElementById(inputId);
+      const icon = document.getElementById(iconId);
+      if (inp.type === 'password') {
+        inp.type = 'text';
+        icon.className = 'fa-regular fa-eye-slash';
+      } else {
+        inp.type = 'password';
+        icon.className = 'fa-regular fa-eye';
+      }
+    }
+
+    function showLoginModal() {
+      const modal = document.getElementById('loginModal');
+      const passInp = document.getElementById('loginPasswordInput');
+      const err = document.getElementById('loginErrorMsg');
+      err.classList.add('hidden');
+      passInp.value = '';
+      modal.classList.remove('hidden');
+      setTimeout(() => passInp.focus(), 100);
+    }
+
+    function handleLogin(e) {
+      e.preventDefault();
+      const enteredPass = document.getElementById('loginPasswordInput').value.trim();
+      const err = document.getElementById('loginErrorMsg');
+
+      const matchedUser = masterData.users.find(u => u.password === enteredPass);
+      if (!matchedUser) {
+        err.classList.remove('hidden');
+        return;
+      }
+
+      err.classList.add('hidden');
+      loginSuccess(matchedUser, true);
+    }
+
+    function loginSuccess(user, showWelcome = true) {
+      currentUser = user;
+      sessionStorage.setItem(STORAGE_KEY_SESSION, JSON.stringify(user));
+      document.getElementById('loginModal').classList.add('hidden');
+
+      // Cập nhật thông tin người dùng trên thanh Header
+      document.getElementById('currentUserName').textContent = user.name;
+      const roleLabels = {
+        admin: 'ADMIN TOÀN QUYỀN',
+        leader: 'BAN LÃNH ĐẠO',
+        sale: 'NHÂN VIÊN SALE'
+      };
+      const roleBadge = document.getElementById('currentUserRoleBadge');
+      roleBadge.textContent = roleLabels[user.role] || 'NHÂN VIÊN SALE';
+      roleBadge.className = isManagerRole()
+        ? 'text-[10px] font-bold text-amber-300 uppercase tracking-wider'
+        : 'text-[10px] font-bold text-emerald-300 uppercase tracking-wider';
+
+      applyRolePermissionsUI();
+      switchTab('form');
+
+      if (showWelcome) {
+        showToast(`Xin chào ${user.name} (${roleLabels[user.role]})!`);
+      }
+    }
+
+    function handleLogout() {
+      currentUser = null;
+      sessionStorage.removeItem(STORAGE_KEY_SESSION);
+      showLoginModal();
+    }
+
+    function applyRolePermissionsUI() {
+      const isManager = isManagerRole();
+      const companyCard = document.getElementById('companyConfigCard');
+      const saleBanner = document.getElementById('saleRoleBanner');
+      const tabBtnAdmin = document.getElementById('tabBtnAdmin');
+      const btnAddItem = document.getElementById('btnAdminAddItem');
+      const btnSaveCatalog = document.getElementById('btnAdminSaveCatalog');
+      const thDeleteCol = document.getElementById('thAdminDeleteCol');
+      const catalogSubtitle = document.getElementById('catalogRoleSubtitle');
+
+      if (isManager) {
+        companyCard.classList.remove('hidden');
+        saleBanner.classList.add('hidden');
+        tabBtnAdmin.classList.remove('hidden');
+        tabBtnAdmin.classList.add('flex');
+        btnAddItem.classList.remove('hidden');
+        btnAddItem.classList.add('flex');
+        btnSaveCatalog.classList.remove('hidden');
+        btnSaveCatalog.classList.add('flex');
+        thDeleteCol.classList.remove('hidden');
+        catalogSubtitle.textContent = 'Chế độ Lãnh đạo/Admin: Được phép sửa tên vật tư, ĐVT, đơn giá niêm yết, thêm hoặc xóa hạng mục.';
+      } else {
+        companyCard.classList.add('hidden');
+        saleBanner.classList.remove('hidden');
+        tabBtnAdmin.classList.add('hidden');
+        tabBtnAdmin.classList.remove('flex');
+        btnAddItem.classList.add('hidden');
+        btnAddItem.classList.remove('flex');
+        btnSaveCatalog.classList.add('hidden');
+        btnSaveCatalog.classList.remove('flex');
+        thDeleteCol.classList.add('hidden');
+        catalogSubtitle.textContent = 'Chế độ Nhân viên Sale: Tích chọn hạng mục và nhập Khối lượng. Đơn giá được áp dụng cố định theo bảng giá niêm yết của Công ty.';
+      }
+
+      renderFormTable();
+      renderStaffPasswordsTable();
+    }
+
+    // ==================== QUẢN LÝ DANH SÁCH MẬT KHẨU NHÂN VIÊN (ADMIN / LÃNH ĐẠO) ====================
+    function renderStaffPasswordsTable() {
+      const tbody = document.getElementById('staffPasswordsTableBody');
+      if (!tbody) return;
+      tbody.innerHTML = '';
+
+      const roleBadgeMap = {
+        admin: '<span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-red-50 text-[#D62828] border border-red-200">Admin</span>',
+        leader: '<span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-amber-50 text-amber-700 border border-amber-200">Lãnh đạo</span>',
+        sale: '<span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-emerald-50 text-emerald-700 border border-emerald-200">Nhân viên Sale</span>'
+      };
+
+      masterData.users.forEach((u, idx) => {
+        const tr = document.createElement('tr');
+        tr.className = 'hover:bg-slate-50 transition';
+        tr.innerHTML = `
+          <td class="p-3 font-bold text-[#2F3742]">${escapeHtml(u.name)}</td>
+          <td class="p-3">${roleBadgeMap[u.role] || roleBadgeMap.sale}</td>
+          <td class="p-3">
+            <div class="flex items-center gap-1.5">
+              <input type="text" value="${escapeHtml(u.password)}" onchange="updateStaffPassword(${idx}, this.value)" class="px-2.5 py-1 border border-slate-200 rounded-lg font-mono font-bold text-xs text-[#0F172A] bg-slate-50 focus:bg-white focus:border-[#D62828] focus:outline-none w-36">
+            </div>
+          </td>
+          <td class="p-3 text-right">
+            <button type="button" onclick="deleteStaffUser(${idx})" class="text-slate-400 hover:text-[#D62828] p-1 transition" title="Xóa mật khẩu này">
+              <i class="fa-regular fa-trash-can"></i>
+            </button>
+          </td>
+        `;
+        tbody.appendChild(tr);
+      });
+    }
+
+    function handleAddStaffPass(e) {
+      e.preventDefault();
+      if (!isManagerRole()) return;
+
+      const name = document.getElementById('newStaffName').value.trim();
+      const role = document.getElementById('newStaffRole').value;
+      const password = document.getElementById('newStaffPass').value.trim();
+
+      if (!name || !password) return;
+
+      if (masterData.users.some(u => u.password === password)) {
+        showToast('Mật khẩu này đã được cấp cho người khác. Vui lòng chọn mật khẩu khác!', true);
+        return;
+      }
+
+      masterData.users.push({
+        id: 'u_' + Date.now(),
+        name,
+        role,
+        password
+      });
+
+      document.getElementById('newStaffName').value = '';
+      document.getElementById('newStaffPass').value = '';
+
+      saveMasterSystemData(false);
+      renderStaffPasswordsTable();
+      showToast(`Đã cấp mật khẩu cho "${name}" thành công!`);
+    }
+
+    function updateStaffPassword(index, newPass) {
+      if (!isManagerRole()) return;
+      const clean = newPass.trim();
+      if (!clean) {
+        showToast('Mật khẩu không được để trống!', true);
+        renderStaffPasswordsTable();
+        return;
+      }
+      const duplicate = masterData.users.some((u, i) => i !== index && u.password === clean);
+      if (duplicate) {
+        showToast('Mật khẩu bị trùng với tài khoản khác!', true);
+        renderStaffPasswordsTable();
+        return;
+      }
+      masterData.users[index].password = clean;
+      saveMasterSystemData(false);
+      showToast(`Đã cập nhật mật khẩu của ${masterData.users[index].name}!`);
+    }
+
+    function deleteStaffUser(index) {
+      if (!isManagerRole()) return;
+      const target = masterData.users[index];
+      const managersCount = masterData.users.filter(u => u.role === 'admin' || u.role === 'leader').length;
+      if ((target.role === 'admin' || target.role === 'leader') && managersCount <= 1) {
+        showToast('Phải giữ lại ít nhất 1 mật khẩu Admin hoặc Lãnh đạo!', true);
+        return;
+      }
+      if (confirm(`Bạn có chắc muốn thu hồi mật khẩu của "${target.name}"?`)) {
+        masterData.users.splice(index, 1);
+        saveMasterSystemData(false);
+        renderStaffPasswordsTable();
+        showToast('Đã thu hồi mật khẩu truy cập!');
+      }
+    }
+
+    // ==================== UPLOAD CON DẤU & LOGO + ĐỒNG BỘ CLOUD / FILE ====================
+    function handleAssetUpload(event, assetKey) {
+      if (!isManagerRole()) return;
+      const file = event.target.files[0];
+      if (!file) return;
+
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        if (!masterData.customAssets) masterData.customAssets = {};
+        masterData.customAssets[assetKey] = e.target.result;
+        syncBrandingImages();
+        saveMasterSystemData(false);
+        showToast('Đã cập nhật hình ảnh thương hiệu / con dấu thành công!');
+      };
+      reader.readAsDataURL(file);
+    }
+
+    function exportSystemConfigFile() {
+      if (!isManagerRole()) return;
+      saveMasterSystemData(false);
+      const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(masterData, null, 2));
+      const a = document.createElement('a');
+      a.setAttribute("href", dataStr);
+      a.setAttribute("download", `SANWAY_Config_${new Date().toISOString().slice(0,10)}.json`);
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      showToast('Đã xuất file cấu hình hệ thống (.json)!');
+    }
+
+    function importSystemConfigFile(event) {
+      if (!isManagerRole()) return;
+      const file = event.target.files[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        try {
+          const imported = JSON.parse(e.target.result);
+          if (!imported.company || !Array.isArray(imported.users) || !Array.isArray(imported.catalog)) {
+            throw new Error('Cấu trúc file không hợp lệ');
+          }
+          masterData = imported;
+          localStorage.setItem(STORAGE_KEY_MASTER, JSON.stringify(masterData));
+          applyMasterDataToWorkspace();
+          syncBrandingImages();
+          pushToCloudStorageIfConfigured();
+          showToast('Đã nhập và áp dụng cấu hình hệ thống thành công!');
+        } catch (err) {
+          showToast('File cấu hình không hợp lệ!', true);
+        }
+      };
+      reader.readAsText(file);
+    }
+
+    function updateCloudStatusBadges(isConnected) {
+      const loginBadge = document.getElementById('cloudStatusBadgeLogin');
+      const adminBadge = document.getElementById('cloudSyncActiveIndicator');
+      if (isConnected) {
+        if (loginBadge) {
+          loginBadge.textContent = 'Cloud Sync Active';
+          loginBadge.className = 'text-[10px] px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-700 font-bold';
+        }
+        if (adminBadge) {
+          adminBadge.textContent = 'Cloud Connected';
+          adminBadge.className = 'text-[10px] font-bold px-2.5 py-1 rounded-full bg-emerald-100 text-emerald-700';
+        }
+      } else {
+        if (loginBadge) {
+          loginBadge.textContent = 'Local Mode';
+          loginBadge.className = 'text-[10px] px-2 py-0.5 rounded-full bg-slate-200 text-slate-700 font-semibold';
+        }
+        if (adminBadge) {
+          adminBadge.textContent = 'Local Storage';
+          adminBadge.className = 'text-[10px] font-bold px-2.5 py-1 rounded-full bg-slate-100 text-slate-600';
+        }
+      }
+    }
+
+    async function saveCloudSettingsAndSync() {
+      if (!isManagerRole()) return;
+      const endpoint = document.getElementById('cloudEndpointInput').value.trim();
+      const apiKey = document.getElementById('cloudApiKeyInput').value.trim();
+
+      if (!endpoint) {
+        localStorage.removeItem(STORAGE_KEY_CLOUD);
+        updateCloudStatusBadges(false);
+        showToast('Đã tắt Cloud Sync, sử dụng bộ nhớ trình duyệt.');
+        return;
+      }
+
+      localStorage.setItem(STORAGE_KEY_CLOUD, JSON.stringify({ endpoint, apiKey }));
+      updateCloudStatusBadges(true);
+      saveMasterSystemData(false);
+      await pushToCloudStorageIfConfigured(true);
+    }
+
+    async function pushToCloudStorageIfConfigured(showSuccessMsg = false) {
+      const raw = localStorage.getItem(STORAGE_KEY_CLOUD);
+      if (!raw) return;
+      try {
+        const { endpoint, apiKey } = JSON.parse(raw);
+        if (!endpoint) return;
+        const headers = { 'Content-Type': 'application/json' };
+        if (apiKey) {
+          headers['X-Master-Key'] = apiKey;
+          headers['Authorization'] = apiKey.startsWith('Bearer ') ? apiKey : `Bearer ${apiKey}`;
+        }
+        const res = await fetch(endpoint, {
+          method: 'PUT',
+          headers,
+          body: JSON.stringify(masterData)
+        });
+        if (res.ok && showSuccessMsg) {
+          showToast('Đã đồng bộ dữ liệu lên Cloud thành công!');
+        }
+      } catch (e) {
+        if (showSuccessMsg) showToast('Không thể kết nối Cloud URL, đã lưu tại máy!', true);
+      }
+    }
+
+    async function pullFromCloudStorage(endpoint, apiKey) {
+      try {
+        const headers = { 'Accept': 'application/json' };
+        if (apiKey) {
+          headers['X-Master-Key'] = apiKey;
+          headers['Authorization'] = apiKey.startsWith('Bearer ') ? apiKey : `Bearer ${apiKey}`;
+        }
+        const res = await fetch(endpoint, { method: 'GET', headers });
+        if (!res.ok) return;
+        const json = await res.json();
+        const payload = json.record || json;
+        if (payload && payload.company && Array.isArray(payload.users) && Array.isArray(payload.catalog)) {
+          masterData = payload;
+          localStorage.setItem(STORAGE_KEY_MASTER, JSON.stringify(masterData));
+        }
+      } catch (e) {
+        console.warn('Không thể tải dữ liệu từ Cloud:', e);
+      }
+    }
+
+    function resetToFactoryDefaults() {
+      if (!isManagerRole()) return;
+      if (confirm('Khôi phục toàn bộ thông tin công ty, danh mục 47 sản phẩm và mật khẩu về mặc định ban đầu?')) {
+        localStorage.removeItem(STORAGE_KEY_MASTER);
+        masterData = {
+          company: { ...DEFAULT_COMPANY },
+          users: JSON.parse(JSON.stringify(DEFAULT_USERS)),
+          catalog: JSON.parse(JSON.stringify(INITIAL_CATALOG)),
+          customAssets: { stamp: null, logo_horizontal: null, logo_official: null },
+          updatedAt: new Date().toISOString()
+        };
+        applyMasterDataToWorkspace();
+        syncBrandingImages();
+        showToast('Đã khôi phục dữ liệu gốc mặc định!');
+      }
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      initSystemDatabase();
     });
 
     function switchTab(tab) {
+      if (tab === 'admin' && !isManagerRole()) {
+        showToast('Chỉ Lãnh đạo hoặc Admin mới được truy cập mục Quản trị!', true);
+        return;
+      }
+
       const sectionForm = document.getElementById('sectionForm');
       const sectionPreview = document.getElementById('sectionPreview');
+      const sectionAdmin = document.getElementById('sectionAdmin');
       const btnForm = document.getElementById('tabBtnForm');
       const btnPreview = document.getElementById('tabBtnPreview');
+      const btnAdmin = document.getElementById('tabBtnAdmin');
+
+      const inactiveClass = "px-3 py-2 rounded-xl text-xs sm:text-sm font-medium transition bg-slate-700/80 text-slate-200 hover:bg-slate-600 flex items-center gap-1.5";
+      const activeClass = "px-3 py-2 rounded-xl text-xs sm:text-sm font-bold transition bg-[#D62828] text-white shadow-sm flex items-center gap-1.5 hover:bg-[#B91C1C]";
+
+      sectionForm.classList.add('hidden');
+      sectionPreview.classList.add('hidden');
+      sectionAdmin.classList.add('hidden');
+
+      btnForm.className = inactiveClass;
+      btnPreview.className = inactiveClass;
+      if (isManagerRole()) {
+        btnAdmin.className = "px-3 py-2 rounded-xl text-xs sm:text-sm font-medium transition bg-slate-700/80 text-amber-300 hover:bg-slate-600 flex items-center gap-1.5 border border-amber-400/30";
+      }
 
       if (tab === 'form') {
         sectionForm.classList.remove('hidden');
-        sectionPreview.classList.add('hidden');
-        btnForm.className = "px-3.5 py-2 rounded-xl text-xs sm:text-sm font-bold transition bg-[#D62828] text-white shadow-sm flex items-center gap-1.5 hover:bg-[#B91C1C]";
-        btnPreview.className = "px-3.5 py-2 rounded-xl text-xs sm:text-sm font-medium transition bg-slate-700/80 text-slate-200 hover:bg-slate-600 flex items-center gap-1.5";
-        window.scrollTo({ top: 0, behavior: 'smooth' });
+        btnForm.className = activeClass;
+      } else if (tab === 'admin') {
+        sectionAdmin.classList.remove('hidden');
+        btnAdmin.className = activeClass;
+        renderStaffPasswordsTable();
       } else {
         renderPreview();
-        sectionForm.classList.add('hidden');
         sectionPreview.classList.remove('hidden');
-        btnPreview.className = "px-3.5 py-2 rounded-xl text-xs sm:text-sm font-bold transition bg-[#D62828] text-white shadow-sm flex items-center gap-1.5 hover:bg-[#B91C1C]";
-        btnForm.className = "px-3.5 py-2 rounded-lg text-xs sm:text-sm font-medium transition bg-slate-700/80 text-slate-200 hover:bg-slate-600 flex items-center gap-1.5";
-        window.scrollTo({ top: 0, behavior: 'smooth' });
+        btnPreview.className = activeClass;
       }
+      window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
     function initCategoryFilter() {
       const select = document.getElementById('categoryFilter');
+      const currentVal = select.value || 'ALL';
+      select.innerHTML = `<option value="ALL">-- Tất cả phân loại hệ thống (${itemsData.length} mục) --</option>`;
       const categories = [...new Set(itemsData.map(i => i.category))];
       categories.forEach(cat => {
         const opt = document.createElement('option');
@@ -490,12 +1333,16 @@
         opt.textContent = cat;
         select.appendChild(opt);
       });
+      if ([...select.options].some(o => o.value === currentVal)) {
+        select.value = currentVal;
+      }
     }
 
     function renderFormTable() {
       const tbody = document.getElementById('quoteItemsTableBody');
       const catFilter = document.getElementById('categoryFilter').value;
       const searchTxt = document.getElementById('searchItemInput').value.toLowerCase().trim();
+      const isManager = isManagerRole();
 
       tbody.innerHTML = '';
 
@@ -510,34 +1357,50 @@
 
         const subtotal = item.quantity * item.price;
 
+        const nameCellHtml = isManager
+          ? `<input type="text" value="${escapeHtml(item.name)}" onchange="updateItemField(${index}, 'name', this.value)" class="w-full text-xs font-semibold text-[#2F3742] bg-transparent border border-transparent hover:border-slate-300 focus:border-[#D62828] focus:bg-white rounded px-2 py-1 transition">`
+          : `<div class="text-xs font-semibold text-[#2F3742] px-2 py-1">${escapeHtml(item.name)}</div>`;
+
+        const unitCellHtml = isManager
+          ? `<input type="text" value="${escapeHtml(item.unit)}" onchange="updateItemField(${index}, 'unit', this.value)" class="w-16 text-center text-xs bg-transparent border border-transparent hover:border-slate-300 focus:border-[#D62828] focus:bg-white rounded px-1 py-1">`
+          : `<span class="text-xs text-slate-600 font-medium">${escapeHtml(item.unit)}</span>`;
+
+        const priceCellHtml = isManager
+          ? `<input type="number" value="${item.price}" min="0" step="1000" onchange="updateItemField(${index}, 'price', parseFloat(this.value) || 0)" class="w-28 text-right font-semibold text-xs bg-white border border-slate-300 focus:border-[#D62828] rounded px-2 py-1 tabular-nums">`
+          : `<span class="text-xs font-semibold text-slate-700 tabular-nums px-2 py-1 bg-slate-100/80 rounded border border-slate-200/70 inline-block" title="Đơn giá niêm yết (Đã khóa)"><i class="fa-solid fa-lock text-[9px] text-slate-400 mr-1"></i>${formatVND(item.price)}</span>`;
+
+        const deleteCellHtml = isManager
+          ? `<td class="p-3 text-center">
+              <button onclick="deleteItem(${index})" class="text-slate-400 hover:text-[#D62828] transition p-1" title="Xóa hạng mục khỏi bảng giá">
+                <i class="fa-regular fa-trash-can text-sm"></i>
+              </button>
+            </td>`
+          : '';
+
         tr.innerHTML = `
           <td class="p-3 text-center">
             <input type="checkbox" ${item.selected ? 'checked' : ''} onchange="toggleItemSelect(${index}, this.checked)" class="w-4 h-4 rounded text-[#D62828] focus:ring-[#D62828] cursor-pointer">
           </td>
-          <td class="p-3 text-center text-xs text-slate-500 font-mono">${displayIndex}</td>
+          <td class="p-3 text-center text-xs text-slate-500 tabular-nums">${displayIndex}</td>
           <td class="p-3">
-            <input type="text" value="${escapeHtml(item.name)}" onchange="updateItemField(${index}, 'name', this.value)" class="w-full text-xs font-semibold text-[#2F3742] bg-transparent border border-transparent hover:border-slate-300 focus:border-[#D62828] focus:bg-white rounded px-2 py-1 transition">
+            ${nameCellHtml}
           </td>
-          <td class="p-3 text-xs text-[#6B737D] truncate max-w-[140px]" title="${item.category}">
-            <span class="px-2 py-0.5 rounded text-[11px] bg-slate-100 text-[#2F3742] font-medium">${item.category}</span>
-          </td>
-          <td class="p-3 text-center">
-            <input type="text" value="${escapeHtml(item.unit)}" onchange="updateItemField(${index}, 'unit', this.value)" class="w-16 text-center text-xs bg-transparent border border-transparent hover:border-slate-300 focus:border-[#D62828] focus:bg-white rounded px-1 py-1">
+          <td class="p-3 text-xs text-[#6B737D] truncate max-w-[160px]" title="${escapeHtml(item.category)}">
+            <span class="px-2 py-0.5 rounded text-[11px] bg-slate-100 text-[#2F3742] font-medium">${escapeHtml(item.category)}</span>
           </td>
           <td class="p-3 text-center">
-            <input type="number" value="${item.quantity}" min="1" onchange="updateItemField(${index}, 'quantity', parseFloat(this.value) || 0)" class="w-20 text-center font-bold text-xs bg-white border border-slate-300 focus:border-[#D62828] rounded px-1.5 py-1">
+            ${unitCellHtml}
+          </td>
+          <td class="p-3 text-center">
+            <input type="number" value="${item.quantity}" min="1" onchange="updateItemField(${index}, 'quantity', parseFloat(this.value) || 0)" class="w-20 text-center font-bold text-xs bg-white border border-slate-300 focus:border-[#D62828] rounded px-1.5 py-1 tabular-nums">
           </td>
           <td class="p-3 text-right">
-            <input type="number" value="${item.price}" min="0" step="1000" onchange="updateItemField(${index}, 'price', parseFloat(this.value) || 0)" class="w-28 text-right font-medium text-xs bg-white border border-slate-300 focus:border-[#D62828] rounded px-2 py-1">
+            ${priceCellHtml}
           </td>
-          <td class="p-3 text-right font-bold text-[#2F3742] text-xs font-mono">
+          <td class="p-3 text-right font-bold text-[#2F3742] text-xs tabular-nums">
             ${formatVND(subtotal)}
           </td>
-          <td class="p-3 text-center">
-            <button onclick="deleteItem(${index})" class="text-slate-400 hover:text-[#D62828] transition p-1" title="Xóa dòng">
-              <i class="fa-regular fa-trash-can text-sm"></i>
-            </button>
-          </td>
+          ${deleteCellHtml}
         `;
         tbody.appendChild(tr);
       });
@@ -554,16 +1417,28 @@
     }
 
     function updateItemField(index, field, value) {
+      if ((field === 'price' || field === 'name' || field === 'unit') && !isManagerRole()) {
+        showToast('Nhân viên Sale chỉ được phép thay đổi Khối lượng!', true);
+        renderFormTable();
+        return;
+      }
       itemsData[index][field] = value;
       renderFormTable();
       updateFormSummary();
+      if (isManagerRole() && (field === 'price' || field === 'name' || field === 'unit')) {
+        saveMasterSystemData(false);
+      }
     }
 
     function deleteItem(index) {
-      if (confirm('Bạn có chắc muốn xóa hạng mục này khỏi báo giá?')) {
+      if (!isManagerRole()) return;
+      if (confirm('Bạn có chắc muốn xóa hạng mục này khỏi danh mục báo giá gốc?')) {
         itemsData.splice(index, 1);
+        initCategoryFilter();
         renderFormTable();
         updateFormSummary();
+        saveMasterSystemData(false);
+        showToast('Đã xóa hạng mục khỏi danh mục!');
       }
     }
 
@@ -574,22 +1449,31 @@
     }
 
     function addNewCustomItem() {
-      const cat = prompt("Nhập tên phân nhóm cho mục mới:", "Hạng mục phát sinh / bổ sung") || "Hạng mục bổ sung";
-      const name = prompt("Nhập tên thiết bị / công việc:", "Kiểm tra, bảo dưỡng thiết bị mới") || "Thiết bị mới";
+      if (!isManagerRole()) return;
+      const cat = prompt("Nhập tên phân nhóm cho mục mới:", "Hạng mục phát sinh / bổ sung");
+      if (!cat) return;
+      const name = prompt("Nhập tên thiết bị / công việc:", "Kiểm tra, bảo dưỡng thiết bị mới");
+      if (!name) return;
+      const unit = prompt("Nhập đơn vị tính (ĐVT):", "Chiếc") || "Chiếc";
+      const price = parseFloat(prompt("Nhập đơn giá niêm yết (VNĐ):", "150000")) || 0;
+
       const newItem = {
         id: Date.now(),
-        category: cat,
-        name: name,
-        unit: "Chiếc",
-        default_price: 100000,
+        category: cat.trim(),
+        name: name.trim(),
+        unit: unit.trim(),
+        default_price: price,
         default_qty: 1,
         quantity: 1,
-        price: 100000,
+        price: price,
         selected: true
       };
       itemsData.unshift(newItem);
+      initCategoryFilter();
       renderFormTable();
       updateFormSummary();
+      saveMasterSystemData(false);
+      showToast('Đã thêm hạng mục mới vào danh mục gốc!');
     }
 
     function updateFormSummary() {
@@ -706,7 +1590,9 @@
         const pageEl = document.createElement('div');
         pageEl.className = 'a4-page';
 
-        let watermarkSrc = ASSETS.logo_official || ASSETS.logo_horizontal;
+        let watermarkSrc = getActiveAsset('logo_official') || getActiveAsset('logo_horizontal');
+        let activeLogoH = getActiveAsset('logo_horizontal') || getActiveAsset('logo_official');
+        let activeStamp = getActiveAsset('stamp');
 
         let pageHtml = `
           <!-- WATERMARK LOGO VUÔNG CHÌM TINH TẾ TÂM TRANG -->
@@ -723,7 +1609,7 @@
               <div class="flex items-center justify-between gap-4">
                 <!-- Logo SANWAY kích thước lớn (chiều rộng 275px, cao ~92px ngang bằng 4 dòng thông tin phải) -->
                 <div class="w-1/2 flex items-center">
-                  <img src="${ASSETS.logo_horizontal || ASSETS.logo_official}" alt="SANWAY" style="width: 275px; height: auto; margin-left: -4px;" class="object-contain object-left">
+                  <img src="${activeLogoH}" alt="SANWAY" style="width: 275px; height: auto; margin-left: -4px;" class="object-contain object-left">
                 </div>
                 <!-- Thông tin liên hệ công ty tách 4 dòng gọn gàng theo chuẩn -->
                 <div class="w-1/2 text-right leading-snug space-y-0.5 text-[8.5pt] text-[#475569]">
@@ -759,7 +1645,7 @@
           pageHtml += `
             <div class="pb-2.5 mb-3 border-b border-slate-200 flex justify-between items-center text-[9pt]">
               <div class="flex items-center">
-                <img src="${ASSETS.logo_horizontal || ASSETS.logo_official}" alt="SANWAY" class="h-6 w-auto object-contain">
+                <img src="${activeLogoH}" alt="SANWAY" class="h-6 w-auto object-contain">
               </div>
               <div class="text-right font-medium text-[#64748B]">
                 <span>Báo giá: <b class="text-[#0F172A] font-bold uppercase">${escapeHtml(projTitle.replace(/^HẠNG MỤC\s*:\s*/i, ''))}</b> <span class="text-slate-400 mx-1">|</span> Trang ${currentPage}</span>
@@ -871,7 +1757,7 @@
                 <p class="font-bold text-[#475569] text-[8.5pt] uppercase tracking-wider">${escapeHtml(signerTitle)}</p>
                 
                 <div class="my-0.5 min-h-[70px] flex items-center justify-center" style="display: ${showStamp ? 'flex' : 'none'}">
-                  <img src="${ASSETS.stamp}" alt="Mộc đỏ công ty" class="max-h-16 object-contain mx-auto drop-shadow-sm">
+                  <img src="${activeStamp}" alt="Mộc đỏ công ty" class="max-h-16 object-contain mx-auto drop-shadow-sm">
                 </div>
 
                 <p class="font-extrabold text-[#0F172A] text-[10pt] mt-0.5">${escapeHtml(directorName)}</p>
@@ -886,7 +1772,7 @@
 
           <div class="mt-2 pt-2 border-t border-slate-200/80 flex justify-between items-center text-[8.5pt] text-[#64748B] relative z-10">
             <div>
-              <span class="font-bold text-[#1E293B]">CÔNG TY CỔ PHẦN SANWAY</span> <span class="mx-1 text-slate-300">•</span> <span class="italic">Cho mỗi bước tiến thêm vững vàng</span>
+              <span class="font-bold text-[#1E293B] uppercase">${escapeHtml(companyName)}</span> <span class="mx-1 text-slate-300">•</span> <span class="italic">Cho mỗi bước tiến thêm vững vàng</span>
             </div>
             <div class="text-[#475569] font-semibold tabular-nums">
               Trang ${currentPage} / ${totalPages}
