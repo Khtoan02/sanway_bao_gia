@@ -645,17 +645,14 @@
             <label class="erp-label"><i class="fa-solid fa-envelope text-slate-400"></i> Email liên hệ</label>
             <input type="text" id="inputCompanyEmail" onchange="saveMasterSystemData(false)" value="contact@sanway.vn" class="erp-input">
           </div>
-          <div class="lg:col-span-5">
+          <div class="lg:col-span-6">
             <label class="erp-label"><i class="fa-solid fa-location-dot text-slate-400"></i> Địa chỉ trụ sở / Văn phòng</label>
             <input type="text" id="inputCompanyAddress" onchange="saveMasterSystemData(false)" value="KCN Nomura, Huyện An Dương, TP. Hải Phòng" class="erp-input">
           </div>
-          <div class="lg:col-span-3">
-            <label class="erp-label"><i class="fa-solid fa-user-pen text-slate-400"></i> Họ và tên Người ký</label>
-            <input type="text" id="inputDirectorName" onchange="saveMasterSystemData(false)" value="Nguyễn Văn A" class="erp-input font-bold text-[#D62828]">
-          </div>
-          <div class="lg:col-span-2">
-            <label class="erp-label"><i class="fa-solid fa-id-badge text-slate-400"></i> Chức danh</label>
+          <div class="lg:col-span-4">
+            <label class="erp-label"><i class="fa-solid fa-id-badge text-slate-400"></i> Chức danh người ký báo giá</label>
             <input type="text" id="inputSignerTitle" onchange="saveMasterSystemData(false)" value="GIÁM ĐỐC" class="erp-input font-semibold uppercase">
+            <input type="hidden" id="inputDirectorName" value="">
           </div>
           <div class="lg:col-span-2">
             <label class="erp-label"><i class="fa-solid fa-percent text-slate-400"></i> VAT (%)</label>
@@ -1140,7 +1137,7 @@
       hotline: '0936.888.666',
       email: 'contact@sanway.vn',
       address: 'KCN Nomura, Huyện An Dương, TP. Hải Phòng',
-      directorName: 'Nguyễn Văn A',
+      directorName: '',
       signerTitle: 'GIÁM ĐỐC',
       vatRate: 8
     };
@@ -2244,24 +2241,16 @@
       `;
 
       const signatureBlockHtml = `
-        <!-- KHỐI CHỮ KÝ PHÁP NHÂN (KHOẢNG KÝ RỘNG RÃI CHUẨN HÀNH CHÍNH & CON DẤU KÍCH THƯỚC THẬT) -->
-        <div class="flex justify-between items-start pt-2">
-          <div class="text-center w-1/2 pr-4">
-            <p class="text-[8.5pt] invisible select-none mb-0.5">&nbsp;</p>
-            <p class="text-[9.5pt] font-extrabold text-[#0F172A] uppercase tracking-wide">ĐẠI DIỆN KHÁCH HÀNG</p>
-            <p class="italic text-[#64748B] text-[8.5pt]">(Ký, ghi rõ họ tên & đóng dấu)</p>
-            <div style="min-height: 140px;"></div>
-          </div>
-          <div class="text-center w-1/2 pl-4">
+        <!-- KHỐI CHỮ KÝ ĐƠN VỊ BÁO GIÁ (CHỈ ĐẠI DIỆN SANWAY Ở BÊN PHẢI, KHÔNG GHI SẴN TÊN ĐỂ GIÁM ĐỐC TỰ KÝ) -->
+        <div class="flex justify-end items-start pt-2">
+          <div class="text-center w-[52%] pl-4">
             <p class="italic text-[#64748B] text-[8.5pt] mb-0.5">${escapeHtml(quoteDate)}</p>
             <p class="text-[9.5pt] font-extrabold text-[#0F172A] uppercase tracking-wide">${escapeHtml(companyName)}</p>
             <p class="font-bold text-[#475569] text-[8.5pt] uppercase tracking-wider">${escapeHtml(signerTitle)}</p>
-            
-            <div class="my-1 flex items-center justify-center" style="min-height: 140px;">
-              ${showStamp ? `<img src="${activeStamp}" alt="Mộc đỏ công ty" style="height: 136px; width: auto; max-width: 250px; mix-blend-mode: multiply;" class="object-contain mx-auto">` : ''}
+            ${!showStamp ? `<p class="italic text-[#64748B] text-[8pt] mt-0.5">(Ký, ghi rõ họ tên & đóng dấu)</p>` : ''}
+            <div class="my-1 flex items-center justify-center" style="min-height: 145px;">
+              ${showStamp ? `<img src="${activeStamp}" alt="Mộc đỏ công ty" style="height: 142px; width: auto; max-width: 260px; mix-blend-mode: multiply;" class="object-contain mx-auto">` : ''}
             </div>
-
-            <p class="font-extrabold text-[#0F172A] text-[10.5pt] mt-0.5">${escapeHtml(directorName)}</p>
           </div>
         </div>
       `;
