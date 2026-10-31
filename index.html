@@ -2167,7 +2167,9 @@
             unit: item.unit,
             quantity: item.quantity,
             price: item.price,
-            subtotal: item.quantity * item.price
+            subtotal: item.quantity * item.price,
+            groupRoman: roman,
+            groupName: catName
           });
         });
       }
@@ -2226,6 +2228,10 @@
         // Không để dòng tiêu đề nhóm (La Mã) nằm lẻ loi ở cuối trang
         if (take > 1 && allRows[currentRowIdx + take - 1].type === 'group') {
           take--;
+        }
+        // Không để nhóm mới mở ra ở cuối trang mà chỉ có đúng 1 hạng mục lẻ loi rồi bị ngắt sang trang sau
+        if (take > 2 && allRows[currentRowIdx + take - 2].type === 'group' && (currentRowIdx + take) < allRows.length) {
+          take -= 2;
         }
 
         pageChunks.push(allRows.slice(currentRowIdx, currentRowIdx + take));
@@ -2313,9 +2319,9 @@
           `;
         }
 
-        // BẢNG BÁO GIÁ CĂN LỀ CHUẨN XÁC, TIÊU ĐỀ KHÔNG RỚT DÒNG, SỐ LIỆU TABULAR-NUMS
+        // BẢNG BÁO GIÁ CĂN LỀ CHUẨN XÁC, KHÔNG DÙNG flex-1 ĐỂ KHỐI TỔNG TIỀN & CHỮ KÝ BÁM SÁT NGAY DƯỚI ĐÁY BẢNG
         pageHtml += `
-          <div class="mb-2 flex-1">
+          <div class="mb-2.5">
             <table class="sanway-table">
               <thead>
                 <tr>
@@ -2323,13 +2329,23 @@
                   <th style="text-align: left; padding-left: 6px;">TÊN HẠNG MỤC, VẬT TƯ THIẾT BỊ</th>
                   <th style="width: 44px; text-align: center;">ĐVT</th>
                   <th style="width: 44px; text-align: center;" title="Số lượng / Khối lượng">SL</th>
-                  <th style="width: 88px; text-align: right;">ĐƠN GIÁ (Đ)</th>
-                  <th style="width: 98px; text-align: right;">THÀNH TIỀN (Đ)</th>
-                  <th style="width: 52px; text-align: center;">GHI CHÚ</th>
+                  <th style="width: 86px; text-align: right;">ĐƠN GIÁ (Đ)</th>
+                  <th style="width: 96px; text-align: right;">THÀNH TIỀN (Đ)</th>
+                  <th style="width: 58px; text-align: center; padding-right: 6px;">GHI CHÚ</th>
                 </tr>
               </thead>
               <tbody>
         `;
+
+        // Nếu dòng đầu tiên của trang mới là dòng hạng mục (nhóm bị ngắt từ trang trước sang), nhắc lại tên nhóm (tiếp theo)
+        if (chunk.length > 0 && chunk[0].type === 'item' && chunk[0].groupName) {
+          pageHtml += `
+            <tr class="group-row">
+              <td style="text-align: center; color: #D62828; font-weight: 800;">${chunk[0].groupRoman}</td>
+              <td colspan="6" style="padding-left: 6px; color: #0F172A; text-transform: uppercase;">${escapeHtml(chunk[0].groupName)} <span class="text-[8pt] font-semibold text-slate-500 normal-case italic">(tiếp theo)</span></td>
+            </tr>
+          `;
+        }
 
         chunk.forEach(row => {
           if (row.type === 'group') {
