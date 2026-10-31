@@ -161,7 +161,7 @@
     }
 
     .sanway-table thead th {
-      padding: 7.5px 5px;
+      padding: 6.5px 5px;
       font-size: 8pt;
       font-weight: 700;
       text-transform: uppercase;
@@ -176,23 +176,38 @@
     }
 
     .sanway-table tbody tr.group-row td {
-      padding: 7px 5px 6px 5px;
+      padding: 5.5px 5px 5px 5px;
       border-top: 1px solid #CBD5E1;
       border-bottom: 1.5px solid #94A3B8;
       font-weight: 800;
       font-size: 9.5pt;
+      line-height: 1.3;
       color: #0F172A;
       letter-spacing: 0.02em;
     }
 
     .sanway-table tbody tr.item-row td {
-      padding: 6px 5px;
+      padding: 5px 5px;
       border-bottom: 1px solid #EEF2F6;
       color: #334155;
       font-size: 9.5pt;
-      line-height: 1.35;
+      line-height: 1.32;
       vertical-align: middle;
     }
+
+    /* ĐẢM BẢO CÁC CLASS TYPOGRAPHY TRONG TRANG A4 CÓ HIỆU LỰC TỨC THÌ TRƯỚC KHI ĐO DOM (KHÔNG CHỜ TAILWIND JIT MUTATION OBSERVER) */
+    .a4-page {
+      line-height: 1.38;
+    }
+    .a4-page .text-\[8pt\] { font-size: 8pt !important; line-height: 1.35 !important; }
+    .a4-page .text-\[8\.5pt\] { font-size: 8.5pt !important; line-height: 1.38 !important; }
+    .a4-page .text-\[9pt\] { font-size: 9pt !important; line-height: 1.38 !important; }
+    .a4-page .text-\[9\.5pt\] { font-size: 9.5pt !important; line-height: 1.38 !important; }
+    .a4-page .text-\[10pt\] { font-size: 10pt !important; line-height: 1.38 !important; }
+    .a4-page .text-\[10\.5pt\] { font-size: 10.5pt !important; line-height: 1.38 !important; }
+    .a4-page .text-\[11pt\] { font-size: 11pt !important; line-height: 1.35 !important; }
+    .a4-page .text-\[12pt\] { font-size: 12pt !important; line-height: 1.3 !important; }
+    .a4-page .text-\[17\.5pt\] { font-size: 17.5pt !important; line-height: 1.25 !important; }
 
     .tabular-nums {
       font-variant-numeric: tabular-nums;
@@ -1771,8 +1786,8 @@
         }
         renderStaffPasswordsTable();
       } else {
-        renderPreview();
         sectionPreview.classList.remove('hidden');
+        renderPreview();
         btnPreview.className = activeClass;
         if (mobTabPreview) mobTabPreview.className = mobActive;
         if (mobileCtaBtn) {
@@ -2115,7 +2130,7 @@
     }
 
     // ==================== TỰ ĐỘNG CHIA TRANG A4 THEO NGHỊ ĐỊNH 30/2020/NĐ-CP ====================
-    function renderPreview() {
+    function renderPreview(isRepass = false) {
       const companyName = document.getElementById('inputCompanyFullName').value;
       const companyHotline = document.getElementById('inputCompanyHotline').value;
       const companyEmail = document.getElementById('inputCompanyEmail').value;
@@ -2193,8 +2208,8 @@
       let activeLogoH = getActiveAsset('logo_horizontal') || getActiveAsset('logo_official');
       let activeStamp = getActiveAsset('stamp');
 
-      // KHỐI TỔNG TIỀN, GHI CHÚ & CHỮ KÝ TRANG CUỐI: TRÌNH BÀY CƠ BẢN, CHUẨN CHỈ, KHÔNG ĐÓNG KHUNG / SHAPE
-      const summaryAndSignatureHtml = `
+      // TÁCH PHẦN CUỐI BÁO GIÁ THÀNH 3 KHỐI ĐỘC LẬP (TỔNG TIỀN -> GHI CHÚ -> CHỮ KÝ) ĐỂ LẤP ĐẦY KHOẢNG TRỐNG TRANG HIỆN TẠI TRƯỚC KHI SANG TRANG MỚI
+      const totalsBlockHtml = `
         <!-- KHỐI TỔNG KẾT TÀI CHÍNH (KHÔNG ĐÓNG KHUNG, KHÔNG SHAPE) -->
         <div class="mt-2 pt-2 border-t border-slate-300 text-[9.5pt] space-y-0.5">
           <div class="flex justify-between items-baseline text-[#334155]">
@@ -2213,15 +2228,19 @@
             <span class="font-semibold">Số tiền bằng chữ:</span> <span class="italic font-bold text-[#0F172A]">${escapeHtml(totalInWords)}</span>
           </div>
         </div>
+      `;
 
+      const notesBlockHtml = `
         <!-- GHI CHÚ ĐIỀU KHOẢN KỸ THUẬT (KHÔNG ĐÓNG KHUNG, KHÔNG VIỀN TRÁI SHAPE) -->
-        <div class="mt-2 mb-2 text-[8.5pt] text-[#334155] leading-snug space-y-0.5">
+        <div class="mt-2 mb-1.5 text-[8.5pt] text-[#334155] space-y-0.5">
           <p class="font-bold uppercase text-[#0F172A] text-[9pt]">Ghi chú & Cam kết kỹ thuật:</p>
           <p>- Nghiệm thu và thanh toán căn cứ theo khối lượng thực tế thi công tại công trình.</p>
           <p>- Trường hợp phát hiện thiết bị hư hỏng không thể phục hồi, SANWAY sẽ lập biên bản hiện trường và gửi đề xuất thay thế kèm báo giá bổ sung.</p>
           <p>- Toàn bộ linh kiện, thiết bị thay thế được bảo hành chính hãng tiêu chuẩn 12 tháng kể từ ngày ký biên bản bàn giao.</p>
         </div>
+      `;
 
+      const signatureBlockHtml = `
         <!-- KHỐI CHỮ KÝ PHÁP NHÂN -->
         <div class="flex justify-between items-start pt-1.5">
           <div class="text-center w-1/2 pr-3">
@@ -2233,8 +2252,8 @@
             <p class="text-[9.5pt] font-extrabold text-[#0F172A] uppercase tracking-wide">${escapeHtml(companyName)}</p>
             <p class="font-bold text-[#475569] text-[8.5pt] uppercase tracking-wider">${escapeHtml(signerTitle)}</p>
             
-            <div class="my-0.5 min-h-[64px] flex items-center justify-center" style="display: ${showStamp ? 'flex' : 'none'}">
-              <img src="${activeStamp}" alt="Mộc đỏ công ty" class="max-h-16 object-contain mx-auto">
+            <div class="my-0.5 min-h-[60px] flex items-center justify-center" style="display: ${showStamp ? 'flex' : 'none'}; min-height: 60px;">
+              <img src="${activeStamp}" alt="Mộc đỏ công ty" style="height: 60px; width: auto;" class="max-h-16 object-contain mx-auto">
             </div>
 
             <p class="font-extrabold text-[#0F172A] text-[10pt] mt-0.5">${escapeHtml(directorName)}</p>
@@ -2268,7 +2287,7 @@
         return tr;
       }
 
-      function createA4PageDOM(pageNumber) {
+      function createA4PageDOM(pageNumber, hasTable = true) {
         const isFirst = (pageNumber === 1);
         const wrapperEl = document.createElement('div');
         wrapperEl.className = 'a4-page-scale-wrapper';
@@ -2279,8 +2298,8 @@
         const headerHtml = isFirst ? `
           <div class="pb-3 border-b border-slate-200">
             <div class="flex items-center justify-between gap-4">
-              <div class="w-1/2 flex items-center">
-                <img src="${activeLogoH}" alt="SANWAY" style="width: 275px; height: auto; margin-left: -4px;" class="object-contain object-left">
+              <div class="w-1/2 flex items-center" style="min-height: 92px;">
+                <img src="${activeLogoH}" alt="SANWAY" style="width: 275px; min-height: 92px; height: auto; margin-left: -4px;" class="object-contain object-left">
               </div>
               <div class="w-1/2 text-right leading-snug space-y-0.5 text-[8.5pt] text-[#475569]">
                 <p class="text-[11pt] font-extrabold text-[#0F172A] uppercase tracking-tight mb-0.5">${escapeHtml(companyName)}</p>
@@ -2308,9 +2327,9 @@
             </p>
           </div>
         ` : `
-          <div class="pb-2.5 mb-3 border-b border-slate-200 flex justify-between items-center text-[9pt]">
+          <div class="pb-2.5 mb-3 border-b border-slate-200 flex justify-between items-center text-[9pt]" style="min-height: 35px;">
             <div class="flex items-center">
-              <img src="${activeLogoH}" alt="SANWAY" class="h-6 w-auto object-contain">
+              <img src="${activeLogoH}" alt="SANWAY" style="height: 24px; width: auto;" class="h-6 w-auto object-contain">
             </div>
             <div class="text-right font-medium text-[#64748B]">
               <span>Báo giá: <b class="text-[#0F172A] font-bold uppercase">${escapeHtml(projTitle.replace(/^HẠNG MỤC\s*:\s*/i, ''))}</b> <span class="text-slate-400 mx-1">|</span> <span class="page-header-num">Trang ${pageNumber}</span></span>
@@ -2318,26 +2337,30 @@
           </div>
         `;
 
+        const tableContainerHtml = hasTable ? `
+          <div class="mb-1">
+            <table class="sanway-table">
+              <thead>
+                <tr>
+                  <th style="width: 32px; text-align: center;">STT</th>
+                  <th style="text-align: left; padding-left: 6px;">TÊN HẠNG MỤC, VẬT TƯ THIẾT BỊ</th>
+                  <th style="width: 42px; text-align: center;">ĐVT</th>
+                  <th style="width: 40px; text-align: center;" title="Số lượng / Khối lượng">SL</th>
+                  <th style="width: 84px; text-align: right;">ĐƠN GIÁ (Đ)</th>
+                  <th style="width: 94px; text-align: right;">THÀNH TIỀN (Đ)</th>
+                  <th style="width: 56px; text-align: center; padding-right: 6px;">GHI CHÚ</th>
+                </tr>
+              </thead>
+              <tbody class="page-tbody"></tbody>
+            </table>
+          </div>
+        ` : '';
+
         pageEl.innerHTML = `
           <img src="${watermarkSrc}" alt="Watermark" class="a4-watermark">
           <div class="page-top-body flex-1 min-h-0 overflow-hidden flex flex-col justify-start relative z-10">
             ${headerHtml}
-            <div class="mb-1.5">
-              <table class="sanway-table">
-                <thead>
-                  <tr>
-                    <th style="width: 32px; text-align: center;">STT</th>
-                    <th style="text-align: left; padding-left: 6px;">TÊN HẠNG MỤC, VẬT TƯ THIẾT BỊ</th>
-                    <th style="width: 42px; text-align: center;">ĐVT</th>
-                    <th style="width: 40px; text-align: center;" title="Số lượng / Khối lượng">SL</th>
-                    <th style="width: 84px; text-align: right;">ĐƠN GIÁ (Đ)</th>
-                    <th style="width: 94px; text-align: right;">THÀNH TIỀN (Đ)</th>
-                    <th style="width: 56px; text-align: center; padding-right: 6px;">GHI CHÚ</th>
-                  </tr>
-                </thead>
-                <tbody class="page-tbody"></tbody>
-              </table>
-            </div>
+            ${tableContainerHtml}
             <div class="page-bottom-slot"></div>
           </div>
           <div class="shrink-0 mt-2 pt-2 border-t border-slate-200/80 flex justify-between items-center text-[8.5pt] text-[#64748B] relative z-10">
@@ -2371,16 +2394,14 @@
       let pageNum = 1;
 
       if (allRows.length === 0) {
-        const emptyPage = createA4PageDOM(1);
-        emptyPage.bottomSlot.innerHTML = summaryAndSignatureHtml;
+        const emptyPage = createA4PageDOM(1, true);
         pages.push(emptyPage);
       } else {
         while (rowIdx < allRows.length) {
-          const pObj = createA4PageDOM(pageNum);
+          const pObj = createA4PageDOM(pageNum, true);
           pages.push(pObj);
 
-          // Đặt sẵn dòng "(Bảng báo giá tiếp tục...)" để trừ hao chiều cao chính xác khi đo trang giữa
-          pObj.bottomSlot.innerHTML = `
+          const continuationNoteHtml = `
             <div class="text-right text-[8.5pt] italic text-[#64748B] mt-1 mb-0.5">
               (Bảng báo giá tiếp tục ở Trang ${pageNum + 1}...)
             </div>
@@ -2393,6 +2414,10 @@
           }
 
           while (rowIdx < allRows.length) {
+            const isVeryLastRow = (rowIdx === allRows.length - 1);
+            // Chỉ giữ dòng "(Bảng báo giá tiếp tục...)" khi vẫn còn dòng phía sau
+            pObj.bottomSlot.innerHTML = isVeryLastRow ? '' : continuationNoteHtml;
+
             const candidateRow = allRows[rowIdx];
             const tr = buildRowTrElement(candidateRow, false);
             pObj.tbody.appendChild(tr);
@@ -2401,6 +2426,7 @@
             const isOverflowing = (pObj.topBody.scrollHeight > pObj.topBody.clientHeight + 1);
             if (isOverflowing && pObj.rows.length > 0) {
               pObj.tbody.removeChild(tr);
+              pObj.bottomSlot.innerHTML = continuationNoteHtml;
               break;
             }
 
@@ -2408,66 +2434,43 @@
             rowIdx++;
           }
 
-          // Nếu vẫn còn dòng cho trang sau, không để dòng tiêu đề nhóm (La Mã) nằm trơ trọi ở cuối trang hiện tại
-          if (rowIdx < allRows.length && pObj.rows.length > 1) {
+          // Nếu bảng đã kết thúc hoàn toàn trên trang này, xóa dòng "(Bảng báo giá tiếp tục...)"
+          if (rowIdx >= allRows.length) {
+            pObj.bottomSlot.innerHTML = '';
+          } else if (pObj.rows.length > 1) {
+            // Nếu vẫn còn dòng cho trang sau, không để dòng tiêu đề nhóm (La Mã) nằm trơ trọi ở cuối trang hiện tại
             const lastAdded = pObj.rows[pObj.rows.length - 1];
             if (lastAdded.row.type === 'group') {
               pObj.tbody.removeChild(lastAdded.tr);
               pObj.rows.pop();
               rowIdx--;
+              pObj.bottomSlot.innerHTML = continuationNoteHtml;
             }
           }
 
           pageNum++;
         }
-
-        // Sau khi đã xếp hết các dòng vào bảng, gắn Khối Tổng tiền + Ghi chú + Chữ ký vào trang cuối cùng
-        let lastPage = pages[pages.length - 1];
-        lastPage.bottomSlot.innerHTML = summaryAndSignatureHtml;
-
-        // Nếu gắn thêm Khối Tổng tiền + Chữ ký vào trang cuối mà bị tràn chiều cao trang cuối:
-        if (lastPage.topBody.scrollHeight > lastPage.topBody.clientHeight + 1) {
-          // Khôi phục ghi chú chuyển trang ở trang hiện tại và chuyển dòng cuối + Khối Tổng tiền/Chữ ký sang trang mới
-          const nextPNum = pages.length + 1;
-          lastPage.bottomSlot.innerHTML = `
-            <div class="text-right text-[8.5pt] italic text-[#64748B] mt-1 mb-0.5">
-              (Bảng báo giá tiếp tục ở Trang ${nextPNum}...)
-            </div>
-          `;
-
-          const movedRows = [];
-          // Giữ lại tối thiểu 2 dòng hạng mục đi kèm với Khối Tổng tiền & Chữ ký ở trang cuối mới để bảng không bị trống
-          while (
-            lastPage.rows.length > 1 &&
-            (lastPage.topBody.scrollHeight > lastPage.topBody.clientHeight + 1 || movedRows.length < 2)
-          ) {
-            const popped = lastPage.rows.pop();
-            lastPage.tbody.removeChild(popped.tr);
-            movedRows.unshift(popped.row);
-          }
-
-          // Nếu sau khi lùi dòng mà dòng cuối của trang trước lại là tiêu đề nhóm (group), lùi luôn tiêu đề nhóm đó sang trang cuối
-          if (lastPage.rows.length > 1 && lastPage.rows[lastPage.rows.length - 1].row.type === 'group') {
-            const poppedGroup = lastPage.rows.pop();
-            lastPage.tbody.removeChild(poppedGroup.tr);
-            movedRows.unshift(poppedGroup.row);
-          }
-
-          const finalPage = createA4PageDOM(nextPNum);
-          pages.push(finalPage);
-
-          if (movedRows.length > 0 && movedRows[0].type === 'item' && movedRows[0].groupName) {
-            finalPage.tbody.appendChild(buildRowTrElement(movedRows[0], true));
-          }
-          movedRows.forEach(r => {
-            const tr = buildRowTrElement(r, false);
-            finalPage.tbody.appendChild(tr);
-            finalPage.rows.push({ row: r, tr });
-          });
-
-          finalPage.bottomSlot.innerHTML = summaryAndSignatureHtml;
-        }
       }
+
+      // Lần lượt gắn 3 khối cuối báo giá (1. Tổng tiền -> 2. Ghi chú -> 3. Chữ ký) vào khoảng trống còn lại
+      // Khối nào vừa với khoảng trống của trang hiện tại thì nằm ngay trên trang đó; khối nào tràn mới sang trang mới
+      const postTableBlocks = [totalsBlockHtml, notesBlockHtml, signatureBlockHtml];
+      let currentEndPage = pages[pages.length - 1];
+
+      postTableBlocks.forEach(blockHtml => {
+        const blockWrapper = document.createElement('div');
+        blockWrapper.innerHTML = blockHtml.trim();
+        const blockEl = blockWrapper.firstElementChild;
+        currentEndPage.bottomSlot.appendChild(blockEl);
+
+        if (currentEndPage.topBody.scrollHeight > currentEndPage.topBody.clientHeight + 1) {
+          currentEndPage.bottomSlot.removeChild(blockEl);
+          const nextPNum = pages.length + 1;
+          currentEndPage = createA4PageDOM(nextPNum, false);
+          pages.push(currentEndPage);
+          currentEndPage.bottomSlot.appendChild(blockEl);
+        }
+      });
 
       // Cập nhật tổng số trang chính xác dưới Footer của tất cả các trang
       const totalPages = pages.length;
@@ -2485,6 +2488,15 @@
       }
 
       updateMobileA4Scale();
+
+      // Sau 1 nhịp khung hình (khi Tailwind JIT và ảnh base64 đã giải mã xong), kiểm tra lại để đảm bảo chính xác tuyệt đối 100%
+      if (!isRepass) {
+        requestAnimationFrame(() => {
+          setTimeout(() => {
+            renderPreview(true);
+          }, 30);
+        });
+      }
     }
 
     // Tự động thu phóng tờ A4 (210mm x 297mm = 794px x 1123px) vừa khít chiều ngang màn hình điện thoại
