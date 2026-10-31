@@ -2174,20 +2174,20 @@
         });
       }
 
-      // THUẬT TOÁN CHIA TRANG A4 THÔNG MINH THEO CHIỀU CAO THỰC TẾ (ĐẢM BẢO LỀ DƯỚI 24MM LUÔN THOÁNG ĐÃNG, KHÔNG BỊ SÁT MÉP DƯỚI)
+      // THUẬT TOÁN CHIA TRANG A4 THÔNG MINH THEO CHIỀU CAO THỰC TẾ (LẤP ĐẦY TỐI ĐA MỖI TRANG, KHÔNG NHẢY TRANG SỚM)
       function estimateRowHeightPx(row) {
-        if (row.type === 'group') return 30;
+        if (row.type === 'group') return 29;
         const nameLen = (row.name || '').length;
-        if (nameLen > 110) return 60;
-        if (nameLen > 58) return 44;
-        return 28.5;
+        if (nameLen > 105) return 56;
+        if (nameLen > 54) return 41;
+        return 27;
       }
 
-      // Chiều cao tối đa dành cho phần thân bảng trên mỗi trang (đã trừ Header, Tiêu đề, Khối chữ ký trang cuối và Lề dưới 24mm)
-      const MAX_P1_MID = 525;  // Trang 1 (khi còn trang tiếp theo): ~18 dòng
-      const MAX_P1_LAST = 220; // Trang 1 (khi báo giá ngắn chỉ có 1 trang kèm Tổng kết & Chữ ký): ~7 dòng
-      const MAX_PN_MID = 715;  // Trang 2+ (khi còn trang tiếp theo): ~24 dòng
-      const MAX_PN_LAST = 435; // Trang 2+ (trang cuối kèm Tổng kết, Ghi chú & Chữ ký đóng dấu): ~15 dòng
+      // Chiều cao thực tế khả dụng cho phần tbody trên mỗi trang A4 (đã đo chuẩn theo khung 297mm, lề trên 20mm, lề dưới 24mm)
+      const MAX_P1_MID = 585;  // Trang 1 (khi còn trang sau): ~21 dòng (lấp đầy trang 1)
+      const MAX_P1_LAST = 315; // Trang 1 (khi báo giá ngắn chỉ có 1 trang kèm Tổng kết & Chữ ký): ~11 dòng
+      const MAX_PN_MID = 785;  // Trang 2+ (khi còn trang sau): ~28 dòng (lấp đầy trang 2)
+      const MAX_PN_LAST = 535; // Trang 2+ (trang cuối kèm Tổng kết, Ghi chú & Chữ ký đóng dấu): ~19 dòng
 
       const pageChunks = [];
       let currentRowIdx = 0;
@@ -2197,41 +2197,37 @@
         const maxMid = (pageNum === 1) ? MAX_P1_MID : MAX_PN_MID;
         const maxLast = (pageNum === 1) ? MAX_P1_LAST : MAX_PN_LAST;
 
-        let remainingHeight = 0;
+        // Nếu dòng đầu trang là item tiếp nối từ trang trước, cộng thêm 29px cho dòng tiêu đề nhóm "(tiếp theo)"
+        const contHeaderH = (allRows[currentRowIdx].type === 'item') ? 29 : 0;
+
+        let remainingHeight = contHeaderH;
         for (let i = currentRowIdx; i < allRows.length; i++) {
           remainingHeight += estimateRowHeightPx(allRows[i]);
         }
 
-        // Trường hợp toàn bộ số dòng còn lại + Khối Tổng kết & Chữ ký vừa khít trong trang hiện tại
+        // 1. Nếu toàn bộ các dòng còn lại + Khối Tổng kết & Chữ ký vừa khít trong trang hiện tại -> Gộp luôn vào trang này!
         if (remainingHeight <= maxLast) {
           pageChunks.push(allRows.slice(currentRowIdx));
           currentRowIdx = allRows.length;
           break;
         }
 
-        // Trường hợp cần sang trang tiếp theo: nếu số dòng còn lại ít hơn maxMid nhưng vượt quá maxLast,
-        // giữ lại khoảng 4-5 dòng cho trang cuối để trang cuối luôn cân đối, không bị lẻ 1 dòng
-        let targetMax = maxMid;
-        if (remainingHeight <= maxMid && (allRows.length - currentRowIdx) >= 5) {
-          targetMax = Math.max(120, remainingHeight - 130);
-        }
+        // 2. Nếu vượt quá maxLast (cần sang trang mới cho phần còn lại + Chữ ký), lấp đầy trang hiện tại tối đa tới maxMid
+        let maxRowsToTake = allRows.length - currentRowIdx - 2;
+        if (maxRowsToTake < 1) maxRowsToTake = 1;
 
-        let curH = 0;
+        let curH = contHeaderH;
         let take = 0;
-        while (currentRowIdx + take < allRows.length) {
+        while (take < maxRowsToTake) {
           const rh = estimateRowHeightPx(allRows[currentRowIdx + take]);
-          if (curH + rh > targetMax && take > 0) break;
+          if (curH + rh > maxMid && take > 0) break;
           curH += rh;
           take++;
         }
 
-        // Không để dòng tiêu đề nhóm (La Mã) nằm lẻ loi ở cuối trang
+        // Chỉ tránh để dòng tiêu đề nhóm (La Mã) đứng trơ trọi một mình ở dòng cuối cùng của trang
         if (take > 1 && allRows[currentRowIdx + take - 1].type === 'group') {
           take--;
-        }
-        // Không để nhóm mới mở ra ở cuối trang mà chỉ có đúng 1 hạng mục lẻ loi rồi bị ngắt sang trang sau
-        if (take > 2 && allRows[currentRowIdx + take - 2].type === 'group' && (currentRowIdx + take) < allRows.length) {
-          take -= 2;
         }
 
         pageChunks.push(allRows.slice(currentRowIdx, currentRowIdx + take));
