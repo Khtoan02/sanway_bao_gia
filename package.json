@@ -1,0 +1,12 @@
+{
+  "name": "sanway-quotation-erp",
+  "version": "2.0.0",
+  "description": "Hệ thống Quản lý & Xuất Báo giá Kỹ thuật PCCC SANWAY (Backend API & RBAC)",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}

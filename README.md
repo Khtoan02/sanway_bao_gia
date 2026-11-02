@@ -17,10 +17,11 @@ Hệ thống tạo và xuất báo giá tự động theo đúng bộ nhận di�
   - Tự động tính tổng tiền và đọc số thành chữ tiếng Việt chuẩn tài chính.
   - Tối ưu CSS `@media print` in ấn và lưu file PDF sắc nét chuẩn khổ giấy A4 Portrait.
 
-## 💻 Hướng Dẫn Sử Dụng
-Mở trực tiếp file `index.html` bằng trình duyệt hoặc khởi chạy qua server:
+## 💻 Hướng Dẫn Sử Dụng (Backend Bảo Mật)
+Khởi chạy Backend Server Node.js để xác thực mã PIN 4 số và lưu trữ dữ liệu bảo mật phía Server:
 ```bash
-python3 -m http.server 3000
+npm start
+# hoặc: node server.js
 ```
 Truy cập: `http://localhost:3000`
 

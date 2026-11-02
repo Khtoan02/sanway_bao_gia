@@ -1,3 +1,6 @@
 .DS_Store
 *.log
+server_data/
+node_modules/
+
 

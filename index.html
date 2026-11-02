@@ -316,79 +316,36 @@
 </head>
 <body class="text-brand-dark antialiased min-h-screen pb-28 md:pb-8">
 
-  <!-- ==================== MÀN HÌNH ĐĂNG NHẬP BẰNG MẬT KHẨU (ENTERPRISE PORTAL) ==================== -->
-  <div id="loginModal" class="no-print fixed inset-0 z-[100] bg-[#0F172A]/90 backdrop-blur-md flex items-center justify-center p-3 sm:p-4 overflow-y-auto">
-    <div class="bg-white w-full max-w-[440px] max-h-[94vh] overflow-y-auto rounded-2xl shadow-2xl border border-slate-200/80 animate-modal my-auto">
-      <!-- Header Login -->
-      <div class="bg-gradient-to-b from-[#1E293B] to-[#0F172A] px-5 sm:px-6 py-5 sm:py-7 text-center relative overflow-hidden border-b border-slate-800">
-        <div class="absolute -right-10 -top-10 w-36 h-36 rounded-full bg-[#D62828]/20 blur-2xl pointer-events-none"></div>
-        <div class="absolute -left-10 -bottom-10 w-28 h-28 rounded-full bg-blue-500/10 blur-2xl pointer-events-none"></div>
-        <div class="inline-flex items-center justify-center bg-white px-4 sm:px-5 py-2 rounded-xl shadow-md mb-3">
-          <img id="loginLogo" src="" alt="SANWAY" class="h-8 sm:h-10 w-auto object-contain">
-        </div>
-        <h2 class="text-white font-extrabold text-sm sm:text-base tracking-wide uppercase">Cổng Quản Lý Báo Giá Nội Bộ</h2>
-        <p class="text-slate-400 text-[11px] sm:text-xs mt-1">Xác thực nhanh bằng Mật khẩu phân quyền (RBAC)</p>
+  <!-- ==================== MÀN HÌNH ĐĂNG NHẬP TỐI GIẢN (MẬT KHẨU 4 SỐ) ==================== -->
+  <div id="loginModal" class="no-print fixed inset-0 z-[100] bg-[#0F172A]/90 backdrop-blur-md flex items-center justify-center p-4">
+    <div class="bg-white w-full max-w-[330px] rounded-2xl shadow-2xl border border-slate-200/80 p-6 sm:p-7 text-center animate-modal">
+      <div class="mb-5 flex justify-center">
+        <img id="loginLogo" src="" alt="SANWAY" class="h-10 w-auto object-contain">
       </div>
 
-      <!-- Body Login -->
-      <form onsubmit="handleLogin(event)" class="p-5 sm:p-7 space-y-4 sm:space-y-5">
+      <form onsubmit="handleLogin(event)" class="space-y-3.5" autocomplete="off">
         <div>
-          <label class="erp-label uppercase tracking-wider">
-            <i class="fa-solid fa-key text-[#D62828]"></i>
-            <span>Mật khẩu truy cập của bạn</span>
-          </label>
-          <div class="relative mt-1">
-            <span class="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none">
-              <i class="fa-solid fa-lock text-xs"></i>
-            </span>
-            <input type="password" id="loginPasswordInput" required autofocus placeholder="Nhập mật khẩu được cấp..." class="mobile-no-zoom w-full pl-9 pr-11 py-3 border border-slate-300 rounded-xl text-sm font-bold text-[#0F172A] focus:border-[#D62828] focus:ring-4 focus:ring-red-500/10 focus:outline-none transition tracking-wider">
-            <button type="button" onclick="togglePasswordVisibility('loginPasswordInput', 'loginEyeIcon')" class="absolute right-2.5 top-1/2 -translate-y-1/2 text-slate-400 hover:text-[#0F172A] w-8 h-8 rounded-lg hover:bg-slate-100 flex items-center justify-center transition">
-              <i id="loginEyeIcon" class="fa-regular fa-eye text-xs"></i>
-            </button>
-          </div>
-          <p id="loginErrorMsg" class="hidden text-xs font-semibold text-[#D62828] mt-2 flex items-center gap-1.5 bg-red-50 border border-red-200 px-3 py-2 rounded-lg">
+          <input
+            type="password"
+            id="loginPasswordInput"
+            inputmode="numeric"
+            pattern="[0-9]{4}"
+            maxlength="4"
+            required
+            autofocus
+            placeholder="• • • •"
+            oninput="handlePinInput(this)"
+            class="mobile-no-zoom w-full py-3.5 px-4 border-2 border-slate-200 rounded-xl text-center text-2xl font-black tracking-[0.55em] text-[#0F172A] placeholder:text-slate-300 placeholder:tracking-[0.35em] focus:border-[#D62828] focus:ring-4 focus:ring-red-500/10 focus:outline-none transition"
+          >
+          <p id="loginErrorMsg" class="hidden text-xs font-semibold text-[#D62828] mt-2.5 flex items-center justify-center gap-1.5">
             <i class="fa-solid fa-circle-exclamation"></i>
-            <span>Mật khẩu không chính xác. Vui lòng kiểm tra lại!</span>
+            <span id="loginErrorText">Mật khẩu 4 số không đúng!</span>
           </p>
         </div>
 
-        <button type="submit" class="w-full py-3.5 sm:py-3 rounded-xl bg-[#D62828] hover:bg-[#B91C1C] active:scale-[0.99] text-white font-bold text-sm shadow-lg shadow-red-600/20 transition flex items-center justify-center gap-2">
-          <span>Truy Cập Hệ Thống</span>
-          <i class="fa-solid fa-arrow-right text-xs"></i>
+        <button type="submit" id="loginSubmitBtn" class="w-full py-3 rounded-xl bg-[#D62828] hover:bg-[#B91C1C] active:scale-[0.99] text-white font-bold text-sm shadow-md shadow-red-600/20 transition">
+          Đăng Nhập
         </button>
-
-        <!-- Quick Demo / Role Switcher Pills -->
-        <div class="pt-3.5 border-t border-slate-100 space-y-2.5">
-          <div class="flex items-center justify-between text-[11px] gap-2">
-            <span class="font-bold text-slate-600 flex items-center gap-1.5">
-              <i class="fa-solid fa-bolt text-amber-500"></i> Chọn nhanh vai trò (Demo):
-            </span>
-            <span id="cloudStatusBadgeLogin" class="text-[10px] px-2 py-0.5 rounded-md bg-slate-100 text-slate-600 font-semibold border border-slate-200 shrink-0">Local Mode</span>
-          </div>
-          <div class="grid grid-cols-3 gap-2">
-            <button type="button" onclick="quickFillLogin('admin2026')" class="px-2.5 py-2.5 rounded-xl border border-slate-200 hover:border-[#D62828] active:bg-red-50 hover:bg-red-50/40 text-left transition group">
-              <div class="text-[10px] font-bold text-[#D62828] uppercase flex items-center justify-between">
-                <span>Admin</span>
-                <i class="fa-solid fa-user-gear text-[10px] opacity-70 group-hover:opacity-100"></i>
-              </div>
-              <div class="text-[11px] font-mono font-semibold text-slate-700 mt-0.5 truncate">admin2026</div>
-            </button>
-            <button type="button" onclick="quickFillLogin('lanhdao2026')" class="px-2.5 py-2.5 rounded-xl border border-slate-200 hover:border-amber-500 active:bg-amber-50 hover:bg-amber-50/40 text-left transition group">
-              <div class="text-[10px] font-bold text-amber-700 uppercase flex items-center justify-between">
-                <span>Lãnh đạo</span>
-                <i class="fa-solid fa-crown text-[10px] opacity-70 group-hover:opacity-100"></i>
-              </div>
-              <div class="text-[11px] font-mono font-semibold text-slate-700 mt-0.5 truncate">lanhdao2026</div>
-            </button>
-            <button type="button" onclick="quickFillLogin('sale01')" class="px-2.5 py-2.5 rounded-xl border border-slate-200 hover:border-emerald-600 active:bg-emerald-50 hover:bg-emerald-50/40 text-left transition group">
-              <div class="text-[10px] font-bold text-emerald-700 uppercase flex items-center justify-between">
-                <span>Sale 01</span>
-                <i class="fa-solid fa-user-tie text-[10px] opacity-70 group-hover:opacity-100"></i>
-              </div>
-              <div class="text-[11px] font-mono font-semibold text-slate-700 mt-0.5 truncate">sale01</div>
-            </button>
-          </div>
-        </div>
       </form>
     </div>
   </div>
@@ -915,8 +872,8 @@
                   </select>
                 </div>
                 <div class="sm:col-span-4">
-                  <label class="block text-[11px] font-bold text-slate-600 mb-1">Mật khẩu đăng nhập riêng</label>
-                  <input type="text" id="newStaffPass" required placeholder="VD: sale_vanb2026" class="erp-input text-xs font-mono font-bold text-[#D62828] py-2">
+                  <label class="block text-[11px] font-bold text-slate-600 mb-1">Mật khẩu 4 số (PIN)</label>
+                  <input type="text" id="newStaffPass" inputmode="numeric" pattern="[0-9]{4}" maxlength="4" oninput="this.value = this.value.replace(/\D/g, '').slice(0, 4)" required placeholder="VD: 1234" class="erp-input text-xs font-mono font-bold text-[#D62828] py-2 tracking-widest text-center">
                 </div>
               </div>
               <div class="mt-3 flex justify-end">
@@ -1120,16 +1077,25 @@
   </div>
 
   <script>
-    // ==================== HỆ THỐNG LƯU TRỮ & PHÂN QUYỀN (RBAC PASSWORD-ONLY) ====================
-    const STORAGE_KEY_MASTER = 'SANWAY_MASTER_DATA_V1';
-    const STORAGE_KEY_SESSION = 'SANWAY_AUTH_SESSION_V1';
+    // ==================== HỆ THỐNG BẢO MẬT BACKEND API & MÃ HÓA AES-256-GCM (KHÔNG LƯU MẬT KHẨU RÕ Ở FRONTEND) ====================
+    const STORAGE_KEY_MASTER = 'SANWAY_PUBLIC_CACHE_V2';
+    const STORAGE_KEY_VAULT = 'SANWAY_ENC_VAULT_V2';
+    const STORAGE_KEY_TOKEN = 'SANWAY_AUTH_TOKEN_V2';
     const STORAGE_KEY_CLOUD = 'SANWAY_CLOUD_CONFIG_V1';
 
-    const DEFAULT_USERS = [
-      { id: 'u_admin', name: 'Quản Trị Viên (Admin)', role: 'admin', password: 'admin2026' },
-      { id: 'u_leader', name: 'Ban Giám Đốc (Lãnh Đạo)', role: 'leader', password: 'lanhdao2026' },
-      { id: 'u_sale1', name: 'Nhân Viên Kinh Doanh 01', role: 'sale', password: 'sale01' },
-      { id: 'u_sale2', name: 'Nhân Viên Kinh Doanh 02', role: 'sale', password: 'sale02' }
+    // Xóa sạch mọi dữ liệu plaintext cũ (nếu từng tồn tại ở phiên bản trước trong trình duyệt)
+    try {
+      localStorage.removeItem('SANWAY_MASTER_DATA_V1');
+      sessionStorage.removeItem('SANWAY_AUTH_SESSION_V1');
+    } catch (e) {}
+
+    // Bản ghi mã hóa AES-256-GCM + PBKDF2-SHA256 (100.000 vòng) dùng khi chạy độc lập không có Node Server
+    // Tuyệt đối không chứa bất kỳ mật khẩu dạng rõ (plaintext) nào trong mã nguồn HTML/JS
+    const SECURE_VAULT_SEED = [
+      {"id":"u_admin","s":"eTHN2POkKwXsk0i9qIJnqQ==","iv":"eT0D9cmDA1Mn6NV7","ct":"JPpmQIUY/JBR8QEH6tVMamV7KHZOW/SwRAasyFfp+5MBt3Dd/iCEx/DMA0IuI8Entwt4Eypacy4+e61TaI4qbQzJK5sVD9vxefTtAXeIjBg/vGU="},
+      {"id":"u_leader","s":"a0qZxuTGwTnyO2hojGOdAQ==","iv":"hD3XxEDTchWYYZm3","ct":"gy575QiEhSYJ/tYqY3CYPG+gn2FiOwYP2FRJnPmbfzy5J7g6YisC7AEeTRdbixggSiMeUG4iPmp9hzLUb3rEvsMscGVLvDFO50UNdUU0/U0AV2XEDcAszvTw"},
+      {"id":"u_sale1","s":"IR4WKbPqaYIB3xo7jXhD5g==","iv":"iByRXtSBGuuFL7iv","ct":"QPF4fSaX1zzr4yGjZTeHjhZ7n0i6zoRq5KFIUX1agNvTaBmRTpQoYyJ4zSVNLPJNgXC6yYkRu9eHHYPKnYwA+rD+Csn0g3a6nz1YuevPNTAD"},
+      {"id":"u_sale2","s":"JJwZXNseRKd0CaqsV09R6w==","iv":"Z2TMB4U8eB+gkDue","ct":"9523VOX84C+YmBpknad8tVqRIw2UioH0gonC4c3YyE7iDbFdJ6lE5r0fZJYj48FcR5Y0MuY4vaTo0PUHP6motS5a0yN6aXQ89Xo2v6xYJbnA"}
     ];
 
     const DEFAULT_COMPANY = {
@@ -1142,10 +1108,12 @@
       vatRate: 8
     };
 
-    let currentUser = null; // { id, name, role, password }
+    let backendAvailable = false;
+    let authToken = sessionStorage.getItem(STORAGE_KEY_TOKEN) || '';
+    let currentUser = null; // { id, name, role }
     let masterData = {
       company: { ...DEFAULT_COMPANY },
-      users: JSON.parse(JSON.stringify(DEFAULT_USERS)),
+      users: [],
       catalog: JSON.parse(JSON.stringify(INITIAL_CATALOG)),
       customAssets: {
         stamp: null,
@@ -1194,21 +1162,149 @@
       if (document.getElementById('adminPreviewStamp')) document.getElementById('adminPreviewStamp').src = stampImg;
     }
 
-    // Khởi tạo dữ liệu từ LocalStorage + Cloud (nếu có)
+    // ==================== WEB CRYPTO PBKDF2 + AES-256-GCM (DÙNG KHI KHÔNG CÓ NODE SERVER) ====================
+    function b64ToBytes(b64) {
+      const bin = atob(b64);
+      const arr = new Uint8Array(bin.length);
+      for (let i = 0; i < bin.length; i++) arr[i] = bin.charCodeAt(i);
+      return arr;
+    }
+
+    function bytesToB64(bytes) {
+      let bin = '';
+      const arr = new Uint8Array(bytes);
+      for (let i = 0; i < arr.length; i++) bin += String.fromCharCode(arr[i]);
+      return btoa(bin);
+    }
+
+    async function derivePinKey(pin, saltBytes) {
+      const enc = new TextEncoder();
+      const baseKey = await window.crypto.subtle.importKey(
+        'raw',
+        enc.encode(String(pin)),
+        { name: 'PBKDF2' },
+        false,
+        ['deriveKey']
+      );
+      return window.crypto.subtle.deriveKey(
+        {
+          name: 'PBKDF2',
+          salt: saltBytes,
+          iterations: 100000,
+          hash: 'SHA-256'
+        },
+        baseKey,
+        { name: 'AES-GCM', length: 256 },
+        false,
+        ['encrypt', 'decrypt']
+      );
+    }
+
+    async function encryptVaultEntry(pin, userObj) {
+      const salt = window.crypto.getRandomValues(new Uint8Array(16));
+      const iv = window.crypto.getRandomValues(new Uint8Array(12));
+      const key = await derivePinKey(pin, salt);
+      const encoded = new TextEncoder().encode(JSON.stringify({
+        id: userObj.id,
+        name: userObj.name,
+        role: userObj.role
+      }));
+      const cipherBuf = await window.crypto.subtle.encrypt({ name: 'AES-GCM', iv }, key, encoded);
+      return {
+        id: userObj.id,
+        name: userObj.name,
+        role: userObj.role,
+        s: bytesToB64(salt),
+        iv: bytesToB64(iv),
+        ct: bytesToB64(cipherBuf)
+      };
+    }
+
+    async function verifyPinAgainstVault(pin) {
+      let vault = SECURE_VAULT_SEED;
+      const savedVaultRaw = localStorage.getItem(STORAGE_KEY_VAULT);
+      if (savedVaultRaw) {
+        try {
+          const parsed = JSON.parse(savedVaultRaw);
+          if (Array.isArray(parsed) && parsed.length > 0) vault = parsed;
+        } catch (e) {}
+      }
+
+      for (const entry of vault) {
+        try {
+          const key = await derivePinKey(pin, b64ToBytes(entry.s));
+          const decryptedBuf = await window.crypto.subtle.decrypt(
+            { name: 'AES-GCM', iv: b64ToBytes(entry.iv) },
+            key,
+            b64ToBytes(entry.ct)
+          );
+          const payload = JSON.parse(new TextDecoder().decode(decryptedBuf));
+          if (payload && payload.id && payload.role) {
+            return { user: payload, vault };
+          }
+        } catch (err) {
+          // Sai PIN cho entry này, tiếp tục kiểm tra entry tiếp theo
+        }
+      }
+      return null;
+    }
+
+    function applyServerPayload(payload) {
+      if (payload.token) {
+        authToken = payload.token;
+        sessionStorage.setItem(STORAGE_KEY_TOKEN, authToken);
+      }
+      if (payload.company) masterData.company = payload.company;
+      if (Array.isArray(payload.catalog)) masterData.catalog = payload.catalog;
+      if (payload.customAssets) masterData.customAssets = payload.customAssets;
+      if (Array.isArray(payload.users)) {
+        masterData.users = payload.users;
+      } else {
+        masterData.users = [];
+      }
+      applyMasterDataToWorkspace();
+      syncBrandingImages();
+    }
+
+    // Khởi tạo hệ thống: Ưu tiên kết nối Backend API (/api/auth/me), tự động chuyển sang Encrypted Vault nếu mở file tĩnh
     async function initSystemDatabase() {
+      syncBrandingImages();
+
+      try {
+        const headers = { 'Accept': 'application/json' };
+        if (authToken) headers['Authorization'] = `Bearer ${authToken}`;
+        const res = await fetch('/api/auth/me', { method: 'GET', headers, credentials: 'same-origin' });
+        if (res.status === 200 || res.status === 401) {
+          backendAvailable = true;
+          updateCloudStatusBadges(true);
+          if (res.status === 200) {
+            const data = await res.json();
+            if (data && data.ok && data.user) {
+              applyServerPayload(data);
+              loginSuccess(data.user, false);
+              return;
+            }
+          }
+          showLoginModal();
+          return;
+        }
+      } catch (e) {
+        backendAvailable = false;
+      }
+
+      // Chế độ Offline / Static Host (GitHub Pages): Đọc cấu hình công ty & bảng giá (không chứa mật khẩu)
       const savedLocal = localStorage.getItem(STORAGE_KEY_MASTER);
       if (savedLocal) {
         try {
           const parsed = JSON.parse(savedLocal);
-          if (parsed && parsed.company && Array.isArray(parsed.users) && Array.isArray(parsed.catalog)) {
-            masterData = parsed;
+          if (parsed && parsed.company && Array.isArray(parsed.catalog)) {
+            masterData.company = parsed.company;
+            masterData.catalog = parsed.catalog;
+            masterData.customAssets = parsed.customAssets || { stamp: null, logo_horizontal: null, logo_official: null };
           }
-        } catch (e) {
-          console.warn('Không thể đọc LocalStorage, dùng mặc định:', e);
-        }
+        } catch (e) {}
       }
 
-      // Kiểm tra cấu hình Cloud Sync
       const cloudCfgRaw = localStorage.getItem(STORAGE_KEY_CLOUD);
       if (cloudCfgRaw) {
         try {
@@ -1219,44 +1315,27 @@
             updateCloudStatusBadges(true);
             await pullFromCloudStorage(cloudCfg.endpoint, cloudCfg.apiKey);
           }
-        } catch (e) {
-          console.warn('Lỗi tải cấu hình Cloud:', e);
-        }
+        } catch (e) {}
       }
 
       applyMasterDataToWorkspace();
       syncBrandingImages();
-
-      // Kiểm tra phiên đăng nhập hiện hành
-      const savedSession = sessionStorage.getItem(STORAGE_KEY_SESSION);
-      if (savedSession) {
-        try {
-          const sessionUser = JSON.parse(savedSession);
-          const matched = masterData.users.find(u => u.password === sessionUser.password);
-          if (matched) {
-            loginSuccess(matched, false);
-            return;
-          }
-        } catch (e) {}
-      }
       showLoginModal();
     }
 
     function applyMasterDataToWorkspace() {
-      // Đổ thông tin công ty vào các input
       const c = masterData.company || DEFAULT_COMPANY;
       document.getElementById('inputCompanyFullName').value = c.fullName || DEFAULT_COMPANY.fullName;
       document.getElementById('inputCompanyHotline').value = c.hotline || DEFAULT_COMPANY.hotline;
       document.getElementById('inputCompanyEmail').value = c.email || DEFAULT_COMPANY.email;
       document.getElementById('inputCompanyAddress').value = c.address || DEFAULT_COMPANY.address;
-      document.getElementById('inputDirectorName').value = c.directorName || DEFAULT_COMPANY.directorName;
+      document.getElementById('inputDirectorName').value = '';
       document.getElementById('inputSignerTitle').value = c.signerTitle || DEFAULT_COMPANY.signerTitle;
       document.getElementById('inputVatRate').value = (c.vatRate !== undefined) ? c.vatRate : 8;
       if (document.getElementById('saleBannerCompanyName')) {
         document.getElementById('saleBannerCompanyName').textContent = c.fullName || DEFAULT_COMPANY.fullName;
       }
 
-      // Khởi tạo bảng vật tư cho phiên báo giá từ catalog gốc
       itemsData = JSON.parse(JSON.stringify(masterData.catalog)).map(item => ({
         ...item,
         selected: item.selected !== undefined ? item.selected : true,
@@ -1270,24 +1349,22 @@
       renderStaffPasswordsTable();
     }
 
-    function saveMasterSystemData(notify = true) {
+    async function saveMasterSystemData(notify = true) {
       if (!isManagerRole()) {
         showToast('Chỉ Lãnh đạo hoặc Admin mới có quyền lưu cấu hình gốc!', true);
         return;
       }
 
-      // Thu thập thông tin công ty từ form
       masterData.company = {
         fullName: document.getElementById('inputCompanyFullName').value.trim(),
         hotline: document.getElementById('inputCompanyHotline').value.trim(),
         email: document.getElementById('inputCompanyEmail').value.trim(),
         address: document.getElementById('inputCompanyAddress').value.trim(),
-        directorName: document.getElementById('inputDirectorName').value.trim(),
+        directorName: '',
         signerTitle: document.getElementById('inputSignerTitle').value.trim(),
         vatRate: parseFloat(document.getElementById('inputVatRate').value) || 0
       };
 
-      // Cập nhật bảng giá gốc từ itemsData
       masterData.catalog = itemsData.map(it => ({
         id: it.id,
         category: it.category,
@@ -1298,10 +1375,43 @@
       }));
 
       masterData.updatedAt = new Date().toISOString();
-      localStorage.setItem(STORAGE_KEY_MASTER, JSON.stringify(masterData));
 
       if (document.getElementById('saleBannerCompanyName')) {
         document.getElementById('saleBannerCompanyName').textContent = masterData.company.fullName;
+      }
+
+      if (backendAvailable) {
+        try {
+          const res = await fetch('/api/system/save', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              'Authorization': `Bearer ${authToken}`
+            },
+            credentials: 'same-origin',
+            body: JSON.stringify({
+              company: masterData.company,
+              catalog: masterData.catalog,
+              customAssets: masterData.customAssets
+            })
+          });
+          const data = await res.json();
+          if (!res.ok || !data.ok) {
+            showToast(data.error || 'Không thể lưu lên Backend!', true);
+            return;
+          }
+        } catch (err) {
+          showToast('Lỗi kết nối Backend Server!', true);
+          return;
+        }
+      } else {
+        // Chỉ lưu thông tin công ty & bảng giá, tuyệt đối không lưu mật khẩu rõ vào LocalStorage
+        localStorage.setItem(STORAGE_KEY_MASTER, JSON.stringify({
+          company: masterData.company,
+          catalog: masterData.catalog,
+          customAssets: masterData.customAssets,
+          updatedAt: masterData.updatedAt
+        }));
       }
 
       pushToCloudStorageIfConfigured();
@@ -1310,17 +1420,10 @@
       }
     }
 
-    // ==================== XỬ LÝ ĐĂNG NHẬP & PHÂN QUYỀN GIAO DIỆN ====================
-    function togglePasswordVisibility(inputId, iconId) {
-      const inp = document.getElementById(inputId);
-      const icon = document.getElementById(iconId);
-      if (inp.type === 'password') {
-        inp.type = 'text';
-        icon.className = 'fa-regular fa-eye-slash';
-      } else {
-        inp.type = 'password';
-        icon.className = 'fa-regular fa-eye';
-      }
+    // ==================== XỬ LÝ ĐĂNG NHẬP MẬT KHẨU 4 SỐ & PHÂN QUYỀN BACKEND ====================
+    function handlePinInput(inputEl) {
+      inputEl.value = inputEl.value.replace(/\D/g, '').slice(0, 4);
+      document.getElementById('loginErrorMsg').classList.add('hidden');
     }
 
     function showLoginModal() {
@@ -1333,37 +1436,86 @@
       setTimeout(() => passInp.focus(), 100);
     }
 
-    function handleLogin(e) {
+    async function handleLogin(e) {
       e.preventDefault();
-      const enteredPass = document.getElementById('loginPasswordInput').value.trim();
+      const enteredPin = document.getElementById('loginPasswordInput').value.replace(/\D/g, '').trim();
       const err = document.getElementById('loginErrorMsg');
+      const errTxt = document.getElementById('loginErrorText');
+      const btn = document.getElementById('loginSubmitBtn');
 
-      const matchedUser = masterData.users.find(u => u.password === enteredPass);
-      if (!matchedUser) {
+      if (!/^\d{4}$/.test(enteredPin)) {
+        if (errTxt) errTxt.textContent = 'Vui lòng nhập đủ 4 chữ số!';
         err.classList.remove('hidden');
         return;
       }
 
-      err.classList.add('hidden');
-      loginSuccess(matchedUser, true);
-    }
+      if (btn) btn.disabled = true;
 
-    function quickFillLogin(pass) {
-      const inp = document.getElementById('loginPasswordInput');
-      inp.value = pass;
-      const matchedUser = masterData.users.find(u => u.password === pass);
-      if (matchedUser) {
-        document.getElementById('loginErrorMsg').classList.add('hidden');
-        loginSuccess(matchedUser, true);
+      // 1. Xác thực trực tiếp trên Backend Server (/api/auth/login)
+      try {
+        const res = await fetch('/api/auth/login', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          credentials: 'same-origin',
+          body: JSON.stringify({ pin: enteredPin })
+        });
+
+        if (res.status !== 404 && res.status !== 405) {
+          backendAvailable = true;
+          const data = await res.json();
+          if (btn) btn.disabled = false;
+
+          if (!res.ok || !data.ok) {
+            if (errTxt) errTxt.textContent = data.error || 'Mật khẩu 4 số không đúng!';
+            err.classList.remove('hidden');
+            document.getElementById('loginPasswordInput').select();
+            return;
+          }
+
+          err.classList.add('hidden');
+          applyServerPayload(data);
+          loginSuccess(data.user, true);
+          return;
+        }
+      } catch (networkErr) {
+        // Nếu không có Node server, chuyển sang giải mã AES-256-GCM cục bộ
       }
+
+      // 2. Xác thực bằng giải mã AES-256-GCM + PBKDF2-SHA256 (Không có mật khẩu rõ trong code)
+      const verified = await verifyPinAgainstVault(enteredPin);
+      if (btn) btn.disabled = false;
+
+      if (!verified) {
+        if (errTxt) errTxt.textContent = 'Mật khẩu 4 số không đúng!';
+        err.classList.remove('hidden');
+        document.getElementById('loginPasswordInput').select();
+        return;
+      }
+
+      err.classList.add('hidden');
+      if (verified.user.role === 'admin' || verified.user.role === 'leader') {
+        const defaultNames = {
+          u_admin: { name: 'Quản Trị Viên (Admin)', role: 'admin' },
+          u_leader: { name: 'Ban Giám Đốc (Lãnh Đạo)', role: 'leader' },
+          u_sale1: { name: 'Nhân Viên Kinh Doanh 01', role: 'sale' },
+          u_sale2: { name: 'Nhân Viên Kinh Doanh 02', role: 'sale' }
+        };
+        masterData.users = verified.vault.map(v => ({
+          id: v.id,
+          name: v.name || (defaultNames[v.id] && defaultNames[v.id].name) || 'Nhân sự',
+          role: v.role || (defaultNames[v.id] && defaultNames[v.id].role) || 'sale',
+          pin: '••••'
+        }));
+      } else {
+        masterData.users = [];
+      }
+      loginSuccess(verified.user, true);
     }
 
     function loginSuccess(user, showWelcome = true) {
-      currentUser = user;
-      sessionStorage.setItem(STORAGE_KEY_SESSION, JSON.stringify(user));
+      currentUser = { id: user.id, name: user.name, role: user.role };
       document.getElementById('loginModal').classList.add('hidden');
 
-      // Cập nhật thông tin người dùng trên thanh Header
       document.getElementById('currentUserName').textContent = user.name;
       const roleLabels = {
         admin: 'ADMIN TOÀN QUYỀN',
@@ -1394,9 +1546,16 @@
       }
     }
 
-    function handleLogout() {
+    async function handleLogout() {
       currentUser = null;
-      sessionStorage.removeItem(STORAGE_KEY_SESSION);
+      authToken = '';
+      sessionStorage.removeItem(STORAGE_KEY_TOKEN);
+      masterData.users = [];
+      if (backendAvailable) {
+        try {
+          await fetch('/api/auth/logout', { method: 'POST', credentials: 'same-origin' });
+        } catch (e) {}
+      }
       showLoginModal();
     }
 
@@ -1454,11 +1613,12 @@
       renderStaffPasswordsTable();
     }
 
-    // ==================== QUẢN LÝ DANH SÁCH MẬT KHẨU NHÂN VIÊN (ADMIN / LÃNH ĐẠO) ====================
+    // ==================== QUẢN LÝ DANH SÁCH MÃ PIN 4 SỐ NHÂN VIÊN (ADMIN / LÃNH ĐẠO) ====================
     function renderStaffPasswordsTable() {
       const tbody = document.getElementById('staffPasswordsTableBody');
       if (!tbody) return;
       tbody.innerHTML = '';
+      if (!isManagerRole()) return;
 
       const roleBadgeMap = {
         admin: '<span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-red-50 text-[#D62828] border border-red-200">Admin</span>',
@@ -1467,6 +1627,7 @@
       };
 
       masterData.users.forEach((u, idx) => {
+        const pinVal = u.pin || '••••';
         const tr = document.createElement('tr');
         tr.className = 'hover:bg-slate-50 transition';
         tr.innerHTML = `
@@ -1474,7 +1635,7 @@
           <td class="p-3">${roleBadgeMap[u.role] || roleBadgeMap.sale}</td>
           <td class="p-3">
             <div class="flex items-center gap-1.5">
-              <input type="text" value="${escapeHtml(u.password)}" onchange="updateStaffPassword(${idx}, this.value)" class="px-2.5 py-1 border border-slate-200 rounded-lg font-mono font-bold text-xs text-[#0F172A] bg-slate-50 focus:bg-white focus:border-[#D62828] focus:outline-none w-36">
+              <input type="text" inputmode="numeric" pattern="[0-9]{4}" maxlength="4" value="${escapeHtml(pinVal)}" oninput="this.value = this.value.replace(/\\D/g, '').slice(0, 4)" onchange="updateStaffPassword(${idx}, this.value)" placeholder="4 số" class="px-2.5 py-1 border border-slate-200 rounded-lg font-mono font-bold text-xs text-center tracking-widest text-[#0F172A] bg-slate-50 focus:bg-white focus:border-[#D62828] focus:outline-none w-24">
             </div>
           </td>
           <td class="p-3 text-right">
@@ -1487,69 +1648,179 @@
       });
     }
 
-    function handleAddStaffPass(e) {
+    async function handleAddStaffPass(e) {
       e.preventDefault();
       if (!isManagerRole()) return;
 
       const name = document.getElementById('newStaffName').value.trim();
       const role = document.getElementById('newStaffRole').value;
-      const password = document.getElementById('newStaffPass').value.trim();
+      const pin = document.getElementById('newStaffPass').value.replace(/\D/g, '').trim();
 
-      if (!name || !password) return;
-
-      if (masterData.users.some(u => u.password === password)) {
-        showToast('Mật khẩu này đã được cấp cho người khác. Vui lòng chọn mật khẩu khác!', true);
+      if (!name || !/^\d{4}$/.test(pin)) {
+        showToast('Mật khẩu phải gồm đúng 4 chữ số (0000 - 9999)!', true);
         return;
       }
 
-      masterData.users.push({
-        id: 'u_' + Date.now(),
-        name,
-        role,
-        password
-      });
+      if (backendAvailable) {
+        try {
+          const res = await fetch('/api/users/add', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              'Authorization': `Bearer ${authToken}`
+            },
+            credentials: 'same-origin',
+            body: JSON.stringify({ name, role, pin })
+          });
+          const data = await res.json();
+          if (!res.ok || !data.ok) {
+            showToast(data.error || 'Không thể cấp mật khẩu!', true);
+            return;
+          }
+          document.getElementById('newStaffName').value = '';
+          document.getElementById('newStaffPass').value = '';
+          applyServerPayload(data);
+          showToast(`Đã cấp mã PIN 4 số cho "${name}" thành công!`);
+          return;
+        } catch (err) {
+          showToast('Lỗi kết nối Backend Server!', true);
+          return;
+        }
+      }
 
+      const existingMatch = await verifyPinAgainstVault(pin);
+      if (existingMatch) {
+        showToast('Mã PIN 4 số này đã được cấp cho người khác!', true);
+        return;
+      }
+
+      const newUserObj = { id: 'u_' + Date.now(), name, role };
+      const encEntry = await encryptVaultEntry(pin, newUserObj);
+      let vault = SECURE_VAULT_SEED.slice();
+      try {
+        const saved = JSON.parse(localStorage.getItem(STORAGE_KEY_VAULT));
+        if (Array.isArray(saved) && saved.length > 0) vault = saved;
+      } catch (err) {}
+      vault.push(encEntry);
+      localStorage.setItem(STORAGE_KEY_VAULT, JSON.stringify(vault));
+
+      masterData.users.push({ id: newUserObj.id, name, role, pin: '••••' });
       document.getElementById('newStaffName').value = '';
       document.getElementById('newStaffPass').value = '';
-
-      saveMasterSystemData(false);
       renderStaffPasswordsTable();
-      showToast(`Đã cấp mật khẩu cho "${name}" thành công!`);
+      showToast(`Đã mã hóa và cấp mã PIN 4 số cho "${name}"!`);
     }
 
-    function updateStaffPassword(index, newPass) {
+    async function updateStaffPassword(index, newPin) {
       if (!isManagerRole()) return;
-      const clean = newPass.trim();
-      if (!clean) {
-        showToast('Mật khẩu không được để trống!', true);
+      const cleanPin = String(newPin || '').replace(/\D/g, '').trim();
+      if (!/^\d{4}$/.test(cleanPin)) {
+        showToast('Mật khẩu phải gồm đúng 4 chữ số (0000 - 9999)!', true);
         renderStaffPasswordsTable();
         return;
       }
-      const duplicate = masterData.users.some((u, i) => i !== index && u.password === clean);
-      if (duplicate) {
-        showToast('Mật khẩu bị trùng với tài khoản khác!', true);
+
+      const targetUser = masterData.users[index];
+      if (!targetUser) return;
+
+      if (backendAvailable) {
+        try {
+          const res = await fetch('/api/users/update', {
+            method: 'PUT',
+            headers: {
+              'Content-Type': 'application/json',
+              'Authorization': `Bearer ${authToken}`
+            },
+            credentials: 'same-origin',
+            body: JSON.stringify({ id: targetUser.id, pin: cleanPin })
+          });
+          const data = await res.json();
+          if (!res.ok || !data.ok) {
+            showToast(data.error || 'Không thể đổi mã PIN!', true);
+            renderStaffPasswordsTable();
+            return;
+          }
+          applyServerPayload(data);
+          showToast(`Đã cập nhật mã PIN 4 số của ${targetUser.name}!`);
+          return;
+        } catch (err) {
+          showToast('Lỗi kết nối Backend Server!', true);
+          renderStaffPasswordsTable();
+          return;
+        }
+      }
+
+      const dup = await verifyPinAgainstVault(cleanPin);
+      if (dup && dup.user.id !== targetUser.id) {
+        showToast('Mã PIN 4 số bị trùng với tài khoản khác!', true);
         renderStaffPasswordsTable();
         return;
       }
-      masterData.users[index].password = clean;
-      saveMasterSystemData(false);
-      showToast(`Đã cập nhật mật khẩu của ${masterData.users[index].name}!`);
+
+      let vault = SECURE_VAULT_SEED.slice();
+      try {
+        const saved = JSON.parse(localStorage.getItem(STORAGE_KEY_VAULT));
+        if (Array.isArray(saved) && saved.length > 0) vault = saved;
+      } catch (err) {}
+
+      const vIdx = vault.findIndex(v => v.id === targetUser.id);
+      const newEnc = await encryptVaultEntry(cleanPin, targetUser);
+      if (vIdx !== -1) vault[vIdx] = newEnc;
+      else vault.push(newEnc);
+      localStorage.setItem(STORAGE_KEY_VAULT, JSON.stringify(vault));
+      masterData.users[index].pin = '••••';
+      renderStaffPasswordsTable();
+      showToast(`Đã mã hóa và cập nhật mã PIN của ${targetUser.name}!`);
     }
 
-    function deleteStaffUser(index) {
+    async function deleteStaffUser(index) {
       if (!isManagerRole()) return;
       const target = masterData.users[index];
+      if (!target) return;
+
       const managersCount = masterData.users.filter(u => u.role === 'admin' || u.role === 'leader').length;
       if ((target.role === 'admin' || target.role === 'leader') && managersCount <= 1) {
-        showToast('Phải giữ lại ít nhất 1 mật khẩu Admin hoặc Lãnh đạo!', true);
+        showToast('Phải giữ lại ít nhất 1 mã PIN Admin hoặc Lãnh đạo!', true);
         return;
       }
-      if (confirm(`Bạn có chắc muốn thu hồi mật khẩu của "${target.name}"?`)) {
-        masterData.users.splice(index, 1);
-        saveMasterSystemData(false);
-        renderStaffPasswordsTable();
-        showToast('Đã thu hồi mật khẩu truy cập!');
+
+      if (!confirm(`Bạn có chắc muốn thu hồi mã PIN của "${target.name}"?`)) return;
+
+      if (backendAvailable) {
+        try {
+          const res = await fetch('/api/users/delete', {
+            method: 'DELETE',
+            headers: {
+              'Content-Type': 'application/json',
+              'Authorization': `Bearer ${authToken}`
+            },
+            credentials: 'same-origin',
+            body: JSON.stringify({ id: target.id })
+          });
+          const data = await res.json();
+          if (!res.ok || !data.ok) {
+            showToast(data.error || 'Không thể xóa mã PIN!', true);
+            return;
+          }
+          applyServerPayload(data);
+          showToast('Đã thu hồi mã PIN truy cập!');
+          return;
+        } catch (err) {
+          showToast('Lỗi kết nối Backend Server!', true);
+          return;
+        }
       }
+
+      let vault = SECURE_VAULT_SEED.slice();
+      try {
+        const saved = JSON.parse(localStorage.getItem(STORAGE_KEY_VAULT));
+        if (Array.isArray(saved) && saved.length > 0) vault = saved;
+      } catch (err) {}
+      vault = vault.filter(v => v.id !== target.id);
+      localStorage.setItem(STORAGE_KEY_VAULT, JSON.stringify(vault));
+      masterData.users.splice(index, 1);
+      renderStaffPasswordsTable();
+      showToast('Đã thu hồi mã PIN truy cập!');
     }
 
     // ==================== UPLOAD CON DẤU & LOGO + ĐỒNG BỘ CLOUD / FILE ====================
@@ -1572,7 +1843,13 @@
     function exportSystemConfigFile() {
       if (!isManagerRole()) return;
       saveMasterSystemData(false);
-      const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(masterData, null, 2));
+      const exportPayload = {
+        company: masterData.company,
+        catalog: masterData.catalog,
+        customAssets: masterData.customAssets,
+        updatedAt: new Date().toISOString()
+      };
+      const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(exportPayload, null, 2));
       const a = document.createElement('a');
       a.setAttribute("href", dataStr);
       a.setAttribute("download", `SANWAY_Config_${new Date().toISOString().slice(0,10)}.json`);
@@ -1587,14 +1864,38 @@
       const file = event.target.files[0];
       if (!file) return;
       const reader = new FileReader();
-      reader.onload = function(e) {
+      reader.onload = async function(e) {
         try {
           const imported = JSON.parse(e.target.result);
-          if (!imported.company || !Array.isArray(imported.users) || !Array.isArray(imported.catalog)) {
+          if (!imported.company || !Array.isArray(imported.catalog)) {
             throw new Error('Cấu trúc file không hợp lệ');
           }
-          masterData = imported;
-          localStorage.setItem(STORAGE_KEY_MASTER, JSON.stringify(masterData));
+          if (backendAvailable) {
+            const res = await fetch('/api/system/import', {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${authToken}`
+              },
+              credentials: 'same-origin',
+              body: JSON.stringify(imported)
+            });
+            const data = await res.json();
+            if (res.ok && data.ok) {
+              applyServerPayload(data);
+              showToast('Đã nhập và áp dụng cấu hình lên Backend thành công!');
+              return;
+            }
+          }
+          masterData.company = imported.company;
+          masterData.catalog = imported.catalog;
+          if (imported.customAssets) masterData.customAssets = imported.customAssets;
+          localStorage.setItem(STORAGE_KEY_MASTER, JSON.stringify({
+            company: masterData.company,
+            catalog: masterData.catalog,
+            customAssets: masterData.customAssets,
+            updatedAt: new Date().toISOString()
+          }));
           applyMasterDataToWorkspace();
           syncBrandingImages();
           pushToCloudStorageIfConfigured();
@@ -1607,24 +1908,15 @@
     }
 
     function updateCloudStatusBadges(isConnected) {
-      const loginBadge = document.getElementById('cloudStatusBadgeLogin');
       const adminBadge = document.getElementById('cloudSyncActiveIndicator');
       if (isConnected) {
-        if (loginBadge) {
-          loginBadge.textContent = 'Cloud Sync Active';
-          loginBadge.className = 'text-[10px] px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-700 font-bold';
-        }
         if (adminBadge) {
-          adminBadge.textContent = 'Cloud Connected';
+          adminBadge.textContent = backendAvailable ? 'Backend Protected' : 'Cloud Connected';
           adminBadge.className = 'text-[10px] font-bold px-2.5 py-1 rounded-full bg-emerald-100 text-emerald-700';
         }
       } else {
-        if (loginBadge) {
-          loginBadge.textContent = 'Local Mode';
-          loginBadge.className = 'text-[10px] px-2 py-0.5 rounded-full bg-slate-200 text-slate-700 font-semibold';
-        }
         if (adminBadge) {
-          adminBadge.textContent = 'Local Storage';
+          adminBadge.textContent = 'Encrypted Vault';
           adminBadge.className = 'text-[10px] font-bold px-2.5 py-1 rounded-full bg-slate-100 text-slate-600';
         }
       }
@@ -1637,14 +1929,14 @@
 
       if (!endpoint) {
         localStorage.removeItem(STORAGE_KEY_CLOUD);
-        updateCloudStatusBadges(false);
-        showToast('Đã tắt Cloud Sync, sử dụng bộ nhớ trình duyệt.');
+        updateCloudStatusBadges(backendAvailable);
+        showToast('Đã tắt Cloud Sync ngoài.');
         return;
       }
 
       localStorage.setItem(STORAGE_KEY_CLOUD, JSON.stringify({ endpoint, apiKey }));
       updateCloudStatusBadges(true);
-      saveMasterSystemData(false);
+      await saveMasterSystemData(false);
       await pushToCloudStorageIfConfigured(true);
     }
 
@@ -1659,16 +1951,22 @@
           headers['X-Master-Key'] = apiKey;
           headers['Authorization'] = apiKey.startsWith('Bearer ') ? apiKey : `Bearer ${apiKey}`;
         }
+        const safePayload = {
+          company: masterData.company,
+          catalog: masterData.catalog,
+          customAssets: masterData.customAssets,
+          updatedAt: masterData.updatedAt
+        };
         const res = await fetch(endpoint, {
           method: 'PUT',
           headers,
-          body: JSON.stringify(masterData)
+          body: JSON.stringify(safePayload)
         });
         if (res.ok && showSuccessMsg) {
           showToast('Đã đồng bộ dữ liệu lên Cloud thành công!');
         }
       } catch (e) {
-        if (showSuccessMsg) showToast('Không thể kết nối Cloud URL, đã lưu tại máy!', true);
+        if (showSuccessMsg) showToast('Không thể kết nối Cloud URL!', true);
       }
     }
 
@@ -1683,22 +1981,39 @@
         if (!res.ok) return;
         const json = await res.json();
         const payload = json.record || json;
-        if (payload && payload.company && Array.isArray(payload.users) && Array.isArray(payload.catalog)) {
-          masterData = payload;
-          localStorage.setItem(STORAGE_KEY_MASTER, JSON.stringify(masterData));
+        if (payload && payload.company && Array.isArray(payload.catalog)) {
+          masterData.company = payload.company;
+          masterData.catalog = payload.catalog;
+          if (payload.customAssets) masterData.customAssets = payload.customAssets;
         }
       } catch (e) {
         console.warn('Không thể tải dữ liệu từ Cloud:', e);
       }
     }
 
-    function resetToFactoryDefaults() {
+    async function resetToFactoryDefaults() {
       if (!isManagerRole()) return;
-      if (confirm('Khôi phục toàn bộ thông tin công ty, danh mục 47 sản phẩm và mật khẩu về mặc định ban đầu?')) {
+      if (confirm('Khôi phục toàn bộ thông tin công ty, danh mục 47 sản phẩm và mã PIN 4 số về mặc định ban đầu?')) {
+        if (backendAvailable) {
+          try {
+            const res = await fetch('/api/system/reset', {
+              method: 'POST',
+              headers: { 'Authorization': `Bearer ${authToken}` },
+              credentials: 'same-origin'
+            });
+            const data = await res.json();
+            if (res.ok && data.ok) {
+              applyServerPayload(data);
+              showToast('Đã khôi phục dữ liệu gốc mặc định trên Backend!');
+              return;
+            }
+          } catch (e) {}
+        }
         localStorage.removeItem(STORAGE_KEY_MASTER);
+        localStorage.removeItem(STORAGE_KEY_VAULT);
         masterData = {
           company: { ...DEFAULT_COMPANY },
-          users: JSON.parse(JSON.stringify(DEFAULT_USERS)),
+          users: masterData.users,
           catalog: JSON.parse(JSON.stringify(INITIAL_CATALOG)),
           customAssets: { stamp: null, logo_horizontal: null, logo_official: null },
           updatedAt: new Date().toISOString()
