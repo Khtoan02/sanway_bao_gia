@@ -81,10 +81,10 @@ function createInitialDb() {
       vatRate: 8
     },
     users: [
-      { id: 'u_admin', name: 'Quản Trị Viên (Admin)', role: 'admin', pin: '9999', pinHash: hashPin('9999') },
-      { id: 'u_leader', name: 'Ban Giám Đốc (Lãnh Đạo)', role: 'leader', pin: '8888', pinHash: hashPin('8888') },
-      { id: 'u_sale1', name: 'Nhân Viên Kinh Doanh 01', role: 'sale', pin: '1111', pinHash: hashPin('1111') },
-      { id: 'u_sale2', name: 'Nhân Viên Kinh Doanh 02', role: 'sale', pin: '2222', pinHash: hashPin('2222') }
+      { id: 'u_admin', name: 'Quản Trị Viên / Giám Đốc', role: 'admin', pin: '9999', pinHash: hashPin('9999') },
+      { id: 'u_leader', name: 'Ban Giám Đốc (Admin)', role: 'admin', pin: '8888', pinHash: hashPin('8888') },
+      { id: 'u_sale1', name: 'Chuyên Viên Kinh Doanh 01', role: 'sale', pin: '1111', pinHash: hashPin('1111') },
+      { id: 'u_sale2', name: 'Chuyên Viên Kinh Doanh 02', role: 'sale', pin: '2222', pinHash: hashPin('2222') }
     ],
     catalog,
     quotes: [
@@ -101,7 +101,8 @@ function createInitialDb() {
         subtotal,
         vatAmount,
         grandTotal,
-        createdBy: 'Quản Trị Viên (Admin)',
+        createdById: 'u_admin',
+        createdBy: 'Quản Trị Viên / Giám Đốc',
         createdByRole: 'admin',
         createdAt: new Date().toISOString(),
         updatedAt: new Date().toISOString(),
@@ -134,10 +135,12 @@ function normalizeDbStructure(db) {
   if (Array.isArray(db.users)) {
     db.users = db.users.map(u => {
       const pin = String(u.pin || u.password || '1111');
+      // Gộp chung Admin và Lãnh đạo thành 1 vai trò duy nhất: 'admin' (Toàn quyền)
+      const normalizedRole = (u.role === 'admin' || u.role === 'leader') ? 'admin' : 'sale';
       return {
         id: u.id,
         name: u.name,
-        role: u.role,
+        role: normalizedRole,
         pin,
         pinHash: u.pinHash || hashPin(pin)
       };
@@ -279,22 +282,49 @@ function clearFailedAttempts(ip) {
   loginAttempts.delete(ip);
 }
 
-// Lọc dữ liệu trả về theo đúng phân quyền (Sale tuyệt đối không nhận được danh sách nhân sự/PIN)
+function computeNextQuoteCode(db) {
+  const year = new Date().getFullYear();
+  const quotes = Array.isArray(db.quotes) ? db.quotes : [];
+  let maxSeq = 0;
+  quotes.forEach(q => {
+    const m = String(q.quoteCode || '').match(/BGSW\/(\d{4})\/(\d+)/i);
+    if (m) {
+      const seq = parseInt(m[2], 10);
+      if (seq > maxSeq) maxSeq = seq;
+    }
+  });
+  return `BGSW/${year}/${String(maxSeq + 1).padStart(3, '0')}`;
+}
+
+// Lọc dữ liệu trả về theo đúng phân quyền:
+// - Admin: Toàn quyền (Xem tất cả báo giá của mọi người, quản lý sản phẩm, thông tin công ty, nhân sự)
+// - Sale: Chỉ xem danh sách báo giá do chính Sale đó đã tạo + danh mục sản phẩm để lập báo giá
 function buildClientPayload(user, db) {
-  const isManager = user.role === 'admin' || user.role === 'leader';
+  const isAdmin = user.role === 'admin' || user.role === 'leader';
+  const allQuotes = Array.isArray(db.quotes) ? db.quotes : [];
+  const visibleQuotes = isAdmin
+    ? allQuotes
+    : allQuotes.filter(q => q.createdById === user.id || q.createdBy === user.name);
+
   return {
     user: {
       id: user.id,
       name: user.name,
-      role: user.role
+      role: isAdmin ? 'admin' : 'sale'
     },
     dbMode: (KV_URL && KV_TOKEN) ? 'vercel-kv' : (IS_VERCEL ? 'vercel-tmp' : 'local-server'),
+    nextQuoteCode: computeNextQuoteCode(db),
     company: db.company,
     catalog: db.catalog,
-    quotes: Array.isArray(db.quotes) ? db.quotes : [],
+    quotes: visibleQuotes,
     customAssets: db.customAssets || { stamp: null, logo_horizontal: null, logo_official: null },
-    users: isManager
-      ? db.users.map(u => ({ id: u.id, name: u.name, role: u.role, pin: u.pin }))
+    users: isAdmin
+      ? db.users.map(u => ({
+          id: u.id,
+          name: u.name,
+          role: (u.role === 'admin' || u.role === 'leader') ? 'admin' : 'sale',
+          pin: u.pin
+        }))
       : []
   };
 }
@@ -426,7 +456,9 @@ async function requestHandler(req, res) {
       return sendJson(res, 401, { ok: false, error: 'Chưa xác thực phiên làm việc!' });
     }
 
-    // 4. Lưu / Tạo mới bản Báo giá (Cả Sale, Lãnh đạo và Admin đều được phép tạo & lưu báo giá)
+    const isAdmin = currentUser.role === 'admin' || currentUser.role === 'leader';
+
+    // 4. Lưu / Tạo mới bản Báo giá (Cả Sale và Admin đều được phép tạo & lưu báo giá)
     if (pathname === '/api/quotes/save' && req.method === 'POST') {
       try {
         const rawBody = await readJsonBody(req);
@@ -439,6 +471,20 @@ async function requestHandler(req, res) {
 
         if (!Array.isArray(db.quotes)) db.quotes = [];
         const existingIdx = db.quotes.findIndex(q => q.id === quote.id || q.quoteCode === quoteCode);
+
+        // Nếu mã đã tồn tại nhưng thuộc về người khác, Sale không được ghi đè báo giá của người khác
+        if (existingIdx !== -1 && !isAdmin) {
+          const existingQuote = db.quotes[existingIdx];
+          const isOwner = existingQuote.createdById === currentUser.id || existingQuote.createdBy === currentUser.name;
+          if (!isOwner) {
+            return sendJson(res, 403, {
+              ok: false,
+              error: `Mã báo giá ${quoteCode} đã được tạo bởi nhân sự khác! Hệ thống sẽ cấp mã mới.`,
+              suggestedNextCode: computeNextQuoteCode(db)
+            });
+          }
+        }
+
         const nowIso = new Date().toISOString();
 
         const record = {
@@ -454,8 +500,11 @@ async function requestHandler(req, res) {
           subtotal: parseFloat(quote.subtotal) || 0,
           vatAmount: parseFloat(quote.vatAmount) || 0,
           grandTotal: parseFloat(quote.grandTotal) || 0,
+          createdById: existingIdx !== -1 ? (db.quotes[existingIdx].createdById || currentUser.id) : currentUser.id,
           createdBy: existingIdx !== -1 ? db.quotes[existingIdx].createdBy : currentUser.name,
-          createdByRole: existingIdx !== -1 ? db.quotes[existingIdx].createdByRole : currentUser.role,
+          createdByRole: existingIdx !== -1
+            ? ((db.quotes[existingIdx].createdByRole === 'admin' || db.quotes[existingIdx].createdByRole === 'leader') ? 'admin' : 'sale')
+            : (isAdmin ? 'admin' : 'sale'),
           updatedBy: currentUser.name,
           createdAt: existingIdx !== -1 ? db.quotes[existingIdx].createdAt : nowIso,
           updatedAt: nowIso,
@@ -475,7 +524,7 @@ async function requestHandler(req, res) {
       }
     }
 
-    // 5. Xóa một bản Báo giá đã lưu
+    // 5. Xóa một bản Báo giá đã lưu (Admin xóa được tất cả, Sale chỉ xóa được báo giá của chính mình)
     if (pathname === '/api/quotes/delete' && req.method === 'DELETE') {
       try {
         const { id } = await readJsonBody(req);
@@ -483,6 +532,9 @@ async function requestHandler(req, res) {
         const target = db.quotes.find(q => q.id === id);
         if (!target) {
           return sendJson(res, 404, { ok: false, error: 'Không tìm thấy bản báo giá!' });
+        }
+        if (!isAdmin && target.createdById !== currentUser.id && target.createdBy !== currentUser.name) {
+          return sendJson(res, 403, { ok: false, error: 'Bạn chỉ có quyền xóa báo giá do chính mình tạo!' });
         }
         db.quotes = db.quotes.filter(q => q.id !== id);
         await saveDatabase(db);
@@ -492,9 +544,9 @@ async function requestHandler(req, res) {
       }
     }
 
-    // Các API bên dưới bắt buộc phải có quyền Admin hoặc Lãnh đạo
-    if (currentUser.role !== 'admin' && currentUser.role !== 'leader') {
-      return sendJson(res, 403, { ok: false, error: 'Chỉ Admin hoặc Lãnh đạo mới có quyền thực hiện thao tác này!' });
+    // Các API bên dưới bắt buộc phải có quyền Admin
+    if (!isAdmin) {
+      return sendJson(res, 403, { ok: false, error: 'Chỉ Admin mới có quyền thực hiện thao tác quản trị này!' });
     }
 
     // 6. Lưu thông tin công ty, bảng giá sản phẩm & con dấu
@@ -541,7 +593,7 @@ async function requestHandler(req, res) {
       try {
         const { name, role, pin } = await readJsonBody(req);
         const cleanName = String(name || '').trim();
-        const cleanRole = ['admin', 'leader', 'sale'].includes(role) ? role : 'sale';
+        const cleanRole = (role === 'admin' || role === 'leader') ? 'admin' : 'sale';
         const cleanPin = String(pin || '').trim();
 
         if (!cleanName || !/^\d{4}$/.test(cleanPin)) {
