@@ -45,9 +45,23 @@
       font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
     }
 
+    :root {
+      --brand-color: #D62828;
+      --metal-dark: #1E293B;
+      --metal-charcoal: #0F172A;
+    }
+
     body {
-      background-color: #EEF2F7;
+      background-color: #EEF2F6;
       color: #0F172A;
+      accent-color: var(--brand-color);
+    }
+
+    @supports not (accent-color: var(--brand-color)) {
+      input[type="checkbox"]:checked {
+        background-color: var(--brand-color);
+        border-color: var(--brand-color);
+      }
     }
 
     /* HIỆU ỨNG CHUYỂN ĐỘNG MƯỢT MÀ CHUẨN ENTERPRISE SAAS WORKBENCH */
@@ -366,20 +380,20 @@
 <body class="text-brand-dark antialiased min-h-screen pb-28 lg:pb-6 bg-[#EEF2F7]">
 
   <!-- ==================== TRANG PUBLIC DUY NHẤT: CỔNG ĐĂNG NHẬP NỘI BỘ SANWAY (MẬT KHẨU 4 SỐ) ==================== -->
-  <div id="loginModal" class="no-print fixed inset-0 z-[100] bg-gradient-to-br from-[#E6ECF5] via-[#F4F7FB] to-[#E2E8F0] flex flex-col items-center justify-center p-4 overflow-hidden">
-    <!-- Hiệu ứng nền Workbench mềm mại -->
-    <div class="pointer-events-none absolute -top-32 -left-32 w-96 h-96 rounded-full bg-red-500/10 blur-3xl"></div>
-    <div class="pointer-events-none absolute -bottom-32 -right-32 w-96 h-96 rounded-full bg-blue-500/10 blur-3xl"></div>
+  <div id="loginModal" class="no-print fixed inset-0 z-[100] bg-gradient-to-br from-[#E2E8F0] via-[#EEF2F6] to-[#CBD5E1] flex flex-col items-center justify-center p-4 overflow-hidden">
+    <!-- Hiệu ứng nền Đỏ SANWAY & Xám kim loại -->
+    <div class="pointer-events-none absolute -top-32 -left-32 w-96 h-96 rounded-full bg-[#D62828]/10 blur-3xl"></div>
+    <div class="pointer-events-none absolute -bottom-32 -right-32 w-96 h-96 rounded-full bg-[#1E293B]/10 blur-3xl"></div>
 
-    <div class="relative bg-white w-full max-w-[360px] rounded-[28px] shadow-[0_20px_60px_-15px_rgba(15,23,42,0.12)] border border-white p-7 sm:p-8 text-center animate-modal">
+    <div class="relative bg-white w-full max-w-[360px] rounded-[28px] shadow-[0_20px_60px_-15px_rgba(15,23,42,0.16)] border border-slate-200/80 p-7 sm:p-8 text-center animate-modal">
       <div class="mb-4 flex justify-center">
-        <div class="px-4 py-2 rounded-2xl bg-[#F8FAFC] border border-slate-100 inline-flex items-center justify-center">
+        <div class="px-4 py-2 rounded-2xl bg-[#F8FAFC] border border-slate-200/80 inline-flex items-center justify-center">
           <img id="loginLogo" src="" alt="SANWAY" class="h-11 w-auto object-contain">
         </div>
       </div>
 
       <h1 class="text-base font-extrabold text-[#0F172A] tracking-tight">Hệ Thống Quản Trị Nội Bộ SANWAY</h1>
-      <p class="text-xs text-slate-400 font-medium mt-1 mb-5">Nhập mã PIN 4 số để truy cập theo phân quyền</p>
+      <p class="text-xs text-slate-500 font-medium mt-1 mb-5">Nhập mã PIN 4 số để truy cập theo phân quyền</p>
 
       <form onsubmit="handleLogin(event)" class="space-y-4" autocomplete="off">
         <div>
@@ -401,15 +415,15 @@
           </p>
         </div>
 
-        <button type="submit" id="loginSubmitBtn" class="w-full py-3.5 rounded-2xl bg-gradient-to-r from-[#D62828] to-[#E11D48] hover:from-[#B91C1C] hover:to-[#BE123C] active:scale-[0.99] text-white font-extrabold text-sm shadow-lg shadow-red-600/25 transition flex items-center justify-center gap-2">
+        <button type="submit" id="loginSubmitBtn" class="w-full py-3.5 rounded-2xl bg-[#D62828] hover:bg-[#B91C1C] active:scale-[0.99] text-white font-extrabold text-sm shadow-lg shadow-red-600/20 transition flex items-center justify-center gap-2">
           <span>Đăng Nhập Hệ Thống</span>
           <i class="fa-solid fa-arrow-right text-xs"></i>
         </button>
       </form>
 
-      <div class="mt-6 pt-4 border-t border-slate-100 flex items-center justify-center gap-2 text-[11px] text-slate-400 font-medium">
-        <i class="fa-solid fa-shield-halved text-emerald-500"></i>
-        <span>Tự động nhận diện vai trò: <b class="text-slate-600">Admin</b> hoặc <b class="text-slate-600">Sale</b></span>
+      <div class="mt-6 pt-4 border-t border-slate-100 flex items-center justify-center gap-2 text-[11px] text-slate-500 font-medium">
+        <i class="fa-solid fa-shield-halved text-[#D62828]"></i>
+        <span>Tự động nhận diện vai trò: <b class="text-[#0F172A]">Admin</b> hoặc <b class="text-[#0F172A]">Sale</b></span>
       </div>
     </div>
   </div>
@@ -488,27 +502,27 @@
   </div>
 
   <!-- ==================== TRANG QUẢN TRỊ WORKBENCH (CHỈ HIỂN THỊ SAU KHI ĐĂNG NHẬP) ==================== -->
-  <div id="erpAppShell" class="hidden min-h-screen flex flex-col lg:flex-row bg-[#EEF2F7]">
+  <div id="erpAppShell" class="hidden min-h-screen flex flex-col lg:flex-row bg-[#EEF2F6]">
 
-    <!-- SIDEBAR TRÁI PHONG CÁCH WORKBENCH TRẮNG SÁNG HIỆN ĐẠI -->
-    <aside class="no-print hidden lg:flex lg:flex-col lg:w-64 lg:fixed lg:inset-y-0 lg:left-0 bg-white border-r border-[#E6ECF5] shadow-[4px_0_24px_rgba(15,23,42,0.02)] z-40 select-none">
+    <!-- SIDEBAR TRÁI PHONG CÁCH WORKBENCH (TÔNG ĐỎ SANWAY & XÁM ĐEN KIM LOẠI) -->
+    <aside class="no-print hidden lg:flex lg:flex-col lg:w-64 lg:fixed lg:inset-y-0 lg:left-0 bg-white border-r border-slate-200/80 shadow-[4px_0_24px_rgba(15,23,42,0.03)] z-40 select-none">
       <!-- Brand Header -->
       <div class="px-5 pt-5 pb-4 flex items-center gap-3">
-        <div class="bg-[#F8FAFC] border border-slate-100 px-2.5 py-1.5 rounded-2xl flex items-center shrink-0">
+        <div class="bg-[#F8FAFC] border border-slate-200/80 px-2.5 py-1.5 rounded-2xl flex items-center shrink-0">
           <img id="navLogo" src="" alt="SANWAY Logo" class="h-7 w-auto object-contain">
         </div>
         <div class="min-w-0">
           <div class="flex items-center gap-1.5">
             <span class="text-xs font-black tracking-tight uppercase text-[#0F172A] truncate">SANWAY</span>
-            <span id="sidebarRoleChip" class="text-[9px] font-extrabold px-1.5 py-0.5 rounded-md bg-red-50 text-[#D62828] border border-red-100">ADMIN</span>
+            <span id="sidebarRoleChip" class="text-[9px] font-extrabold px-1.5 py-0.5 rounded-md bg-red-50 text-[#D62828] border border-red-200">ADMIN</span>
           </div>
-          <p class="text-[10.5px] text-slate-400 font-medium truncate mt-0.5">Bàn Làm Việc Nội Bộ</p>
+          <p class="text-[10.5px] text-slate-500 font-medium truncate mt-0.5">Bàn Làm Việc Nội Bộ</p>
         </div>
       </div>
 
       <!-- Nút Tạo Báo Giá Mới (Sinh mã BGSW mới ngay lập tức) -->
       <div class="px-4 pb-3">
-        <button type="button" onclick="startNewQuotationWithNextCode()" class="w-full py-2.5 px-3.5 rounded-2xl bg-gradient-to-r from-[#D62828] to-[#E11D48] hover:from-[#B91C1C] hover:to-[#BE123C] active:scale-[0.99] text-white font-extrabold text-xs shadow-md shadow-red-500/20 transition flex items-center justify-center gap-2">
+        <button type="button" onclick="startNewQuotationWithNextCode()" class="w-full py-2.5 px-3.5 rounded-2xl bg-[#D62828] hover:bg-[#B91C1C] active:scale-[0.99] text-white font-extrabold text-xs shadow-md shadow-red-600/20 transition flex items-center justify-center gap-2">
           <i class="fa-solid fa-plus-circle text-sm"></i>
           <span>+ Tạo Báo Giá Mới</span>
         </button>
@@ -520,7 +534,7 @@
 
         <button id="tabBtnDashboard" onclick="switchTab('dashboard')" class="wb-nav-item active">
           <span class="flex items-center gap-3">
-            <span class="w-7 h-7 rounded-lg bg-red-50 text-[#D62828] flex items-center justify-center text-xs">
+            <span class="w-7 h-7 rounded-lg bg-red-50 text-[#D62828] border border-red-100 flex items-center justify-center text-xs">
               <i class="fa-solid fa-table-columns"></i>
             </span>
             <span>Bàn Làm Việc</span>
@@ -529,22 +543,22 @@
 
         <button id="tabBtnForm" onclick="switchTab('form')" class="wb-nav-item">
           <span class="flex items-center gap-3">
-            <span class="w-7 h-7 rounded-lg bg-blue-50 text-blue-600 flex items-center justify-center text-xs">
+            <span class="w-7 h-7 rounded-lg bg-slate-100 text-[#1E293B] border border-slate-200/80 flex items-center justify-center text-xs">
               <i class="fa-solid fa-file-signature"></i>
             </span>
             <span>Lập Báo Giá Mới</span>
           </span>
-          <span class="text-[9.5px] px-1.5 py-0.5 rounded-md bg-blue-50 text-blue-600 font-bold">Live A4</span>
+          <span class="text-[9.5px] px-1.5 py-0.5 rounded-md bg-slate-100 text-[#1E293B] border border-slate-200 font-bold">Live A4</span>
         </button>
 
         <button id="tabBtnQuotes" onclick="switchTab('quotes')" class="wb-nav-item">
           <span class="flex items-center gap-3">
-            <span class="w-7 h-7 rounded-lg bg-amber-50 text-amber-600 flex items-center justify-center text-xs">
+            <span class="w-7 h-7 rounded-lg bg-slate-100 text-[#1E293B] border border-slate-200/80 flex items-center justify-center text-xs">
               <i class="fa-solid fa-folder-open"></i>
             </span>
             <span id="sidebarQuotesLabel">Quản Lý Báo Giá</span>
           </span>
-          <span id="sidebarQuotesCount" class="text-[10px] px-2 py-0.5 rounded-full bg-amber-50 text-amber-700 border border-amber-200/70 font-extrabold tabular-nums">1</span>
+          <span id="sidebarQuotesCount" class="text-[10px] px-2 py-0.5 rounded-full bg-slate-100 text-[#1E293B] border border-slate-200 font-extrabold tabular-nums">1</span>
         </button>
 
         <!-- Khu vực Dành riêng cho Admin (Quản lý sản phẩm, thông tin công ty, nhân sự) -->
@@ -553,37 +567,37 @@
 
           <button id="tabBtnProducts" onclick="switchTab('products')" class="wb-nav-item">
             <span class="flex items-center gap-3">
-              <span class="w-7 h-7 rounded-lg bg-sky-50 text-sky-600 flex items-center justify-center text-xs">
+              <span class="w-7 h-7 rounded-lg bg-slate-100 text-[#1E293B] border border-slate-200/80 flex items-center justify-center text-xs">
                 <i class="fa-solid fa-boxes-stacked"></i>
               </span>
               <span>Quản Lý Sản Phẩm</span>
             </span>
-            <span id="sidebarProductsCount" class="text-[10px] px-2 py-0.5 rounded-full bg-sky-50 text-sky-700 border border-sky-200/70 font-extrabold tabular-nums">47</span>
+            <span id="sidebarProductsCount" class="text-[10px] px-2 py-0.5 rounded-full bg-slate-100 text-[#1E293B] border border-slate-200 font-extrabold tabular-nums">47</span>
           </button>
 
           <button id="tabBtnAdmin" onclick="switchTab('admin')" class="wb-nav-item">
             <span class="flex items-center gap-3">
-              <span class="w-7 h-7 rounded-lg bg-purple-50 text-purple-600 flex items-center justify-center text-xs">
+              <span class="w-7 h-7 rounded-lg bg-slate-100 text-[#1E293B] border border-slate-200/80 flex items-center justify-center text-xs">
                 <i class="fa-solid fa-sliders"></i>
               </span>
               <span>Công Ty & Nhân Sự</span>
             </span>
-            <span class="text-[9px] px-1.5 py-0.5 rounded-md bg-purple-50 text-purple-700 font-bold">All</span>
+            <span class="text-[9px] px-1.5 py-0.5 rounded-md bg-red-50 text-[#D62828] border border-red-200 font-bold">All</span>
           </button>
         </div>
       </div>
 
-      <!-- Thẻ thông tin Trạng thái & Tài khoản dưới đáy Sidebar (Phong cách Heartly Card) -->
+      <!-- Thẻ thông tin Trạng thái & Tài khoản dưới đáy Sidebar -->
       <div class="p-4 space-y-3">
-        <div class="rounded-2xl bg-gradient-to-br from-[#F8FAFC] to-[#EEF2F7] border border-[#E6ECF5] p-3.5">
+        <div class="rounded-2xl bg-[#F8FAFC] border border-slate-200/80 p-3.5">
           <div class="flex items-center justify-between text-[11px] mb-1.5">
             <span class="text-slate-500 font-semibold flex items-center gap-1.5">
-              <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+              <span class="w-2 h-2 rounded-full bg-[#D62828] animate-pulse"></span>
               <span>Kết nối DB:</span>
             </span>
-            <span id="sidebarDbBadge" class="font-extrabold text-emerald-700 truncate max-w-[115px]">Backend Active</span>
+            <span id="sidebarDbBadge" class="font-extrabold text-[#1E293B] truncate max-w-[115px]">Backend Active</span>
           </div>
-          <p id="sidebarRoleDescText" class="text-[10.5px] text-slate-400 leading-relaxed">
+          <p id="sidebarRoleDescText" class="text-[10.5px] text-slate-500 leading-relaxed">
             Quyền Admin: Xem tất cả báo giá, quản lý sản phẩm & thông tin công ty.
           </p>
         </div>
@@ -598,7 +612,7 @@
               <div id="currentUserRoleBadge" class="text-[10px] font-bold text-[#D62828] uppercase tracking-wider mt-0.5">—</div>
             </div>
           </div>
-          <button onclick="handleLogout()" title="Đăng xuất về màn hình Login" class="w-8 h-8 rounded-xl bg-slate-100 hover:bg-red-50 text-slate-500 hover:text-[#D62828] transition flex items-center justify-center text-xs shrink-0">
+          <button onclick="handleLogout()" title="Đăng xuất về màn hình Login" class="w-8 h-8 rounded-xl bg-slate-100 hover:bg-red-50 text-slate-600 hover:text-[#D62828] transition flex items-center justify-center text-xs shrink-0">
             <i class="fa-solid fa-right-from-bracket"></i>
           </button>
         </div>
@@ -606,10 +620,10 @@
     </aside>
 
     <!-- HEADER MOBILE / TABLET (ẨN TRÊN DESKTOP LG) -->
-    <header class="no-print lg:hidden bg-white text-[#0F172A] sticky top-0 z-40 border-b border-[#E6ECF5] shadow-xs">
+    <header class="no-print lg:hidden bg-white text-[#0F172A] sticky top-0 z-40 border-b border-slate-200/80 shadow-xs">
       <div class="px-3.5 h-14 flex items-center justify-between gap-2">
         <div class="flex items-center gap-2.5 min-w-0">
-          <div class="bg-[#F8FAFC] border border-slate-100 px-2 py-1 rounded-xl flex items-center shrink-0">
+          <div class="bg-[#F8FAFC] border border-slate-200/80 px-2 py-1 rounded-xl flex items-center shrink-0">
             <img id="navLogoMobile" src="" alt="SANWAY" class="h-6 w-auto object-contain">
           </div>
           <div class="min-w-0">
@@ -633,7 +647,7 @@
     <main id="erpMainContent" class="flex-1 lg:pl-64 min-w-0">
       <div class="max-w-[1680px] mx-auto p-3 sm:p-5 lg:p-6 space-y-5">
 
-        <!-- THANH HEADER WORKBENCH TRÊN CÙNG (PHONG CÁCH HEARTLY / 后台工作台) -->
+        <!-- THANH HEADER WORKBENCH TRÊN CÙNG -->
         <div class="no-print erp-card px-4 sm:px-6 py-3.5 flex flex-col md:flex-row md:items-center justify-between gap-3">
           <div>
             <div id="wbCurrentDateText" class="text-[11px] font-bold text-slate-400 uppercase tracking-wider">Chủ Nhật, 02 Tháng 11, 2026</div>
@@ -658,7 +672,7 @@
                 id="wbGlobalSearchInput"
                 onkeydown="if(event.key==='Enter'){document.getElementById('searchSavedQuotesInput').value=this.value;switchTab('quotes');}"
                 placeholder="Tra cứu nhanh mã BGSW/... (Enter)"
-                class="w-full pl-9 pr-3 py-2 text-xs font-medium bg-[#F4F7FB] hover:bg-white focus:bg-white border border-slate-200/80 rounded-xl focus:outline-none focus:border-[#D62828] transition"
+                class="w-full pl-9 pr-3 py-2 text-xs font-medium bg-[#F8FAFC] hover:bg-white focus:bg-white border border-slate-200 rounded-xl focus:outline-none focus:border-[#D62828] transition"
               >
             </div>
 
@@ -667,7 +681,7 @@
               <span>Báo Giá Mới</span>
             </button>
 
-            <button type="button" onclick="handleLogout()" class="px-3 py-2 rounded-xl bg-[#F4F7FB] hover:bg-red-50 text-slate-600 hover:text-[#D62828] border border-slate-200/80 text-xs font-bold transition flex items-center gap-1.5" title="Đăng xuất">
+            <button type="button" onclick="handleLogout()" class="px-3 py-2 rounded-xl bg-[#F8FAFC] hover:bg-red-50 text-slate-700 hover:text-[#D62828] border border-slate-200 text-xs font-bold transition flex items-center gap-1.5" title="Đăng xuất">
               <i class="fa-solid fa-power-off text-[11px]"></i>
               <span class="hidden sm:inline">Đăng xuất</span>
             </button>
@@ -678,11 +692,11 @@
         <div id="sectionDashboard" class="no-print space-y-5">
           <div class="grid grid-cols-1 xl:grid-cols-12 gap-5 items-start">
 
-            <!-- Cột Trái (8/12): Banner 3 ô trung tâm + 4 Thẻ chỉ số trực quan + Danh sách báo giá gần đây -->
+            <!-- Cột Trái (8/12): Banner 3 ô trung tâm + 2 Thẻ chỉ số trực quan + Danh sách báo giá gần đây -->
             <div class="xl:col-span-8 space-y-5">
 
-              <!-- Banner 3 phân vùng nổi bật (Phong cách Heartly Blue/Red Pill Banner) -->
-              <div class="rounded-[24px] bg-gradient-to-r from-[#D62828] via-[#E11D48] to-[#2563EB] text-white p-5 sm:p-6 shadow-[0_14px_34px_-8px_rgba(214,40,40,0.32)] grid grid-cols-1 sm:grid-cols-3 gap-4 sm:divide-x sm:divide-white/20">
+              <!-- Banner 3 phân vùng nổi bật (Chuẩn tông Đỏ SANWAY & Xám Đen Kim Loại) -->
+              <div class="rounded-[24px] bg-gradient-to-r from-[#D62828] via-[#A91D1D] to-[#1E293B] text-white p-5 sm:p-6 shadow-[0_14px_34px_-8px_rgba(15,23,42,0.24)] grid grid-cols-1 sm:grid-cols-3 gap-4 sm:divide-x sm:divide-white/15">
                 <div class="flex items-center gap-3.5 sm:pr-3">
                   <div class="w-12 h-12 rounded-2xl bg-white/15 backdrop-blur-xs flex items-center justify-center text-xl shrink-0">
                     <i class="fa-solid fa-file-invoice-dollar"></i>
@@ -714,15 +728,15 @@
                 </div>
               </div>
 
-              <!-- Lưới 4 Thẻ Metric Trực Quan (Phong cách Heartly 2x2 Cards) -->
+              <!-- Lưới 2 Thẻ Metric Trực Quan (Đỏ chủ đạo & Xám đen kim loại) -->
               <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div class="erp-card p-5 flex items-center justify-between gap-4">
                   <div>
                     <div id="dashCard1Value" class="text-2xl font-black text-[#0F172A] tabular-nums">1</div>
-                    <div id="dashCard1Label" class="text-xs font-extrabold uppercase tracking-wider text-blue-600 mt-1">BÁO GIÁ ĐÃ LƯU</div>
-                    <p id="dashCard1Sub" class="text-[11px] text-slate-400 mt-1">Hồ sơ báo giá được lưu trữ trên hệ thống</p>
+                    <div id="dashCard1Label" class="text-xs font-extrabold uppercase tracking-wider text-[#D62828] mt-1">BÁO GIÁ ĐÃ LƯU</div>
+                    <p id="dashCard1Sub" class="text-[11px] text-slate-500 mt-1">Hồ sơ báo giá được lưu trữ trên hệ thống</p>
                   </div>
-                  <div class="w-16 h-16 rounded-2xl bg-blue-50 border border-blue-100 flex flex-col items-center justify-center text-blue-600 shrink-0">
+                  <div class="w-16 h-16 rounded-2xl bg-red-50 border border-red-100 flex flex-col items-center justify-center text-[#D62828] shrink-0">
                     <i class="fa-solid fa-folder-tree text-xl"></i>
                   </div>
                 </div>
@@ -730,11 +744,11 @@
                 <div class="erp-card p-5 flex items-center justify-between gap-4">
                   <div>
                     <div id="dashCard2Value" class="text-2xl font-black text-[#0F172A] tabular-nums">47 mục</div>
-                    <div class="text-xs font-extrabold uppercase tracking-wider text-emerald-600 mt-1">DANH MỤC VẬT TƯ PCCC</div>
-                    <p class="text-[11px] text-slate-400 mt-1">Thiết bị & vật tư chuẩn sẵn sàng báo giá</p>
+                    <div class="text-xs font-extrabold uppercase tracking-wider text-[#334155] mt-1">DANH MỤC VẬT TƯ PCCC</div>
+                    <p class="text-[11px] text-slate-500 mt-1">Thiết bị & vật tư chuẩn sẵn sàng báo giá</p>
                   </div>
-                  <div class="w-16 h-16 rounded-2xl bg-emerald-50 border border-emerald-100 flex flex-col items-center justify-center text-emerald-600 shrink-0">
-                    <i class="fa-solid fa-boxes-Check text-xl fa-boxes-stacked"></i>
+                  <div class="w-16 h-16 rounded-2xl bg-slate-100 border border-slate-200 flex flex-col items-center justify-center text-[#1E293B] shrink-0">
+                    <i class="fa-solid fa-boxes-stacked text-xl"></i>
                   </div>
                 </div>
               </div>
@@ -744,7 +758,7 @@
                 <div class="flex flex-wrap items-center justify-between gap-2">
                   <div>
                     <h3 id="dashRecentQuotesHeading" class="text-sm sm:text-base font-extrabold text-[#0F172A]">Danh Sách Báo Giá Mới Nhất (Toàn Công Ty)</h3>
-                    <p id="dashRecentQuotesSub" class="text-xs text-slate-400 mt-0.5">Bấm vào từng báo giá để mở xem trước A4, chỉnh sửa hoặc in PDF</p>
+                    <p id="dashRecentQuotesSub" class="text-xs text-slate-500 mt-0.5">Bấm vào từng báo giá để mở xem trước A4, chỉnh sửa hoặc in PDF</p>
                   </div>
                   <button type="button" onclick="switchTab('quotes')" class="text-xs font-extrabold text-[#D62828] hover:underline flex items-center gap-1">
                     <span>Xem toàn bộ danh sách</span>
@@ -752,9 +766,9 @@
                   </button>
                 </div>
 
-                <div tabindex="0" role="region" aria-label="Báo giá gần đây trên bàn làm việc" class="overflow-x-auto border rounded-2xl border-slate-100">
+                <div tabindex="0" role="region" aria-label="Báo giá gần đây trên bàn làm việc" class="overflow-x-auto border rounded-2xl border-slate-200/80">
                   <table class="w-full text-left border-collapse text-xs">
-                    <thead class="bg-[#F8FAFC] text-slate-500 uppercase font-extrabold text-[10.5px] tracking-wider border-b border-slate-100">
+                    <thead class="bg-[#F8FAFC] text-slate-600 uppercase font-extrabold text-[10.5px] tracking-wider border-b border-slate-200/80">
                       <tr>
                         <th class="py-3 px-3.5">Mã Báo Giá</th>
                         <th class="py-3 px-3.5">Khách Hàng / Đối Tác</th>
@@ -771,33 +785,33 @@
               </div>
             </div>
 
-            <!-- Cột Phải (4/12): Thẻ Hồ Sơ Nhân Sự & Lối Tắt Nhanh (Phong cách cột phải của Heartly & 后台工作台) -->
+            <!-- Cột Phải (4/12): Thẻ Hồ Sơ Nhân Sự & Lối Tắt Nhanh (Tông Đỏ & Xám Đen Kim Loại) -->
             <div class="xl:col-span-4 space-y-5">
 
-              <!-- 2 Thẻ Hành Động Nhanh (Giống "内容发布" bên phải ảnh mẫu) -->
+              <!-- 2 Thẻ Hành Động Nhanh (Đỏ SANWAY & Xám Đen Kim Loại) -->
               <div class="erp-card p-5 space-y-3.5">
                 <div class="flex items-center justify-between">
                   <h3 class="text-sm font-extrabold text-[#0F172A]">Thao Tác Nhanh</h3>
                   <span class="text-[10px] font-bold text-slate-400">Lối tắt nghiệp vụ</span>
                 </div>
                 <div class="grid grid-cols-2 gap-3">
-                  <button type="button" onclick="startNewQuotationWithNextCode()" class="p-4 rounded-2xl bg-gradient-to-br from-[#2563EB] to-[#3B82F6] hover:from-[#1D4ED8] hover:to-[#2563EB] text-white text-left shadow-md shadow-blue-500/20 transition group">
-                    <div class="w-8 h-8 rounded-xl bg-white/20 flex items-center justify-center text-sm mb-2.5">
+                  <button type="button" onclick="startNewQuotationWithNextCode()" class="p-4 rounded-2xl bg-gradient-to-br from-[#D62828] to-[#B91C1C] hover:from-[#B91C1C] hover:to-[#991B1B] text-white text-left shadow-md shadow-red-600/20 transition group">
+                    <div class="w-8 h-8 rounded-xl bg-white/15 flex items-center justify-center text-sm mb-2.5">
                       <i class="fa-solid fa-file-circle-plus"></i>
                     </div>
                     <div class="text-xs font-extrabold">Lập Báo Giá Mới</div>
-                    <div class="text-[10px] text-white/80 mt-0.5 flex items-center gap-1">
+                    <div class="text-[10px] text-white/85 mt-0.5 flex items-center gap-1">
                       <span>Cấp mã tự động</span>
                       <i class="fa-solid fa-circle-chevron-right text-[9px] group-hover:translate-x-0.5 transition"></i>
                     </div>
                   </button>
 
-                  <button type="button" onclick="switchTab('quotes')" class="p-4 rounded-2xl bg-gradient-to-br from-[#0EA5E9] to-[#38BDF8] hover:from-[#0284C7] hover:to-[#0EA5E9] text-white text-left shadow-md shadow-sky-500/20 transition group">
-                    <div class="w-8 h-8 rounded-xl bg-white/20 flex items-center justify-center text-sm mb-2.5">
+                  <button type="button" onclick="switchTab('quotes')" class="p-4 rounded-2xl bg-gradient-to-br from-[#1E293B] to-[#334155] hover:from-[#0F172A] hover:to-[#1E293B] text-white text-left shadow-md shadow-slate-900/15 transition group">
+                    <div class="w-8 h-8 rounded-xl bg-white/15 flex items-center justify-center text-sm mb-2.5">
                       <i class="fa-solid fa-folder-open"></i>
                     </div>
                     <div id="dashQuickQuotesBtnTitle" class="text-xs font-extrabold">Kho Báo Giá</div>
-                    <div class="text-[10px] text-white/80 mt-0.5 flex items-center gap-1">
+                    <div class="text-[10px] text-white/85 mt-0.5 flex items-center gap-1">
                       <span>Tra cứu & In PDF</span>
                       <i class="fa-solid fa-circle-chevron-right text-[9px] group-hover:translate-x-0.5 transition"></i>
                     </div>
@@ -805,7 +819,7 @@
                 </div>
               </div>
 
-              <!-- Thẻ Thông Tin Tài Khoản & Phân Quyền Hiện Tại (Giống cột phải Rodney Morrison trong ảnh mẫu) -->
+              <!-- Thẻ Thông Tin Tài Khoản & Phân Quyền Hiện Tại -->
               <div class="erp-card p-5 space-y-4">
                 <div class="flex items-center gap-3 pb-3.5 border-b border-slate-100">
                   <div class="w-11 h-11 rounded-2xl bg-red-50 border border-red-100 text-[#D62828] flex items-center justify-center text-base font-black">
@@ -819,19 +833,19 @@
 
                 <div class="space-y-2.5 text-xs">
                   <div class="flex items-center justify-between py-1">
-                    <span class="text-slate-400 font-medium">Đơn vị phát hành</span>
+                    <span class="text-slate-500 font-medium">Đơn vị phát hành</span>
                     <span id="dashProfileCompany" class="font-bold text-[#0F172A] text-right truncate max-w-[180px]">CÔNG TY CỔ PHẦN SANWAY</span>
                   </div>
                   <div class="flex items-center justify-between py-1">
-                    <span class="text-slate-400 font-medium">Phạm vi xem báo giá</span>
-                    <span id="dashProfileScope" class="font-bold text-emerald-600">Tất cả mọi người (All)</span>
+                    <span class="text-slate-500 font-medium">Phạm vi xem báo giá</span>
+                    <span id="dashProfileScope" class="font-bold text-[#D62828]">Tất cả mọi người (All)</span>
                   </div>
                   <div class="flex items-center justify-between py-1">
-                    <span class="text-slate-400 font-medium">Quyền quản lý sản phẩm</span>
+                    <span class="text-slate-500 font-medium">Quyền quản lý sản phẩm</span>
                     <span id="dashProfileProductPerm" class="font-bold text-[#0F172A]">Toàn quyền thêm / sửa / xóa</span>
                   </div>
                   <div class="flex items-center justify-between py-1">
-                    <span class="text-slate-400 font-medium">Thuế suất VAT mặc định</span>
+                    <span class="text-slate-500 font-medium">Thuế suất VAT mặc định</span>
                     <span id="dashProfileVat" class="font-bold text-[#0F172A] tabular-nums">8%</span>
                   </div>
                 </div>
@@ -842,9 +856,9 @@
                 <div class="flex items-center justify-between">
                   <div>
                     <h3 class="text-sm font-extrabold text-[#0F172A]">Thống Kê Báo Giá Theo Nhân Sự</h3>
-                    <p class="text-[11px] text-slate-400">Tổng hợp số lượng & doanh số báo giá của từng người</p>
+                    <p class="text-[11px] text-slate-500">Tổng hợp số lượng & doanh số báo giá của từng người</p>
                   </div>
-                  <span class="w-8 h-8 rounded-xl bg-amber-50 text-amber-600 flex items-center justify-center text-xs">
+                  <span class="w-8 h-8 rounded-xl bg-slate-100 text-[#1E293B] border border-slate-200 flex items-center justify-center text-xs">
                     <i class="fa-solid fa-chart-pie"></i>
                   </span>
                 </div>
@@ -870,7 +884,7 @@
                 <div class="flex flex-wrap items-center gap-2">
                   <h2 class="text-sm sm:text-base font-extrabold text-[#0F172A]">Soạn Thảo & Xem Trước Báo Giá Trực Tiếp</h2>
                   <span id="currentDraftCodeBadge" class="text-xs font-black px-2.5 py-0.5 rounded-lg bg-red-50 text-[#D62828] border border-red-200 tabular-nums">BGSW/2026/001</span>
-                  <span id="currentDraftStatusBadge" class="text-[11px] font-bold px-2 py-0.5 rounded-md bg-emerald-50 text-emerald-700 border border-emerald-200">Đang chỉnh sửa</span>
+                  <span id="currentDraftStatusBadge" class="text-[11px] font-bold px-2 py-0.5 rounded-md bg-slate-100 text-[#1E293B] border border-slate-200">Đang chỉnh sửa</span>
                 </div>
                 <p class="text-xs text-slate-500 mt-0.5">Mọi thay đổi về khách hàng, mã số, hạng mục và khối lượng đều cập nhật tức thì sang khung Bản in A4 bên phải</p>
               </div>
@@ -885,7 +899,7 @@
                 <i class="fa-solid fa-floppy-disk"></i>
                 <span>Tạo & Lưu Báo Giá Này</span>
               </button>
-              <button type="button" onclick="handlePrint()" class="px-4 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-extrabold shadow-md shadow-emerald-600/20 transition flex items-center gap-1.5">
+              <button type="button" onclick="handlePrint()" class="px-4 py-2.5 rounded-xl bg-[#1E293B] hover:bg-[#0F172A] text-white text-xs font-extrabold shadow-md shadow-slate-900/15 transition flex items-center gap-1.5">
                 <i class="fa-solid fa-print"></i>
                 <span>Xuất PDF / In A4</span>
               </button>
@@ -908,7 +922,7 @@
             </div>
 
             <div class="erp-card p-3 sm:p-3.5 flex items-center gap-3">
-              <div class="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-slate-100 text-slate-700 border border-slate-200/80 flex items-center justify-center text-sm shrink-0">
+              <div class="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-slate-100 text-[#1E293B] border border-slate-200/80 flex items-center justify-center text-sm shrink-0">
                 <i class="fa-solid fa-calculator"></i>
               </div>
               <div class="min-w-0">
@@ -918,7 +932,7 @@
             </div>
 
             <div class="erp-card p-3 sm:p-3.5 flex items-center gap-3">
-              <div class="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-amber-50 text-amber-600 border border-amber-200/60 flex items-center justify-center text-sm shrink-0">
+              <div class="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-slate-100 text-[#1E293B] border border-slate-200/80 flex items-center justify-center text-sm shrink-0">
                 <i class="fa-solid fa-percent"></i>
               </div>
               <div class="min-w-0">
@@ -945,18 +959,18 @@
             <div class="no-print xl:col-span-7 space-y-4 min-w-0">
 
               <!-- Banner thông báo chế độ phân quyền cho Sale (Gọn gàng) -->
-              <div id="saleRoleBanner" class="hidden bg-[#0F172A] text-white rounded-xl p-3.5 px-4 shadow-xs flex flex-wrap items-center justify-between gap-2 border border-slate-800">
+              <div id="saleRoleBanner" class="hidden bg-[#1E293B] text-white rounded-xl p-3.5 px-4 shadow-xs flex flex-wrap items-center justify-between gap-2 border border-slate-700">
                 <div class="flex items-center gap-2.5">
-                  <span class="w-8 h-8 rounded-lg bg-emerald-500/15 text-emerald-400 border border-emerald-500/30 flex items-center justify-center text-xs shrink-0">
+                  <span class="w-8 h-8 rounded-lg bg-[#D62828] text-white flex items-center justify-center text-xs shrink-0">
                     <i class="fa-solid fa-user-check"></i>
                   </span>
                   <div class="text-xs">
                     <span class="font-bold text-white">Chế độ Nhân viên Kinh doanh (Sale)</span>
-                    <span class="text-slate-400 ml-1">• Đơn giá áp dụng theo bảng giá niêm yết của <b id="saleBannerCompanyName" class="text-slate-200">CÔNG TY CỔ PHẦN SANWAY</b></span>
+                    <span class="text-slate-300 ml-1">• Đơn giá áp dụng theo bảng giá niêm yết của <b id="saleBannerCompanyName" class="text-white">CÔNG TY CỔ PHẦN SANWAY</b></span>
                   </div>
                 </div>
-                <span class="text-[10px] px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-300 border border-emerald-400/30 font-semibold">
-                  <i class="fa-solid fa-lock text-[9px] mr-1"></i>Khóa đơn giá gốc
+                <span class="text-[10px] px-2.5 py-0.5 rounded bg-slate-800 text-slate-200 border border-slate-600 font-semibold">
+                  <i class="fa-solid fa-lock text-[9px] mr-1 text-[#D62828]"></i>Khóa đơn giá gốc
                 </span>
               </div>
 
@@ -964,7 +978,7 @@
               <div class="erp-card p-4 sm:p-5">
                 <div class="flex flex-wrap items-center justify-between pb-3.5 border-b border-slate-100 mb-4 gap-2">
                   <div class="flex items-center gap-2.5">
-                    <span class="w-9 h-9 rounded-xl bg-blue-50 text-blue-600 border border-blue-100 flex items-center justify-center text-xs">
+                    <span class="w-9 h-9 rounded-xl bg-red-50 text-[#D62828] border border-red-100 flex items-center justify-center text-xs">
                       <i class="fa-solid fa-file-contract"></i>
                     </span>
                     <div>
@@ -1041,7 +1055,7 @@
               <div class="erp-card p-4 sm:p-5">
                 <div class="flex flex-col sm:flex-row sm:items-center justify-between pb-3.5 border-b border-slate-100 gap-3">
                   <div class="flex items-center gap-2.5">
-                    <span class="w-9 h-9 rounded-xl bg-slate-100 text-[#0F172A] border border-slate-200/80 flex items-center justify-center text-xs shrink-0">
+                    <span class="w-9 h-9 rounded-xl bg-slate-100 text-[#1E293B] border border-slate-200/80 flex items-center justify-center text-xs shrink-0">
                       <i class="fa-solid fa-list-check"></i>
                     </span>
                     <div>
@@ -1055,7 +1069,7 @@
 
                   <div class="flex flex-wrap items-center gap-1.5">
                     <button type="button" onclick="selectAll(true)" class="text-xs px-2.5 py-1.5 rounded-lg border border-slate-200 bg-white hover:bg-slate-50 text-slate-700 font-semibold transition flex items-center gap-1">
-                      <i class="fa-solid fa-check-double text-emerald-600"></i>
+                      <i class="fa-solid fa-check-double text-[#D62828]"></i>
                       <span>Chọn hết</span>
                     </button>
                     <button type="button" onclick="selectAll(false)" class="text-xs px-2.5 py-1.5 rounded-lg border border-slate-200 bg-white hover:bg-slate-50 text-slate-700 font-semibold transition flex items-center gap-1">
@@ -1096,7 +1110,7 @@
                 <!-- Bảng chọn hạng mục sản phẩm (Desktop/Tablet) -->
                 <div tabindex="0" role="region" aria-label="Bảng chọn hạng mục báo giá" class="hidden md:block overflow-x-auto custom-scroll border rounded-xl border-slate-200 max-h-[520px]">
                   <table class="w-full text-left border-collapse text-xs">
-                    <thead class="sticky top-0 bg-[#0F172A] text-white z-10 shadow-xs">
+                    <thead class="sticky top-0 bg-[#1E293B] text-white z-10 shadow-xs">
                       <tr class="text-[10.5px] uppercase font-bold tracking-wider">
                         <th class="py-2.5 px-2.5 text-center w-10">Chọn</th>
                         <th class="py-2.5 px-1.5 w-10 text-center">STT</th>
@@ -1119,14 +1133,14 @@
                 </div>
 
                 <!-- Thanh tổng kết & Nút Tạo Lưu Báo Giá dưới chân bảng -->
-                <div class="mt-4 bg-[#0F172A] text-white p-4 rounded-xl flex flex-col sm:flex-row items-center justify-between gap-3 shadow-md">
+                <div class="mt-4 bg-[#1E293B] text-white p-4 rounded-xl flex flex-col sm:flex-row items-center justify-between gap-3 shadow-md">
                   <div class="flex flex-wrap items-center gap-3 text-xs w-full sm:w-auto justify-between sm:justify-start">
                     <span class="text-slate-300">Đã chọn: <b id="statSelectedItems" class="text-white">47</b>/<span id="statTotalItems">47</span></span>
                     <span class="text-slate-300">Trước thuế: <b id="statSubtotal" class="text-white tabular-nums">190.010.000 đ</b></span>
                     <span class="text-slate-300 hidden sm:inline">VAT (<span id="statVatPercent">8%</span>): <b id="statVatAmount" class="text-white tabular-nums">15.200.800 đ</b></span>
                     <div class="bg-white/10 border border-white/15 px-3 py-1 rounded-lg">
                       <span class="text-slate-300 text-[11px]">Tổng cộng:</span>
-                      <span id="statGrandTotal" class="text-sm font-black text-amber-300 ml-1 tabular-nums">205.210.800 đ</span>
+                      <span id="statGrandTotal" class="text-sm font-black text-white ml-1 tabular-nums">205.210.800 đ</span>
                     </div>
                   </div>
 
@@ -1135,7 +1149,7 @@
                       <i class="fa-solid fa-floppy-disk"></i>
                       <span>Tạo & Lưu Báo Giá</span>
                     </button>
-                    <button type="button" onclick="handlePrint()" class="px-3.5 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-extrabold text-xs shadow-md transition flex items-center justify-center gap-1.5">
+                    <button type="button" onclick="handlePrint()" class="px-3.5 py-2.5 rounded-xl bg-slate-700 hover:bg-slate-600 border border-slate-600 text-white font-extrabold text-xs shadow-md transition flex items-center justify-center gap-1.5">
                       <i class="fa-solid fa-print"></i>
                       <span>In A4</span>
                     </button>
@@ -1146,18 +1160,18 @@
 
             <!-- CỘT PHẢI (5/12): KHUNG XEM TRƯỚC BẢN IN A4 TRỰC TIẾP (LIVE A4 PREVIEW DOCK) -->
             <div id="sectionPreview" class="xl:col-span-5 xl:sticky xl:top-4 print:block min-w-0">
-              <div class="no-print bg-[#0F172A] text-white px-4 py-3 rounded-t-2xl border border-slate-800 flex flex-wrap items-center justify-between gap-2 shadow-md">
+              <div class="no-print bg-[#1E293B] text-white px-4 py-3 rounded-t-2xl border border-slate-700 flex flex-wrap items-center justify-between gap-2 shadow-md">
                 <div class="flex items-center gap-2">
-                  <span class="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse"></span>
+                  <span class="w-2.5 h-2.5 rounded-full bg-[#D62828] animate-pulse"></span>
                   <span class="text-xs font-extrabold uppercase tracking-wider">Xem Trước Bản In A4 Trực Tiếp</span>
-                  <span id="livePreviewPageCount" class="text-[10px] font-bold px-2 py-0.5 rounded-md bg-slate-800 text-amber-300 border border-slate-700">3 trang</span>
+                  <span id="livePreviewPageCount" class="text-[10px] font-bold px-2 py-0.5 rounded-md bg-slate-800 text-slate-200 border border-slate-700">3 trang</span>
                 </div>
                 <div class="flex items-center gap-1.5">
                   <button type="button" onclick="togglePreviewZoomMode()" id="btnZoomMode" class="px-2.5 py-1 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200 text-[11px] font-semibold border border-slate-700 transition flex items-center gap-1" title="Chuyển chế độ thu phóng">
-                    <i class="fa-solid fa-magnifying-glass-plus text-[10px] text-amber-400"></i>
+                    <i class="fa-solid fa-magnifying-glass-plus text-[10px] text-slate-300"></i>
                     <span id="zoomModeLabel">Vừa khung</span>
                   </button>
-                  <button type="button" onclick="handlePrint()" class="px-3 py-1 rounded-lg bg-emerald-600 hover:bg-emerald-500 text-white text-[11px] font-bold transition flex items-center gap-1">
+                  <button type="button" onclick="handlePrint()" class="px-3 py-1 rounded-lg bg-[#D62828] hover:bg-[#B91C1C] text-white text-[11px] font-bold transition flex items-center gap-1">
                     <i class="fa-solid fa-print text-[10px]"></i>
                     <span>In / Xuất PDF</span>
                   </button>
@@ -1179,20 +1193,20 @@
         <div id="sectionQuotes" class="hidden no-print space-y-5">
           <div class="erp-card p-5 sm:p-6 flex flex-col md:flex-row md:items-center justify-between gap-4">
             <div class="flex items-center gap-3.5">
-              <div class="w-11 h-11 rounded-2xl bg-amber-50 text-amber-600 border border-amber-100 flex items-center justify-center text-base shrink-0">
+              <div class="w-11 h-11 rounded-2xl bg-red-50 text-[#D62828] border border-red-100 flex items-center justify-center text-base shrink-0">
                 <i class="fa-solid fa-folder-open"></i>
               </div>
               <div>
                 <div class="flex flex-wrap items-center gap-2">
                   <h2 id="quotesPageTitle" class="text-sm sm:text-lg font-extrabold text-[#0F172A] tracking-tight">Quản Lý Tất Cả Báo Giá Đã Lập</h2>
-                  <span id="quotesHeaderTotalBadge" class="text-[11px] font-extrabold px-2.5 py-0.5 rounded-full bg-amber-50 text-amber-700 border border-amber-200">1 bản báo giá</span>
+                  <span id="quotesHeaderTotalBadge" class="text-[11px] font-extrabold px-2.5 py-0.5 rounded-full bg-slate-100 text-[#1E293B] border border-slate-200">1 bản báo giá</span>
                 </div>
-                <p id="quotesPageSubtitle" class="text-xs text-slate-400 mt-0.5">Xem tất cả báo giá của mọi nhân sự theo mã <b class="text-[#D62828]">BGSW/YYYY/NNN</b> — Mở lại chỉnh sửa, nhân bản hoặc xuất PDF</p>
+                <p id="quotesPageSubtitle" class="text-xs text-slate-500 mt-0.5">Xem tất cả báo giá của mọi nhân sự theo mã <b class="text-[#D62828]">BGSW/YYYY/NNN</b> — Mở lại chỉnh sửa, nhân bản hoặc xuất PDF</p>
               </div>
             </div>
 
             <div class="flex flex-wrap items-center gap-2">
-              <button type="button" onclick="startNewQuotationWithNextCode()" class="px-4 py-2.5 rounded-xl bg-gradient-to-r from-[#D62828] to-[#E11D48] hover:from-[#B91C1C] hover:to-[#BE123C] text-white text-xs font-extrabold shadow-md shadow-red-500/20 transition flex items-center gap-2">
+              <button type="button" onclick="startNewQuotationWithNextCode()" class="px-4 py-2.5 rounded-xl bg-[#D62828] hover:bg-[#B91C1C] text-white text-xs font-extrabold shadow-md shadow-red-600/20 transition flex items-center gap-2">
                 <i class="fa-solid fa-plus-circle"></i>
                 <span>+ Lập Báo Giá Mới (Sinh Mã Mới)</span>
               </button>
@@ -1218,12 +1232,12 @@
                 </select>
               </div>
 
-              <div class="md:col-span-2 text-right text-[11px] text-slate-400 font-semibold hidden md:block">
+              <div class="md:col-span-2 text-right text-[11px] text-slate-500 font-semibold hidden md:block">
                 <span id="quotesRoleScopeHint">Toàn quyền Admin</span>
               </div>
             </div>
 
-            <div tabindex="0" role="region" aria-label="Danh sách báo giá đã lưu" class="overflow-x-auto border rounded-2xl border-slate-100">
+            <div tabindex="0" role="region" aria-label="Danh sách báo giá đã lưu" class="overflow-x-auto border rounded-2xl border-slate-200/80">
               <table class="w-full text-left border-collapse text-xs">
                 <thead class="bg-[#F8FAFC] text-slate-600 uppercase font-extrabold text-[10.5px] tracking-wider border-b border-slate-200/80">
                   <tr>
@@ -1249,15 +1263,15 @@
         <div id="sectionProducts" class="hidden no-print space-y-5">
           <div class="erp-card p-5 sm:p-6 flex flex-col md:flex-row md:items-center justify-between gap-4">
             <div class="flex items-center gap-3.5">
-              <div class="w-11 h-11 rounded-2xl bg-sky-50 text-sky-600 border border-sky-100 flex items-center justify-center text-base shrink-0">
+              <div class="w-11 h-11 rounded-2xl bg-slate-100 text-[#1E293B] border border-slate-200 flex items-center justify-center text-base shrink-0">
                 <i class="fa-solid fa-boxes-stacked"></i>
               </div>
               <div>
                 <div class="flex flex-wrap items-center gap-2">
                   <h2 class="text-sm sm:text-lg font-extrabold text-[#0F172A] tracking-tight">Quản Lý Danh Mục Sản Phẩm & Bảng Giá Vật Tư</h2>
-                  <span id="productsHeaderCountBadge" class="text-[11px] font-extrabold px-2.5 py-0.5 rounded-full bg-sky-50 text-sky-700 border border-sky-200">47 sản phẩm</span>
+                  <span id="productsHeaderCountBadge" class="text-[11px] font-extrabold px-2.5 py-0.5 rounded-full bg-red-50 text-[#D62828] border border-red-200">47 sản phẩm</span>
                 </div>
-                <p id="productsHeaderSubtitle" class="text-xs text-slate-400 mt-0.5">Quản lý tập trung toàn bộ danh mục thiết bị, vật tư PCCC, đơn vị tính và đơn giá niêm yết</p>
+                <p id="productsHeaderSubtitle" class="text-xs text-slate-500 mt-0.5">Quản lý tập trung toàn bộ danh mục thiết bị, vật tư PCCC, đơn vị tính và đơn giá niêm yết</p>
               </div>
             </div>
 
@@ -1266,7 +1280,7 @@
                 <i class="fa-solid fa-plus"></i>
                 <span>Thêm Sản Phẩm Mới</span>
               </button>
-              <button type="button" id="btnAdminSaveCatalog" onclick="saveMasterSystemData(true)" class="hidden px-4 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-extrabold shadow-sm transition items-center gap-1.5">
+              <button type="button" id="btnAdminSaveCatalog" onclick="saveMasterSystemData(true)" class="hidden px-4 py-2.5 rounded-xl bg-[#1E293B] hover:bg-[#0F172A] text-white text-xs font-extrabold shadow-sm transition items-center gap-1.5">
                 <i class="fa-solid fa-floppy-disk"></i>
                 <span>Lưu Bảng Giá Niêm Yết</span>
               </button>
@@ -1291,7 +1305,7 @@
               </div>
             </div>
 
-            <div tabindex="0" role="region" aria-label="Bảng quản lý danh mục sản phẩm" class="overflow-x-auto border rounded-2xl border-slate-100 max-h-[68vh] custom-scroll">
+            <div tabindex="0" role="region" aria-label="Bảng quản lý danh mục sản phẩm" class="overflow-x-auto border rounded-2xl border-slate-200/80 max-h-[68vh] custom-scroll">
               <table class="w-full text-left border-collapse text-xs">
                 <thead class="sticky top-0 bg-[#F8FAFC] text-slate-600 uppercase font-extrabold text-[10.5px] tracking-wider border-b border-slate-200 z-10">
                   <tr>
@@ -1318,7 +1332,7 @@
           <!-- Header Quản trị -->
           <div class="erp-card p-5 sm:p-6 flex flex-col md:flex-row md:items-center justify-between gap-4">
             <div class="flex items-start sm:items-center gap-3.5 sm:gap-4">
-              <div class="w-11 h-11 rounded-2xl bg-purple-50 text-purple-600 border border-purple-100 flex items-center justify-center text-base shrink-0">
+              <div class="w-11 h-11 rounded-2xl bg-slate-100 text-[#1E293B] border border-slate-200 flex items-center justify-center text-base shrink-0">
                 <i class="fa-solid fa-sliders"></i>
               </div>
               <div>
@@ -1326,16 +1340,16 @@
                   <h2 class="text-sm sm:text-lg font-extrabold text-[#0F172A] tracking-tight">Cấu Hình Thông Tin Công Ty, Nhân Sự & Database</h2>
                   <span class="text-[10px] font-extrabold px-2.5 py-0.5 rounded-full bg-red-50 text-[#D62828] border border-red-200">Admin Toàn Quyền</span>
                 </div>
-                <p class="text-xs text-slate-400 mt-0.5">Thiết lập pháp nhân công ty phát hành báo giá, cấp mã PIN 4 số cho Admin / Sale, con dấu mộc đỏ và đồng bộ Cloud</p>
+                <p class="text-xs text-slate-500 mt-0.5">Thiết lập pháp nhân công ty phát hành báo giá, cấp mã PIN 4 số cho Admin / Sale, con dấu mộc đỏ và đồng bộ Cloud</p>
               </div>
             </div>
             <div class="grid grid-cols-2 sm:flex sm:flex-wrap items-center gap-2">
               <button type="button" onclick="exportSystemConfigFile()" class="px-3.5 py-2.5 sm:py-2 rounded-xl bg-[#F8FAFC] hover:bg-slate-100 text-slate-700 text-xs font-bold transition flex items-center justify-center gap-1.5 border border-slate-200">
-                <i class="fa-solid fa-file-arrow-down text-amber-500"></i>
+                <i class="fa-solid fa-file-arrow-down text-[#D62828]"></i>
                 <span>Xuất Backup JSON</span>
               </button>
               <label class="px-3.5 py-2.5 sm:py-2 rounded-xl bg-[#F8FAFC] hover:bg-slate-100 text-slate-700 text-xs font-bold transition flex items-center justify-center gap-1.5 border border-slate-200 cursor-pointer">
-                <i class="fa-solid fa-file-arrow-up text-emerald-600"></i>
+                <i class="fa-solid fa-file-arrow-up text-[#1E293B]"></i>
                 <span>Nhập Backup JSON</span>
                 <input type="file" accept=".json" onchange="importSystemConfigFile(event)" class="hidden">
               </label>
@@ -1395,7 +1409,7 @@
               <div>
                 <div class="flex items-center justify-between pb-4 border-b border-slate-100 mb-5">
                   <div class="flex items-center gap-3">
-                    <span class="w-10 h-10 rounded-xl bg-amber-50 text-amber-600 border border-amber-100 flex items-center justify-center text-sm shrink-0">
+                    <span class="w-10 h-10 rounded-xl bg-slate-100 text-[#1E293B] border border-slate-200 flex items-center justify-center text-sm shrink-0">
                       <i class="fa-solid fa-users-gear"></i>
                     </span>
                     <div>
@@ -1437,7 +1451,7 @@
                 </form>
 
                 <!-- Danh sách mật khẩu hiện hành -->
-                <div class="overflow-x-auto border rounded-2xl border-slate-100">
+                <div class="overflow-x-auto border rounded-2xl border-slate-200/80">
                   <table class="w-full text-left border-collapse text-xs">
                     <thead class="bg-[#F8FAFC] text-slate-600 uppercase font-extrabold text-[10.5px] tracking-wider border-b border-slate-200/80">
                       <tr>
@@ -1454,8 +1468,8 @@
                 </div>
               </div>
 
-              <div class="mt-4 text-xs text-slate-600 bg-amber-50/70 border border-amber-200/80 rounded-xl p-3.5 flex items-start gap-2.5">
-                <i class="fa-solid fa-shield-halved text-amber-600 mt-0.5"></i>
+              <div class="mt-4 text-xs text-slate-600 bg-slate-100/80 border border-slate-200 rounded-xl p-3.5 flex items-start gap-2.5">
+                <i class="fa-solid fa-shield-halved text-[#D62828] mt-0.5"></i>
                 <span><b>Bảo mật Backend:</b> Mọi mật khẩu 4 số được lưu trữ và kiểm tra trên Server (hoặc Vercel KV). Tài khoản Sale không bao giờ đọc được danh sách này trong DevTools.</span>
               </div>
             </div>
@@ -1479,8 +1493,8 @@
                     <div class="h-24 flex items-center justify-center bg-white rounded-lg border border-dashed border-slate-300 p-2 mb-3">
                       <img id="adminPreviewStamp" src="" alt="Con dấu" class="max-h-18 object-contain">
                     </div>
-                    <label class="w-full py-2.5 sm:py-2 px-2.5 rounded-lg bg-[#0F172A] hover:bg-slate-800 text-white text-xs font-bold cursor-pointer transition inline-flex items-center justify-center gap-1.5">
-                      <i class="fa-solid fa-camera-rotate text-amber-400"></i>
+                    <label class="w-full py-2.5 sm:py-2 px-2.5 rounded-lg bg-[#D62828] hover:bg-[#B91C1C] text-white text-xs font-bold cursor-pointer transition inline-flex items-center justify-center gap-1.5">
+                      <i class="fa-solid fa-camera-rotate"></i>
                       <span>Đổi con dấu</span>
                       <input type="file" accept="image/*" onchange="handleAssetUpload(event, 'stamp')" class="hidden">
                     </label>
@@ -1491,8 +1505,8 @@
                     <div class="h-24 flex items-center justify-center bg-white rounded-lg border border-dashed border-slate-300 p-2 mb-3">
                       <img id="adminPreviewLogo" src="" alt="Logo" class="max-h-16 object-contain">
                     </div>
-                    <label class="w-full py-2.5 sm:py-2 px-2.5 rounded-lg bg-[#0F172A] hover:bg-slate-800 text-white text-xs font-bold cursor-pointer transition inline-flex items-center justify-center gap-1.5">
-                      <i class="fa-solid fa-image text-emerald-400"></i>
+                    <label class="w-full py-2.5 sm:py-2 px-2.5 rounded-lg bg-[#1E293B] hover:bg-[#0F172A] text-white text-xs font-bold cursor-pointer transition inline-flex items-center justify-center gap-1.5">
+                      <i class="fa-solid fa-image"></i>
                       <span>Đổi Logo</span>
                       <input type="file" accept="image/*" onchange="handleAssetUpload(event, 'logo_horizontal')" class="hidden">
                     </label>
@@ -1504,7 +1518,7 @@
               <div class="erp-card p-4 sm:p-6">
                 <div class="flex items-center justify-between pb-4 border-b border-slate-100 mb-4 gap-2">
                   <div class="flex items-center gap-3">
-                    <span class="w-10 h-10 rounded-xl bg-blue-50 text-blue-600 border border-blue-100 flex items-center justify-center text-sm shrink-0">
+                    <span class="w-10 h-10 rounded-xl bg-slate-100 text-[#1E293B] border border-slate-200 flex items-center justify-center text-sm shrink-0">
                       <i class="fa-solid fa-database"></i>
                     </span>
                     <div>
@@ -1512,7 +1526,7 @@
                       <p class="text-xs text-slate-500 mt-0.5">Tự động nhận diện Upstash Redis trên Vercel hoặc đồng bộ qua REST API</p>
                     </div>
                   </div>
-                  <span id="cloudSyncActiveIndicator" class="text-[10px] font-bold px-2.5 py-1 rounded-md bg-slate-100 text-slate-600 border border-slate-200 shrink-0">Backend DB</span>
+                  <span id="cloudSyncActiveIndicator" class="text-[10px] font-bold px-2.5 py-1 rounded-md bg-slate-100 text-slate-700 border border-slate-200 shrink-0">Backend DB</span>
                 </div>
 
                 <div class="space-y-3.5 text-xs">
@@ -1525,7 +1539,7 @@
                     <input type="password" id="cloudApiKeyInput" placeholder="X-Master-Key hoặc Bearer Token..." class="erp-input text-xs">
                   </div>
                   <div class="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-2.5 pt-1">
-                    <button type="button" onclick="saveCloudSettingsAndSync()" class="flex-1 py-2.5 px-3.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-bold transition flex items-center justify-center gap-1.5 shadow-sm">
+                    <button type="button" onclick="saveCloudSettingsAndSync()" class="flex-1 py-2.5 px-3.5 rounded-xl bg-[#1E293B] hover:bg-[#0F172A] text-white font-bold transition flex items-center justify-center gap-1.5 shadow-sm">
                       <i class="fa-solid fa-rotate"></i>
                       <span>Lưu & Đồng Bộ Cloud</span>
                     </button>
@@ -1549,7 +1563,7 @@
     <div class="px-3.5 pt-2 pb-1.5 border-b border-slate-100 flex items-center justify-between gap-2">
       <div class="min-w-0">
         <div class="flex items-center gap-1.5 text-[10px] text-slate-500 font-semibold">
-          <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
+          <span class="w-1.5 h-1.5 rounded-full bg-[#D62828]"></span>
           <span>Đã chọn <b id="mobileBarSelectedCount" class="text-[#0F172A]">47</b> mục</span>
           <span>•</span>
           <span>Đã gồm VAT</span>
@@ -1561,7 +1575,7 @@
           <i class="fa-solid fa-floppy-disk"></i>
           <span>Lưu BG</span>
         </button>
-        <button type="button" id="mobilePrimaryCtaBtn" onclick="handlePrint()" class="px-3 py-2 rounded-xl bg-emerald-600 text-white text-xs font-extrabold flex items-center gap-1 shrink-0">
+        <button type="button" id="mobilePrimaryCtaBtn" onclick="handlePrint()" class="px-3 py-2 rounded-xl bg-[#1E293B] text-white text-xs font-extrabold flex items-center gap-1 shrink-0">
           <i id="mobilePrimaryCtaIcon" class="fa-solid fa-print"></i>
           <span id="mobilePrimaryCtaText">In A4</span>
         </button>
@@ -1594,7 +1608,7 @@
 
   <!-- Toast Notification -->
   <div id="toastNotif" class="no-print fixed bottom-32 lg:bottom-5 right-3 left-3 lg:left-auto lg:right-5 z-[110] hidden bg-[#0F172A] text-white px-4 py-3 rounded-xl shadow-xl border border-slate-700 text-xs font-semibold items-center gap-2.5 transition-all">
-    <i id="toastIcon" class="fa-solid fa-circle-check text-emerald-400 text-sm shrink-0"></i>
+    <i id="toastIcon" class="fa-solid fa-circle-check text-[#D62828] text-sm shrink-0"></i>
     <span id="toastMessage">Đã lưu cấu hình thành công!</span>
   </div>
 
@@ -1696,8 +1710,8 @@
       const text = document.getElementById('toastMessage');
       text.textContent = msg;
       icon.className = isError
-        ? 'fa-solid fa-triangle-exclamation text-rose-400 text-sm'
-        : 'fa-solid fa-circle-check text-emerald-400 text-sm';
+        ? 'fa-solid fa-triangle-exclamation text-[#D62828] text-sm'
+        : 'fa-solid fa-circle-check text-[#D62828] text-sm';
       toast.classList.remove('hidden');
       toast.classList.add('flex');
       clearTimeout(window._toastTimer);
@@ -1858,7 +1872,7 @@
       if (sbBadge) sbBadge.textContent = text;
       if (adminBadge) {
         adminBadge.textContent = text;
-        adminBadge.className = 'text-[10px] font-bold px-2.5 py-1 rounded-full bg-emerald-100 text-emerald-700';
+        adminBadge.className = 'text-[10px] font-bold px-2.5 py-1 rounded-full bg-slate-100 text-[#1E293B] border border-slate-200';
       }
     }
 
@@ -2047,7 +2061,7 @@
       if (document.getElementById('dashProfileScope')) {
         const scEl = document.getElementById('dashProfileScope');
         scEl.textContent = isAdmin ? 'Xem tất cả mọi người (All)' : 'Chỉ báo giá của tôi';
-        scEl.className = isAdmin ? 'font-bold text-[#D62828]' : 'font-bold text-blue-600';
+        scEl.className = isAdmin ? 'font-bold text-[#D62828]' : 'font-bold text-[#1E293B]';
       }
       if (document.getElementById('dashProfileProductPerm')) {
         document.getElementById('dashProfileProductPerm').textContent = isAdmin
@@ -2093,10 +2107,10 @@
               <td class="py-3 px-3 text-right font-extrabold text-[#0F172A] tabular-nums whitespace-nowrap">${formatVND(q.grandTotal || 0)} đ</td>
               <td class="py-3 px-3.5 text-right whitespace-nowrap">
                 <div class="inline-flex items-center gap-1">
-                  <button type="button" onclick="loadQuotationToEditor('${escapeHtml(q.id)}')" class="px-2.5 py-1 rounded-lg bg-[#0F172A] hover:bg-slate-800 text-white font-bold text-[11px] transition">
+                  <button type="button" onclick="loadQuotationToEditor('${escapeHtml(q.id)}')" class="px-2.5 py-1 rounded-lg bg-[#1E293B] hover:bg-[#0F172A] text-white font-bold text-[11px] transition">
                     Mở & Sửa
                   </button>
-                  <button type="button" onclick="printSavedQuotation('${escapeHtml(q.id)}')" class="px-2 py-1 rounded-lg bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-[11px] transition" title="In PDF">
+                  <button type="button" onclick="printSavedQuotation('${escapeHtml(q.id)}')" class="px-2 py-1 rounded-lg bg-[#D62828] hover:bg-[#B91C1C] text-white font-bold text-[11px] transition" title="In PDF">
                     <i class="fa-solid fa-print"></i>
                   </button>
                 </div>
@@ -2127,14 +2141,14 @@
             staffStatsList.innerHTML = `<div class="text-xs text-slate-400 py-2">Chưa có dữ liệu báo giá.</div>`;
           } else {
             staffStatsList.innerHTML = entries.map(([name, st]) => `
-              <div class="p-3 rounded-xl bg-[#F8FAFC] border border-slate-100 flex items-center justify-between gap-2">
+              <div class="p-3 rounded-xl bg-[#F8FAFC] border border-slate-200/80 flex items-center justify-between gap-2">
                 <div class="min-w-0">
                   <div class="text-xs font-extrabold text-[#0F172A] truncate">${escapeHtml(name)}</div>
-                  <div class="text-[11px] text-slate-400 font-medium">${st.count} bản báo giá đã lập</div>
+                  <div class="text-[11px] text-slate-500 font-medium">${st.count} bản báo giá đã lập</div>
                 </div>
                 <div class="text-right shrink-0">
                   <div class="text-xs font-black text-[#D62828] tabular-nums">${formatVND(st.total)} đ</div>
-                  <button type="button" onclick="filterQuotesByCreator('${escapeHtml(name)}')" class="text-[10px] font-bold text-blue-600 hover:underline">
+                  <button type="button" onclick="filterQuotesByCreator('${escapeHtml(name)}')" class="text-[10px] font-bold text-[#1E293B] hover:text-[#D62828] hover:underline">
                     Xem danh sách →
                   </button>
                 </div>
@@ -2529,11 +2543,11 @@
           <td class="py-3.5 px-3.5 text-right font-black text-[#D62828] tabular-nums whitespace-nowrap">${formatVND(q.grandTotal || 0)} đ</td>
           <td class="py-3.5 px-3.5 text-right whitespace-nowrap">
             <div class="inline-flex items-center gap-1.5">
-              <button type="button" onclick="loadQuotationToEditor('${escapeHtml(q.id)}')" class="px-2.5 py-1.5 rounded-lg bg-[#0F172A] hover:bg-slate-800 text-white font-bold text-[11px] transition inline-flex items-center gap-1" title="Mở và chỉnh sửa báo giá này">
-                <i class="fa-solid fa-pen-to-square text-amber-400"></i>
+              <button type="button" onclick="loadQuotationToEditor('${escapeHtml(q.id)}')" class="px-2.5 py-1.5 rounded-lg bg-[#1E293B] hover:bg-[#0F172A] text-white font-bold text-[11px] transition inline-flex items-center gap-1" title="Mở và chỉnh sửa báo giá này">
+                <i class="fa-solid fa-pen-to-square text-slate-300"></i>
                 <span>Mở & Sửa</span>
               </button>
-              <button type="button" onclick="printSavedQuotation('${escapeHtml(q.id)}')" class="px-2.5 py-1.5 rounded-lg bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-[11px] transition inline-flex items-center gap-1" title="Xuất PDF / In A4">
+              <button type="button" onclick="printSavedQuotation('${escapeHtml(q.id)}')" class="px-2.5 py-1.5 rounded-lg bg-[#D62828] hover:bg-[#B91C1C] text-white font-bold text-[11px] transition inline-flex items-center gap-1" title="Xuất PDF / In A4">
                 <i class="fa-solid fa-print"></i>
                 <span>In</span>
               </button>
@@ -2829,7 +2843,7 @@
         headerPill.textContent = isAdmin ? 'Admin • Toàn Quyền Hệ Thống (All)' : 'Sale • Tạo & Xem Báo Giá Cá Nhân';
         headerPill.className = isAdmin
           ? 'text-[10.5px] font-extrabold px-2.5 py-0.5 rounded-full bg-red-50 text-[#D62828] border border-red-200'
-          : 'text-[10.5px] font-extrabold px-2.5 py-0.5 rounded-full bg-blue-50 text-blue-600 border border-blue-200';
+          : 'text-[10.5px] font-extrabold px-2.5 py-0.5 rounded-full bg-slate-100 text-[#1E293B] border border-slate-300';
       }
 
       const sbChip = document.getElementById('sidebarRoleChip');
@@ -2837,7 +2851,7 @@
         sbChip.textContent = isAdmin ? 'ADMIN' : 'SALE';
         sbChip.className = isAdmin
           ? 'text-[9px] font-extrabold px-1.5 py-0.5 rounded-md bg-red-50 text-[#D62828] border border-red-100'
-          : 'text-[9px] font-extrabold px-1.5 py-0.5 rounded-md bg-blue-50 text-blue-600 border border-blue-100';
+          : 'text-[9px] font-extrabold px-1.5 py-0.5 rounded-md bg-slate-200 text-[#1E293B] border border-slate-300';
       }
 
       const sbDesc = document.getElementById('sidebarRoleDescText');
@@ -2851,7 +2865,7 @@
       roleBadge.textContent = roleTitle;
       roleBadge.className = isAdmin
         ? 'text-[10px] font-bold text-[#D62828] uppercase tracking-wider mt-0.5'
-        : 'text-[10px] font-bold text-blue-600 uppercase tracking-wider mt-0.5';
+        : 'text-[10px] font-bold text-slate-600 uppercase tracking-wider mt-0.5';
 
       if (document.getElementById('mobileHeaderRoleText')) {
         document.getElementById('mobileHeaderRoleText').textContent = `${user.name} • ${roleTitle}`;
@@ -2861,7 +2875,7 @@
       if (avatarEl) {
         avatarEl.className = isAdmin
           ? 'w-9 h-9 rounded-2xl bg-red-50 border border-red-100 flex items-center justify-center text-xs font-extrabold text-[#D62828] shrink-0'
-          : 'w-9 h-9 rounded-2xl bg-blue-50 border border-blue-100 flex items-center justify-center text-xs font-extrabold text-blue-600 shrink-0';
+          : 'w-9 h-9 rounded-2xl bg-slate-100 border border-slate-300 flex items-center justify-center text-xs font-extrabold text-[#1E293B] shrink-0';
         avatarEl.innerHTML = isAdmin
           ? '<i class="fa-solid fa-crown"></i>'
           : '<i class="fa-solid fa-user-tie"></i>';
@@ -3008,7 +3022,7 @@
       const roleBadgeMap = {
         admin: '<span class="px-2.5 py-0.5 rounded-full text-[10px] font-extrabold bg-red-50 text-[#D62828] border border-red-200">Admin (Toàn quyền All)</span>',
         leader: '<span class="px-2.5 py-0.5 rounded-full text-[10px] font-extrabold bg-red-50 text-[#D62828] border border-red-200">Admin (Toàn quyền All)</span>',
-        sale: '<span class="px-2.5 py-0.5 rounded-full text-[10px] font-extrabold bg-blue-50 text-blue-700 border border-blue-200">Sale (Kinh doanh)</span>'
+        sale: '<span class="px-2.5 py-0.5 rounded-full text-[10px] font-extrabold bg-slate-100 text-[#1E293B] border border-slate-300">Sale (Kinh doanh)</span>'
       };
 
       masterData.users.forEach((u, idx) => {
@@ -3297,7 +3311,7 @@
       if (isConnected) {
         if (adminBadge) {
           adminBadge.textContent = backendAvailable ? 'Backend Protected' : 'Cloud Connected';
-          adminBadge.className = 'text-[10px] font-bold px-2.5 py-1 rounded-full bg-emerald-100 text-emerald-700';
+          adminBadge.className = 'text-[10px] font-bold px-2.5 py-1 rounded-full bg-slate-100 text-[#1E293B] border border-slate-200';
         }
       } else {
         if (adminBadge) {
