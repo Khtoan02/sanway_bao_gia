@@ -420,11 +420,6 @@
           <i class="fa-solid fa-arrow-right text-xs"></i>
         </button>
       </form>
-
-      <div class="mt-6 pt-4 border-t border-slate-100 flex items-center justify-center gap-2 text-[11px] text-slate-500 font-medium">
-        <i class="fa-solid fa-shield-halved text-[#D62828]"></i>
-        <span>Tự động nhận diện vai trò: <b class="text-[#0F172A]">Admin</b> hoặc <b class="text-[#0F172A]">Sale</b></span>
-      </div>
     </div>
   </div>
 
@@ -464,25 +459,18 @@
           <input type="text" id="modalItemName" required placeholder="VD: Kiểm tra, bảo dưỡng đầu báo khói địa chỉ" class="erp-input font-semibold">
         </div>
 
-        <div class="grid grid-cols-2 sm:grid-cols-3 gap-3 sm:gap-4">
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <div>
             <label class="erp-label">
               <i class="fa-solid fa-scale-balanced text-slate-400"></i>
-              <span>Đơn vị tính (ĐVT)</span>
+              <span>Đơn vị tính (ĐVT) <span class="text-[#D62828]">*</span></span>
             </label>
             <input type="text" id="modalItemUnit" required value="Chiếc" placeholder="Chiếc, Bộ, HT..." class="erp-input text-center font-semibold">
           </div>
           <div>
             <label class="erp-label">
-              <i class="fa-solid fa-cubes text-slate-400"></i>
-              <span>Khối lượng mặc định</span>
-            </label>
-            <input type="number" id="modalItemQty" required min="1" value="1" class="erp-input text-center font-bold tabular-nums">
-          </div>
-          <div class="col-span-2 sm:col-span-1">
-            <label class="erp-label">
               <i class="fa-solid fa-tag text-[#D62828]"></i>
-              <span>Đơn giá niêm yết (đ)</span>
+              <span>Đơn giá niêm yết (VNĐ) <span class="text-[#D62828]">*</span></span>
             </label>
             <input type="number" id="modalItemPrice" required min="0" step="1000" value="150000" class="erp-input text-right font-bold text-[#D62828] tabular-nums">
           </div>
@@ -915,166 +903,159 @@
           <!-- BỐ CỤC CHIA ĐÔI MÀN HÌNH NGAY TỪ ĐỈNH TRANG (TRÁI 7/12: SOẠN BÁO GIÁ | PHẢI 5/12: BẢN XEM TRƯỚC A4 VỪA KHÍT KHUNG) -->
           <div id="workspaceSplitGrid" class="grid grid-cols-1 lg:grid-cols-12 gap-5 items-start">
 
-            <!-- CỘT TRÁI (7/12): TOÀN BỘ HEADER, KPI, THÔNG TIN KHÁCH HÀNG & BẢNG CHỌN VẬT TƯ NẰM GỌN TRONG CỘT TRÁI -->
-            <div class="no-print lg:col-span-7 space-y-4 min-w-0">
+            <!-- CỘT TRÁI (7/12): TOÀN BỘ HEADER, THÔNG TIN KHÁCH HÀNG & BẢNG CHỌN VẬT TƯ NẰM GỌN TRONG CỘT TRÁI -->
+            <div class="no-print lg:col-span-7 space-y-5 min-w-0">
 
               <!-- Banner thông báo chế độ phân quyền cho Sale -->
-              <div id="saleRoleBanner" class="hidden bg-[#1E293B] text-white rounded-xl py-2.5 px-4 shadow-xs flex flex-wrap items-center justify-between gap-2 border border-slate-700">
-                <div class="flex items-center gap-2.5">
-                  <span class="w-7 h-7 rounded-lg bg-[#D62828] text-white flex items-center justify-center text-xs shrink-0">
+              <div id="saleRoleBanner" class="hidden bg-[#1E293B] text-white rounded-2xl py-3 px-5 shadow-xs flex flex-wrap items-center justify-between gap-3 border border-slate-700">
+                <div class="flex items-center gap-3">
+                  <span class="w-8 h-8 rounded-xl bg-[#D62828] text-white flex items-center justify-center text-xs shrink-0">
                     <i class="fa-solid fa-user-check"></i>
                   </span>
                   <div class="text-xs">
                     <span class="font-bold text-white">Chế độ Sale</span>
-                    <span class="text-slate-300 ml-1">• Áp dụng bảng giá niêm yết <b id="saleBannerCompanyName" class="text-white">CÔNG TY CỔ PHẦN SANWAY</b></span>
+                    <span class="text-slate-300 ml-1.5">• Áp dụng bảng giá niêm yết <b id="saleBannerCompanyName" class="text-white">CÔNG TY CỔ PHẦN SANWAY</b></span>
                   </div>
                 </div>
-                <span class="text-[10.5px] px-2.5 py-0.5 rounded bg-slate-800 text-slate-200 border border-slate-600 font-semibold">
-                  <i class="fa-solid fa-lock text-[9px] mr-1 text-[#D62828]"></i>Khóa đơn giá gốc
+                <span class="text-[11px] px-3 py-1 rounded-lg bg-slate-800 text-slate-200 border border-slate-600 font-semibold">
+                  <i class="fa-solid fa-lock text-[9px] mr-1.5 text-[#D62828]"></i>Khóa đơn giá gốc
                 </span>
               </div>
 
-              <!-- KHỐI 1: THÔNG TIN KHÁCH HÀNG & MÃ HỒ SƠ BÁO GIÁ (GỌN GÀNG 2 HÀNG - TIẾT KIỆM CHIỀU DỌC ĐỂ THẤY NGAY BẢNG & THANH TỔNG KẾT) -->
-              <div class="erp-card p-3.5 sm:p-4 space-y-3">
+              <!-- KHỐI 1: THÔNG TIN KHÁCH HÀNG & MÃ HỒ SƠ BÁO GIÁ (BỐ CỤC THOÁNG ĐÃNG, CÂN ĐỐI) -->
+              <div class="erp-card p-5 sm:p-6 space-y-5">
                 <!-- Hàng đầu: Tiêu đề + Mã BGSW + Cụm nút Lưu & Tạo Báo Giá -->
-                <div class="flex flex-wrap items-center justify-between gap-2 pb-2.5 border-b border-slate-100">
-                  <div class="flex items-center gap-2.5">
-                    <div class="w-8 h-8 rounded-lg bg-red-50 text-[#D62828] border border-red-100 flex items-center justify-center text-sm shrink-0">
+                <div class="flex flex-wrap items-center justify-between gap-3 pb-4 border-b border-slate-100">
+                  <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 rounded-xl bg-red-50 text-[#D62828] border border-red-100 flex items-center justify-center text-sm shrink-0">
                       <i class="fa-solid fa-file-invoice"></i>
                     </div>
-                    <div class="flex flex-wrap items-center gap-2">
-                      <h2 class="text-sm sm:text-base font-extrabold text-[#0F172A]">Thông Tin Hồ Sơ Báo Giá</h2>
-                      <span id="currentDraftCodeBadge" class="text-xs font-black px-2 py-0.5 rounded-md bg-red-50 text-[#D62828] border border-red-200 tabular-nums">BGSW/2026/001</span>
-                      <span id="currentDraftStatusBadge" class="text-[11px] font-bold px-2 py-0.5 rounded-md bg-slate-100 text-[#1E293B] border border-slate-200">Chưa lưu</span>
+                    <div>
+                      <div class="flex flex-wrap items-center gap-2.5">
+                        <h2 class="text-base font-extrabold text-[#0F172A]">Thông Tin Hồ Sơ Báo Giá</h2>
+                        <span id="currentDraftCodeBadge" class="text-xs font-black px-2.5 py-0.5 rounded-lg bg-red-50 text-[#D62828] border border-red-200 tabular-nums">BGSW/2026/001</span>
+                        <span id="currentDraftStatusBadge" class="text-[11px] font-bold px-2.5 py-0.5 rounded-lg bg-slate-100 text-[#1E293B] border border-slate-200">Chưa lưu</span>
+                      </div>
+                      <p class="text-xs text-slate-500 mt-1">Điền thông tin khách hàng, nhập số lượng & ghi chú bên dưới rồi nhấn <b>Lưu & Tạo Báo Giá</b></p>
                     </div>
                   </div>
 
-                  <div class="flex flex-wrap items-center gap-1.5">
-                    <button type="button" onclick="startNewQuotationWithNextCode()" class="px-3 py-1.5 rounded-lg border border-slate-300 bg-white hover:bg-slate-50 text-slate-700 text-xs font-bold transition flex items-center gap-1.5">
+                  <div class="flex flex-wrap items-center gap-2">
+                    <button type="button" onclick="startNewQuotationWithNextCode()" class="px-3.5 py-2 rounded-xl border border-slate-300 bg-white hover:bg-slate-50 text-slate-700 text-xs font-bold transition flex items-center gap-2">
                       <i class="fa-solid fa-rotate text-[#D62828]"></i>
-                      <span>Mã Tiếp Theo</span>
+                      <span>Làm Mới & Mã Tiếp Theo</span>
                     </button>
-                    <button type="button" id="btnPrimarySaveQuote" onclick="saveCurrentQuotation()" class="px-4 py-1.5 rounded-lg bg-gradient-to-r from-[#D62828] to-[#B91C1C] hover:from-[#B91C1C] hover:to-[#991B1B] active:scale-[0.99] text-white text-xs font-extrabold shadow-xs transition flex items-center gap-1.5">
+                    <button type="button" id="btnPrimarySaveQuote" onclick="saveCurrentQuotation()" class="px-4 py-2 rounded-xl bg-gradient-to-r from-[#D62828] to-[#B91C1C] hover:from-[#B91C1C] hover:to-[#991B1B] active:scale-[0.99] text-white text-xs font-extrabold shadow-sm shadow-red-600/15 transition flex items-center gap-2">
                       <i id="btnPrimarySaveIcon" class="fa-solid fa-floppy-disk"></i>
                       <span id="btnPrimarySaveText">Lưu & Tạo Báo Giá</span>
                     </button>
-                    <button type="button" id="btnPrintAfterSave" onclick="handlePrint()" class="hidden px-3.5 py-1.5 rounded-lg bg-[#1E293B] hover:bg-[#0F172A] text-white text-xs font-extrabold shadow-xs transition items-center gap-1.5">
+                    <button type="button" id="btnPrintAfterSave" onclick="handlePrint()" class="hidden px-4 py-2 rounded-xl bg-[#1E293B] hover:bg-[#0F172A] text-white text-xs font-extrabold shadow-sm transition items-center gap-2">
                       <i class="fa-solid fa-print"></i>
                       <span>In Báo Giá Ngay</span>
                     </button>
                   </div>
                 </div>
 
-                <!-- Ẩn các node đồng bộ phụ để giữ gọn màn hình (đã hiển thị trực tiếp ở Thanh Tổng Kết dưới chân bảng) -->
+                <!-- Ẩn các node đồng bộ phụ -->
                 <div class="hidden">
-                  <span id="kpiSelectedCount">47</span>
+                  <span id="kpiSelectedCount">0</span>
                   <span id="kpiTotalCount">47</span>
-                  <span id="kpiSubtotal">190.010.000 đ</span>
+                  <span id="kpiSubtotal">0 đ</span>
                   <span id="kpiVatRate">8%</span>
-                  <span id="kpiVatAmount">15.200.800 đ</span>
-                  <span id="kpiGrandTotal">205.210.800 đ</span>
+                  <span id="kpiVatAmount">0 đ</span>
+                  <span id="kpiGrandTotal">0 đ</span>
                 </div>
 
-                <!-- Lưới nhập Thông tin Khách hàng & Hồ sơ Báo giá: 2 Hàng × 3 Cột cực gọn -->
-                <div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-12 gap-2.5">
+                <!-- Lưới nhập Thông tin Khách hàng & Hồ sơ Báo giá: 2 Hàng × 3 Cột thoáng đãng -->
+                <div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-12 gap-x-5 gap-y-4">
                   <div class="xl:col-span-5">
-                    <label class="erp-label !mb-1 !text-[11px]">
-                      <i class="fa-solid fa-building-user text-[#D62828]"></i>
-                      <span>Kính gửi Khách hàng / Đối tác <span class="text-[#D62828]">*</span></span>
+                    <label class="block text-xs font-bold text-slate-700 mb-1.5">
+                      Kính gửi Khách hàng / Đối tác <span class="text-[#D62828]">*</span>
                     </label>
-                    <input type="text" id="inputCustomerName" oninput="markQuoteDirtyAndPreview()" value="CÔNG TY TNHH TÂN HUY HOÀNG" placeholder="Nhập tên công ty khách hàng..." class="erp-input !py-1.5 !text-xs font-bold">
+                    <input type="text" id="inputCustomerName" oninput="markQuoteDirtyAndPreview()" value="CÔNG TY TNHH TÂN HUY HOÀNG" placeholder="Nhập tên công ty khách hàng..." class="erp-input !py-2.5 !px-3.5 text-xs font-bold">
                   </div>
 
                   <div class="xl:col-span-4">
-                    <label class="erp-label !mb-1 !text-[11px]">
-                      <i class="fa-solid fa-fire-extinguisher text-[#D62828]"></i>
-                      <span>Tên hạng mục báo giá (TV)</span>
+                    <label class="block text-xs font-bold text-slate-700 mb-1.5">
+                      Tên hạng mục báo giá (Tiếng Việt)
                     </label>
-                    <input type="text" id="inputProjectTitle" oninput="markQuoteDirtyAndPreview()" value="BẢO DƯỠNG HỆ THỐNG PCCC" class="erp-input !py-1.5 !text-xs font-semibold">
+                    <input type="text" id="inputProjectTitle" oninput="markQuoteDirtyAndPreview()" value="BẢO DƯỠNG HỆ THỐNG PCCC" class="erp-input !py-2.5 !px-3.5 text-xs font-semibold">
                   </div>
 
                   <div class="xl:col-span-3">
-                    <label class="erp-label !mb-1 !text-[11px]">
-                      <i class="fa-solid fa-hashtag text-[#D62828]"></i>
-                      <span>Số / Mã Báo Giá</span>
+                    <label class="block text-xs font-bold text-slate-700 mb-1.5">
+                      Số / Mã Báo Giá
                     </label>
-                    <div class="flex gap-1">
-                      <input type="text" id="inputQuoteCode" oninput="handleQuoteCodeManualChange()" value="BGSW/2026/001" class="erp-input !py-1.5 !text-xs font-black text-[#D62828] tracking-wide">
-                      <button type="button" onclick="assignNextQuoteCode()" title="Sinh mã báo giá mới tiếp theo" class="px-2.5 rounded-lg border border-slate-300 hover:bg-slate-100 text-slate-700 text-xs font-bold shrink-0 transition">
+                    <div class="flex gap-1.5">
+                      <input type="text" id="inputQuoteCode" oninput="handleQuoteCodeManualChange()" value="BGSW/2026/001" class="erp-input !py-2.5 !px-3.5 text-xs font-black text-[#D62828] tracking-wide">
+                      <button type="button" onclick="assignNextQuoteCode()" title="Sinh mã báo giá mới tiếp theo" class="px-3 rounded-xl border border-slate-300 hover:bg-slate-100 text-slate-700 text-xs font-bold shrink-0 transition">
                         <i class="fa-solid fa-plus"></i>
                       </button>
                     </div>
                   </div>
 
                   <div class="xl:col-span-5">
-                    <label class="erp-label !mb-1 !text-[11px]">
-                      <i class="fa-solid fa-globe text-slate-400"></i>
-                      <span>Tiêu đề phụ Tiếng Anh</span>
+                    <label class="block text-xs font-bold text-slate-600 mb-1.5">
+                      Tiêu đề phụ Tiếng Anh
                     </label>
-                    <input type="text" id="inputProjectTitleEn" oninput="markQuoteDirtyAndPreview()" value="FIRE PROTECTION SYSTEM MAINTENANCE QUOTATION" class="erp-input !py-1.5 !text-xs text-slate-600 font-medium">
+                    <input type="text" id="inputProjectTitleEn" oninput="markQuoteDirtyAndPreview()" value="FIRE PROTECTION SYSTEM MAINTENANCE QUOTATION" class="erp-input !py-2.5 !px-3.5 text-xs text-slate-600 font-medium">
                   </div>
 
                   <div class="xl:col-span-4">
-                    <label class="erp-label !mb-1 !text-[11px]">
-                      <i class="fa-regular fa-calendar-check text-slate-400"></i>
-                      <span>Địa điểm & Ngày lập báo giá</span>
+                    <label class="block text-xs font-bold text-slate-600 mb-1.5">
+                      Địa điểm & Ngày lập báo giá
                     </label>
-                    <input type="text" id="inputQuoteDate" oninput="markQuoteDirtyAndPreview()" value="Hải Phòng, 21/10/2026" class="erp-input !py-1.5 !text-xs font-medium">
+                    <input type="text" id="inputQuoteDate" oninput="markQuoteDirtyAndPreview()" value="Hải Phòng, 21/10/2026" class="erp-input !py-2.5 !px-3.5 text-xs font-medium">
                   </div>
 
                   <div class="xl:col-span-3">
-                    <label class="erp-label !mb-1 !text-[11px]">
-                      <i class="fa-solid fa-stamp text-[#D62828]"></i>
-                      <span>Con dấu mộc đỏ</span>
+                    <label class="block text-xs font-bold text-slate-600 mb-1.5">
+                      Hiển thị con dấu mộc đỏ
                     </label>
-                    <select id="inputShowStamp" onchange="markQuoteDirtyAndPreview()" class="erp-input !py-1.5 !text-xs font-semibold cursor-pointer">
-                      <option value="yes" selected>Có đóng dấu đỏ</option>
-                      <option value="no">Không đóng dấu</option>
+                    <select id="inputShowStamp" onchange="markQuoteDirtyAndPreview()" class="erp-input !py-2.5 !px-3.5 text-xs font-semibold cursor-pointer">
+                      <option value="yes" selected>Có đóng dấu mộc đỏ</option>
+                      <option value="no">Không đóng dấu (Ký tươi)</option>
                     </select>
                   </div>
                 </div>
               </div>
 
-              <!-- KHỐI 2: CHỌN HẠNG MỤC VẬT TƯ THEO TỪNG TAB NHÓM (KHÔNG CẦN CUỘN DÀI - LUÔN THẤY THANH TỔNG KẾT & NÚT LƯU) -->
-              <div class="erp-card p-3.5 sm:p-4 space-y-3">
-                <!-- Thanh tiêu đề + Tìm kiếm nhanh + Chọn/Bỏ toàn bộ -->
-                <div class="flex flex-col xl:flex-row xl:items-center justify-between gap-2.5 pb-2.5 border-b border-slate-100">
-                  <div class="flex items-center gap-2.5">
-                    <span class="w-8 h-8 rounded-lg bg-[#1E293B] text-white flex items-center justify-center text-xs shrink-0">
+              <!-- KHỐI 2: CHỌN HẠNG MỤC VẬT TƯ, SỐ LƯỢNG & GHI CHÚ THEO TỪNG TAB NHÓM (THOÁNG ĐÃNG, DỄ QUAN SÁT) -->
+              <div class="erp-card p-5 sm:p-6 space-y-5">
+                <!-- Hàng 1: Tiêu đề + Ô tìm kiếm & Bộ lọc -->
+                <div class="flex flex-col xl:flex-row xl:items-center justify-between gap-3.5 pb-4 border-b border-slate-100">
+                  <div class="flex items-center gap-3">
+                    <span class="w-10 h-10 rounded-xl bg-slate-100 text-[#1E293B] border border-slate-200 flex items-center justify-center text-sm shrink-0">
                       <i class="fa-solid fa-layer-group"></i>
                     </span>
                     <div>
-                      <div class="flex flex-wrap items-center gap-2">
-                        <h3 class="text-sm sm:text-base font-extrabold text-[#0F172A]">Danh Mục Sản Phẩm Theo Nhóm Hạng Mục</h3>
-                        <span id="selectedBadgeCount" class="bg-red-50 text-[#D62828] text-xs px-2 py-0.5 rounded-md font-extrabold border border-red-200">47 mục</span>
+                      <div class="flex flex-wrap items-center gap-2.5">
+                        <h3 class="text-base font-extrabold text-[#0F172A]">Danh Mục Sản Phẩm, Số Lượng & Ghi Chú</h3>
+                        <span id="selectedBadgeCount" class="bg-red-50 text-[#D62828] text-xs px-2.5 py-0.5 rounded-lg font-extrabold border border-red-200">0 mục đã chọn</span>
                       </div>
-                      <p id="catalogRoleSubtitle" class="text-[11px] text-slate-500">Chọn từng <b>Tab Nhóm 1, 2, 3...</b> bên dưới để xem và chỉnh số lượng ngay trong 1 màn hình, không cần cuộn.</p>
+                      <p id="catalogRoleSubtitle" class="text-xs text-slate-500 mt-1">Số lượng mặc định là <b>0</b> — Nhập số lượng <b>&gt; 0</b> hoặc tích chọn để đưa hạng mục vào báo giá.</p>
                     </div>
                   </div>
 
-                  <div class="flex flex-wrap items-center gap-1.5">
-                    <!-- Ô tìm nhanh gọn ngay trên thanh công cụ -->
-                    <div class="relative w-44 sm:w-52">
-                      <span class="absolute left-2.5 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none text-[11px]">
+                  <div class="flex flex-wrap items-center gap-2">
+                    <div class="relative w-full sm:w-56">
+                      <span class="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none text-xs">
                         <i class="fa-solid fa-magnifying-glass"></i>
                       </span>
-                      <input type="text" id="searchItemInput" oninput="filterTable()" placeholder="Tìm nhanh vật tư..." class="erp-input !pl-7 !pr-2.5 !py-1.5 !text-xs">
+                      <input type="text" id="searchItemInput" oninput="filterTable()" placeholder="Tìm nhanh vật tư, thiết bị..." class="erp-input !pl-9 !pr-3 !py-2 text-xs">
                     </div>
 
-                    <label class="px-2.5 py-1.5 rounded-lg border border-slate-200 bg-slate-50 hover:bg-slate-100 cursor-pointer flex items-center gap-1.5 text-xs font-semibold text-slate-700 select-none transition">
-                      <input type="checkbox" id="onlySelectedFilter" onchange="filterTable()" class="w-3.5 h-3.5 rounded text-[#D62828] focus:ring-[#D62828]">
-                      <span>Đã chọn</span>
+                    <label class="px-3 py-2 rounded-xl border border-slate-200 bg-slate-50 hover:bg-slate-100 cursor-pointer flex items-center gap-2 text-xs font-semibold text-slate-700 select-none transition">
+                      <input type="checkbox" id="onlySelectedFilter" onchange="filterTable()" class="w-4 h-4 rounded text-[#D62828] focus:ring-[#D62828]">
+                      <span>Mục đã chọn</span>
                     </label>
 
-                    <button type="button" onclick="selectAll(true)" class="text-xs px-2.5 py-1.5 rounded-lg border border-slate-200 bg-white hover:bg-slate-50 text-slate-700 font-semibold transition flex items-center gap-1" title="Chọn tất cả 47 mục của mọi nhóm">
-                      <i class="fa-solid fa-check-double text-[#D62828]"></i>
-                      <span>Chọn hết</span>
+                    <button type="button" onclick="selectAll(false)" class="text-xs px-3 py-2 rounded-xl border border-slate-200 bg-white hover:bg-red-50 hover:text-[#D62828] hover:border-red-200 text-slate-600 font-semibold transition flex items-center gap-1.5" title="Đưa toàn bộ số lượng về 0">
+                      <i class="fa-solid fa-rotate-left text-[11px]"></i>
+                      <span>Đặt lại về 0</span>
                     </button>
-                    <button type="button" onclick="selectAll(false)" class="text-xs px-2.5 py-1.5 rounded-lg border border-slate-200 bg-white hover:bg-slate-50 text-slate-700 font-semibold transition flex items-center gap-1" title="Bỏ chọn tất cả mọi nhóm">
-                      <i class="fa-regular fa-square-minus text-slate-400"></i>
-                      <span>Bỏ hết</span>
-                    </button>
-                    <button type="button" id="btnQuickCatalogInForm" onclick="switchTab('products')" class="hidden text-xs px-2.5 py-1.5 rounded-lg bg-slate-100 hover:bg-slate-200 text-[#0F172A] font-bold transition items-center gap-1">
+
+                    <button type="button" id="btnQuickCatalogInForm" onclick="switchTab('products')" class="hidden text-xs px-3 py-2 rounded-xl bg-slate-100 hover:bg-slate-200 text-[#0F172A] font-bold transition items-center gap-1.5">
                       <i class="fa-solid fa-boxes-stacked text-[#D62828]"></i>
                       <span>Kho SP</span>
                     </button>
@@ -1086,62 +1067,55 @@
                   <option value="ALL">-- Tất cả phân nhóm hệ thống --</option>
                 </select>
 
-                <!-- HỆ THỐNG TAB NHÓM HẠNG MỤC (NHÓM 1, NHÓM 2, NHÓM 3...): CLICK XEM TỪNG NHÓM NGAY LẬP TỨC -->
-                <div class="bg-[#F8FAFC] border border-slate-200/90 rounded-xl p-2 space-y-2">
-                  <div class="flex items-center justify-between gap-2 px-1">
-                    <div class="flex items-center gap-1.5 text-[11px] font-extrabold uppercase tracking-wider text-slate-500">
-                      <i class="fa-solid fa-folder-tree text-[#D62828]"></i>
-                      <span>Chọn Tab Nhóm Hạng Mục:</span>
+                <!-- Hàng 2: Danh sách Tab Nhóm Hạng Mục (Nhóm 1, 2, 3...) thoáng đãng -->
+                <div class="space-y-3">
+                  <div class="flex flex-wrap items-center justify-between gap-2">
+                    <div class="flex items-center gap-2">
+                      <span id="activeGroupIndexBadge" class="px-2.5 py-1 rounded-lg bg-red-50 text-[#D62828] border border-red-200 font-black text-xs shrink-0">NHÓM 1</span>
+                      <span id="activeGroupNameTitle" class="font-extrabold text-[#0F172A] text-sm">Hệ thống Giai đoạn I - Báo cháy</span>
+                      <span id="activeGroupStatBadge" class="text-xs text-slate-500 font-semibold">(Đã chọn 0/9 mục)</span>
                     </div>
-                    <div class="flex items-center gap-1">
-                      <button type="button" onclick="stepCategoryTab(-1)" class="px-2.5 py-1 rounded-md bg-white hover:bg-slate-100 text-slate-700 border border-slate-200/90 text-[11px] font-bold transition flex items-center gap-1">
-                        <i class="fa-solid fa-chevron-left text-[9px]"></i>
-                        <span>Nhóm trước</span>
+
+                    <div class="flex flex-wrap items-center gap-1.5">
+                      <button type="button" onclick="toggleCurrentCategoryGroup(true)" class="px-3 py-1.5 rounded-lg border border-slate-200 bg-white hover:bg-slate-50 text-slate-700 text-xs font-bold transition flex items-center gap-1.5">
+                        <i class="fa-solid fa-check text-[#D62828]"></i>
+                        <span>Chọn nhóm này</span>
                       </button>
-                      <button type="button" onclick="stepCategoryTab(1)" class="px-2.5 py-1 rounded-md bg-[#1E293B] hover:bg-[#0F172A] text-white text-[11px] font-bold transition flex items-center gap-1">
-                        <span>Nhóm tiếp theo</span>
-                        <i class="fa-solid fa-chevron-right text-[9px]"></i>
+                      <button type="button" onclick="toggleCurrentCategoryGroup(false)" class="px-3 py-1.5 rounded-lg border border-slate-200 bg-white hover:bg-slate-50 text-slate-500 hover:text-slate-800 text-xs font-semibold transition flex items-center gap-1.5">
+                        <i class="fa-solid fa-xmark"></i>
+                        <span>Bỏ nhóm này</span>
+                      </button>
+                      <div class="h-4 w-px bg-slate-200 mx-0.5 hidden sm:block"></div>
+                      <button type="button" onclick="stepCategoryTab(-1)" class="px-2.5 py-1.5 rounded-lg border border-slate-200 bg-white hover:bg-slate-50 text-slate-700 text-xs font-bold transition flex items-center gap-1" title="Chuyển về nhóm trước">
+                        <i class="fa-solid fa-chevron-left text-[10px]"></i>
+                        <span>Trước</span>
+                      </button>
+                      <button type="button" onclick="stepCategoryTab(1)" class="px-2.5 py-1.5 rounded-lg bg-[#1E293B] hover:bg-[#0F172A] text-white text-xs font-bold transition flex items-center gap-1" title="Chuyển sang nhóm tiếp theo">
+                        <span>Tiếp theo</span>
+                        <i class="fa-solid fa-chevron-right text-[10px]"></i>
                       </button>
                     </div>
                   </div>
 
-                  <!-- Danh sách các Tab Nhóm 1, 2, 3... (Render tự động từ dữ liệu) -->
-                  <div id="categoryTabsContainer" class="flex flex-wrap gap-1.5">
+                  <!-- Các nút Tab Nhóm 1, 2, 3... rộng rãi, có khoảng thở -->
+                  <div id="categoryTabsContainer" class="flex flex-wrap gap-2 p-2.5 rounded-2xl bg-[#F8FAFC] border border-slate-200/80">
                     <!-- Rendered dynamically by renderCategoryGroupTabs() -->
                   </div>
                 </div>
 
-                <!-- Thanh trạng thái & thao tác nhanh cho Nhóm đang mở -->
-                <div id="activeGroupControlBar" class="flex flex-wrap items-center justify-between gap-2 px-3 py-2 rounded-xl bg-slate-900 text-white text-xs">
-                  <div class="flex items-center gap-2 min-w-0">
-                    <span id="activeGroupIndexBadge" class="px-2 py-0.5 rounded bg-[#D62828] text-white font-black text-[11px] shrink-0">NHÓM 1</span>
-                    <span id="activeGroupNameTitle" class="font-extrabold text-white truncate">Hệ thống Giai đoạn I - Báo cháy</span>
-                    <span id="activeGroupStatBadge" class="text-[11px] text-slate-300 font-semibold shrink-0">(Đã chọn 9/9 mục)</span>
-                  </div>
-                  <div class="flex items-center gap-1.5 shrink-0">
-                    <button type="button" onclick="toggleCurrentCategoryGroup(true)" class="px-2.5 py-1 rounded-lg bg-white/10 hover:bg-white/20 text-white text-[11px] font-bold transition flex items-center gap-1">
-                      <i class="fa-solid fa-check text-[#D62828]"></i>
-                      <span>Chọn nhóm này</span>
-                    </button>
-                    <button type="button" onclick="toggleCurrentCategoryGroup(false)" class="px-2.5 py-1 rounded-lg bg-white/10 hover:bg-white/20 text-slate-300 hover:text-white text-[11px] font-semibold transition flex items-center gap-1">
-                      <i class="fa-solid fa-xmark"></i>
-                      <span>Bỏ nhóm này</span>
-                    </button>
-                  </div>
-                </div>
-
-                <!-- Bảng chọn hạng mục sản phẩm của Nhóm đang chọn (Gọn gàng, vừa khít không cần cuộn dài) -->
-                <div tabindex="0" role="region" aria-label="Bảng chọn hạng mục báo giá" class="hidden md:block overflow-x-auto custom-scroll border rounded-xl border-slate-200 max-h-[340px]">
+                <!-- Hàng 3: Bảng chọn hạng mục sản phẩm (Sáng sủa, thoáng mắt, có cột GHI CHÚ) -->
+                <div tabindex="0" role="region" aria-label="Bảng chọn hạng mục báo giá" class="hidden md:block overflow-x-auto custom-scroll border rounded-2xl border-slate-200/90 max-h-[420px]">
                   <table class="w-full text-left border-collapse text-xs">
-                    <thead class="sticky top-0 bg-[#1E293B] text-white z-10 shadow-xs">
-                      <tr class="text-[11px] uppercase font-bold tracking-wider">
-                        <th class="py-2.5 px-2.5 text-center w-11">Chọn</th>
-                        <th class="py-2.5 px-2 w-11 text-center">STT</th>
-                        <th class="py-2.5 px-3">Hạng mục vật tư / Thiết bị</th>
-                        <th class="py-2.5 px-2 w-20 text-center">ĐVT</th>
-                        <th class="py-2.5 px-2.5 w-32 text-center">Khối lượng</th>
-                        <th class="py-2.5 px-3 w-32 text-right">Đơn giá</th>
-                        <th class="py-2.5 px-3 w-32 text-right">Thành tiền</th>
+                    <thead class="sticky top-0 bg-[#F8FAFC] text-slate-600 z-10 border-b border-slate-200">
+                      <tr class="text-[11px] uppercase font-extrabold tracking-wider">
+                        <th class="py-3.5 px-3 text-center w-12">Chọn</th>
+                        <th class="py-3.5 px-2.5 w-12 text-center">STT</th>
+                        <th class="py-3.5 px-3.5 min-w-[210px]">Hạng mục vật tư / Thiết bị</th>
+                        <th class="py-3.5 px-2.5 w-20 text-center">ĐVT</th>
+                        <th class="py-3.5 px-3 w-32 text-center">Số lượng</th>
+                        <th class="py-3.5 px-3.5 w-32 text-right">Đơn giá (đ)</th>
+                        <th class="py-3.5 px-3.5 w-32 text-right">Thành tiền</th>
+                        <th class="py-3.5 px-3.5 w-44">Ghi chú</th>
                       </tr>
                     </thead>
                     <tbody id="quoteItemsTableBody" class="divide-y divide-slate-100 bg-white">
@@ -1151,28 +1125,44 @@
                 </div>
 
                 <!-- Danh sách thẻ trên Mobile -->
-                <div id="quoteItemsMobileList" class="md:hidden space-y-2.5 max-h-[50vh] overflow-y-auto custom-scroll pr-0.5">
+                <div id="quoteItemsMobileList" class="md:hidden space-y-3 max-h-[55vh] overflow-y-auto custom-scroll pr-0.5">
                   <!-- Rendered by JS -->
                 </div>
 
-                <!-- Thanh tổng kết & Nút Lưu & Tạo Báo Giá dưới chân bảng (GHIM CỐ ĐỊNH LUÔN HIỂN THỊ TRONG TẦM MẮT) -->
-                <div class="sticky bottom-2 z-20 mt-3 bg-[#1E293B] text-white p-3.5 rounded-xl flex flex-col sm:flex-row items-center justify-between gap-3 shadow-lg border border-slate-700">
-                  <div class="flex flex-wrap items-center gap-3 text-xs w-full sm:w-auto justify-between sm:justify-start">
-                    <span class="text-slate-300">Tổng chọn: <b id="statSelectedItems" class="text-[#D62828] bg-white px-1.5 py-0.5 rounded font-black">47</b>/<span id="statTotalItems">47</span> mục</span>
-                    <span class="text-slate-300">Trước thuế: <b id="statSubtotal" class="text-white tabular-nums">190.010.000 đ</b></span>
-                    <span class="text-slate-300 hidden sm:inline">VAT (<span id="statVatPercent">8%</span>): <b id="statVatAmount" class="text-white tabular-nums">15.200.800 đ</b></span>
-                    <div class="bg-red-600/20 border border-red-500/40 px-3 py-1 rounded-lg">
-                      <span class="text-red-200 text-[11px] font-bold">Tổng thanh toán:</span>
-                      <span id="statGrandTotal" class="text-sm font-black text-white ml-1 tabular-nums">205.210.800 đ</span>
+                <!-- Thanh tổng kết & Nút Lưu & Tạo Báo Giá dưới chân bảng (GHIM CỐ ĐỊNH, KHOẢNG CÁCH RÕ RÀNG) -->
+                <div class="sticky bottom-2 z-20 mt-4 bg-[#1E293B] text-white px-5 py-4 rounded-2xl flex flex-col xl:flex-row items-center justify-between gap-4 shadow-lg border border-slate-700/80">
+                  <div class="flex flex-wrap items-center gap-x-6 gap-y-2 text-xs w-full xl:w-auto justify-between xl:justify-start">
+                    <div class="flex items-center gap-2">
+                      <span class="text-slate-400">Hạng mục chọn:</span>
+                      <span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg bg-slate-800 border border-slate-700 font-bold text-white tabular-nums">
+                        <b id="statSelectedItems" class="text-[#D62828] font-black">0</b>
+                        <span class="text-slate-400">/</span>
+                        <span id="statTotalItems">47</span>
+                      </span>
+                    </div>
+
+                    <div class="flex items-center gap-1.5">
+                      <span class="text-slate-400">Trước thuế:</span>
+                      <b id="statSubtotal" class="text-white font-bold tabular-nums">0 đ</b>
+                    </div>
+
+                    <div class="hidden sm:flex items-center gap-1.5">
+                      <span class="text-slate-400">VAT (<span id="statVatPercent">8%</span>):</span>
+                      <b id="statVatAmount" class="text-white font-bold tabular-nums">0 đ</b>
+                    </div>
+
+                    <div class="bg-red-600/20 border border-red-500/40 px-3.5 py-1.5 rounded-xl flex items-center gap-2">
+                      <span class="text-red-200 text-xs font-bold">Tổng thanh toán:</span>
+                      <span id="statGrandTotal" class="text-sm sm:text-base font-black text-white tabular-nums">0 đ</span>
                     </div>
                   </div>
 
-                  <div class="flex items-center gap-2 w-full sm:w-auto shrink-0">
-                    <button type="button" id="btnBottomSaveQuote" onclick="saveCurrentQuotation()" class="flex-1 sm:flex-none px-5 py-2.5 rounded-xl bg-gradient-to-r from-[#D62828] to-[#B91C1C] hover:from-[#B91C1C] hover:to-[#991B1B] text-white font-extrabold text-xs shadow-md transition flex items-center justify-center gap-1.5">
+                  <div class="flex items-center gap-2.5 w-full xl:w-auto shrink-0">
+                    <button type="button" id="btnBottomSaveQuote" onclick="saveCurrentQuotation()" class="flex-1 xl:flex-none px-5 py-2.5 rounded-xl bg-gradient-to-r from-[#D62828] to-[#B91C1C] hover:from-[#B91C1C] hover:to-[#991B1B] text-white font-extrabold text-xs shadow-md transition flex items-center justify-center gap-2">
                       <i class="fa-solid fa-floppy-disk"></i>
                       <span id="btnBottomSaveText">Lưu & Tạo Báo Giá</span>
                     </button>
-                    <button type="button" id="btnBottomPrintAfterSave" onclick="handlePrint()" class="hidden px-4 py-2.5 rounded-xl bg-white text-[#0F172A] hover:bg-slate-100 font-extrabold text-xs shadow-md transition items-center justify-center gap-1.5">
+                    <button type="button" id="btnBottomPrintAfterSave" onclick="handlePrint()" class="hidden px-4 py-2.5 rounded-xl bg-white text-[#0F172A] hover:bg-slate-100 font-extrabold text-xs shadow-md transition items-center justify-center gap-2">
                       <i class="fa-solid fa-print text-[#D62828]"></i>
                       <span>In Ngay</span>
                     </button>
@@ -1325,13 +1315,12 @@
               <table class="w-full text-left border-collapse text-xs">
                 <thead class="sticky top-0 bg-[#F8FAFC] text-slate-600 uppercase font-extrabold text-[10.5px] tracking-wider border-b border-slate-200 z-10">
                   <tr>
-                    <th class="py-3 px-3 w-14 text-center">STT</th>
-                    <th class="py-3 px-3.5">Tên Sản Phẩm / Hạng Mục Vật Tư Thiết Bị</th>
-                    <th class="py-3 px-3.5 w-64">Phân Nhóm Hệ Thống</th>
-                    <th class="py-3 px-2.5 w-24 text-center">ĐVT</th>
-                    <th class="py-3 px-2.5 w-28 text-center">SL Mặc Định</th>
-                    <th class="py-3 px-3.5 w-40 text-right">Đơn Giá Niêm Yết (đ)</th>
-                    <th id="thAdminDeleteCol" class="py-3 px-2.5 w-16 text-center">Xóa</th>
+                    <th class="py-3.5 px-3 w-14 text-center">STT</th>
+                    <th class="py-3.5 px-4">Tên Sản Phẩm / Hạng Mục Vật Tư Thiết Bị</th>
+                    <th class="py-3.5 px-4 w-72">Phân Nhóm Hệ Thống</th>
+                    <th class="py-3.5 px-3 w-28 text-center">ĐVT</th>
+                    <th class="py-3.5 px-4 w-44 text-right">Đơn Giá Niêm Yết (VNĐ)</th>
+                    <th id="thAdminDeleteCol" class="py-3.5 px-3 w-16 text-center">Xóa</th>
                   </tr>
                 </thead>
                 <tbody id="productCatalogManagerBody" class="divide-y divide-slate-100 bg-white">
@@ -2086,10 +2075,12 @@
         document.getElementById('saleBannerCompanyName').textContent = c.fullName || DEFAULT_COMPANY.fullName;
       }
 
+      // Mặc định số lượng = 0 và chưa chọn mục nào khi mở phiên làm việc mới
       itemsData = JSON.parse(JSON.stringify(masterData.catalog)).map(item => ({
         ...item,
-        selected: item.selected !== undefined ? item.selected : true,
-        quantity: item.default_qty !== undefined ? item.default_qty : (item.quantity || 1),
+        selected: false,
+        quantity: 0,
+        note: item.note || '',
         price: item.default_price !== undefined ? item.default_price : (item.price || 0)
       }));
 
@@ -2454,12 +2445,13 @@
       document.getElementById('inputQuoteCode').value = nextCode;
       document.getElementById('inputQuoteDate').value = formatTodayVietnamese();
 
-      // Khôi phục số lượng mặc định theo catalog chuẩn
+      // Mặc định toàn bộ số lượng = 0 hết khi khởi tạo báo giá mới
       itemsData = JSON.parse(JSON.stringify(masterData.catalog)).map(item => ({
         ...item,
-        selected: true,
-        quantity: item.default_qty !== undefined ? item.default_qty : 1,
-        price: item.default_price !== undefined ? item.default_price : 0
+        selected: false,
+        quantity: 0,
+        note: '',
+        price: item.default_price !== undefined ? item.default_price : (item.price || 0)
       }));
 
       setQuoteSavedState(false, 'Bản nháp mới chưa lưu');
@@ -2489,9 +2481,9 @@
         return;
       }
 
-      const selectedItems = itemsData.filter(i => i.selected);
+      const selectedItems = itemsData.filter(i => i.selected && (parseFloat(i.quantity) || 0) > 0);
       if (selectedItems.length === 0) {
-        showToast('Vui lòng chọn ít nhất 1 hạng mục sản phẩm để tạo báo giá!', true);
+        showToast('Vui lòng chọn ít nhất 1 hạng mục sản phẩm (Số lượng > 0) để lưu & tạo báo giá!', true);
         return;
       }
 
@@ -2523,9 +2515,10 @@
           category: it.category,
           name: it.name,
           unit: it.unit,
-          quantity: it.quantity,
-          price: it.price,
-          selected: Boolean(it.selected)
+          quantity: parseFloat(it.quantity) || 0,
+          price: parseFloat(it.price) || 0,
+          note: it.note || '',
+          selected: Boolean(it.selected && (parseFloat(it.quantity) || 0) > 0)
         }))
       };
 
@@ -2799,39 +2792,35 @@
 
         if (isManager) {
           tr.innerHTML = `
-            <td class="py-2.5 px-3 text-center font-bold text-slate-400 tabular-nums">${displaySeq}</td>
-            <td class="py-2.5 px-3.5">
-              <input type="text" value="${escapeHtml(item.name)}" onchange="updateItemField(${index}, 'name', this.value)" class="w-full text-xs font-bold text-[#0F172A] bg-slate-50/70 hover:bg-white focus:bg-white border border-slate-200 focus:border-[#D62828] rounded-lg px-2.5 py-1.5 focus:outline-none">
+            <td class="py-3 px-3 text-center font-bold text-slate-400 tabular-nums">${displaySeq}</td>
+            <td class="py-3 px-4">
+              <input type="text" value="${escapeHtml(item.name)}" onchange="updateItemField(${index}, 'name', this.value)" class="w-full text-xs font-bold text-[#0F172A] bg-slate-50/70 hover:bg-white focus:bg-white border border-slate-200 focus:border-[#D62828] rounded-xl px-3 py-2 focus:outline-none">
             </td>
-            <td class="py-2.5 px-3.5">
-              <input type="text" list="existingCategoriesList" value="${escapeHtml(item.category)}" onchange="updateItemField(${index}, 'category', this.value)" class="w-full text-xs font-semibold text-slate-700 bg-slate-50/70 hover:bg-white focus:bg-white border border-slate-200 focus:border-[#D62828] rounded-lg px-2.5 py-1.5 focus:outline-none">
+            <td class="py-3 px-4">
+              <input type="text" list="existingCategoriesList" value="${escapeHtml(item.category)}" onchange="updateItemField(${index}, 'category', this.value)" class="w-full text-xs font-semibold text-slate-700 bg-slate-50/70 hover:bg-white focus:bg-white border border-slate-200 focus:border-[#D62828] rounded-xl px-3 py-2 focus:outline-none">
             </td>
-            <td class="py-2.5 px-2.5 text-center">
-              <input type="text" value="${escapeHtml(item.unit)}" onchange="updateItemField(${index}, 'unit', this.value)" class="w-20 text-center text-xs font-semibold text-slate-700 bg-slate-50/70 focus:bg-white border border-slate-200 focus:border-[#D62828] rounded-lg px-2 py-1.5 focus:outline-none">
+            <td class="py-3 px-3 text-center">
+              <input type="text" value="${escapeHtml(item.unit)}" onchange="updateItemField(${index}, 'unit', this.value)" class="w-24 text-center text-xs font-semibold text-slate-700 bg-slate-50/70 focus:bg-white border border-slate-200 focus:border-[#D62828] rounded-xl px-2.5 py-2 focus:outline-none">
             </td>
-            <td class="py-2.5 px-2.5 text-center">
-              <input type="number" min="1" value="${item.quantity}" onchange="updateItemField(${index}, 'quantity', Math.max(1, parseFloat(this.value) || 1))" class="w-20 text-center text-xs font-bold text-[#0F172A] bg-slate-50/70 focus:bg-white border border-slate-200 focus:border-[#D62828] rounded-lg px-2 py-1.5 tabular-nums focus:outline-none">
+            <td class="py-3 px-4 text-right">
+              <input type="number" min="0" step="1000" value="${item.price}" onchange="updateItemField(${index}, 'price', Math.max(0, parseFloat(this.value) || 0))" class="w-36 text-right text-xs font-extrabold text-[#D62828] bg-white border border-slate-300 focus:border-[#D62828] rounded-xl px-3 py-2 tabular-nums focus:outline-none">
             </td>
-            <td class="py-2.5 px-3.5 text-right">
-              <input type="number" min="0" step="1000" value="${item.price}" onchange="updateItemField(${index}, 'price', Math.max(0, parseFloat(this.value) || 0))" class="w-32 text-right text-xs font-extrabold text-[#D62828] bg-white border border-slate-300 focus:border-[#D62828] rounded-lg px-2.5 py-1.5 tabular-nums focus:outline-none">
-            </td>
-            <td class="py-2.5 px-2.5 text-center">
-              <button type="button" onclick="deleteItem(${index})" class="w-8 h-8 rounded-lg text-slate-400 hover:text-[#D62828] hover:bg-red-50 transition inline-flex items-center justify-center" title="Xóa sản phẩm khỏi danh mục">
+            <td class="py-3 px-3 text-center">
+              <button type="button" onclick="deleteItem(${index})" class="w-8 h-8 rounded-xl text-slate-400 hover:text-[#D62828] hover:bg-red-50 transition inline-flex items-center justify-center" title="Xóa sản phẩm khỏi danh mục">
                 <i class="fa-regular fa-trash-can"></i>
               </button>
             </td>
           `;
         } else {
           tr.innerHTML = `
-            <td class="py-3 px-3 text-center font-bold text-slate-400 tabular-nums">${displaySeq}</td>
-            <td class="py-3 px-3.5 font-bold text-[#0F172A]">${escapeHtml(item.name)}</td>
-            <td class="py-3 px-3.5">
-              <span class="px-2.5 py-1 rounded-md bg-slate-100 text-slate-700 font-semibold text-[11px] border border-slate-200">${escapeHtml(item.category)}</span>
+            <td class="py-3.5 px-3 text-center font-bold text-slate-400 tabular-nums">${displaySeq}</td>
+            <td class="py-3.5 px-4 font-bold text-[#0F172A]">${escapeHtml(item.name)}</td>
+            <td class="py-3.5 px-4">
+              <span class="px-2.5 py-1 rounded-lg bg-slate-100 text-slate-700 font-semibold text-[11px] border border-slate-200">${escapeHtml(item.category)}</span>
             </td>
-            <td class="py-3 px-2.5 text-center font-semibold text-slate-600">${escapeHtml(item.unit)}</td>
-            <td class="py-3 px-2.5 text-center font-bold text-[#0F172A] tabular-nums">${item.quantity}</td>
-            <td class="py-3 px-3.5 text-right font-extrabold text-[#0F172A] tabular-nums">
-              <span class="px-2.5 py-1 rounded-lg bg-slate-100 border border-slate-200 inline-flex items-center gap-1.5">
+            <td class="py-3.5 px-3 text-center font-semibold text-slate-600">${escapeHtml(item.unit)}</td>
+            <td class="py-3.5 px-4 text-right font-extrabold text-[#0F172A] tabular-nums">
+              <span class="px-3 py-1 rounded-lg bg-slate-100 border border-slate-200 inline-flex items-center gap-1.5">
                 <i class="fa-solid fa-lock text-[9px] text-slate-400"></i>
                 ${formatVND(item.price)} đ
               </span>
@@ -2863,7 +2852,7 @@
         category: it.category,
         name: it.name,
         unit: it.unit,
-        default_qty: it.quantity,
+        default_qty: 0,
         default_price: it.price
       }));
 
@@ -3826,7 +3815,7 @@
 
       categories.forEach((cat, idx) => {
         const groupItems = itemsData.filter(i => i.category === cat);
-        const selectedCount = groupItems.filter(i => i.selected).length;
+        const selectedCount = groupItems.filter(i => i.selected && (parseFloat(i.quantity) || 0) > 0).length;
         const isActive = currentCat === cat;
 
         const btn = document.createElement('button');
@@ -3834,36 +3823,36 @@
         btn.onclick = () => selectCategoryTab(cat);
         btn.title = `${cat} (Đã chọn ${selectedCount}/${groupItems.length} mục)`;
         btn.className = isActive
-          ? 'px-2.5 py-1.5 rounded-lg bg-gradient-to-r from-[#D62828] to-[#B91C1C] text-white text-xs font-extrabold shadow-xs transition flex items-center gap-1.5 border border-[#B91C1C]'
-          : 'px-2.5 py-1.5 rounded-lg bg-white hover:bg-slate-100 text-slate-700 text-xs font-semibold transition flex items-center gap-1.5 border border-slate-200/90';
+          ? 'px-3.5 py-2 rounded-xl bg-gradient-to-r from-[#D62828] to-[#B91C1C] text-white text-xs font-extrabold shadow-sm transition flex items-center gap-2 border border-[#B91C1C]'
+          : 'px-3.5 py-2 rounded-xl bg-white hover:bg-slate-100 text-slate-700 text-xs font-semibold transition flex items-center gap-2 border border-slate-200/90 shadow-2xs';
 
         const badgeClass = isActive
-          ? 'px-1.5 py-0.2 rounded bg-white/20 text-white text-[10px] font-black tabular-nums'
+          ? 'px-2 py-0.5 rounded-md bg-white/20 text-white text-[10.5px] font-black tabular-nums'
           : (selectedCount > 0
-              ? 'px-1.5 py-0.2 rounded bg-red-50 text-[#D62828] border border-red-200/80 text-[10px] font-bold tabular-nums'
-              : 'px-1.5 py-0.2 rounded bg-slate-100 text-slate-400 text-[10px] font-bold tabular-nums');
+              ? 'px-2 py-0.5 rounded-md bg-red-50 text-[#D62828] border border-red-200 text-[10.5px] font-extrabold tabular-nums'
+              : 'px-2 py-0.5 rounded-md bg-slate-100 text-slate-400 text-[10.5px] font-bold tabular-nums');
 
         btn.innerHTML = `
           <span class="${isActive ? 'text-white font-black' : 'text-[#D62828] font-extrabold'}">${idx + 1}.</span>
-          <span class="truncate max-w-[155px] sm:max-w-[190px]">${escapeHtml(shortenCategoryLabel(cat))}</span>
+          <span class="truncate max-w-[170px] sm:max-w-[210px]">${escapeHtml(shortenCategoryLabel(cat))}</span>
           <span class="${badgeClass}">${selectedCount}/${groupItems.length}</span>
         `;
         container.appendChild(btn);
       });
 
       // Tab "Tất cả (47)" nằm ở cuối nếu người dùng muốn xem gộp
-      const totalSelected = itemsData.filter(i => i.selected).length;
+      const totalSelected = itemsData.filter(i => i.selected && (parseFloat(i.quantity) || 0) > 0).length;
       const isAllActive = currentCat === 'ALL';
       const allBtn = document.createElement('button');
       allBtn.type = 'button';
       allBtn.onclick = () => selectCategoryTab('ALL');
       allBtn.className = isAllActive
-        ? 'px-2.5 py-1.5 rounded-lg bg-[#1E293B] text-white text-xs font-extrabold shadow-xs transition flex items-center gap-1.5 border border-slate-800'
-        : 'px-2.5 py-1.5 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold transition flex items-center gap-1.5 border border-slate-200';
+        ? 'px-3.5 py-2 rounded-xl bg-[#1E293B] text-white text-xs font-extrabold shadow-sm transition flex items-center gap-2 border border-slate-800'
+        : 'px-3.5 py-2 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold transition flex items-center gap-2 border border-slate-200';
       allBtn.innerHTML = `
-        <i class="fa-solid fa-table-list text-[10px]"></i>
+        <i class="fa-solid fa-table-list text-[11px]"></i>
         <span>Tất cả</span>
-        <span class="px-1.5 py-0.2 rounded ${isAllActive ? 'bg-white/20 text-white' : 'bg-white text-slate-700'} text-[10px] font-black tabular-nums">${totalSelected}/${itemsData.length}</span>
+        <span class="px-2 py-0.5 rounded-md ${isAllActive ? 'bg-white/20 text-white' : 'bg-white text-slate-700'} text-[10.5px] font-black tabular-nums">${totalSelected}/${itemsData.length}</span>
       `;
       container.appendChild(allBtn);
 
@@ -3879,7 +3868,7 @@
       } else {
         const activeIdx = categories.indexOf(currentCat);
         const groupItems = itemsData.filter(i => i.category === currentCat);
-        const selectedCount = groupItems.filter(i => i.selected).length;
+        const selectedCount = groupItems.filter(i => i.selected && (parseFloat(i.quantity) || 0) > 0).length;
         if (indexBadge) indexBadge.textContent = `NHÓM ${activeIdx + 1}/${categories.length}`;
         if (nameTitle) nameTitle.textContent = currentCat;
         if (statBadge) statBadge.textContent = `(Đã chọn ${selectedCount}/${groupItems.length} mục)`;
@@ -3914,7 +3903,15 @@
       const currentCat = select ? select.value : 'ALL';
       itemsData.forEach(item => {
         if (currentCat === 'ALL' || item.category === currentCat) {
-          item.selected = selectBool;
+          if (selectBool) {
+            item.selected = true;
+            if ((parseFloat(item.quantity) || 0) <= 0) {
+              item.quantity = 1;
+            }
+          } else {
+            item.selected = false;
+            item.quantity = 0;
+          }
         }
       });
       setQuoteSavedState(false);
@@ -3939,56 +3936,66 @@
 
       let displayIndex = 0;
       itemsData.forEach((item, index) => {
+        const qtyVal = parseFloat(item.quantity) || 0;
+        const isItemActive = Boolean(item.selected && qtyVal > 0);
+
         // Nếu người dùng đang gõ ô tìm kiếm thì tìm trên toàn bộ danh mục để tiện tra cứu nhanh
         if (!searchTxt && catFilter !== 'ALL' && item.category !== catFilter) return;
-        if (onlySelected && !item.selected) return;
-        if (searchTxt && !item.name.toLowerCase().includes(searchTxt) && !item.category.toLowerCase().includes(searchTxt)) return;
+        if (onlySelected && !isItemActive) return;
+        if (searchTxt && !item.name.toLowerCase().includes(searchTxt) && !item.category.toLowerCase().includes(searchTxt) && !String(item.note || '').toLowerCase().includes(searchTxt)) return;
 
         displayIndex++;
-        const subtotal = item.quantity * item.price;
+        const subtotal = qtyVal * (parseFloat(item.price) || 0);
 
-        // 1. RENDER TRÊN BẢNG MÁY TÍNH (COMPACT SPLIT-SCREEN TABLE)
+        // 1. RENDER TRÊN BẢNG MÁY TÍNH (THOÁNG ĐÃNG, RÕ RÀNG, CÓ CỘT GHI CHÚ)
         const tr = document.createElement('tr');
-        tr.className = item.selected
-          ? "hover:bg-slate-50/90 transition"
-          : "hover:bg-slate-50 bg-slate-50/60 opacity-50";
+        tr.className = isItemActive
+          ? "bg-red-50/20 hover:bg-red-50/40 transition"
+          : "hover:bg-slate-50/80 transition";
 
         const qtyStepperHtml = `
-          <div class="inline-flex items-center border border-slate-300 rounded-lg bg-white overflow-hidden shadow-2xs">
-            <button type="button" onclick="stepItemQty(${index}, -1)" class="w-7 h-7 flex items-center justify-center text-slate-500 hover:bg-slate-100 hover:text-[#0F172A] transition text-[10px]">
+          <div class="inline-flex items-center border ${isItemActive ? 'border-red-300 bg-white' : 'border-slate-200 bg-slate-50/70'} rounded-xl overflow-hidden shadow-2xs">
+            <button type="button" onclick="stepItemQty(${index}, -1)" class="w-8 h-8 flex items-center justify-center text-slate-500 hover:bg-slate-100 hover:text-[#0F172A] transition text-[10px]">
               <i class="fa-solid fa-minus"></i>
             </button>
-            <input type="number" value="${item.quantity}" min="1" onchange="updateItemField(${index}, 'quantity', Math.max(1, parseFloat(this.value) || 1))" class="w-12 h-7 text-center font-bold text-xs text-[#0F172A] border-x border-slate-200 focus:outline-none tabular-nums">
-            <button type="button" onclick="stepItemQty(${index}, 1)" class="w-7 h-7 flex items-center justify-center text-slate-500 hover:bg-slate-100 hover:text-[#D62828] transition text-[10px]">
+            <input type="number" value="${qtyVal}" min="0" onchange="updateItemField(${index}, 'quantity', Math.max(0, parseFloat(this.value) || 0))" class="w-12 h-8 text-center font-extrabold text-xs ${isItemActive ? 'text-[#D62828] bg-white' : 'text-slate-500 bg-transparent'} border-x border-slate-200/80 focus:outline-none tabular-nums">
+            <button type="button" onclick="stepItemQty(${index}, 1)" class="w-8 h-8 flex items-center justify-center text-slate-500 hover:bg-red-50 hover:text-[#D62828] transition text-[10px]">
               <i class="fa-solid fa-plus"></i>
             </button>
           </div>
         `;
 
         const priceCellHtml = isManager
-          ? `<input type="number" value="${item.price}" min="0" step="1000" onchange="updateItemField(${index}, 'price', parseFloat(this.value) || 0)" class="w-28 text-right font-bold text-xs text-[#0F172A] bg-white border border-slate-300 focus:border-[#D62828] focus:outline-none rounded-lg px-2 py-1 tabular-nums">`
+          ? `<input type="number" value="${item.price}" min="0" step="1000" onchange="updateItemField(${index}, 'price', parseFloat(this.value) || 0)" class="w-28 text-right font-bold text-xs text-[#0F172A] bg-white border border-slate-200 focus:border-[#D62828] focus:outline-none rounded-xl px-2.5 py-1.5 tabular-nums">`
           : `<span class="text-xs font-semibold text-slate-700 tabular-nums">${formatVND(item.price)}</span>`;
 
+        const noteCellHtml = `
+          <input type="text" value="${escapeHtml(item.note || '')}" placeholder="Nhập ghi chú..." onchange="updateItemField(${index}, 'note', this.value)" class="w-full text-xs text-slate-700 bg-slate-50/70 hover:bg-white focus:bg-white border border-slate-200 focus:border-[#D62828] focus:outline-none rounded-xl px-3 py-1.5 transition">
+        `;
+
         tr.innerHTML = `
-          <td class="py-2 px-2.5 text-center">
-            <input type="checkbox" ${item.selected ? 'checked' : ''} onchange="toggleItemSelect(${index}, this.checked)" class="w-4 h-4 rounded text-[#D62828] focus:ring-[#D62828] cursor-pointer">
+          <td class="py-3.5 px-3 text-center">
+            <input type="checkbox" ${isItemActive ? 'checked' : ''} onchange="toggleItemSelect(${index}, this.checked)" class="w-4 h-4 rounded text-[#D62828] focus:ring-[#D62828] cursor-pointer">
           </td>
-          <td class="py-2 px-2 text-center text-xs font-bold text-slate-400 tabular-nums">${displayIndex}</td>
-          <td class="py-2 px-3">
-            <div class="text-xs sm:text-[13px] font-bold text-[#0F172A] leading-snug">${escapeHtml(item.name)}</div>
-            ${(catFilter === 'ALL' || searchTxt) ? `<div class="text-[10.5px] font-medium text-slate-400 mt-0.5">${escapeHtml(item.category)}</div>` : ''}
+          <td class="py-3.5 px-2.5 text-center text-xs font-bold text-slate-400 tabular-nums">${displayIndex}</td>
+          <td class="py-3.5 px-3.5">
+            <div class="text-xs sm:text-[13px] font-bold ${isItemActive ? 'text-[#0F172A]' : 'text-slate-600'} leading-relaxed">${escapeHtml(item.name)}</div>
+            ${(catFilter === 'ALL' || searchTxt) ? `<div class="text-[11px] font-medium text-slate-400 mt-0.5">${escapeHtml(item.category)}</div>` : ''}
           </td>
-          <td class="py-2 px-2 text-center">
-            <span class="text-xs text-slate-600 font-semibold bg-slate-100 px-2 py-0.5 rounded-md border border-slate-200/70">${escapeHtml(item.unit)}</span>
+          <td class="py-3.5 px-2.5 text-center">
+            <span class="text-xs text-slate-600 font-semibold bg-slate-100 px-2.5 py-1 rounded-lg border border-slate-200/70">${escapeHtml(item.unit)}</span>
           </td>
-          <td class="py-2 px-2.5 text-center">
+          <td class="py-3.5 px-3 text-center">
             ${qtyStepperHtml}
           </td>
-          <td class="py-2 px-3 text-right">
+          <td class="py-3.5 px-3.5 text-right">
             ${priceCellHtml}
           </td>
-          <td class="py-2 px-3 text-right font-extrabold text-[#0F172A] text-xs sm:text-[13px] tabular-nums">
+          <td class="py-3.5 px-3.5 text-right font-extrabold ${isItemActive ? 'text-[#D62828]' : 'text-slate-400'} text-xs sm:text-[13px] tabular-nums">
             ${formatVND(subtotal)}
+          </td>
+          <td class="py-3.5 px-3.5">
+            ${noteCellHtml}
           </td>
         `;
         tbody.appendChild(tr);
@@ -3996,37 +4003,37 @@
         // 2. RENDER THẺ VẬT TƯ TRÊN ĐIỆN THOẠI (MOBILE TOUCH CARD VIEW)
         if (mobileList) {
           const card = document.createElement('div');
-          card.className = item.selected
-            ? "rounded-xl border border-slate-200 bg-white p-3.5 shadow-2xs transition"
-            : "rounded-xl border border-slate-200/70 bg-slate-50/70 p-3.5 opacity-60 transition";
+          card.className = isItemActive
+            ? "rounded-2xl border border-red-200 bg-white p-4 shadow-xs transition space-y-3"
+            : "rounded-2xl border border-slate-200/80 bg-white p-4 transition space-y-3";
 
           card.innerHTML = `
-            <div class="flex items-center justify-between gap-2 pb-2 mb-2 border-b border-slate-100">
-              <label class="flex items-center gap-2 min-w-0 cursor-pointer flex-1">
-                <input type="checkbox" ${item.selected ? 'checked' : ''} onchange="toggleItemSelect(${index}, this.checked)" class="w-4 h-4 rounded text-[#D62828] focus:ring-[#D62828] shrink-0">
-                <span class="text-[11px] font-extrabold text-slate-400 tabular-nums shrink-0">#${displayIndex}</span>
-                <span class="text-[10px] font-bold text-slate-600 bg-slate-100 px-2 py-0.5 rounded-md border border-slate-200/70 truncate">${escapeHtml(item.category)}</span>
+            <div class="flex items-center justify-between gap-2 pb-2.5 border-b border-slate-100">
+              <label class="flex items-center gap-2.5 min-w-0 cursor-pointer flex-1">
+                <input type="checkbox" ${isItemActive ? 'checked' : ''} onchange="toggleItemSelect(${index}, this.checked)" class="w-4 h-4 rounded text-[#D62828] focus:ring-[#D62828] shrink-0">
+                <span class="text-xs font-extrabold text-slate-400 tabular-nums shrink-0">#${displayIndex}</span>
+                <span class="text-[11px] font-bold text-slate-600 bg-slate-100 px-2.5 py-0.5 rounded-lg border border-slate-200/70 truncate">${escapeHtml(item.category)}</span>
               </label>
-              <span class="text-xs font-semibold text-slate-600 bg-slate-100 px-2 py-0.5 rounded-md border border-slate-200/60 shrink-0">${escapeHtml(item.unit)}</span>
+              <span class="text-xs font-semibold text-slate-600 bg-slate-100 px-2.5 py-0.5 rounded-lg border border-slate-200/60 shrink-0">${escapeHtml(item.unit)}</span>
             </div>
 
-            <div class="mb-3 text-sm font-bold text-[#0F172A] leading-snug">
+            <div class="text-sm font-bold text-[#0F172A] leading-relaxed">
               ${escapeHtml(item.name)}
             </div>
 
-            <div class="flex items-center justify-between gap-2 pt-2 border-t border-slate-100/90">
+            <div class="flex items-center justify-between gap-2 pt-2 border-t border-slate-100">
               <div>
                 <div class="text-[10px] font-semibold text-slate-400 uppercase">Đơn giá</div>
                 <div class="text-xs font-bold text-slate-700 tabular-nums mt-0.5">${formatVND(item.price)} đ</div>
               </div>
 
               <div class="text-center">
-                <div class="text-[10px] font-semibold text-slate-400 uppercase mb-0.5">Khối lượng</div>
+                <div class="text-[10px] font-semibold text-slate-400 uppercase mb-1">Số lượng</div>
                 <div class="inline-flex items-center border border-slate-300 rounded-xl bg-white overflow-hidden shadow-2xs">
                   <button type="button" onclick="stepItemQty(${index}, -1)" class="w-8 h-8 flex items-center justify-center text-slate-600 active:bg-slate-100 transition text-xs">
                     <i class="fa-solid fa-minus"></i>
                   </button>
-                  <input type="number" value="${item.quantity}" min="1" onchange="updateItemField(${index}, 'quantity', Math.max(1, parseFloat(this.value) || 1))" class="mobile-no-zoom w-11 h-8 text-center font-extrabold text-xs text-[#0F172A] border-x border-slate-200 focus:outline-none tabular-nums">
+                  <input type="number" value="${qtyVal}" min="0" onchange="updateItemField(${index}, 'quantity', Math.max(0, parseFloat(this.value) || 0))" class="mobile-no-zoom w-11 h-8 text-center font-extrabold text-xs text-[#0F172A] border-x border-slate-200 focus:outline-none tabular-nums">
                   <button type="button" onclick="stepItemQty(${index}, 1)" class="w-8 h-8 flex items-center justify-center text-[#D62828] active:bg-red-50 transition text-xs">
                     <i class="fa-solid fa-plus"></i>
                   </button>
@@ -4035,8 +4042,12 @@
 
               <div class="text-right">
                 <div class="text-[10px] font-semibold text-slate-400 uppercase">Thành tiền</div>
-                <div class="text-xs font-black text-[#D62828] tabular-nums mt-1">${formatVND(subtotal)} đ</div>
+                <div class="text-xs font-black ${isItemActive ? 'text-[#D62828]' : 'text-slate-400'} tabular-nums mt-1">${formatVND(subtotal)} đ</div>
               </div>
+            </div>
+
+            <div class="pt-1">
+              <input type="text" value="${escapeHtml(item.note || '')}" placeholder="Ghi chú hạng mục này (nếu có)..." onchange="updateItemField(${index}, 'note', this.value)" class="w-full text-xs text-slate-700 bg-slate-50 focus:bg-white border border-slate-200 focus:border-[#D62828] focus:outline-none rounded-xl px-3 py-2">
             </div>
           `;
           mobileList.appendChild(card);
@@ -4046,8 +4057,8 @@
       if (displayIndex === 0) {
         tbody.innerHTML = `
           <tr>
-            <td colspan="7" class="py-8 px-4 text-center text-xs text-slate-500 bg-slate-50/60">
-              <i class="fa-solid fa-box-open text-base text-slate-400 mb-1.5 block"></i>
+            <td colspan="8" class="py-10 px-4 text-center text-xs text-slate-500 bg-slate-50/40">
+              <i class="fa-solid fa-box-open text-lg text-slate-400 mb-2 block"></i>
               Không có hạng mục vật tư nào khớp bộ lọc trong nhóm này.
             </td>
           </tr>
@@ -4065,8 +4076,8 @@
     }
 
     function stepItemQty(index, delta) {
-      const current = parseFloat(itemsData[index].quantity) || 1;
-      const next = Math.max(1, current + delta);
+      const current = parseFloat(itemsData[index].quantity) || 0;
+      const next = Math.max(0, current + delta);
       updateItemField(index, 'quantity', next);
     }
 
@@ -4076,6 +4087,11 @@
 
     function toggleItemSelect(index, isChecked) {
       itemsData[index].selected = isChecked;
+      if (isChecked && (parseFloat(itemsData[index].quantity) || 0) <= 0) {
+        itemsData[index].quantity = 1;
+      } else if (!isChecked) {
+        itemsData[index].quantity = 0;
+      }
       setQuoteSavedState(false);
       renderFormTable();
       updateFormSummary();
@@ -4084,12 +4100,20 @@
 
     function updateItemField(index, field, value) {
       if ((field === 'price' || field === 'name' || field === 'unit' || field === 'category') && !isManagerRole()) {
-        showToast('Nhân viên Sale chỉ được phép thay đổi Khối lượng!', true);
+        showToast('Nhân viên Sale chỉ được phép cập nhật Số lượng và Ghi chú!', true);
         renderFormTable();
         renderProductCatalogManager();
         return;
       }
-      itemsData[index][field] = value;
+
+      if (field === 'quantity') {
+        const cleanQty = Math.max(0, parseFloat(value) || 0);
+        itemsData[index].quantity = cleanQty;
+        itemsData[index].selected = (cleanQty > 0);
+      } else {
+        itemsData[index][field] = value;
+      }
+
       setQuoteSavedState(false);
       if (field === 'category') initCategoryFilter();
       renderFormTable();
@@ -4116,7 +4140,15 @@
     }
 
     function selectAll(val) {
-      itemsData.forEach(item => item.selected = val);
+      itemsData.forEach(item => {
+        if (val) {
+          item.selected = true;
+          if ((parseFloat(item.quantity) || 0) <= 0) item.quantity = 1;
+        } else {
+          item.selected = false;
+          item.quantity = 0;
+        }
+      });
       setQuoteSavedState(false);
       renderFormTable();
       updateFormSummary();
@@ -4132,7 +4164,6 @@
         : (itemsData[0]?.category || 'HỆ THỐNG GIAI ĐOẠN I - BÁO CHÁY');
       document.getElementById('modalItemName').value = '';
       document.getElementById('modalItemUnit').value = 'Chiếc';
-      document.getElementById('modalItemQty').value = 1;
       document.getElementById('modalItemPrice').value = 150000;
       modal.classList.remove('hidden');
       modal.classList.add('flex');
@@ -4152,7 +4183,6 @@
       const cat = document.getElementById('modalItemCategory').value.trim();
       const name = document.getElementById('modalItemName').value.trim();
       const unit = document.getElementById('modalItemUnit').value.trim() || 'Chiếc';
-      const qty = Math.max(1, parseFloat(document.getElementById('modalItemQty').value) || 1);
       const price = Math.max(0, parseFloat(document.getElementById('modalItemPrice').value) || 0);
 
       if (!cat || !name) return;
@@ -4163,10 +4193,11 @@
         name: name,
         unit: unit,
         default_price: price,
-        default_qty: qty,
-        quantity: qty,
+        default_qty: 0,
+        quantity: 0,
         price: price,
-        selected: true
+        note: '',
+        selected: false
       };
       itemsData.unshift(newItem);
       closeAddItemModal();
@@ -4180,13 +4211,13 @@
     }
 
     function updateFormSummary() {
-      const selectedItems = itemsData.filter(i => i.selected);
-      const subtotal = selectedItems.reduce((sum, i) => sum + (i.quantity * i.price), 0);
+      const selectedItems = itemsData.filter(i => i.selected && (parseFloat(i.quantity) || 0) > 0);
+      const subtotal = selectedItems.reduce((sum, i) => sum + ((parseFloat(i.quantity) || 0) * (parseFloat(i.price) || 0)), 0);
       const vatRate = parseFloat(document.getElementById('inputVatRate').value) || 0;
       const vatAmount = Math.round(subtotal * (vatRate / 100));
       const grandTotal = subtotal + vatAmount;
 
-      document.getElementById('selectedBadgeCount').textContent = `${selectedItems.length} mục`;
+      document.getElementById('selectedBadgeCount').textContent = `${selectedItems.length} mục đã chọn`;
       document.getElementById('statSelectedItems').textContent = selectedItems.length;
       document.getElementById('statTotalItems').textContent = itemsData.length;
       
@@ -4229,8 +4260,8 @@
       const vatRate = parseFloat(document.getElementById('inputVatRate').value) || 0;
       const showStamp = document.getElementById('inputShowStamp').value === 'yes';
 
-      const selectedItems = itemsData.filter(i => i.selected);
-      const subtotal = selectedItems.reduce((sum, i) => sum + (i.quantity * i.price), 0);
+      const selectedItems = itemsData.filter(i => i.selected && (parseFloat(i.quantity) || 0) > 0);
+      const subtotal = selectedItems.reduce((sum, i) => sum + ((parseFloat(i.quantity) || 0) * (parseFloat(i.price) || 0)), 0);
       const vatAmount = Math.round(subtotal * (vatRate / 100));
       const grandTotal = subtotal + vatAmount;
       const totalInWords = numberToWordsVietnamese(grandTotal);
@@ -4266,6 +4297,7 @@
             quantity: item.quantity,
             price: item.price,
             subtotal: item.quantity * item.price,
+            note: item.note || '',
             groupRoman: roman,
             groupName: catName
           });
@@ -4351,6 +4383,9 @@
           `;
         } else {
           tr.className = 'item-row';
+          const noteText = (row.note && String(row.note).trim()) ? escapeHtml(String(row.note).trim()) : '—';
+          const noteAlign = (row.note && String(row.note).trim()) ? 'left' : 'center';
+          const noteColor = (row.note && String(row.note).trim()) ? '#334155' : '#94A3B8';
           tr.innerHTML = `
             <td class="tabular-nums" style="text-align: center; color: #334155; font-size: 8.5pt; font-weight: 600;">${row.index}</td>
             <td style="padding-left: 7px; padding-right: 5px; font-weight: 500; color: #0F172A;">${escapeHtml(row.name)}</td>
@@ -4358,7 +4393,7 @@
             <td class="tabular-nums" style="text-align: center; font-weight: 700; color: #0F172A;">${row.quantity}</td>
             <td class="tabular-nums" style="text-align: right; padding-right: 6px; color: #1E293B; font-weight: 600;">${formatVND(row.price)}</td>
             <td class="tabular-nums" style="text-align: right; padding-right: 6px; color: #0F172A; font-weight: 700;">${formatVND(row.subtotal)}</td>
-            <td style="text-align: center; color: #94A3B8;">—</td>
+            <td style="text-align: ${noteAlign}; padding-left: 5px; padding-right: 5px; color: ${noteColor}; font-size: 8pt;">${noteText}</td>
           `;
         }
         return tr;
@@ -4419,13 +4454,13 @@
             <table class="sanway-table">
               <thead>
                 <tr>
-                  <th style="width: 32px; text-align: center;">STT</th>
+                  <th style="width: 30px; text-align: center;">STT</th>
                   <th style="text-align: left; padding-left: 6px;">TÊN HẠNG MỤC, VẬT TƯ THIẾT BỊ</th>
-                  <th style="width: 42px; text-align: center;">ĐVT</th>
-                  <th style="width: 40px; text-align: center;" title="Số lượng / Khối lượng">SL</th>
-                  <th style="width: 84px; text-align: right;">ĐƠN GIÁ (Đ)</th>
-                  <th style="width: 94px; text-align: right;">THÀNH TIỀN (Đ)</th>
-                  <th style="width: 56px; text-align: center; padding-right: 6px;">GHI CHÚ</th>
+                  <th style="width: 40px; text-align: center;">ĐVT</th>
+                  <th style="width: 38px; text-align: center;" title="Số lượng / Khối lượng">SL</th>
+                  <th style="width: 80px; text-align: right;">ĐƠN GIÁ (Đ)</th>
+                  <th style="width: 90px; text-align: right;">THÀNH TIỀN (Đ)</th>
+                  <th style="width: 78px; text-align: center; padding-right: 6px;">GHI CHÚ</th>
                 </tr>
               </thead>
               <tbody class="page-tbody"></tbody>
@@ -4472,6 +4507,16 @@
 
       if (allRows.length === 0) {
         const emptyPage = createA4PageDOM(1, true);
+        if (emptyPage.tbody) {
+          const emptyTr = document.createElement('tr');
+          emptyTr.className = 'item-row';
+          emptyTr.innerHTML = `
+            <td colspan="7" style="text-align: center; padding: 18px 10px; color: #64748B; font-style: italic; font-size: 9pt;">
+              Chưa có hạng mục nào được chọn (Số lượng mặc định = 0). Vui lòng tích chọn hoặc tăng số lượng &gt; 0 ở bảng bên trái.
+            </td>
+          `;
+          emptyPage.tbody.appendChild(emptyTr);
+        }
         pages.push(emptyPage);
       } else {
         while (rowIdx < allRows.length) {
