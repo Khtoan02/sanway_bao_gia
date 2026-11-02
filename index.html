@@ -3085,8 +3085,12 @@
 
       applyRolePermissionsUI();
       updateSidebarCounters();
-      renderDashboardOverview();
-      switchTab('dashboard');
+      if (isAdmin) {
+        renderDashboardOverview();
+        switchTab('dashboard');
+      } else {
+        switchTab('form');
+      }
 
       if (showWelcome) {
         showToast(`Xin chào ${user.name} (${roleTitle})!`);
@@ -3110,6 +3114,8 @@
       const isManager = isManagerRole();
       const saleBanner = document.getElementById('saleRoleBanner');
       const sidebarAdminSection = document.getElementById('sidebarAdminSection');
+      const tabBtnDashboard = document.getElementById('tabBtnDashboard');
+      const mobTabDashboard = document.getElementById('mobTabDashboard');
       const mobTabProducts = document.getElementById('mobTabProducts');
       const mobTabCompany = document.getElementById('mobTabCompany');
       const mobTabStaff = document.getElementById('mobTabStaff');
@@ -3128,8 +3134,9 @@
 
       if (isManager) {
         if (saleBanner) saleBanner.classList.add('hidden');
+        if (tabBtnDashboard) tabBtnDashboard.classList.remove('hidden');
         if (sidebarAdminSection) sidebarAdminSection.classList.remove('hidden');
-        [mobTabProducts, mobTabCompany, mobTabStaff].forEach(el => {
+        [mobTabDashboard, mobTabProducts, mobTabCompany, mobTabStaff].forEach(el => {
           if (el) {
             el.classList.remove('hidden');
             el.classList.add('flex');
@@ -3159,22 +3166,23 @@
         if (quoteCreatorFilterWrapper) quoteCreatorFilterWrapper.classList.remove('hidden');
         if (quotesRoleScopeHint) quotesRoleScopeHint.textContent = 'Phạm vi: Tất cả mọi người (All)';
         if (catalogSubtitle) {
-          catalogSubtitle.textContent = 'Chế độ Admin: Toàn quyền chọn hạng mục, chỉnh khối lượng và sửa trực tiếp đơn giá — Bản A4 bên phải cập nhật ngay.';
+          catalogSubtitle.innerHTML = 'Số lượng mặc định là <b>0</b> — Chế độ Admin: Toàn quyền chọn hạng mục, chỉnh số lượng, ghi chú và sửa trực tiếp đơn giá.';
         }
         if (productsSubtitle) {
           productsSubtitle.textContent = 'Chế độ Admin: Toàn quyền thêm mới, chỉnh sửa tên, phân nhóm, ĐVT, đơn giá niêm yết hoặc xóa sản phẩm.';
         }
       } else {
         if (saleBanner) saleBanner.classList.remove('hidden');
+        if (tabBtnDashboard) tabBtnDashboard.classList.add('hidden');
         if (sidebarAdminSection) sidebarAdminSection.classList.add('hidden');
-        [mobTabProducts, mobTabCompany, mobTabStaff].forEach(el => {
+        [mobTabDashboard, mobTabProducts, mobTabCompany, mobTabStaff].forEach(el => {
           if (el) {
             el.classList.add('hidden');
             el.classList.remove('flex');
           }
         });
         if (mobileNavGrid) {
-          mobileNavGrid.className = 'grid grid-cols-3 gap-1 px-2 pt-1.5';
+          mobileNavGrid.className = 'grid grid-cols-2 gap-1.5 px-2 pt-1.5';
         }
         if (btnQuickCatalogInForm) {
           btnQuickCatalogInForm.classList.add('hidden');
@@ -3189,7 +3197,7 @@
           btnSaveCatalog.classList.remove('flex');
         }
         if (thDeleteCol) thDeleteCol.classList.add('hidden');
-        if (sidebarQuotesLabel) sidebarQuotesLabel.textContent = 'Quản Lý Báo Giá';
+        if (sidebarQuotesLabel) sidebarQuotesLabel.textContent = 'Quản Lý Báo Giá Của Tôi';
         if (quotesPageTitle) quotesPageTitle.textContent = 'Danh Sách Báo Giá Đã Lập Của Tôi';
         if (quotesPageSubtitle) {
           quotesPageSubtitle.innerHTML = `Hiển thị danh sách các bản báo giá do <b class="text-[#D62828]">${escapeHtml(currentUser ? currentUser.name : 'bạn')}</b> đã lập — Bấm để xem lại, sửa hoặc in báo giá`;
@@ -3197,14 +3205,16 @@
         if (quoteCreatorFilterWrapper) quoteCreatorFilterWrapper.classList.add('hidden');
         if (quotesRoleScopeHint) quotesRoleScopeHint.textContent = 'Phạm vi: Báo giá của tôi';
         if (catalogSubtitle) {
-          catalogSubtitle.textContent = 'Chế độ Sale: Tích chọn hạng mục và chỉnh Khối lượng — Bản A4 bên phải cập nhật trực tiếp.';
+          catalogSubtitle.innerHTML = 'Số lượng mặc định là <b>0</b> — Nhập số lượng <b>&gt; 0</b> và ghi chú để đưa hạng mục vào báo giá.';
         }
       }
 
       renderFormTable();
       renderProductCatalogManager();
       renderSavedQuotesTable();
-      renderDashboardOverview();
+      if (isManager) {
+        renderDashboardOverview();
+      }
       renderStaffPasswordsTable();
     }
 
@@ -3651,6 +3661,9 @@
     }
 
     function switchTab(tab) {
+      if (tab === 'dashboard' && !isManagerRole()) {
+        tab = 'form';
+      }
       const adminOnlyTabs = ['products', 'company', 'staff', 'config', 'admin'];
       if (adminOnlyTabs.includes(tab) && !isManagerRole()) {
         showToast('Chỉ Quản trị viên (Admin / Lãnh đạo) mới có quyền truy cập mục này!', true);
@@ -3690,25 +3703,30 @@
         if (sec) sec.classList.add('hidden');
       });
 
-      [btnDashboard, btnForm, btnQuotes].forEach(b => {
+      [btnForm, btnQuotes].forEach(b => {
         if (b) b.className = sidebarInactive;
       });
       if (isManagerRole()) {
-        [btnProducts, btnCompany, btnStaff, btnConfig].forEach(b => {
+        [btnDashboard, btnProducts, btnCompany, btnStaff, btnConfig].forEach(b => {
           if (b) b.className = sidebarInactive;
         });
+      } else if (btnDashboard) {
+        btnDashboard.classList.add('hidden');
       }
 
-      [mobTabDashboard, mobTabForm, mobTabQuotes].forEach(b => {
+      [mobTabForm, mobTabQuotes].forEach(b => {
         if (b) b.className = mobInactive;
       });
       if (isManagerRole()) {
-        [mobTabProducts, mobTabCompany, mobTabStaff].forEach(b => {
+        [mobTabDashboard, mobTabProducts, mobTabCompany, mobTabStaff].forEach(b => {
           if (b) b.className = mobInactive;
         });
+      } else if (mobTabDashboard) {
+        mobTabDashboard.classList.add('hidden');
+        mobTabDashboard.classList.remove('flex');
       }
 
-      if (tab === 'dashboard') {
+      if (tab === 'dashboard' && isManagerRole()) {
         if (sectionDashboard) sectionDashboard.classList.remove('hidden');
         if (btnDashboard) btnDashboard.className = sidebarActive;
         if (mobTabDashboard) mobTabDashboard.className = mobActive;
