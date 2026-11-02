@@ -4,6 +4,9 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>SANWAY - Báo Giá Kỹ Thuật PCCC & Công Trình</title>
+  <link id="siteFavicon" rel="icon" type="image/png" sizes="64x64" href="/favicon.png">
+  <link id="siteShortcutIcon" rel="shortcut icon" href="/favicon.ico">
+  <link id="siteAppleTouchIcon" rel="apple-touch-icon" href="/favicon.png">
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -1822,12 +1825,17 @@
 
     function syncBrandingImages() {
       const logoH = getActiveAsset('logo_horizontal') || getActiveAsset('logo_official');
+      const logoSquare = getActiveAsset('logo_official') || logoH;
       const stampImg = getActiveAsset('stamp');
       if (document.getElementById('navLogo')) document.getElementById('navLogo').src = logoH;
       if (document.getElementById('navLogoMobile')) document.getElementById('navLogoMobile').src = logoH;
       if (document.getElementById('loginLogo')) document.getElementById('loginLogo').src = logoH;
       if (document.getElementById('adminPreviewLogo')) document.getElementById('adminPreviewLogo').src = logoH;
       if (document.getElementById('adminPreviewStamp')) document.getElementById('adminPreviewStamp').src = stampImg;
+      if (logoSquare) {
+        if (document.getElementById('siteFavicon')) document.getElementById('siteFavicon').href = logoSquare;
+        if (document.getElementById('siteAppleTouchIcon')) document.getElementById('siteAppleTouchIcon').href = logoSquare;
+      }
     }
 
     // ==================== WEB CRYPTO PBKDF2 + AES-256-GCM (DÙNG KHI KHÔNG CÓ NODE SERVER) ====================

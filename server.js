@@ -395,7 +395,7 @@ function readJsonBody(req, maxBytes = 15 * 1024 * 1024) {
   });
 }
 
-const ALLOWED_STATIC_FILES = new Set(['/index.html', '/app_data.js']);
+const ALLOWED_STATIC_FILES = new Set(['/index.html', '/app_data.js', '/favicon.png', '/favicon.ico']);
 
 async function requestHandler(req, res) {
   const parsedUrl = new URL(req.url, `http://${req.headers.host || 'localhost'}`);
@@ -758,7 +758,9 @@ async function requestHandler(req, res) {
   const ext = path.extname(filePath).toLowerCase();
   const mimeTypes = {
     '.html': 'text/html; charset=utf-8',
-    '.js': 'application/javascript; charset=utf-8'
+    '.js': 'application/javascript; charset=utf-8',
+    '.png': 'image/png',
+    '.ico': 'image/x-icon'
   };
 
   fs.readFile(filePath, (err, content) => {
