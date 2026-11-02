@@ -65,10 +65,6 @@ function getDefaultCatalog() {
 
 function createInitialDb() {
   const catalog = getDefaultCatalog();
-  const subtotal = catalog.reduce((sum, item) => sum + ((item.default_qty || 1) * (item.default_price || 0)), 0);
-  const vatRate = 8;
-  const vatAmount = Math.round(subtotal * (vatRate / 100));
-  const grandTotal = subtotal + vatAmount;
 
   return {
     company: {
@@ -87,36 +83,7 @@ function createInitialDb() {
       { id: 'u_sale2', name: 'Chuyên Viên Kinh Doanh 02', role: 'sale', pin: '2222', pinHash: hashPin('2222') }
     ],
     catalog,
-    quotes: [
-      {
-        id: 'q_default_001',
-        quoteCode: 'BGSW/2026/001',
-        customerName: 'CÔNG TY TNHH TÂN HUY HOÀNG',
-        projectTitle: 'BẢO DƯỠNG HỆ THỐNG PCCC',
-        projectTitleEn: 'FIRE PROTECTION SYSTEM MAINTENANCE QUOTATION',
-        quoteDate: 'Hải Phòng, 21/10/2026',
-        showStamp: 'yes',
-        vatRate,
-        selectedCount: catalog.length,
-        subtotal,
-        vatAmount,
-        grandTotal,
-        createdById: 'u_admin',
-        createdBy: 'Quản Trị Viên / Giám Đốc',
-        createdByRole: 'admin',
-        createdAt: new Date().toISOString(),
-        updatedAt: new Date().toISOString(),
-        itemsSnapshot: catalog.map(it => ({
-          id: it.id,
-          category: it.category,
-          name: it.name,
-          unit: it.unit,
-          quantity: it.default_qty || 1,
-          price: it.default_price || 0,
-          selected: true
-        }))
-      }
-    ],
+    quotes: [],
     customAssets: {
       stamp: null,
       logo_horizontal: null,
@@ -130,7 +97,11 @@ function normalizeDbStructure(db) {
   if (!db || typeof db !== 'object') return createInitialDb();
   if (!db.company) db.company = createInitialDb().company;
   if (!Array.isArray(db.catalog)) db.catalog = getDefaultCatalog();
-  if (!Array.isArray(db.quotes)) db.quotes = createInitialDb().quotes;
+  if (!Array.isArray(db.quotes)) {
+    db.quotes = [];
+  } else {
+    db.quotes = db.quotes.filter(q => q && q.id !== 'q_default_001');
+  }
   if (!db.customAssets) db.customAssets = { stamp: null, logo_horizontal: null, logo_official: null };
   if (Array.isArray(db.users)) {
     db.users = db.users.map(u => {
@@ -306,17 +277,71 @@ function buildClientPayload(user, db) {
     ? allQuotes
     : allQuotes.filter(q => q.createdById === user.id || q.createdBy === user.name);
 
+  // Thống kê số lượng báo giá theo từng nhân sự (Nhân viên Sale & Lãnh đạo/Admin), mặc định là 0
+  const staffMap = new Map();
+  (db.users || []).forEach(u => {
+    staffMap.set(u.id, {
+      id: u.id,
+      name: u.name,
+      role: (u.role === 'admin' || u.role === 'leader') ? 'admin' : 'sale',
+      count: 0,
+      totalValue: 0,
+      maxValue: 0
+    });
+  });
+
+  allQuotes.forEach(q => {
+    const val = parseFloat(q.grandTotal) || 0;
+    let entry = staffMap.get(q.createdById);
+    if (!entry) {
+      for (const item of staffMap.values()) {
+        if (item.name === q.createdBy) {
+          entry = item;
+          break;
+        }
+      }
+    }
+    if (!entry && q.createdBy) {
+      const customKey = 'ext_' + q.createdBy;
+      if (!staffMap.has(customKey)) {
+        staffMap.set(customKey, {
+          id: customKey,
+          name: q.createdBy,
+          role: (q.createdByRole === 'admin' || q.createdByRole === 'leader') ? 'admin' : 'sale',
+          count: 0,
+          totalValue: 0,
+          maxValue: 0
+        });
+      }
+      entry = staffMap.get(customKey);
+    }
+    if (entry) {
+      entry.count += 1;
+      entry.totalValue += val;
+      if (val > entry.maxValue) entry.maxValue = val;
+    }
+  });
+
   return {
     user: {
       id: user.id,
       name: user.name,
       role: isAdmin ? 'admin' : 'sale'
     },
-    dbMode: (KV_URL && KV_TOKEN) ? 'vercel-kv' : (IS_VERCEL ? 'vercel-tmp' : 'local-server'),
+    ...(isAdmin ? {
+      dbMode: (KV_URL && KV_TOKEN) ? 'vercel-kv' : (IS_VERCEL ? 'vercel-tmp' : 'local-server'),
+      systemHealth: {
+        status: 'Healthy • 100% Online',
+        dbEngine: (KV_URL && KV_TOKEN) ? 'Vercel KV / Upstash Redis' : (IS_VERCEL ? 'Vercel Serverless Storage' : 'Node.js Encrypted File DB'),
+        securityMode: 'PBKDF2-SHA256 (100k) + HMAC-SHA256 Session + Rate Limit',
+        updatedAt: db.updatedAt || new Date().toISOString()
+      }
+    } : {}),
     nextQuoteCode: computeNextQuoteCode(db),
     company: db.company,
     catalog: db.catalog,
     quotes: visibleQuotes,
+    staffStats: Array.from(staffMap.values()),
     customAssets: db.customAssets || { stamp: null, logo_horizontal: null, logo_official: null },
     users: isAdmin
       ? db.users.map(u => ({

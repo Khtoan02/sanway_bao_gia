@@ -504,7 +504,7 @@
   <!-- ==================== TRANG QUẢN TRỊ WORKBENCH (CHỈ HIỂN THỊ SAU KHI ĐĂNG NHẬP) ==================== -->
   <div id="erpAppShell" class="hidden min-h-screen flex flex-col lg:flex-row bg-[#EEF2F6]">
 
-    <!-- SIDEBAR TRÁI PHONG CÁCH WORKBENCH (TÔNG ĐỎ SANWAY & XÁM ĐEN KIM LOẠI) -->
+    <!-- SIDEBAR TRÁI PHONG CÁCH WORKBENCH (TÁCH RIÊNG TỪNG CHỨC NĂNG RÕ RÀNG) -->
     <aside class="no-print hidden lg:flex lg:flex-col lg:w-64 lg:fixed lg:inset-y-0 lg:left-0 bg-white border-r border-slate-200/80 shadow-[4px_0_24px_rgba(15,23,42,0.03)] z-40 select-none">
       <!-- Brand Header -->
       <div class="px-5 pt-5 pb-4 flex items-center gap-3">
@@ -516,26 +516,26 @@
             <span class="text-xs font-black tracking-tight uppercase text-[#0F172A] truncate">SANWAY</span>
             <span id="sidebarRoleChip" class="text-[9px] font-extrabold px-1.5 py-0.5 rounded-md bg-red-50 text-[#D62828] border border-red-200">ADMIN</span>
           </div>
-          <p class="text-[10.5px] text-slate-500 font-medium truncate mt-0.5">Bàn Làm Việc Nội Bộ</p>
+          <p class="text-[10.5px] text-slate-500 font-medium truncate mt-0.5">Hệ Thống Quản Trị Báo Giá</p>
         </div>
       </div>
 
       <!-- Nút Tạo Báo Giá Mới (Sinh mã BGSW mới ngay lập tức) -->
       <div class="px-4 pb-3">
-        <button type="button" onclick="startNewQuotationWithNextCode()" class="w-full py-2.5 px-3.5 rounded-2xl bg-[#D62828] hover:bg-[#B91C1C] active:scale-[0.99] text-white font-extrabold text-xs shadow-md shadow-red-600/20 transition flex items-center justify-center gap-2">
+        <button type="button" onclick="startNewQuotationWithNextCode()" class="w-full py-2.5 px-3.5 rounded-2xl bg-gradient-to-r from-[#D62828] to-[#B91C1C] hover:from-[#B91C1C] hover:to-[#991B1B] active:scale-[0.99] text-white font-extrabold text-xs shadow-md shadow-red-600/20 transition flex items-center justify-center gap-2">
           <i class="fa-solid fa-plus-circle text-sm"></i>
-          <span>+ Tạo Báo Giá Mới</span>
+          <span>+ Lập Báo Giá Mới</span>
         </button>
       </div>
 
-      <!-- Danh mục điều hướng chính (Tự động ẩn/hiện theo quyền Admin hoặc Sale) -->
+      <!-- Danh mục điều hướng chính (Tách riêng từng Tab chức năng, ẩn/hiện theo quyền Admin hoặc Sale) -->
       <div class="flex-1 overflow-y-auto px-3 py-3 space-y-1">
-        <div class="px-3 pb-1.5 text-[10px] font-extrabold uppercase tracking-wider text-slate-400">Không gian làm việc</div>
+        <div class="px-3 pb-1.5 text-[10px] font-extrabold uppercase tracking-wider text-slate-400">Nghiệp vụ báo giá</div>
 
         <button id="tabBtnDashboard" onclick="switchTab('dashboard')" class="wb-nav-item active">
           <span class="flex items-center gap-3">
             <span class="w-7 h-7 rounded-lg bg-red-50 text-[#D62828] border border-red-100 flex items-center justify-center text-xs">
-              <i class="fa-solid fa-table-columns"></i>
+              <i class="fa-solid fa-chart-pie"></i>
             </span>
             <span>Bàn Làm Việc</span>
           </span>
@@ -546,9 +546,9 @@
             <span class="w-7 h-7 rounded-lg bg-slate-100 text-[#1E293B] border border-slate-200/80 flex items-center justify-center text-xs">
               <i class="fa-solid fa-file-signature"></i>
             </span>
-            <span>Lập Báo Giá Mới</span>
+            <span>Lập Báo Giá</span>
           </span>
-          <span class="text-[9.5px] px-1.5 py-0.5 rounded-md bg-slate-100 text-[#1E293B] border border-slate-200 font-bold">Live A4</span>
+          <span class="text-[9.5px] px-1.5 py-0.5 rounded-md bg-red-50 text-[#D62828] border border-red-100 font-bold">A4 Live</span>
         </button>
 
         <button id="tabBtnQuotes" onclick="switchTab('quotes')" class="wb-nav-item">
@@ -558,12 +558,12 @@
             </span>
             <span id="sidebarQuotesLabel">Quản Lý Báo Giá</span>
           </span>
-          <span id="sidebarQuotesCount" class="text-[10px] px-2 py-0.5 rounded-full bg-slate-100 text-[#1E293B] border border-slate-200 font-extrabold tabular-nums">1</span>
+          <span id="sidebarQuotesCount" class="text-[10px] px-2 py-0.5 rounded-full bg-slate-100 text-[#1E293B] border border-slate-200 font-extrabold tabular-nums">0</span>
         </button>
 
-        <!-- Khu vực Dành riêng cho Admin (Quản lý sản phẩm, thông tin công ty, nhân sự) -->
+        <!-- Khu vực Dành riêng cho Admin (Tách riêng: Sản phẩm, Thông tin công ty, Nhân sự, Config Website) -->
         <div id="sidebarAdminSection" class="pt-4 mt-4 border-t border-slate-100 space-y-1 hidden">
-          <div class="px-3 pb-1.5 text-[10px] font-extrabold uppercase tracking-wider text-slate-400">Quản trị toàn hệ thống</div>
+          <div class="px-3 pb-1.5 text-[10px] font-extrabold uppercase tracking-wider text-slate-400">Quản trị hệ thống (Admin)</div>
 
           <button id="tabBtnProducts" onclick="switchTab('products')" class="wb-nav-item">
             <span class="flex items-center gap-3">
@@ -575,34 +575,40 @@
             <span id="sidebarProductsCount" class="text-[10px] px-2 py-0.5 rounded-full bg-slate-100 text-[#1E293B] border border-slate-200 font-extrabold tabular-nums">47</span>
           </button>
 
-          <button id="tabBtnAdmin" onclick="switchTab('admin')" class="wb-nav-item">
+          <button id="tabBtnCompany" onclick="switchTab('company')" class="wb-nav-item">
             <span class="flex items-center gap-3">
               <span class="w-7 h-7 rounded-lg bg-slate-100 text-[#1E293B] border border-slate-200/80 flex items-center justify-center text-xs">
-                <i class="fa-solid fa-sliders"></i>
+                <i class="fa-solid fa-building-shield"></i>
               </span>
-              <span>Công Ty & Nhân Sự</span>
+              <span>Thông Tin Công Ty</span>
             </span>
-            <span class="text-[9px] px-1.5 py-0.5 rounded-md bg-red-50 text-[#D62828] border border-red-200 font-bold">All</span>
+          </button>
+
+          <button id="tabBtnStaff" onclick="switchTab('staff')" class="wb-nav-item">
+            <span class="flex items-center gap-3">
+              <span class="w-7 h-7 rounded-lg bg-slate-100 text-[#1E293B] border border-slate-200/80 flex items-center justify-center text-xs">
+                <i class="fa-solid fa-users-gear"></i>
+              </span>
+              <span>Quản Lý Nhân Sự</span>
+            </span>
+            <span id="sidebarStaffCount" class="text-[10px] px-2 py-0.5 rounded-full bg-slate-100 text-[#1E293B] border border-slate-200 font-extrabold tabular-nums">4</span>
+          </button>
+
+          <button id="tabBtnConfig" onclick="switchTab('config')" class="wb-nav-item">
+            <span class="flex items-center gap-3">
+              <span class="w-7 h-7 rounded-lg bg-red-50 text-[#D62828] border border-red-100 flex items-center justify-center text-xs">
+                <i class="fa-solid fa-server"></i>
+              </span>
+              <span>Config Website</span>
+            </span>
+            <span class="text-[9px] px-1.5 py-0.5 rounded-md bg-red-50 text-[#D62828] border border-red-200 font-bold">Admin</span>
           </button>
         </div>
       </div>
 
-      <!-- Thẻ thông tin Trạng thái & Tài khoản dưới đáy Sidebar -->
-      <div class="p-4 space-y-3">
-        <div class="rounded-2xl bg-[#F8FAFC] border border-slate-200/80 p-3.5">
-          <div class="flex items-center justify-between text-[11px] mb-1.5">
-            <span class="text-slate-500 font-semibold flex items-center gap-1.5">
-              <span class="w-2 h-2 rounded-full bg-[#D62828] animate-pulse"></span>
-              <span>Kết nối DB:</span>
-            </span>
-            <span id="sidebarDbBadge" class="font-extrabold text-[#1E293B] truncate max-w-[115px]">Backend Active</span>
-          </div>
-          <p id="sidebarRoleDescText" class="text-[10.5px] text-slate-500 leading-relaxed">
-            Quyền Admin: Xem tất cả báo giá, quản lý sản phẩm & thông tin công ty.
-          </p>
-        </div>
-
-        <div class="flex items-center justify-between gap-2 pt-1 border-t border-slate-100">
+      <!-- Thẻ Tài khoản tinh gọn dưới đáy Sidebar (Không hiện thông số kỹ thuật DB ở đây) -->
+      <div class="p-4 border-t border-slate-100">
+        <div class="flex items-center justify-between gap-2">
           <div class="flex items-center gap-2.5 min-w-0">
             <div id="currentUserAvatar" class="w-9 h-9 rounded-2xl bg-red-50 border border-red-100 flex items-center justify-center text-xs font-extrabold text-[#D62828] shrink-0">
               <i class="fa-solid fa-user-shield"></i>
@@ -612,7 +618,7 @@
               <div id="currentUserRoleBadge" class="text-[10px] font-bold text-[#D62828] uppercase tracking-wider mt-0.5">—</div>
             </div>
           </div>
-          <button onclick="handleLogout()" title="Đăng xuất về màn hình Login" class="w-8 h-8 rounded-xl bg-slate-100 hover:bg-red-50 text-slate-600 hover:text-[#D62828] transition flex items-center justify-center text-xs shrink-0">
+          <button onclick="handleLogout()" title="Đăng xuất" class="w-8 h-8 rounded-xl bg-slate-100 hover:bg-red-50 text-slate-600 hover:text-[#D62828] transition flex items-center justify-center text-xs shrink-0">
             <i class="fa-solid fa-right-from-bracket"></i>
           </button>
         </div>
@@ -627,14 +633,14 @@
             <img id="navLogoMobile" src="" alt="SANWAY" class="h-6 w-auto object-contain">
           </div>
           <div class="min-w-0">
-            <div class="text-xs font-extrabold uppercase tracking-wide text-[#0F172A] truncate">SANWAY WORKBENCH</div>
-            <div id="mobileHeaderRoleText" class="text-[10px] text-[#D62828] font-bold truncate">Hệ thống Báo giá PCCC</div>
+            <div class="text-xs font-extrabold uppercase tracking-wide text-[#0F172A] truncate">SANWAY</div>
+            <div id="mobileHeaderRoleText" class="text-[10px] text-[#D62828] font-bold truncate">Quản trị Báo giá</div>
           </div>
         </div>
         <div class="flex items-center gap-1.5">
           <button type="button" onclick="startNewQuotationWithNextCode()" class="px-2.5 py-1.5 rounded-xl bg-[#D62828] text-white text-[11px] font-bold flex items-center gap-1">
             <i class="fa-solid fa-plus"></i>
-            <span>Mã mới</span>
+            <span>Lập BG</span>
           </button>
           <button type="button" onclick="handleLogout()" class="w-8 h-8 rounded-xl bg-slate-100 text-slate-600 flex items-center justify-center text-xs">
             <i class="fa-solid fa-right-from-bracket"></i>
@@ -643,238 +649,241 @@
       </div>
     </header>
 
-    <!-- KHU VỰC NỘI DUNG CHÍNH (BÊN PHẢI SIDEBAR) -->
+    <!-- KHU VỰC NỘI DUNG CHÍNH (FULL-WIDTH BÊN PHẢI SIDEBAR, BỎ MAX-W-[1680PX] VÀ BỎ THANH HEADER TRÊN CÙNG) -->
     <main id="erpMainContent" class="flex-1 lg:pl-64 min-w-0">
-      <div class="max-w-[1680px] mx-auto p-3 sm:p-5 lg:p-6 space-y-5">
+      <div class="w-full p-3 sm:p-5 lg:p-6 space-y-5">
 
-        <!-- THANH HEADER WORKBENCH TRÊN CÙNG -->
-        <div class="no-print erp-card px-4 sm:px-6 py-3.5 flex flex-col md:flex-row md:items-center justify-between gap-3">
-          <div>
-            <div id="wbCurrentDateText" class="text-[11px] font-bold text-slate-400 uppercase tracking-wider">Chủ Nhật, 02 Tháng 11, 2026</div>
-            <div class="flex flex-wrap items-center gap-2.5 mt-0.5">
-              <h1 class="text-base sm:text-xl font-black text-[#0F172A] tracking-tight">
-                Xin chào, <span id="wbGreetingName" class="text-[#D62828]">Quản Trị Viên</span> 👋
-              </h1>
-              <span id="wbHeaderRolePill" class="text-[10.5px] font-extrabold px-2.5 py-0.5 rounded-full bg-red-50 text-[#D62828] border border-red-200">
-                Admin • Toàn Quyền Hệ Thống
-              </span>
-            </div>
-          </div>
-
-          <div class="flex flex-wrap items-center gap-2.5">
-            <!-- Ô tìm kiếm nhanh báo giá -->
-            <div class="relative w-full sm:w-64">
-              <span class="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400 text-xs">
-                <i class="fa-solid fa-magnifying-glass"></i>
-              </span>
-              <input
-                type="text"
-                id="wbGlobalSearchInput"
-                onkeydown="if(event.key==='Enter'){document.getElementById('searchSavedQuotesInput').value=this.value;switchTab('quotes');}"
-                placeholder="Tra cứu nhanh mã BGSW/... (Enter)"
-                class="w-full pl-9 pr-3 py-2 text-xs font-medium bg-[#F8FAFC] hover:bg-white focus:bg-white border border-slate-200 rounded-xl focus:outline-none focus:border-[#D62828] transition"
-              >
-            </div>
-
-            <button type="button" onclick="startNewQuotationWithNextCode()" class="px-3.5 py-2 rounded-xl bg-[#D62828] hover:bg-[#B91C1C] text-white text-xs font-extrabold shadow-sm transition flex items-center gap-1.5">
-              <i class="fa-solid fa-plus"></i>
-              <span>Báo Giá Mới</span>
-            </button>
-
-            <button type="button" onclick="handleLogout()" class="px-3 py-2 rounded-xl bg-[#F8FAFC] hover:bg-red-50 text-slate-700 hover:text-[#D62828] border border-slate-200 text-xs font-bold transition flex items-center gap-1.5" title="Đăng xuất">
-              <i class="fa-solid fa-power-off text-[11px]"></i>
-              <span class="hidden sm:inline">Đăng xuất</span>
-            </button>
-          </div>
-        </div>
-
-        <!-- ==================== MÀN HÌNH 0: BÀN LÀM VIỆC TỔNG QUAN (WORKBENCH DASHBOARD) ==================== -->
+        <!-- ==================== MÀN HÌNH 0: BÀN LÀM VIỆC (DASHBOARD KIỂM SOÁT SỐ LƯỢNG & CHỈ SỐ BÁO GIÁ) ==================== -->
         <div id="sectionDashboard" class="no-print space-y-5">
+
+          <!-- Banner Gradient Đỏ thuần túy (100% Red Gradient - Không pha xám đen) -->
+          <div class="rounded-[24px] bg-gradient-to-r from-[#D62828] via-[#B91C1C] to-[#991B1B] text-white p-5 sm:p-6 shadow-[0_14px_34px_-8px_rgba(214,40,40,0.35)]">
+            <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-4 pb-5 mb-5 border-b border-white/15">
+              <div>
+                <div class="inline-flex items-center gap-2 px-2.5 py-1 rounded-full bg-white/15 text-[10.5px] font-extrabold uppercase tracking-wider mb-2">
+                  <i class="fa-solid fa-chart-line"></i>
+                  <span id="dashScopeBadgeText">Trung Tâm Kiểm Soát Báo Giá Toàn Hệ Thống</span>
+                </div>
+                <h1 class="text-lg sm:text-2xl font-black tracking-tight">
+                  Bàn Làm Việc & Thống Kê Báo Giá SANWAY
+                </h1>
+                <p class="text-xs text-white/85 mt-0.5">
+                  Kiểm soát số lượng báo giá từ nhân viên Sale và lãnh đạo/Admin, chỉ số doanh số dự toán và các hồ sơ báo giá giá trị lớn cần quan tâm.
+                </p>
+              </div>
+              <div class="flex flex-wrap items-center gap-2.5 shrink-0">
+                <button type="button" onclick="startNewQuotationWithNextCode()" class="px-4 py-2.5 rounded-xl bg-white text-[#D62828] hover:bg-red-50 text-xs font-extrabold shadow-sm transition flex items-center gap-2">
+                  <i class="fa-solid fa-plus-circle"></i>
+                  <span>+ Lập Báo Giá Mới</span>
+                </button>
+                <button type="button" onclick="switchTab('quotes')" class="px-4 py-2.5 rounded-xl bg-black/20 hover:bg-black/30 text-white border border-white/20 text-xs font-bold transition flex items-center gap-1.5">
+                  <i class="fa-solid fa-folder-open"></i>
+                  <span>Danh Sách Báo Giá</span>
+                </button>
+              </div>
+            </div>
+
+            <!-- 4 Chỉ số cốt lõi trên Banner Đỏ (Mặc định = 0) -->
+            <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 lg:divide-x lg:divide-white/15">
+              <div class="flex items-center gap-3.5 lg:pr-3">
+                <div class="w-11 h-11 rounded-2xl bg-white/15 flex items-center justify-center text-lg shrink-0">
+                  <i class="fa-solid fa-file-invoice"></i>
+                </div>
+                <div>
+                  <div id="dashBannerQuotesTitle" class="text-[11px] text-white/80 font-semibold">Tổng Số Lượng Báo Giá</div>
+                  <div id="dashBannerQuotesCount" class="text-xl sm:text-2xl font-black tracking-tight tabular-nums mt-0.5">0 Hồ sơ</div>
+                </div>
+              </div>
+
+              <div class="flex items-center gap-3.5 lg:px-4">
+                <div class="w-11 h-11 rounded-2xl bg-white/15 flex items-center justify-center text-lg shrink-0">
+                  <i class="fa-solid fa-coins"></i>
+                </div>
+                <div class="min-w-0">
+                  <div id="dashBannerRevenueTitle" class="text-[11px] text-white/80 font-semibold">Tổng Giá Trị Báo Giá</div>
+                  <div id="dashBannerRevenueValue" class="text-lg sm:text-xl font-black tracking-tight tabular-nums truncate mt-0.5">0 đ</div>
+                </div>
+              </div>
+
+              <div class="flex items-center gap-3.5 lg:px-4">
+                <div class="w-11 h-11 rounded-2xl bg-white/15 flex items-center justify-center text-lg shrink-0">
+                  <i class="fa-solid fa-star"></i>
+                </div>
+                <div class="min-w-0">
+                  <div class="text-[11px] text-white/80 font-semibold">Báo Giá Giá Trị Lớn (≥ 50tr)</div>
+                  <div id="dashBannerHighValueCount" class="text-lg sm:text-xl font-black tracking-tight tabular-nums mt-0.5">0 Hồ sơ</div>
+                </div>
+              </div>
+
+              <div class="flex items-center gap-3.5 lg:pl-4">
+                <div class="w-11 h-11 rounded-2xl bg-white/15 flex items-center justify-center text-lg shrink-0">
+                  <i class="fa-solid fa-barcode"></i>
+                </div>
+                <div>
+                  <div class="text-[11px] text-white/80 font-semibold">Mã BGSW Tiếp Theo</div>
+                  <div id="dashBannerNextCode" class="text-lg sm:text-xl font-black tracking-tight tabular-nums mt-0.5">BGSW/2026/001</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- 4 Thẻ Chỉ Số Báo Giá Chi Tiết (Mặc định = 0) -->
+          <div class="grid grid-cols-2 xl:grid-cols-4 gap-4">
+            <div class="erp-card p-4 sm:p-5 flex items-center justify-between gap-3">
+              <div>
+                <div class="text-[11px] font-bold text-slate-400 uppercase tracking-wider">Báo Giá Của Nhân Viên Sale</div>
+                <div id="dashMetricSaleCount" class="text-xl sm:text-2xl font-black text-[#0F172A] tabular-nums mt-1">0</div>
+                <div id="dashMetricSaleValue" class="text-xs font-bold text-[#D62828] tabular-nums mt-0.5">0 đ</div>
+              </div>
+              <div class="w-12 h-12 rounded-2xl bg-red-50 border border-red-100 text-[#D62828] flex items-center justify-center text-base shrink-0">
+                <i class="fa-solid fa-user-tie"></i>
+              </div>
+            </div>
+
+            <div class="erp-card p-4 sm:p-5 flex items-center justify-between gap-3">
+              <div>
+                <div class="text-[11px] font-bold text-slate-400 uppercase tracking-wider">Báo Giá Của Lãnh Đạo / Admin</div>
+                <div id="dashMetricAdminCount" class="text-xl sm:text-2xl font-black text-[#0F172A] tabular-nums mt-1">0</div>
+                <div id="dashMetricAdminValue" class="text-xs font-bold text-[#1E293B] tabular-nums mt-0.5">0 đ</div>
+              </div>
+              <div class="w-12 h-12 rounded-2xl bg-slate-100 border border-slate-200 text-[#1E293B] flex items-center justify-center text-base shrink-0">
+                <i class="fa-solid fa-crown"></i>
+              </div>
+            </div>
+
+            <div class="erp-card p-4 sm:p-5 flex items-center justify-between gap-3">
+              <div>
+                <div class="text-[11px] font-bold text-slate-400 uppercase tracking-wider">Báo Giá Cao Nhất</div>
+                <div id="dashMetricMaxQuoteValue" class="text-lg sm:text-xl font-black text-[#D62828] tabular-nums mt-1">0 đ</div>
+                <div id="dashMetricMaxQuoteCustomer" class="text-[11px] font-semibold text-slate-500 truncate max-w-[180px] mt-0.5">Chưa có báo giá</div>
+              </div>
+              <div class="w-12 h-12 rounded-2xl bg-red-50 border border-red-100 text-[#D62828] flex items-center justify-center text-base shrink-0">
+                <i class="fa-solid fa-arrow-trend-up"></i>
+              </div>
+            </div>
+
+            <div class="erp-card p-4 sm:p-5 flex items-center justify-between gap-3">
+              <div>
+                <div class="text-[11px] font-bold text-slate-400 uppercase tracking-wider">Giá Trị Trung Bình / Báo Giá</div>
+                <div id="dashMetricAvgQuoteValue" class="text-lg sm:text-xl font-black text-[#0F172A] tabular-nums mt-1">0 đ</div>
+                <div id="dashMetricActiveStaffCount" class="text-[11px] font-semibold text-slate-500 mt-0.5">0 nhân sự đã lập báo giá</div>
+              </div>
+              <div class="w-12 h-12 rounded-2xl bg-slate-100 border border-slate-200 text-[#1E293B] flex items-center justify-center text-base shrink-0">
+                <i class="fa-solid fa-scale-balanced"></i>
+              </div>
+            </div>
+          </div>
+
+          <!-- Lưới 2 Cột Chính: (Trái) Kiểm Soát Số Lượng Báo Giá Theo Nhân Sự & Lãnh Đạo | (Phải) Báo Giá Giá Trị Lớn Cần Quan Tâm -->
           <div class="grid grid-cols-1 xl:grid-cols-12 gap-5 items-start">
 
-            <!-- Cột Trái (8/12): Banner 3 ô trung tâm + 2 Thẻ chỉ số trực quan + Danh sách báo giá gần đây -->
-            <div class="xl:col-span-8 space-y-5">
-
-              <!-- Banner 3 phân vùng nổi bật (Chuẩn tông Đỏ SANWAY & Xám Đen Kim Loại) -->
-              <div class="rounded-[24px] bg-gradient-to-r from-[#D62828] via-[#A91D1D] to-[#1E293B] text-white p-5 sm:p-6 shadow-[0_14px_34px_-8px_rgba(15,23,42,0.24)] grid grid-cols-1 sm:grid-cols-3 gap-4 sm:divide-x sm:divide-white/15">
-                <div class="flex items-center gap-3.5 sm:pr-3">
-                  <div class="w-12 h-12 rounded-2xl bg-white/15 backdrop-blur-xs flex items-center justify-center text-xl shrink-0">
-                    <i class="fa-solid fa-file-invoice-dollar"></i>
-                  </div>
+            <!-- Cột Trái (6/12): Bảng Kiểm Soát Số Lượng Báo Giá Của Nhân Viên & Lãnh Đạo (Mặc định = 0) -->
+            <div class="xl:col-span-6 erp-card p-5 space-y-4">
+              <div class="flex flex-wrap items-center justify-between gap-2">
+                <div class="flex items-center gap-2.5">
+                  <span class="w-9 h-9 rounded-xl bg-red-50 text-[#D62828] border border-red-100 flex items-center justify-center text-xs shrink-0">
+                    <i class="fa-solid fa-users-viewfinder"></i>
+                  </span>
                   <div>
-                    <div id="dashBannerQuotesTitle" class="text-xs text-white/80 font-semibold">Tổng Báo Giá Hệ Thống</div>
-                    <div id="dashBannerQuotesCount" class="text-xl sm:text-2xl font-black tracking-tight tabular-nums mt-0.5">1 Hồ sơ</div>
-                  </div>
-                </div>
-
-                <div class="flex items-center gap-3.5 sm:px-4">
-                  <div class="w-12 h-12 rounded-2xl bg-white/15 backdrop-blur-xs flex items-center justify-center text-xl shrink-0">
-                    <i class="fa-solid fa-coins"></i>
-                  </div>
-                  <div class="min-w-0">
-                    <div id="dashBannerRevenueTitle" class="text-xs text-white/80 font-semibold">Tổng Giá Trị Báo Giá</div>
-                    <div id="dashBannerRevenueValue" class="text-lg sm:text-xl font-black tracking-tight tabular-nums truncate mt-0.5">205.210.800 đ</div>
-                  </div>
-                </div>
-
-                <div class="flex items-center gap-3.5 sm:pl-4">
-                  <div class="w-12 h-12 rounded-2xl bg-white/15 backdrop-blur-xs flex items-center justify-center text-xl shrink-0">
-                    <i class="fa-solid fa-barcode"></i>
-                  </div>
-                  <div>
-                    <div class="text-xs text-white/80 font-semibold">Mã BGSW Tiếp Theo</div>
-                    <div id="dashBannerNextCode" class="text-lg sm:text-xl font-black tracking-tight tabular-nums mt-0.5">BGSW/2026/002</div>
+                    <h3 class="text-sm sm:text-base font-extrabold text-[#0F172A]">Thống Kê Số Lượng Báo Giá Theo Nhân Sự</h3>
+                    <p class="text-[11px] text-slate-500">Tổng hợp tất cả nhân viên Sale và Lãnh đạo/Admin lên báo giá (Mặc định: 0)</p>
                   </div>
                 </div>
               </div>
 
-              <!-- Lưới 2 Thẻ Metric Trực Quan (Đỏ chủ đạo & Xám đen kim loại) -->
-              <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <div class="erp-card p-5 flex items-center justify-between gap-4">
-                  <div>
-                    <div id="dashCard1Value" class="text-2xl font-black text-[#0F172A] tabular-nums">1</div>
-                    <div id="dashCard1Label" class="text-xs font-extrabold uppercase tracking-wider text-[#D62828] mt-1">BÁO GIÁ ĐÃ LƯU</div>
-                    <p id="dashCard1Sub" class="text-[11px] text-slate-500 mt-1">Hồ sơ báo giá được lưu trữ trên hệ thống</p>
-                  </div>
-                  <div class="w-16 h-16 rounded-2xl bg-red-50 border border-red-100 flex flex-col items-center justify-center text-[#D62828] shrink-0">
-                    <i class="fa-solid fa-folder-tree text-xl"></i>
-                  </div>
-                </div>
-
-                <div class="erp-card p-5 flex items-center justify-between gap-4">
-                  <div>
-                    <div id="dashCard2Value" class="text-2xl font-black text-[#0F172A] tabular-nums">47 mục</div>
-                    <div class="text-xs font-extrabold uppercase tracking-wider text-[#334155] mt-1">DANH MỤC VẬT TƯ PCCC</div>
-                    <p class="text-[11px] text-slate-500 mt-1">Thiết bị & vật tư chuẩn sẵn sàng báo giá</p>
-                  </div>
-                  <div class="w-16 h-16 rounded-2xl bg-slate-100 border border-slate-200 flex flex-col items-center justify-center text-[#1E293B] shrink-0">
-                    <i class="fa-solid fa-boxes-stacked text-xl"></i>
-                  </div>
-                </div>
-              </div>
-
-              <!-- Bảng Báo Giá Gần Đây (Admin thấy tất cả mọi người | Sale chỉ thấy của chính Sale đó) -->
-              <div class="erp-card p-5 space-y-4">
-                <div class="flex flex-wrap items-center justify-between gap-2">
-                  <div>
-                    <h3 id="dashRecentQuotesHeading" class="text-sm sm:text-base font-extrabold text-[#0F172A]">Danh Sách Báo Giá Mới Nhất (Toàn Công Ty)</h3>
-                    <p id="dashRecentQuotesSub" class="text-xs text-slate-500 mt-0.5">Bấm vào từng báo giá để mở xem trước A4, chỉnh sửa hoặc in PDF</p>
-                  </div>
-                  <button type="button" onclick="switchTab('quotes')" class="text-xs font-extrabold text-[#D62828] hover:underline flex items-center gap-1">
-                    <span>Xem toàn bộ danh sách</span>
-                    <i class="fa-solid fa-arrow-right text-[10px]"></i>
-                  </button>
-                </div>
-
-                <div tabindex="0" role="region" aria-label="Báo giá gần đây trên bàn làm việc" class="overflow-x-auto border rounded-2xl border-slate-200/80">
-                  <table class="w-full text-left border-collapse text-xs">
-                    <thead class="bg-[#F8FAFC] text-slate-600 uppercase font-extrabold text-[10.5px] tracking-wider border-b border-slate-200/80">
-                      <tr>
-                        <th class="py-3 px-3.5">Mã Báo Giá</th>
-                        <th class="py-3 px-3.5">Khách Hàng / Đối Tác</th>
-                        <th class="py-3 px-3">Người Lập</th>
-                        <th class="py-3 px-3 text-right">Tổng Tiền (Gồm VAT)</th>
-                        <th class="py-3 px-3.5 text-right">Thao Tác</th>
-                      </tr>
-                    </thead>
-                    <tbody id="dashboardRecentQuotesBody" class="divide-y divide-slate-100 bg-white">
-                      <!-- Rendered by renderDashboardOverview() -->
-                    </tbody>
-                  </table>
-                </div>
+              <div tabindex="0" role="region" aria-label="Bảng thống kê số lượng báo giá theo nhân sự" class="overflow-x-auto border rounded-2xl border-slate-200/80">
+                <table class="w-full text-left border-collapse text-xs">
+                  <thead class="bg-[#F8FAFC] text-slate-600 uppercase font-extrabold text-[10.5px] tracking-wider border-b border-slate-200/80">
+                    <tr>
+                      <th class="py-3 px-3.5">Nhân Sự Lập Báo Giá</th>
+                      <th class="py-3 px-3">Vai Trò</th>
+                      <th class="py-3 px-3 text-center">Số Lượng BG</th>
+                      <th class="py-3 px-3.5 text-right">Tổng Giá Trị Đã Báo Giá</th>
+                    </tr>
+                  </thead>
+                  <tbody id="dashStaffStatsTableBody" class="divide-y divide-slate-100 bg-white">
+                    <!-- Rendered by renderDashboardOverview() with default 0 -->
+                  </tbody>
+                </table>
               </div>
             </div>
 
-            <!-- Cột Phải (4/12): Thẻ Hồ Sơ Nhân Sự & Lối Tắt Nhanh (Tông Đỏ & Xám Đen Kim Loại) -->
-            <div class="xl:col-span-4 space-y-5">
-
-              <!-- 2 Thẻ Hành Động Nhanh (Đỏ SANWAY & Xám Đen Kim Loại) -->
-              <div class="erp-card p-5 space-y-3.5">
-                <div class="flex items-center justify-between">
-                  <h3 class="text-sm font-extrabold text-[#0F172A]">Thao Tác Nhanh</h3>
-                  <span class="text-[10px] font-bold text-slate-400">Lối tắt nghiệp vụ</span>
-                </div>
-                <div class="grid grid-cols-2 gap-3">
-                  <button type="button" onclick="startNewQuotationWithNextCode()" class="p-4 rounded-2xl bg-gradient-to-br from-[#D62828] to-[#B91C1C] hover:from-[#B91C1C] hover:to-[#991B1B] text-white text-left shadow-md shadow-red-600/20 transition group">
-                    <div class="w-8 h-8 rounded-xl bg-white/15 flex items-center justify-center text-sm mb-2.5">
-                      <i class="fa-solid fa-file-circle-plus"></i>
-                    </div>
-                    <div class="text-xs font-extrabold">Lập Báo Giá Mới</div>
-                    <div class="text-[10px] text-white/85 mt-0.5 flex items-center gap-1">
-                      <span>Cấp mã tự động</span>
-                      <i class="fa-solid fa-circle-chevron-right text-[9px] group-hover:translate-x-0.5 transition"></i>
-                    </div>
-                  </button>
-
-                  <button type="button" onclick="switchTab('quotes')" class="p-4 rounded-2xl bg-gradient-to-br from-[#1E293B] to-[#334155] hover:from-[#0F172A] hover:to-[#1E293B] text-white text-left shadow-md shadow-slate-900/15 transition group">
-                    <div class="w-8 h-8 rounded-xl bg-white/15 flex items-center justify-center text-sm mb-2.5">
-                      <i class="fa-solid fa-folder-open"></i>
-                    </div>
-                    <div id="dashQuickQuotesBtnTitle" class="text-xs font-extrabold">Kho Báo Giá</div>
-                    <div class="text-[10px] text-white/85 mt-0.5 flex items-center gap-1">
-                      <span>Tra cứu & In PDF</span>
-                      <i class="fa-solid fa-circle-chevron-right text-[9px] group-hover:translate-x-0.5 transition"></i>
-                    </div>
-                  </button>
-                </div>
-              </div>
-
-              <!-- Thẻ Thông Tin Tài Khoản & Phân Quyền Hiện Tại -->
-              <div class="erp-card p-5 space-y-4">
-                <div class="flex items-center gap-3 pb-3.5 border-b border-slate-100">
-                  <div class="w-11 h-11 rounded-2xl bg-red-50 border border-red-100 text-[#D62828] flex items-center justify-center text-base font-black">
-                    <i class="fa-solid fa-user-check"></i>
-                  </div>
-                  <div class="min-w-0">
-                    <div id="dashProfileName" class="text-sm font-extrabold text-[#0F172A] truncate">Quản Trị Viên</div>
-                    <div id="dashProfileRoleText" class="text-[11px] font-bold text-[#D62828]">Admin • Toàn quyền hệ thống</div>
-                  </div>
-                </div>
-
-                <div class="space-y-2.5 text-xs">
-                  <div class="flex items-center justify-between py-1">
-                    <span class="text-slate-500 font-medium">Đơn vị phát hành</span>
-                    <span id="dashProfileCompany" class="font-bold text-[#0F172A] text-right truncate max-w-[180px]">CÔNG TY CỔ PHẦN SANWAY</span>
-                  </div>
-                  <div class="flex items-center justify-between py-1">
-                    <span class="text-slate-500 font-medium">Phạm vi xem báo giá</span>
-                    <span id="dashProfileScope" class="font-bold text-[#D62828]">Tất cả mọi người (All)</span>
-                  </div>
-                  <div class="flex items-center justify-between py-1">
-                    <span class="text-slate-500 font-medium">Quyền quản lý sản phẩm</span>
-                    <span id="dashProfileProductPerm" class="font-bold text-[#0F172A]">Toàn quyền thêm / sửa / xóa</span>
-                  </div>
-                  <div class="flex items-center justify-between py-1">
-                    <span class="text-slate-500 font-medium">Thuế suất VAT mặc định</span>
-                    <span id="dashProfileVat" class="font-bold text-[#0F172A] tabular-nums">8%</span>
-                  </div>
-                </div>
-              </div>
-
-              <!-- Bảng Thống Kê Báo Giá Theo Từng Nhân Sự Sale (Chỉ hiển thị cho Admin) -->
-              <div id="dashAdminStaffStatsCard" class="erp-card p-5 space-y-3.5 hidden">
-                <div class="flex items-center justify-between">
-                  <div>
-                    <h3 class="text-sm font-extrabold text-[#0F172A]">Thống Kê Báo Giá Theo Nhân Sự</h3>
-                    <p class="text-[11px] text-slate-500">Tổng hợp số lượng & doanh số báo giá của từng người</p>
-                  </div>
-                  <span class="w-8 h-8 rounded-xl bg-slate-100 text-[#1E293B] border border-slate-200 flex items-center justify-center text-xs">
-                    <i class="fa-solid fa-chart-pie"></i>
+            <!-- Cột Phải (6/12): Các Báo Giá Có Giá Trị Lớn Cần Quan Tâm -->
+            <div class="xl:col-span-6 erp-card p-5 space-y-4">
+              <div class="flex flex-wrap items-center justify-between gap-2">
+                <div class="flex items-center gap-2.5">
+                  <span class="w-9 h-9 rounded-xl bg-red-50 text-[#D62828] border border-red-100 flex items-center justify-center text-xs shrink-0">
+                    <i class="fa-solid fa-fire-flame-curved"></i>
                   </span>
+                  <div>
+                    <h3 class="text-sm sm:text-base font-extrabold text-[#0F172A]">Báo Giá Giá Trị Lớn Cần Quan Tâm</h3>
+                    <p class="text-[11px] text-slate-500">Xếp hạng từ cao xuống thấp theo tổng giá trị thanh toán để ưu tiên theo dõi</p>
+                  </div>
                 </div>
-                <div id="dashStaffStatsList" class="space-y-2.5">
-                  <!-- Rendered by renderDashboardOverview() -->
-                </div>
+                <button type="button" onclick="switchTab('quotes')" class="text-xs font-extrabold text-[#D62828] hover:underline flex items-center gap-1">
+                  <span>Xem tất cả</span>
+                  <i class="fa-solid fa-arrow-right text-[10px]"></i>
+                </button>
               </div>
 
+              <div tabindex="0" role="region" aria-label="Danh sách báo giá giá trị lớn cần quan tâm" class="overflow-x-auto border rounded-2xl border-slate-200/80">
+                <table class="w-full text-left border-collapse text-xs">
+                  <thead class="bg-[#F8FAFC] text-slate-600 uppercase font-extrabold text-[10.5px] tracking-wider border-b border-slate-200/80">
+                    <tr>
+                      <th class="py-3 px-3.5">Mã BG</th>
+                      <th class="py-3 px-3">Khách Hàng</th>
+                      <th class="py-3 px-3">Người Lập</th>
+                      <th class="py-3 px-3.5 text-right">Giá Trị (Gồm VAT)</th>
+                      <th class="py-3 px-3 text-right">Mở</th>
+                    </tr>
+                  </thead>
+                  <tbody id="dashboardHighValueQuotesBody" class="divide-y divide-slate-100 bg-white">
+                    <!-- Rendered by renderDashboardOverview() -->
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- Bảng Danh Sách Báo Giá Mới Nhất -->
+          <div class="erp-card p-5 space-y-4">
+            <div class="flex flex-wrap items-center justify-between gap-2">
+              <div>
+                <h3 id="dashRecentQuotesHeading" class="text-sm sm:text-base font-extrabold text-[#0F172A]">Danh Sách Báo Giá Mới Nhất</h3>
+                <p class="text-xs text-slate-500 mt-0.5">Các bản báo giá vừa được lưu gần đây trên hệ thống</p>
+              </div>
+              <button type="button" onclick="switchTab('quotes')" class="text-xs font-extrabold text-[#D62828] hover:underline flex items-center gap-1">
+                <span>Quản lý toàn bộ báo giá</span>
+                <i class="fa-solid fa-arrow-right text-[10px]"></i>
+              </button>
+            </div>
+
+            <div tabindex="0" role="region" aria-label="Báo giá mới nhất trên bàn làm việc" class="overflow-x-auto border rounded-2xl border-slate-200/80">
+              <table class="w-full text-left border-collapse text-xs">
+                <thead class="bg-[#F8FAFC] text-slate-600 uppercase font-extrabold text-[10.5px] tracking-wider border-b border-slate-200/80">
+                  <tr>
+                    <th class="py-3 px-3.5">Mã Báo Giá</th>
+                    <th class="py-3 px-3.5">Khách Hàng / Đối Tác</th>
+                    <th class="py-3 px-3">Hạng Mục</th>
+                    <th class="py-3 px-3">Người Lập</th>
+                    <th class="py-3 px-3 text-right">Tổng Tiền (Gồm VAT)</th>
+                    <th class="py-3 px-3.5 text-right">Thao Tác</th>
+                  </tr>
+                </thead>
+                <tbody id="dashboardRecentQuotesBody" class="divide-y divide-slate-100 bg-white">
+                  <!-- Rendered by renderDashboardOverview() -->
+                </tbody>
+              </table>
             </div>
           </div>
+
         </div>
 
         <!-- ==================== MÀN HÌNH 1: LẬP BÁO GIÁ & LIVE PREVIEW A4 SONG SONG ==================== -->
         <div id="sectionForm" class="hidden space-y-4">
 
-          <!-- Thanh Header trạng thái Báo giá hiện hành + Nút Tạo & Lưu Báo Giá + Xuất PDF -->
+          <!-- Thanh Header trạng thái Báo giá hiện hành: Quy chuẩn về 1 nút "Lưu & Tạo Báo Giá", lưu xong mới hiện nút In -->
           <div class="no-print erp-card p-3.5 sm:px-5 flex flex-col xl:flex-row xl:items-center justify-between gap-3 bg-white">
             <div class="flex flex-wrap items-center gap-3">
               <div class="w-10 h-10 rounded-xl bg-red-50 text-[#D62828] border border-red-100 flex items-center justify-center text-base shrink-0">
@@ -882,26 +891,26 @@
               </div>
               <div>
                 <div class="flex flex-wrap items-center gap-2">
-                  <h2 class="text-sm sm:text-base font-extrabold text-[#0F172A]">Soạn Thảo & Xem Trước Báo Giá Trực Tiếp</h2>
+                  <h2 class="text-sm sm:text-base font-extrabold text-[#0F172A]">Lập Báo Giá Mới</h2>
                   <span id="currentDraftCodeBadge" class="text-xs font-black px-2.5 py-0.5 rounded-lg bg-red-50 text-[#D62828] border border-red-200 tabular-nums">BGSW/2026/001</span>
-                  <span id="currentDraftStatusBadge" class="text-[11px] font-bold px-2 py-0.5 rounded-md bg-slate-100 text-[#1E293B] border border-slate-200">Đang chỉnh sửa</span>
+                  <span id="currentDraftStatusBadge" class="text-[11px] font-bold px-2 py-0.5 rounded-md bg-slate-100 text-[#1E293B] border border-slate-200">Chưa lưu</span>
                 </div>
-                <p class="text-xs text-slate-500 mt-0.5">Mọi thay đổi về khách hàng, mã số, hạng mục và khối lượng đều cập nhật tức thì sang khung Bản in A4 bên phải</p>
+                <p class="text-xs text-slate-500 mt-0.5">Bản xem trước A4 hiển thị trực tiếp bên phải. Nhấn <b>"Lưu & Tạo Báo Giá"</b> để ghi nhận hồ sơ trước khi in.</p>
               </div>
             </div>
 
             <div class="flex flex-wrap items-center gap-2">
               <button type="button" onclick="startNewQuotationWithNextCode()" class="px-3.5 py-2.5 rounded-xl border border-slate-300 bg-white hover:bg-slate-50 text-slate-700 text-xs font-bold transition flex items-center gap-1.5">
-                <i class="fa-solid fa-wand-magic-sparkles text-[#D62828]"></i>
-                <span>Tạo Báo Giá Mới (Mã Tiếp Theo)</span>
+                <i class="fa-solid fa-rotate text-[#D62828]"></i>
+                <span>Làm Mới (Mã Tiếp Theo)</span>
               </button>
-              <button type="button" onclick="saveCurrentQuotation()" class="px-4 py-2.5 rounded-xl bg-[#D62828] hover:bg-[#B91C1C] active:scale-[0.99] text-white text-xs font-extrabold shadow-md shadow-red-600/20 transition flex items-center gap-2">
-                <i class="fa-solid fa-floppy-disk"></i>
-                <span>Tạo & Lưu Báo Giá Này</span>
+              <button type="button" id="btnPrimarySaveQuote" onclick="saveCurrentQuotation()" class="px-5 py-2.5 rounded-xl bg-gradient-to-r from-[#D62828] to-[#B91C1C] hover:from-[#B91C1C] hover:to-[#991B1B] active:scale-[0.99] text-white text-xs font-extrabold shadow-md shadow-red-600/20 transition flex items-center gap-2">
+                <i id="btnPrimarySaveIcon" class="fa-solid fa-floppy-disk"></i>
+                <span id="btnPrimarySaveText">Lưu & Tạo Báo Giá</span>
               </button>
-              <button type="button" onclick="handlePrint()" class="px-4 py-2.5 rounded-xl bg-[#1E293B] hover:bg-[#0F172A] text-white text-xs font-extrabold shadow-md shadow-slate-900/15 transition flex items-center gap-1.5">
+              <button type="button" id="btnPrintAfterSave" onclick="handlePrint()" class="hidden px-4 py-2.5 rounded-xl bg-[#1E293B] hover:bg-[#0F172A] text-white text-xs font-extrabold shadow-md shadow-slate-900/15 transition items-center gap-1.5">
                 <i class="fa-solid fa-print"></i>
-                <span>Xuất PDF / In A4</span>
+                <span>In Báo Giá Ngay</span>
               </button>
             </div>
           </div>
@@ -998,7 +1007,7 @@
                       <i class="fa-solid fa-building-user text-[#D62828]"></i>
                       <span>Kính gửi Khách hàng / Đối tác <span class="text-[#D62828]">*</span></span>
                     </label>
-                    <input type="text" id="inputCustomerName" oninput="scheduleLivePreview()" value="CÔNG TY TNHH TÂN HUY HOÀNG" placeholder="Nhập tên công ty khách hàng..." class="erp-input font-bold">
+                    <input type="text" id="inputCustomerName" oninput="markQuoteDirtyAndPreview()" value="CÔNG TY TNHH TÂN HUY HOÀNG" placeholder="Nhập tên công ty khách hàng..." class="erp-input font-bold">
                   </div>
 
                   <div class="sm:col-span-1">
@@ -1019,7 +1028,7 @@
                       <i class="fa-solid fa-fire-extinguisher text-[#D62828]"></i>
                       <span>Tên hạng mục báo giá (Tiếng Việt)</span>
                     </label>
-                    <input type="text" id="inputProjectTitle" oninput="scheduleLivePreview()" value="BẢO DƯỠNG HỆ THỐNG PCCC" class="erp-input font-semibold">
+                    <input type="text" id="inputProjectTitle" oninput="markQuoteDirtyAndPreview()" value="BẢO DƯỠNG HỆ THỐNG PCCC" class="erp-input font-semibold">
                   </div>
 
                   <div>
@@ -1027,7 +1036,7 @@
                       <i class="fa-solid fa-globe text-slate-400"></i>
                       <span>Tiêu đề phụ Tiếng Anh</span>
                     </label>
-                    <input type="text" id="inputProjectTitleEn" oninput="scheduleLivePreview()" value="FIRE PROTECTION SYSTEM MAINTENANCE QUOTATION" class="erp-input text-slate-600 font-medium">
+                    <input type="text" id="inputProjectTitleEn" oninput="markQuoteDirtyAndPreview()" value="FIRE PROTECTION SYSTEM MAINTENANCE QUOTATION" class="erp-input text-slate-600 font-medium">
                   </div>
 
                   <div>
@@ -1035,7 +1044,7 @@
                       <i class="fa-regular fa-calendar-check text-slate-400"></i>
                       <span>Địa điểm & Ngày lập báo giá</span>
                     </label>
-                    <input type="text" id="inputQuoteDate" oninput="scheduleLivePreview()" value="Hải Phòng, 21/10/2026" class="erp-input font-medium">
+                    <input type="text" id="inputQuoteDate" oninput="markQuoteDirtyAndPreview()" value="Hải Phòng, 21/10/2026" class="erp-input font-medium">
                   </div>
 
                   <div>
@@ -1043,7 +1052,7 @@
                       <i class="fa-solid fa-stamp text-[#D62828]"></i>
                       <span>Hiển thị con dấu mộc đỏ khi xuất PDF</span>
                     </label>
-                    <select id="inputShowStamp" onchange="scheduleLivePreview()" class="erp-input font-semibold cursor-pointer">
+                    <select id="inputShowStamp" onchange="markQuoteDirtyAndPreview()" class="erp-input font-semibold cursor-pointer">
                       <option value="yes" selected>Có đóng dấu mộc đỏ công ty</option>
                       <option value="no">Không đóng dấu (Để trống ký tươi)</option>
                     </select>
@@ -1132,7 +1141,7 @@
                   <!-- Rendered by JS -->
                 </div>
 
-                <!-- Thanh tổng kết & Nút Tạo Lưu Báo Giá dưới chân bảng -->
+                <!-- Thanh tổng kết & Nút Lưu & Tạo Báo Giá dưới chân bảng -->
                 <div class="mt-4 bg-[#1E293B] text-white p-4 rounded-xl flex flex-col sm:flex-row items-center justify-between gap-3 shadow-md">
                   <div class="flex flex-wrap items-center gap-3 text-xs w-full sm:w-auto justify-between sm:justify-start">
                     <span class="text-slate-300">Đã chọn: <b id="statSelectedItems" class="text-white">47</b>/<span id="statTotalItems">47</span></span>
@@ -1145,35 +1154,31 @@
                   </div>
 
                   <div class="flex items-center gap-2 w-full sm:w-auto">
-                    <button type="button" onclick="saveCurrentQuotation()" class="flex-1 sm:flex-none px-4 py-2.5 rounded-xl bg-[#D62828] hover:bg-[#B91C1C] text-white font-extrabold text-xs shadow-md transition flex items-center justify-center gap-1.5">
+                    <button type="button" id="btnBottomSaveQuote" onclick="saveCurrentQuotation()" class="flex-1 sm:flex-none px-5 py-2.5 rounded-xl bg-gradient-to-r from-[#D62828] to-[#B91C1C] hover:from-[#B91C1C] hover:to-[#991B1B] text-white font-extrabold text-xs shadow-md transition flex items-center justify-center gap-1.5">
                       <i class="fa-solid fa-floppy-disk"></i>
-                      <span>Tạo & Lưu Báo Giá</span>
+                      <span id="btnBottomSaveText">Lưu & Tạo Báo Giá</span>
                     </button>
-                    <button type="button" onclick="handlePrint()" class="px-3.5 py-2.5 rounded-xl bg-slate-700 hover:bg-slate-600 border border-slate-600 text-white font-extrabold text-xs shadow-md transition flex items-center justify-center gap-1.5">
-                      <i class="fa-solid fa-print"></i>
-                      <span>In A4</span>
+                    <button type="button" id="btnBottomPrintAfterSave" onclick="handlePrint()" class="hidden px-4 py-2.5 rounded-xl bg-white text-[#0F172A] hover:bg-slate-100 font-extrabold text-xs shadow-md transition items-center justify-center gap-1.5">
+                      <i class="fa-solid fa-print text-[#D62828]"></i>
+                      <span>In Ngay</span>
                     </button>
                   </div>
                 </div>
               </div>
             </div>
 
-            <!-- CỘT PHẢI (5/12): KHUNG XEM TRƯỚC BẢN IN A4 TRỰC TIẾP (LIVE A4 PREVIEW DOCK) -->
+            <!-- CỘT PHẢI (5/12): KHUNG XEM TRƯỚC BẢN IN A4 TRỰC TIẾP (KHÔNG CÓ NÚT XUẤT FILE TRƯỚC KHI LƯU) -->
             <div id="sectionPreview" class="xl:col-span-5 xl:sticky xl:top-4 print:block min-w-0">
               <div class="no-print bg-[#1E293B] text-white px-4 py-3 rounded-t-2xl border border-slate-700 flex flex-wrap items-center justify-between gap-2 shadow-md">
                 <div class="flex items-center gap-2">
                   <span class="w-2.5 h-2.5 rounded-full bg-[#D62828] animate-pulse"></span>
-                  <span class="text-xs font-extrabold uppercase tracking-wider">Xem Trước Bản In A4 Trực Tiếp</span>
+                  <span class="text-xs font-extrabold uppercase tracking-wider">Bản Xem Trước A4 Trực Tiếp</span>
                   <span id="livePreviewPageCount" class="text-[10px] font-bold px-2 py-0.5 rounded-md bg-slate-800 text-slate-200 border border-slate-700">3 trang</span>
                 </div>
                 <div class="flex items-center gap-1.5">
                   <button type="button" onclick="togglePreviewZoomMode()" id="btnZoomMode" class="px-2.5 py-1 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200 text-[11px] font-semibold border border-slate-700 transition flex items-center gap-1" title="Chuyển chế độ thu phóng">
                     <i class="fa-solid fa-magnifying-glass-plus text-[10px] text-slate-300"></i>
                     <span id="zoomModeLabel">Vừa khung</span>
-                  </button>
-                  <button type="button" onclick="handlePrint()" class="px-3 py-1 rounded-lg bg-[#D62828] hover:bg-[#B91C1C] text-white text-[11px] font-bold transition flex items-center gap-1">
-                    <i class="fa-solid fa-print text-[10px]"></i>
-                    <span>In / Xuất PDF</span>
                   </button>
                 </div>
               </div>
@@ -1326,29 +1331,201 @@
           </div>
         </div>
 
-        <!-- ==================== MÀN HÌNH 4: CẤU HÌNH CÔNG TY, CON DẤU & NHÂN SỰ (CHỈ ADMIN) ==================== -->
-        <div id="sectionAdmin" class="hidden no-print space-y-5 sm:space-y-6">
-          
-          <!-- Header Quản trị -->
+        <!-- ==================== MÀN HÌNH 4: QUẢN LÝ THÔNG TIN CÔNG TY, CON DẤU & LOGO (CHỈ ADMIN) ==================== -->
+        <div id="sectionCompany" class="hidden no-print space-y-5">
           <div class="erp-card p-5 sm:p-6 flex flex-col md:flex-row md:items-center justify-between gap-4">
-            <div class="flex items-start sm:items-center gap-3.5 sm:gap-4">
-              <div class="w-11 h-11 rounded-2xl bg-slate-100 text-[#1E293B] border border-slate-200 flex items-center justify-center text-base shrink-0">
-                <i class="fa-solid fa-sliders"></i>
+            <div class="flex items-center gap-3.5">
+              <div class="w-11 h-11 rounded-2xl bg-red-50 text-[#D62828] border border-red-100 flex items-center justify-center text-base shrink-0">
+                <i class="fa-solid fa-building-shield"></i>
               </div>
               <div>
                 <div class="flex flex-wrap items-center gap-2">
-                  <h2 class="text-sm sm:text-lg font-extrabold text-[#0F172A] tracking-tight">Cấu Hình Thông Tin Công Ty, Nhân Sự & Database</h2>
-                  <span class="text-[10px] font-extrabold px-2.5 py-0.5 rounded-full bg-red-50 text-[#D62828] border border-red-200">Admin Toàn Quyền</span>
+                  <h2 class="text-sm sm:text-lg font-extrabold text-[#0F172A] tracking-tight">Quản Lý Thông Tin Công Ty, Con Dấu & Logo</h2>
+                  <span class="text-[10px] font-extrabold px-2.5 py-0.5 rounded-full bg-red-50 text-[#D62828] border border-red-200">Pháp Nhân Phát Hành</span>
                 </div>
-                <p class="text-xs text-slate-500 mt-0.5">Thiết lập pháp nhân công ty phát hành báo giá, cấp mã PIN 4 số cho Admin / Sale, con dấu mộc đỏ và đồng bộ Cloud</p>
+                <p class="text-xs text-slate-500 mt-0.5">Thiết lập thông tin công ty phát hành báo giá, thuế VAT mặc định, con dấu mộc đỏ và logo thương hiệu</p>
               </div>
             </div>
-            <div class="grid grid-cols-2 sm:flex sm:flex-wrap items-center gap-2">
-              <button type="button" onclick="exportSystemConfigFile()" class="px-3.5 py-2.5 sm:py-2 rounded-xl bg-[#F8FAFC] hover:bg-slate-100 text-slate-700 text-xs font-bold transition flex items-center justify-center gap-1.5 border border-slate-200">
+            <button type="button" onclick="saveMasterSystemData(true)" class="text-xs bg-gradient-to-r from-[#D62828] to-[#B91C1C] hover:from-[#B91C1C] hover:to-[#991B1B] text-white font-extrabold px-5 py-2.5 rounded-xl shadow-md transition flex items-center justify-center gap-1.5">
+              <i class="fa-solid fa-floppy-disk"></i>
+              <span>Lưu Thông Tin Công Ty</span>
+            </button>
+          </div>
+
+          <div class="grid grid-cols-1 xl:grid-cols-12 gap-5 items-start">
+            <!-- Cột Trái (7/12): Thông tin pháp nhân & VAT -->
+            <div id="companyConfigCard" class="xl:col-span-7 erp-card p-5 sm:p-6 space-y-4">
+              <div class="pb-3 border-b border-slate-100">
+                <h3 class="text-sm font-extrabold text-[#0F172A]">1. Thông Tin Pháp Nhân & Thuế VAT Mặc Định</h3>
+                <p class="text-xs text-slate-500 mt-0.5">Hiển thị cố định trên Header, Footer và khối Chữ ký của mọi bản báo giá</p>
+              </div>
+
+              <div class="grid grid-cols-1 sm:grid-cols-12 gap-4">
+                <div class="sm:col-span-12">
+                  <label class="erp-label"><i class="fa-solid fa-building text-[#D62828]"></i> Tên công ty phát hành</label>
+                  <input type="text" id="inputCompanyFullName" onchange="saveMasterSystemData(false); scheduleLivePreview();" value="CÔNG TY CỔ PHẦN SANWAY" class="erp-input font-bold">
+                </div>
+                <div class="sm:col-span-6">
+                  <label class="erp-label"><i class="fa-solid fa-phone-volume text-slate-400"></i> Số điện thoại Hotline</label>
+                  <input type="text" id="inputCompanyHotline" onchange="saveMasterSystemData(false); scheduleLivePreview();" value="0936.888.666" class="erp-input font-semibold">
+                </div>
+                <div class="sm:col-span-6">
+                  <label class="erp-label"><i class="fa-solid fa-envelope text-slate-400"></i> Email liên hệ</label>
+                  <input type="text" id="inputCompanyEmail" onchange="saveMasterSystemData(false); scheduleLivePreview();" value="contact@sanway.vn" class="erp-input">
+                </div>
+                <div class="sm:col-span-12">
+                  <label class="erp-label"><i class="fa-solid fa-location-dot text-slate-400"></i> Địa chỉ trụ sở / Văn phòng</label>
+                  <input type="text" id="inputCompanyAddress" onchange="saveMasterSystemData(false); scheduleLivePreview();" value="KCN Nomura, Huyện An Dương, TP. Hải Phòng" class="erp-input">
+                </div>
+                <div class="sm:col-span-8">
+                  <label class="erp-label"><i class="fa-solid fa-id-badge text-slate-400"></i> Chức danh người ký báo giá</label>
+                  <input type="text" id="inputSignerTitle" onchange="saveMasterSystemData(false); scheduleLivePreview();" value="GIÁM ĐỐC" class="erp-input font-semibold uppercase">
+                  <input type="hidden" id="inputDirectorName" value="">
+                </div>
+                <div class="sm:col-span-4">
+                  <label class="erp-label"><i class="fa-solid fa-percent text-[#D62828]"></i> Thuế VAT (%)</label>
+                  <input type="number" id="inputVatRate" value="8" min="0" max="100" onchange="updateFormSummary(); saveMasterSystemData(false); scheduleLivePreview();" class="erp-input font-bold text-center tabular-nums">
+                </div>
+              </div>
+            </div>
+
+            <!-- Cột Phải (5/12): Con dấu mộc đỏ & Logo thương hiệu -->
+            <div class="xl:col-span-5 erp-card p-5 sm:p-6 space-y-4">
+              <div class="pb-3 border-b border-slate-100">
+                <h3 class="text-sm font-extrabold text-[#0F172A]">2. Con Dấu Pháp Nhân & Logo Thương Hiệu</h3>
+                <p class="text-xs text-slate-500 mt-0.5">Tải lên ảnh PNG trong suốt để cập nhật con dấu hoặc logo trên báo giá</p>
+              </div>
+
+              <div class="grid grid-cols-2 gap-4">
+                <div class="border border-slate-200 rounded-2xl p-4 text-center bg-slate-50/50 flex flex-col justify-between">
+                  <div class="text-xs font-extrabold text-[#0F172A] uppercase mb-2">Con dấu mộc đỏ</div>
+                  <div class="h-28 flex items-center justify-center bg-white rounded-xl border border-dashed border-slate-300 p-2 mb-3">
+                    <img id="adminPreviewStamp" src="" alt="Con dấu" class="max-h-20 object-contain">
+                  </div>
+                  <label class="w-full py-2.5 px-3 rounded-xl bg-[#D62828] hover:bg-[#B91C1C] text-white text-xs font-bold cursor-pointer transition inline-flex items-center justify-center gap-1.5">
+                    <i class="fa-solid fa-camera-rotate"></i>
+                    <span>Đổi con dấu</span>
+                    <input type="file" accept="image/*" onchange="handleAssetUpload(event, 'stamp')" class="hidden">
+                  </label>
+                </div>
+
+                <div class="border border-slate-200 rounded-2xl p-4 text-center bg-slate-50/50 flex flex-col justify-between">
+                  <div class="text-xs font-extrabold text-[#0F172A] uppercase mb-2">Logo Header</div>
+                  <div class="h-28 flex items-center justify-center bg-white rounded-xl border border-dashed border-slate-300 p-2 mb-3">
+                    <img id="adminPreviewLogo" src="" alt="Logo" class="max-h-16 object-contain">
+                  </div>
+                  <label class="w-full py-2.5 px-3 rounded-xl bg-[#1E293B] hover:bg-[#0F172A] text-white text-xs font-bold cursor-pointer transition inline-flex items-center justify-center gap-1.5">
+                    <i class="fa-solid fa-image"></i>
+                    <span>Đổi Logo</span>
+                    <input type="file" accept="image/*" onchange="handleAssetUpload(event, 'logo_horizontal')" class="hidden">
+                  </label>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ==================== MÀN HÌNH 5: QUẢN LÝ NHÂN SỰ & MÃ PIN 4 SỐ (CHỈ ADMIN) ==================== -->
+        <div id="sectionStaff" class="hidden no-print space-y-5">
+          <div class="erp-card p-5 sm:p-6 flex flex-col md:flex-row md:items-center justify-between gap-4">
+            <div class="flex items-center gap-3.5">
+              <div class="w-11 h-11 rounded-2xl bg-slate-100 text-[#1E293B] border border-slate-200 flex items-center justify-center text-base shrink-0">
+                <i class="fa-solid fa-users-gear"></i>
+              </div>
+              <div>
+                <div class="flex flex-wrap items-center gap-2">
+                  <h2 class="text-sm sm:text-lg font-extrabold text-[#0F172A] tracking-tight">Quản Lý Nhân Sự & Phân Quyền Mã PIN 4 Số</h2>
+                  <span class="text-[10px] font-extrabold px-2.5 py-0.5 rounded-full bg-red-50 text-[#D62828] border border-red-200">Admin & Sale</span>
+                </div>
+                <p class="text-xs text-slate-500 mt-0.5">Cấp mã PIN 4 số riêng biệt cho từng nhân viên Sale và Lãnh đạo/Admin để định danh người lập báo giá</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="grid grid-cols-1 xl:grid-cols-12 gap-5 items-start">
+            <!-- Form thêm nhân sự mới (4/12) -->
+            <div class="xl:col-span-4 erp-card p-5 sm:p-6">
+              <form onsubmit="handleAddStaffPass(event)" class="space-y-4">
+                <div class="pb-3 border-b border-slate-100 flex items-center gap-2">
+                  <i class="fa-solid fa-user-plus text-[#D62828]"></i>
+                  <h3 class="text-sm font-extrabold text-[#0F172A]">Cấp Mã PIN 4 Số Mới</h3>
+                </div>
+
+                <div>
+                  <label class="erp-label">Họ tên / Biệt danh nhân sự <span class="text-[#D62828]">*</span></label>
+                  <input type="text" id="newStaffName" required placeholder="VD: Nguyễn Văn B (Sale)" class="erp-input text-xs font-semibold">
+                </div>
+
+                <div>
+                  <label class="erp-label">Vai trò phân quyền</label>
+                  <select id="newStaffRole" class="erp-input text-xs font-bold cursor-pointer">
+                    <option value="sale">Sale (Tạo & xem báo giá cá nhân)</option>
+                    <option value="admin">Admin / Lãnh đạo (Toàn quyền All)</option>
+                  </select>
+                </div>
+
+                <div>
+                  <label class="erp-label">Mã PIN 4 số đăng nhập <span class="text-[#D62828]">*</span></label>
+                  <input type="text" id="newStaffPass" inputmode="numeric" pattern="[0-9]{4}" maxlength="4" oninput="this.value = this.value.replace(/\D/g, '').slice(0, 4)" required placeholder="VD: 1234" class="erp-input text-sm font-mono font-bold text-[#D62828] tracking-widest text-center">
+                </div>
+
+                <button type="submit" class="w-full py-2.5 px-4 rounded-xl bg-gradient-to-r from-[#D62828] to-[#B91C1C] hover:from-[#B91C1C] hover:to-[#991B1B] text-white text-xs font-extrabold shadow-md transition flex items-center justify-center gap-2">
+                  <i class="fa-solid fa-plus-circle"></i>
+                  <span>Cấp Tài Khoản Nhân Sự</span>
+                </button>
+              </form>
+            </div>
+
+            <!-- Danh sách nhân sự hiện hành (8/12) -->
+            <div class="xl:col-span-8 erp-card p-5 sm:p-6 space-y-4">
+              <div class="pb-3 border-b border-slate-100 flex items-center justify-between">
+                <div>
+                  <h3 class="text-sm font-extrabold text-[#0F172A]">Danh Sách Tài Khoản Nhân Sự Hiện Hành</h3>
+                  <p class="text-xs text-slate-500 mt-0.5">Có thể đổi trực tiếp mã PIN 4 số hoặc thu hồi quyền truy cập</p>
+                </div>
+              </div>
+
+              <div tabindex="0" role="region" aria-label="Bảng quản lý nhân sự" class="overflow-x-auto border rounded-2xl border-slate-200/80">
+                <table class="w-full text-left border-collapse text-xs">
+                  <thead class="bg-[#F8FAFC] text-slate-600 uppercase font-extrabold text-[10.5px] tracking-wider border-b border-slate-200/80">
+                    <tr>
+                      <th class="py-3.5 px-3.5">Nhân Sự</th>
+                      <th class="py-3.5 px-3">Phân Quyền</th>
+                      <th class="py-3.5 px-3">Mã PIN 4 Số (Sửa Trực Tiếp)</th>
+                      <th class="py-3.5 px-3.5 text-right">Thu Hồi</th>
+                    </tr>
+                  </thead>
+                  <tbody id="staffPasswordsTableBody" class="divide-y divide-slate-100 bg-white">
+                    <!-- Rendered by JS -->
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ==================== MÀN HÌNH 6: CONFIG WEBSITE, DATABASE & BẢO MẬT HỆ THỐNG (CHỈ ADMIN MỚI THẤY) ==================== -->
+        <div id="sectionConfig" class="hidden no-print space-y-5">
+          <div class="erp-card p-5 sm:p-6 flex flex-col md:flex-row md:items-center justify-between gap-4">
+            <div class="flex items-center gap-3.5">
+              <div class="w-11 h-11 rounded-2xl bg-red-50 text-[#D62828] border border-red-100 flex items-center justify-center text-base shrink-0">
+                <i class="fa-solid fa-server"></i>
+              </div>
+              <div>
+                <div class="flex flex-wrap items-center gap-2">
+                  <h2 class="text-sm sm:text-lg font-extrabold text-[#0F172A] tracking-tight">Config Website • Database, Sức Khỏe Hệ Thống & Bảo Mật</h2>
+                  <span id="cloudSyncActiveIndicator" class="text-[10px] font-extrabold px-2.5 py-0.5 rounded-full bg-red-50 text-[#D62828] border border-red-200">Chỉ Admin</span>
+                </div>
+                <p class="text-xs text-slate-500 mt-0.5">Giám sát trạng thái kết nối Database, sức khỏe Website, cơ chế bảo mật Backend và sao lưu cấu hình</p>
+              </div>
+            </div>
+
+            <div class="flex flex-wrap items-center gap-2">
+              <button type="button" onclick="exportSystemConfigFile()" class="px-3.5 py-2.5 rounded-xl bg-[#F8FAFC] hover:bg-slate-100 text-slate-700 text-xs font-bold transition flex items-center gap-1.5 border border-slate-200">
                 <i class="fa-solid fa-file-arrow-down text-[#D62828]"></i>
                 <span>Xuất Backup JSON</span>
               </button>
-              <label class="px-3.5 py-2.5 sm:py-2 rounded-xl bg-[#F8FAFC] hover:bg-slate-100 text-slate-700 text-xs font-bold transition flex items-center justify-center gap-1.5 border border-slate-200 cursor-pointer">
+              <label class="px-3.5 py-2.5 rounded-xl bg-[#F8FAFC] hover:bg-slate-100 text-slate-700 text-xs font-bold transition flex items-center gap-1.5 border border-slate-200 cursor-pointer">
                 <i class="fa-solid fa-file-arrow-up text-[#1E293B]"></i>
                 <span>Nhập Backup JSON</span>
                 <input type="file" accept=".json" onchange="importSystemConfigFile(event)" class="hidden">
@@ -1356,200 +1533,69 @@
             </div>
           </div>
 
-          <!-- Card Thiết lập Đơn vị phát hành & Pháp nhân -->
-          <div id="companyConfigCard" class="erp-card p-5 sm:p-6">
-            <div class="flex flex-wrap items-center justify-between pb-4 border-b border-slate-100 mb-5 gap-3">
-              <div class="flex items-center gap-3">
-                <span class="w-10 h-10 rounded-xl bg-red-50 text-[#D62828] border border-red-100 flex items-center justify-center text-sm">
-                  <i class="fa-solid fa-building-shield"></i>
+          <!-- 3 Thẻ Giám Sát Sức Khỏe Website, Kết Nối Database & Bảo Mật (Chỉ Admin) -->
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <div class="erp-card p-5 space-y-2">
+              <div class="flex items-center justify-between">
+                <span class="text-[11px] font-extrabold uppercase tracking-wider text-slate-400">Trạng Thái Sức Khỏe Website</span>
+                <span class="w-8 h-8 rounded-xl bg-red-50 text-[#D62828] flex items-center justify-center text-xs">
+                  <i class="fa-solid fa-heart-pulse"></i>
                 </span>
-                <div>
-                  <h3 class="text-sm sm:text-base font-extrabold text-[#0F172A]">Thiết Lập Đơn Vị Phát Hành & Thuế VAT Mặc Định</h3>
-                  <p class="text-xs text-slate-500 mt-0.5">Thông tin này hiển thị cố định trên Header, Footer và khối Chữ ký của mọi bản báo giá</p>
-                </div>
               </div>
-              <button type="button" onclick="saveMasterSystemData(true)" class="text-xs bg-[#D62828] hover:bg-[#B91C1C] text-white font-extrabold px-4 py-2.5 rounded-xl shadow-sm transition flex items-center gap-1.5">
-                <i class="fa-solid fa-floppy-disk"></i>
-                <span>Lưu Thông Tin Công Ty</span>
-              </button>
+              <div id="configHealthStatus" class="text-base font-black text-[#0F172A]">Hoạt Động Ổn Định (100% Online)</div>
+              <p id="configHealthUpdated" class="text-xs text-slate-500">API phản hồi thời gian thực, đồng bộ tức thì</p>
             </div>
 
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-4">
-              <div class="lg:col-span-4">
-                <label class="erp-label"><i class="fa-solid fa-building text-slate-400"></i> Tên công ty phát hành</label>
-                <input type="text" id="inputCompanyFullName" onchange="saveMasterSystemData(false); scheduleLivePreview();" value="CÔNG TY CỔ PHẦN SANWAY" class="erp-input font-bold">
+            <div class="erp-card p-5 space-y-2">
+              <div class="flex items-center justify-between">
+                <span class="text-[11px] font-extrabold uppercase tracking-wider text-slate-400">Kết Nối Cơ Sở Dữ Liệu (Database)</span>
+                <span class="w-8 h-8 rounded-xl bg-slate-100 text-[#1E293B] flex items-center justify-center text-xs">
+                  <i class="fa-solid fa-database"></i>
+                </span>
               </div>
-              <div class="lg:col-span-4">
-                <label class="erp-label"><i class="fa-solid fa-phone-volume text-slate-400"></i> Số điện thoại Hotline</label>
-                <input type="text" id="inputCompanyHotline" onchange="saveMasterSystemData(false); scheduleLivePreview();" value="0936.888.666" class="erp-input font-semibold">
+              <div id="configDbEngineText" class="text-base font-black text-[#D62828]">Node Backend DB</div>
+              <p class="text-xs text-slate-500">Hỗ trợ tự động Vercel KV / Upstash Redis & Local Storage</p>
+            </div>
+
+            <div class="erp-card p-5 space-y-2">
+              <div class="flex items-center justify-between">
+                <span class="text-[11px] font-extrabold uppercase tracking-wider text-slate-400">Cơ Chế Bảo Mật Hệ Thống</span>
+                <span class="w-8 h-8 rounded-xl bg-red-50 text-[#D62828] flex items-center justify-center text-xs">
+                  <i class="fa-solid fa-shield-halved"></i>
+                </span>
               </div>
-              <div class="lg:col-span-4">
-                <label class="erp-label"><i class="fa-solid fa-envelope text-slate-400"></i> Email liên hệ</label>
-                <input type="text" id="inputCompanyEmail" onchange="saveMasterSystemData(false); scheduleLivePreview();" value="contact@sanway.vn" class="erp-input">
-              </div>
-              <div class="lg:col-span-6">
-                <label class="erp-label"><i class="fa-solid fa-location-dot text-slate-400"></i> Địa chỉ trụ sở / Văn phòng</label>
-                <input type="text" id="inputCompanyAddress" onchange="saveMasterSystemData(false); scheduleLivePreview();" value="KCN Nomura, Huyện An Dương, TP. Hải Phòng" class="erp-input">
-              </div>
-              <div class="lg:col-span-4">
-                <label class="erp-label"><i class="fa-solid fa-id-badge text-slate-400"></i> Chức danh người ký báo giá</label>
-                <input type="text" id="inputSignerTitle" onchange="saveMasterSystemData(false); scheduleLivePreview();" value="GIÁM ĐỐC" class="erp-input font-semibold uppercase">
-                <input type="hidden" id="inputDirectorName" value="">
-              </div>
-              <div class="lg:col-span-2">
-                <label class="erp-label"><i class="fa-solid fa-percent text-slate-400"></i> VAT (%)</label>
-                <input type="number" id="inputVatRate" value="8" min="0" max="100" onchange="updateFormSummary(); saveMasterSystemData(false); scheduleLivePreview();" class="erp-input font-bold text-center tabular-nums">
-              </div>
+              <div id="configSecurityText" class="text-base font-black text-[#0F172A]">PBKDF2-SHA256 + HMAC Session</div>
+              <p class="text-xs text-slate-500">Ẩn hoàn toàn mã PIN trong DevTools & chống dò mật khẩu</p>
             </div>
           </div>
 
-          <div class="grid grid-cols-1 lg:grid-cols-12 gap-5 sm:gap-6">
-            <!-- Cột trái (7 cols): Quản lý Mật khẩu 4 số Nhân viên Sale & Admin -->
-            <div class="lg:col-span-7 erp-card p-4 sm:p-6 flex flex-col justify-between">
+          <!-- Cấu hình Cloud Sync & Khôi phục dữ liệu gốc -->
+          <div class="erp-card p-5 sm:p-6 space-y-4">
+            <div class="pb-3 border-b border-slate-100">
+              <h3 class="text-sm font-extrabold text-[#0F172A]">Cấu Hình Đồng Bộ Cloud API & Khôi Phục Hệ Thống</h3>
+              <p class="text-xs text-slate-500 mt-0.5">Thiết lập Endpoint lưu trữ đám mây bổ sung hoặc đưa hệ thống về trạng thái xuất xưởng</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs">
               <div>
-                <div class="flex items-center justify-between pb-4 border-b border-slate-100 mb-5">
-                  <div class="flex items-center gap-3">
-                    <span class="w-10 h-10 rounded-xl bg-slate-100 text-[#1E293B] border border-slate-200 flex items-center justify-center text-sm shrink-0">
-                      <i class="fa-solid fa-users-gear"></i>
-                    </span>
-                    <div>
-                      <h3 class="text-sm sm:text-base font-extrabold text-[#0F172A]">Quản Lý Phân Quyền Nhân Sự (Admin & Sale)</h3>
-                      <p class="text-xs text-slate-500 mt-0.5">Gồm 2 nhóm quyền: <b>Admin (Toàn quyền All)</b> và <b>Sale (Tạo & xem báo giá cá nhân)</b></p>
-                    </div>
-                  </div>
-                </div>
-
-                <!-- Form thêm người dùng / mật khẩu mới -->
-                <form onsubmit="handleAddStaffPass(event)" class="bg-[#F8FAFC] p-3.5 sm:p-4 rounded-2xl border border-slate-200/80 mb-5">
-                  <div class="text-xs font-bold text-[#0F172A] uppercase tracking-wider mb-3 flex items-center gap-1.5">
-                    <i class="fa-solid fa-user-plus text-[#D62828]"></i>
-                    <span>Cấp Mã PIN 4 Số Mới Cho Nhân Sự</span>
-                  </div>
-                  <div class="grid grid-cols-1 sm:grid-cols-12 gap-3">
-                    <div class="sm:col-span-5">
-                      <label class="block text-[11px] font-bold text-slate-600 mb-1">Họ tên / Biệt danh nhân sự</label>
-                      <input type="text" id="newStaffName" required placeholder="VD: Nguyễn Văn B (Sale)" class="erp-input text-xs font-semibold py-2">
-                    </div>
-                    <div class="sm:col-span-4">
-                      <label class="block text-[11px] font-bold text-slate-600 mb-1">Vai trò phân quyền</label>
-                      <select id="newStaffRole" class="erp-input text-xs font-bold py-2 cursor-pointer">
-                        <option value="sale">Sale (Tạo & xem báo giá của mình)</option>
-                        <option value="admin">Admin / Lãnh đạo (Toàn quyền All)</option>
-                      </select>
-                    </div>
-                    <div class="sm:col-span-3">
-                      <label class="block text-[11px] font-bold text-slate-600 mb-1">Mã PIN 4 số</label>
-                      <input type="text" id="newStaffPass" inputmode="numeric" pattern="[0-9]{4}" maxlength="4" oninput="this.value = this.value.replace(/\D/g, '').slice(0, 4)" required placeholder="VD: 1234" class="erp-input text-xs font-mono font-bold text-[#D62828] py-2 tracking-widest text-center">
-                    </div>
-                  </div>
-                  <div class="mt-3 flex justify-end">
-                    <button type="submit" class="w-full sm:w-auto justify-center px-4 py-2.5 sm:py-2 rounded-xl bg-[#D62828] hover:bg-[#B91C1C] text-white text-xs font-bold shadow-sm transition flex items-center gap-1.5">
-                      <i class="fa-solid fa-plus"></i>
-                      <span>Cấp Mã PIN Mới</span>
-                    </button>
-                  </div>
-                </form>
-
-                <!-- Danh sách mật khẩu hiện hành -->
-                <div class="overflow-x-auto border rounded-2xl border-slate-200/80">
-                  <table class="w-full text-left border-collapse text-xs">
-                    <thead class="bg-[#F8FAFC] text-slate-600 uppercase font-extrabold text-[10.5px] tracking-wider border-b border-slate-200/80">
-                      <tr>
-                        <th class="py-3 px-3">Nhân sự</th>
-                        <th class="py-3 px-2.5">Phân quyền</th>
-                        <th class="py-3 px-2.5">Mã PIN 4 số (Sửa trực tiếp)</th>
-                        <th class="py-3 px-2.5 text-right">Xóa</th>
-                      </tr>
-                    </thead>
-                    <tbody id="staffPasswordsTableBody" class="divide-y divide-slate-100 bg-white">
-                      <!-- Rendered by JS -->
-                    </tbody>
-                  </table>
-                </div>
+                <label class="erp-label"><i class="fa-solid fa-link text-slate-400"></i> Cloud Storage Endpoint URL (Tùy chọn)</label>
+                <input type="url" id="cloudEndpointInput" placeholder="https://api.jsonbin.io/v3/b/YOUR_BIN_ID..." class="erp-input text-xs">
               </div>
-
-              <div class="mt-4 text-xs text-slate-600 bg-slate-100/80 border border-slate-200 rounded-xl p-3.5 flex items-start gap-2.5">
-                <i class="fa-solid fa-shield-halved text-[#D62828] mt-0.5"></i>
-                <span><b>Bảo mật Backend:</b> Mọi mật khẩu 4 số được lưu trữ và kiểm tra trên Server (hoặc Vercel KV). Tài khoản Sale không bao giờ đọc được danh sách này trong DevTools.</span>
+              <div>
+                <label class="erp-label"><i class="fa-solid fa-key text-slate-400"></i> API Key / Secret Token (Nếu có)</label>
+                <input type="password" id="cloudApiKeyInput" placeholder="X-Master-Key hoặc Bearer Token..." class="erp-input text-xs">
               </div>
             </div>
 
-            <!-- Cột phải (5 cols): Quản lý Con dấu mộc đỏ, Logo & Đồng bộ Cloud -->
-            <div class="lg:col-span-5 space-y-5 sm:space-y-6">
-              <div class="erp-card p-4 sm:p-6">
-                <div class="flex items-center gap-3 pb-4 border-b border-slate-100 mb-4">
-                  <span class="w-10 h-10 rounded-xl bg-red-50 text-[#D62828] border border-red-100 flex items-center justify-center text-sm shrink-0">
-                    <i class="fa-solid fa-stamp"></i>
-                  </span>
-                  <div>
-                    <h3 class="text-sm sm:text-base font-extrabold text-[#0F172A]">Con Dấu Pháp Nhân & Logo Thương Hiệu</h3>
-                    <p class="text-xs text-slate-500 mt-0.5">Tải lên ảnh PNG trong suốt để cập nhật con dấu hoặc logo trên báo giá</p>
-                  </div>
-                </div>
-
-                <div class="grid grid-cols-2 gap-3 sm:gap-4">
-                  <div class="border border-slate-200 rounded-xl p-3 sm:p-3.5 text-center bg-slate-50/50 flex flex-col justify-between">
-                    <div class="text-[11px] font-bold text-slate-700 uppercase mb-2">Con dấu mộc đỏ</div>
-                    <div class="h-24 flex items-center justify-center bg-white rounded-lg border border-dashed border-slate-300 p-2 mb-3">
-                      <img id="adminPreviewStamp" src="" alt="Con dấu" class="max-h-18 object-contain">
-                    </div>
-                    <label class="w-full py-2.5 sm:py-2 px-2.5 rounded-lg bg-[#D62828] hover:bg-[#B91C1C] text-white text-xs font-bold cursor-pointer transition inline-flex items-center justify-center gap-1.5">
-                      <i class="fa-solid fa-camera-rotate"></i>
-                      <span>Đổi con dấu</span>
-                      <input type="file" accept="image/*" onchange="handleAssetUpload(event, 'stamp')" class="hidden">
-                    </label>
-                  </div>
-
-                  <div class="border border-slate-200 rounded-xl p-3 sm:p-3.5 text-center bg-slate-50/50 flex flex-col justify-between">
-                    <div class="text-[11px] font-bold text-slate-700 uppercase mb-2">Logo Header</div>
-                    <div class="h-24 flex items-center justify-center bg-white rounded-lg border border-dashed border-slate-300 p-2 mb-3">
-                      <img id="adminPreviewLogo" src="" alt="Logo" class="max-h-16 object-contain">
-                    </div>
-                    <label class="w-full py-2.5 sm:py-2 px-2.5 rounded-lg bg-[#1E293B] hover:bg-[#0F172A] text-white text-xs font-bold cursor-pointer transition inline-flex items-center justify-center gap-1.5">
-                      <i class="fa-solid fa-image"></i>
-                      <span>Đổi Logo</span>
-                      <input type="file" accept="image/*" onchange="handleAssetUpload(event, 'logo_horizontal')" class="hidden">
-                    </label>
-                  </div>
-                </div>
-              </div>
-
-              <!-- Cấu hình Cloud Sync / Vercel KV -->
-              <div class="erp-card p-4 sm:p-6">
-                <div class="flex items-center justify-between pb-4 border-b border-slate-100 mb-4 gap-2">
-                  <div class="flex items-center gap-3">
-                    <span class="w-10 h-10 rounded-xl bg-slate-100 text-[#1E293B] border border-slate-200 flex items-center justify-center text-sm shrink-0">
-                      <i class="fa-solid fa-database"></i>
-                    </span>
-                    <div>
-                      <h3 class="text-sm sm:text-base font-extrabold text-[#0F172A]">Kết Nối Database (Vercel KV / Upstash / Cloud)</h3>
-                      <p class="text-xs text-slate-500 mt-0.5">Tự động nhận diện Upstash Redis trên Vercel hoặc đồng bộ qua REST API</p>
-                    </div>
-                  </div>
-                  <span id="cloudSyncActiveIndicator" class="text-[10px] font-bold px-2.5 py-1 rounded-md bg-slate-100 text-slate-700 border border-slate-200 shrink-0">Backend DB</span>
-                </div>
-
-                <div class="space-y-3.5 text-xs">
-                  <div>
-                    <label class="erp-label"><i class="fa-solid fa-link text-slate-400"></i> Cloud Storage Endpoint URL (Tùy chọn)</label>
-                    <input type="url" id="cloudEndpointInput" placeholder="https://api.jsonbin.io/v3/b/YOUR_BIN_ID..." class="erp-input text-xs">
-                  </div>
-                  <div>
-                    <label class="erp-label"><i class="fa-solid fa-key text-slate-400"></i> API Key / Secret Token (Nếu có)</label>
-                    <input type="password" id="cloudApiKeyInput" placeholder="X-Master-Key hoặc Bearer Token..." class="erp-input text-xs">
-                  </div>
-                  <div class="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-2.5 pt-1">
-                    <button type="button" onclick="saveCloudSettingsAndSync()" class="flex-1 py-2.5 px-3.5 rounded-xl bg-[#1E293B] hover:bg-[#0F172A] text-white font-bold transition flex items-center justify-center gap-1.5 shadow-sm">
-                      <i class="fa-solid fa-rotate"></i>
-                      <span>Lưu & Đồng Bộ Cloud</span>
-                    </button>
-                    <button type="button" onclick="resetToFactoryDefaults()" class="py-2.5 px-3.5 rounded-xl border border-slate-200 hover:bg-red-50 hover:text-[#D62828] hover:border-red-200 text-slate-600 font-bold transition flex items-center justify-center gap-1.5" title="Khôi phục dữ liệu gốc ban đầu">
-                      <i class="fa-solid fa-rotate-left"></i>
-                      <span>Khôi phục gốc</span>
-                    </button>
-                  </div>
-                </div>
-              </div>
+            <div class="flex flex-wrap items-center justify-between gap-3 pt-2">
+              <button type="button" onclick="saveCloudSettingsAndSync()" class="px-5 py-2.5 rounded-xl bg-[#1E293B] hover:bg-[#0F172A] text-white text-xs font-extrabold transition flex items-center gap-2 shadow-sm">
+                <i class="fa-solid fa-rotate"></i>
+                <span>Lưu & Đồng Bộ Cloud</span>
+              </button>
+              <button type="button" onclick="resetToFactoryDefaults()" class="px-4 py-2.5 rounded-xl border border-slate-200 hover:bg-red-50 hover:text-[#D62828] hover:border-red-200 text-slate-600 text-xs font-bold transition flex items-center gap-1.5">
+                <i class="fa-solid fa-rotate-left"></i>
+                <span>Khôi Phục Dữ Liệu Gốc</span>
+              </button>
             </div>
           </div>
         </div>
@@ -1571,21 +1617,21 @@
         <div id="mobileBarGrandTotal" class="text-sm font-black text-[#D62828] tabular-nums truncate">205.210.800 đ</div>
       </div>
       <div class="flex items-center gap-1.5">
-        <button type="button" onclick="saveCurrentQuotation()" class="px-3 py-2 rounded-xl bg-[#D62828] text-white text-xs font-extrabold flex items-center gap-1 shrink-0">
+        <button type="button" onclick="saveCurrentQuotation()" class="px-3.5 py-2 rounded-xl bg-[#D62828] text-white text-xs font-extrabold flex items-center gap-1.5 shrink-0">
           <i class="fa-solid fa-floppy-disk"></i>
-          <span>Lưu BG</span>
+          <span>Lưu & Tạo BG</span>
         </button>
-        <button type="button" id="mobilePrimaryCtaBtn" onclick="handlePrint()" class="px-3 py-2 rounded-xl bg-[#1E293B] text-white text-xs font-extrabold flex items-center gap-1 shrink-0">
+        <button type="button" id="mobilePrimaryCtaBtn" onclick="handlePrint()" class="hidden px-3 py-2 rounded-xl bg-[#1E293B] text-white text-xs font-extrabold items-center gap-1 shrink-0">
           <i id="mobilePrimaryCtaIcon" class="fa-solid fa-print"></i>
           <span id="mobilePrimaryCtaText">In A4</span>
         </button>
       </div>
     </div>
 
-    <div id="mobileNavGrid" class="grid grid-cols-5 gap-1 px-2 pt-1.5">
+    <div id="mobileNavGrid" class="grid grid-cols-6 gap-1 px-1.5 pt-1.5">
       <button type="button" id="mobTabDashboard" onclick="switchTab('dashboard')" class="py-1.5 px-1 rounded-xl text-[10px] font-bold bg-red-50 text-[#D62828] flex flex-col items-center justify-center gap-0.5 transition">
-        <i class="fa-solid fa-table-columns text-xs"></i>
-        <span>Tổng Quan</span>
+        <i class="fa-solid fa-chart-pie text-xs"></i>
+        <span>Bàn LV</span>
       </button>
       <button type="button" id="mobTabForm" onclick="switchTab('form')" class="py-1.5 px-1 rounded-xl text-[10px] font-semibold text-slate-500 flex flex-col items-center justify-center gap-0.5 transition">
         <i class="fa-solid fa-file-signature text-xs"></i>
@@ -1599,9 +1645,13 @@
         <i class="fa-solid fa-boxes-stacked text-xs"></i>
         <span>Sản Phẩm</span>
       </button>
-      <button type="button" id="mobTabAdmin" onclick="switchTab('admin')" class="hidden py-1.5 px-1 rounded-xl text-[10px] font-semibold text-slate-500 flex-col items-center justify-center gap-0.5 transition">
-        <i class="fa-solid fa-sliders text-xs"></i>
-        <span>Cấu Hình</span>
+      <button type="button" id="mobTabCompany" onclick="switchTab('company')" class="hidden py-1.5 px-1 rounded-xl text-[10px] font-semibold text-slate-500 flex-col items-center justify-center gap-0.5 transition">
+        <i class="fa-solid fa-building-shield text-xs"></i>
+        <span>Công Ty</span>
+      </button>
+      <button type="button" id="mobTabStaff" onclick="switchTab('staff')" class="hidden py-1.5 px-1 rounded-xl text-[10px] font-semibold text-slate-500 flex-col items-center justify-center gap-0.5 transition">
+        <i class="fa-solid fa-users-gear text-xs"></i>
+        <span>Nhân Sự</span>
       </button>
     </div>
   </div>
@@ -1645,51 +1695,31 @@
       vatRate: 8
     };
 
-    function createDefaultInitialQuotes(catalogList) {
-      const cat = Array.isArray(catalogList) ? catalogList : INITIAL_CATALOG;
-      const sub = cat.reduce((s, i) => s + ((i.default_qty || 1) * (i.default_price || 0)), 0);
-      const vat = Math.round(sub * 0.08);
-      return [
-        {
-          id: 'q_default_001',
-          quoteCode: 'BGSW/2026/001',
-          customerName: 'CÔNG TY TNHH TÂN HUY HOÀNG',
-          projectTitle: 'BẢO DƯỠNG HỆ THỐNG PCCC',
-          projectTitleEn: 'FIRE PROTECTION SYSTEM MAINTENANCE QUOTATION',
-          quoteDate: 'Hải Phòng, 21/10/2026',
-          showStamp: 'yes',
-          vatRate: 8,
-          selectedCount: cat.length,
-          subtotal: sub,
-          vatAmount: vat,
-          grandTotal: sub + vat,
-          createdBy: 'Quản Trị Viên (Admin)',
-          createdByRole: 'admin',
-          createdAt: '2026-10-21T08:00:00.000Z',
-          updatedAt: '2026-10-21T08:00:00.000Z',
-          itemsSnapshot: cat.map(it => ({
-            id: it.id,
-            category: it.category,
-            name: it.name,
-            unit: it.unit,
-            quantity: it.default_qty || 1,
-            price: it.default_price || 0,
-            selected: true
-          }))
-        }
-      ];
+    const DEFAULT_STAFF_DIRECTORY = [
+      { id: 'u_admin', name: 'Quản Trị Viên / Giám Đốc', role: 'admin' },
+      { id: 'u_leader', name: 'Ban Giám Đốc (Admin)', role: 'admin' },
+      { id: 'u_sale1', name: 'Chuyên Viên Kinh Doanh 01', role: 'sale' },
+      { id: 'u_sale2', name: 'Chuyên Viên Kinh Doanh 02', role: 'sale' }
+    ];
+
+    function createDefaultInitialQuotes() {
+      // Mặc định số lượng báo giá ban đầu = 0
+      return [];
     }
 
     let backendAvailable = false;
     let authToken = sessionStorage.getItem(STORAGE_KEY_TOKEN) || '';
     let currentUser = null; // { id, name, role }
-    let currentEditingQuoteId = 'q_default_001';
+    let currentEditingQuoteId = 'q_' + Date.now();
+    let isCurrentQuoteSaved = false;
     let previewZoomMode = 'fit'; // 'fit' | '100'
     let masterData = {
       company: { ...DEFAULT_COMPANY },
       users: [],
+      staffStats: [],
+      systemHealth: null,
       catalog: JSON.parse(JSON.stringify(INITIAL_CATALOG)),
-      quotes: createDefaultInitialQuotes(INITIAL_CATALOG),
+      quotes: [],
       customAssets: {
         stamp: null,
         logo_horizontal: null,
@@ -1699,6 +1729,61 @@
     };
 
     let itemsData = [];
+
+    function setQuoteSavedState(isSaved, customStatusText = '') {
+      isCurrentQuoteSaved = Boolean(isSaved);
+      const btnTopPrint = document.getElementById('btnPrintAfterSave');
+      const btnBotPrint = document.getElementById('btnBottomPrintAfterSave');
+      const btnMobPrint = document.getElementById('mobilePrimaryCtaBtn');
+      const topSaveTxt = document.getElementById('btnPrimarySaveText');
+      const botSaveTxt = document.getElementById('btnBottomSaveText');
+      const statusBadge = document.getElementById('currentDraftStatusBadge');
+
+      if (isCurrentQuoteSaved) {
+        if (btnTopPrint) {
+          btnTopPrint.classList.remove('hidden');
+          btnTopPrint.classList.add('flex');
+        }
+        if (btnBotPrint) {
+          btnBotPrint.classList.remove('hidden');
+          btnBotPrint.classList.add('flex');
+        }
+        if (btnMobPrint) {
+          btnMobPrint.classList.remove('hidden');
+          btnMobPrint.classList.add('flex');
+        }
+        if (topSaveTxt) topSaveTxt.textContent = 'Lưu Cập Nhật Báo Giá';
+        if (botSaveTxt) botSaveTxt.textContent = 'Lưu Cập Nhật Báo Giá';
+        if (statusBadge) {
+          statusBadge.textContent = customStatusText || 'Đã lưu • Sẵn sàng in';
+          statusBadge.className = 'text-[11px] font-bold px-2 py-0.5 rounded-md bg-red-50 text-[#D62828] border border-red-200';
+        }
+      } else {
+        if (btnTopPrint) {
+          btnTopPrint.classList.add('hidden');
+          btnTopPrint.classList.remove('flex');
+        }
+        if (btnBotPrint) {
+          btnBotPrint.classList.add('hidden');
+          btnBotPrint.classList.remove('flex');
+        }
+        if (btnMobPrint) {
+          btnMobPrint.classList.add('hidden');
+          btnMobPrint.classList.remove('flex');
+        }
+        if (topSaveTxt) topSaveTxt.textContent = 'Lưu & Tạo Báo Giá';
+        if (botSaveTxt) botSaveTxt.textContent = 'Lưu & Tạo Báo Giá';
+        if (statusBadge) {
+          statusBadge.textContent = customStatusText || 'Chưa lưu (Lưu để in)';
+          statusBadge.className = 'text-[11px] font-bold px-2 py-0.5 rounded-md bg-slate-100 text-[#1E293B] border border-slate-200';
+        }
+      }
+    }
+
+    function markQuoteDirtyAndPreview() {
+      setQuoteSavedState(false);
+      scheduleLivePreview();
+    }
 
     function isManagerRole() {
       return currentUser && (currentUser.role === 'admin' || currentUser.role === 'leader');
@@ -1841,10 +1926,16 @@
       if (Array.isArray(payload.catalog)) masterData.catalog = payload.catalog;
       if (payload.nextQuoteCode) masterData.nextQuoteCode = payload.nextQuoteCode;
       if (Array.isArray(payload.quotes)) {
-        masterData.quotes = payload.quotes;
+        masterData.quotes = payload.quotes.filter(q => q && q.id !== 'q_default_001');
         try {
           localStorage.setItem(STORAGE_KEY_QUOTES, JSON.stringify(masterData.quotes));
         } catch (e) {}
+      }
+      if (Array.isArray(payload.staffStats)) {
+        masterData.staffStats = payload.staffStats;
+      }
+      if (payload.systemHealth) {
+        masterData.systemHealth = payload.systemHealth;
       }
       if (payload.customAssets) masterData.customAssets = payload.customAssets;
       if (Array.isArray(payload.users)) {
@@ -1852,42 +1943,61 @@
       } else {
         masterData.users = [];
       }
-      if (payload.dbMode) {
-        updateDbModeIndicator(payload.dbMode);
+      if (payload.dbMode || payload.systemHealth) {
+        updateDbModeIndicator(payload.dbMode, payload.systemHealth);
       }
       applyMasterDataToWorkspace();
       syncBrandingImages();
     }
 
-    function updateDbModeIndicator(dbMode) {
-      const sbBadge = document.getElementById('sidebarDbBadge');
+    function updateDbModeIndicator(dbMode, systemHealth) {
       const adminBadge = document.getElementById('cloudSyncActiveIndicator');
+      const dbEngineText = document.getElementById('configDbEngineText');
+      const healthStatusEl = document.getElementById('configHealthStatus');
+      const healthUpdatedEl = document.getElementById('configHealthUpdated');
+      const securityTextEl = document.getElementById('configSecurityText');
+
       const labels = {
         'vercel-kv': 'Vercel KV (Cloud)',
         'vercel-tmp': 'Vercel Serverless',
         'local-server': 'Node Backend DB',
         'local-vault': 'Local Encrypted'
       };
-      const text = labels[dbMode] || 'Backend Active';
-      if (sbBadge) sbBadge.textContent = text;
+      const text = labels[dbMode] || (systemHealth && systemHealth.dbEngine) || 'Backend Active';
+
       if (adminBadge) {
         adminBadge.textContent = text;
         adminBadge.className = 'text-[10px] font-bold px-2.5 py-1 rounded-full bg-slate-100 text-[#1E293B] border border-slate-200';
+      }
+      if (dbEngineText) {
+        dbEngineText.textContent = (systemHealth && systemHealth.dbEngine) ? systemHealth.dbEngine : text;
+      }
+      if (healthStatusEl && systemHealth && systemHealth.status) {
+        healthStatusEl.textContent = systemHealth.status;
+      }
+      if (healthUpdatedEl && systemHealth && systemHealth.updatedAt) {
+        try {
+          const d = new Date(systemHealth.updatedAt);
+          healthUpdatedEl.textContent = `Cập nhật lúc: ${d.toLocaleTimeString('vi-VN')} - ${d.toLocaleDateString('vi-VN')}`;
+        } catch (e) {}
+      }
+      if (securityTextEl && systemHealth && systemHealth.security) {
+        securityTextEl.textContent = systemHealth.security;
       }
     }
 
     // Khởi tạo hệ thống: Trang chủ luôn là Trang Login Public duy nhất cho đến khi xác thực thành công
     async function initSystemDatabase() {
       syncBrandingImages();
-      updateWorkbenchHeaderDate();
 
-      // Đọc danh sách báo giá đã lưu ở cache trình duyệt trước (dùng khi chạy Offline)
+      // Đọc danh sách báo giá đã lưu ở cache trình duyệt trước (dùng khi chạy Offline), bỏ qua báo giá mẫu cũ nếu có
       const savedQuotesRaw = localStorage.getItem(STORAGE_KEY_QUOTES);
       if (savedQuotesRaw) {
         try {
           const parsedQ = JSON.parse(savedQuotesRaw);
           if (Array.isArray(parsedQ)) {
-            masterData.quotes = parsedQ;
+            masterData.quotes = parsedQ.filter(q => q && q.id !== 'q_default_001');
+            localStorage.setItem(STORAGE_KEY_QUOTES, JSON.stringify(masterData.quotes));
           }
         } catch (e) {}
       }
@@ -1945,18 +2055,6 @@
       showLoginModal();
     }
 
-    function updateWorkbenchHeaderDate() {
-      const el = document.getElementById('wbCurrentDateText');
-      if (!el) return;
-      const days = ['Chủ Nhật', 'Thứ Hai', 'Thứ Ba', 'Thứ Tư', 'Thứ Năm', 'Thứ Sáu', 'Thứ Bảy'];
-      const now = new Date();
-      const dName = days[now.getDay()];
-      const dd = String(now.getDate()).padStart(2, '0');
-      const mm = String(now.getMonth() + 1).padStart(2, '0');
-      const yyyy = now.getFullYear();
-      el.textContent = `${dName}, Ngày ${dd} Tháng ${mm}, ${yyyy}`;
-    }
-
     function applyMasterDataToWorkspace() {
       const c = masterData.company || DEFAULT_COMPANY;
       document.getElementById('inputCompanyFullName').value = c.fullName || DEFAULT_COMPANY.fullName;
@@ -1992,6 +2090,10 @@
       const visibleQuotes = getVisibleQuotesForCurrentUser();
       const qCount = visibleQuotes.length;
       const pCount = Array.isArray(masterData.catalog) ? masterData.catalog.length : itemsData.length;
+      const sCount = (Array.isArray(masterData.users) && masterData.users.length > 0)
+        ? masterData.users.length
+        : DEFAULT_STAFF_DIRECTORY.length;
+
       if (document.getElementById('sidebarQuotesCount')) {
         document.getElementById('sidebarQuotesCount').textContent = qCount;
       }
@@ -2004,75 +2106,195 @@
       if (document.getElementById('productsHeaderCountBadge')) {
         document.getElementById('productsHeaderCountBadge').textContent = `${pCount} sản phẩm`;
       }
+      if (document.getElementById('sidebarStaffCount')) {
+        document.getElementById('sidebarStaffCount').textContent = sCount;
+      }
     }
 
-    // ==================== BÀN LÀM VIỆC TỔNG QUAN (WORKBENCH DASHBOARD THEO PHÂN QUYỀN) ====================
+    // ==================== BÀN LÀM VIỆC TỔNG QUAN (DASHBOARD KIỂM SOÁT SỐ LƯỢNG & GIÁ TRỊ BÁO GIÁ) ====================
+    function buildStaffAndLeaderStatsList() {
+      const allQuotes = Array.isArray(masterData.quotes) ? masterData.quotes.filter(q => q && q.id !== 'q_default_001') : [];
+      const baseDirectory = (Array.isArray(masterData.users) && masterData.users.length > 0)
+        ? masterData.users
+        : ((Array.isArray(masterData.staffStats) && masterData.staffStats.length > 0) ? masterData.staffStats : DEFAULT_STAFF_DIRECTORY);
+
+      const mapById = new Map();
+      baseDirectory.forEach(u => {
+        const normRole = (u.role === 'admin' || u.role === 'leader') ? 'admin' : 'sale';
+        mapById.set(u.id || u.name, {
+          id: u.id || u.name,
+          name: u.name,
+          role: normRole,
+          count: 0,
+          totalValue: 0,
+          maxValue: 0
+        });
+      });
+
+      allQuotes.forEach(q => {
+        const val = parseFloat(q.grandTotal) || 0;
+        let entry = null;
+        if (q.createdById && mapById.has(q.createdById)) {
+          entry = mapById.get(q.createdById);
+        } else {
+          for (const item of mapById.values()) {
+            if (item.name === q.createdBy) {
+              entry = item;
+              break;
+            }
+          }
+        }
+        if (!entry) {
+          const key = q.createdById || q.createdBy || 'u_unknown';
+          entry = {
+            id: key,
+            name: q.createdBy || 'Nhân sự SANWAY',
+            role: (q.createdByRole === 'admin' || q.createdByRole === 'leader') ? 'admin' : 'sale',
+            count: 0,
+            totalValue: 0,
+            maxValue: 0
+          };
+          mapById.set(key, entry);
+        }
+        entry.count += 1;
+        entry.totalValue += val;
+        if (val > entry.maxValue) entry.maxValue = val;
+      });
+
+      return Array.from(mapById.values());
+    }
+
     function renderDashboardOverview() {
       if (!currentUser) return;
       const isAdmin = isManagerRole();
-      const visibleQuotes = getVisibleQuotesForCurrentUser();
+      const allQuotes = Array.isArray(masterData.quotes) ? masterData.quotes.filter(q => q && q.id !== 'q_default_001') : [];
+      const visibleQuotes = getVisibleQuotesForCurrentUser().filter(q => q && q.id !== 'q_default_001');
       const totalRevenue = visibleQuotes.reduce((sum, q) => sum + (parseFloat(q.grandTotal) || 0), 0);
       const nextCode = generateNextQuoteCode();
-      const pCount = Array.isArray(masterData.catalog) ? masterData.catalog.length : itemsData.length;
 
-      // 1. Cập nhật Banner 3 cột
+      // Thống kê số lượng báo giá theo từng Nhân viên (Sale) và Lãnh đạo (Admin) — mặc định = 0
+      const staffStats = buildStaffAndLeaderStatsList();
+      const saleStaffStats = staffStats.filter(s => s.role === 'sale');
+      const adminStaffStats = staffStats.filter(s => s.role === 'admin');
+      const totalSaleQuotes = saleStaffStats.reduce((sum, s) => sum + s.count, 0);
+      const totalAdminQuotes = adminStaffStats.reduce((sum, s) => sum + s.count, 0);
+
+      // Các báo giá có giá trị lớn cần quan tâm (>= 20.000.000đ hoặc nằm trong Top giá trị cao nhất)
+      const HIGH_VALUE_THRESHOLD = 20000000;
+      const sortedByValue = [...visibleQuotes].sort((a, b) => (parseFloat(b.grandTotal) || 0) - (parseFloat(a.grandTotal) || 0));
+      const highValueQuotes = sortedByValue.filter(q => (parseFloat(q.grandTotal) || 0) >= HIGH_VALUE_THRESHOLD);
+      const maxQuoteObj = sortedByValue[0] || null;
+      const maxQuoteValue = maxQuoteObj ? (parseFloat(maxQuoteObj.grandTotal) || 0) : 0;
+      const avgQuoteValue = visibleQuotes.length > 0 ? Math.round(totalRevenue / visibleQuotes.length) : 0;
+
+      // 1. Cập nhật Banner Đỏ 4 cột (Mặc định = 0)
       const bTitle = document.getElementById('dashBannerQuotesTitle');
       const bCount = document.getElementById('dashBannerQuotesCount');
       const bRevTitle = document.getElementById('dashBannerRevenueTitle');
       const bRevVal = document.getElementById('dashBannerRevenueValue');
+      const bHighCount = document.getElementById('dashBannerHighValueCount');
       const bNext = document.getElementById('dashBannerNextCode');
 
       if (bTitle) bTitle.textContent = isAdmin ? 'Tổng Báo Giá Toàn Hệ Thống' : 'Báo Giá Đã Lập Của Tôi';
       if (bCount) bCount.textContent = `${visibleQuotes.length} Hồ sơ`;
-      if (bRevTitle) bRevTitle.textContent = isAdmin ? 'Tổng Giá Trị Báo Giá (All)' : 'Tổng Giá Trị Báo Giá Của Tôi';
+      if (bRevTitle) bRevTitle.textContent = isAdmin ? 'Tổng Giá Trị Báo Giá' : 'Tổng Giá Trị Báo Giá Của Tôi';
       if (bRevVal) bRevVal.textContent = `${formatVND(totalRevenue)} đ`;
+      if (bHighCount) bHighCount.textContent = `${highValueQuotes.length} Hồ sơ`;
       if (bNext) bNext.textContent = nextCode;
 
-      // 2. Cập nhật 2 thẻ Metric
-      if (document.getElementById('dashCard1Value')) {
-        document.getElementById('dashCard1Value').textContent = `${visibleQuotes.length} bản`;
+      // 2. Cập nhật 4 chỉ số KPI (Mặc định = 0)
+      if (document.getElementById('dashMetricSaleCount')) {
+        document.getElementById('dashMetricSaleCount').textContent = `${totalSaleQuotes}`;
       }
-      if (document.getElementById('dashCard1Label')) {
-        document.getElementById('dashCard1Label').textContent = isAdmin
-          ? 'TẤT CẢ BÁO GIÁ CÔNG TY'
-          : 'BÁO GIÁ CỦA BẠN ĐÃ TẠO';
+      if (document.getElementById('dashMetricAdminCount')) {
+        document.getElementById('dashMetricAdminCount').textContent = `${totalAdminQuotes}`;
       }
-      if (document.getElementById('dashCard1Sub')) {
-        document.getElementById('dashCard1Sub').textContent = isAdmin
-          ? 'Tổng hợp toàn bộ báo giá của Admin và đội ngũ Sale'
-          : `Lưu trữ riêng các báo giá do ${currentUser.name} khởi tạo`;
+      if (document.getElementById('dashMetricMaxQuoteValue')) {
+        document.getElementById('dashMetricMaxQuoteValue').textContent = `${formatVND(maxQuoteValue)} đ`;
       }
-      if (document.getElementById('dashCard2Value')) {
-        document.getElementById('dashCard2Value').textContent = `${pCount} hạng mục`;
+      if (document.getElementById('dashMetricMaxQuoteSub')) {
+        document.getElementById('dashMetricMaxQuoteSub').textContent = maxQuoteObj
+          ? `${maxQuoteObj.quoteCode} • ${maxQuoteObj.customerName}`
+          : 'Mặc định: 0 đ';
       }
-
-      // 3. Cập nhật Thẻ Hồ sơ phân quyền cột phải
-      if (document.getElementById('dashProfileName')) {
-        document.getElementById('dashProfileName').textContent = currentUser.name;
-      }
-      if (document.getElementById('dashProfileRoleText')) {
-        document.getElementById('dashProfileRoleText').textContent = isAdmin
-          ? 'Admin / Lãnh Đạo • Toàn quyền All'
-          : 'Sale • Chuyên viên kinh doanh';
-      }
-      if (document.getElementById('dashProfileCompany')) {
-        document.getElementById('dashProfileCompany').textContent = (masterData.company && masterData.company.fullName) || DEFAULT_COMPANY.fullName;
-      }
-      if (document.getElementById('dashProfileScope')) {
-        const scEl = document.getElementById('dashProfileScope');
-        scEl.textContent = isAdmin ? 'Xem tất cả mọi người (All)' : 'Chỉ báo giá của tôi';
-        scEl.className = isAdmin ? 'font-bold text-[#D62828]' : 'font-bold text-[#1E293B]';
-      }
-      if (document.getElementById('dashProfileProductPerm')) {
-        document.getElementById('dashProfileProductPerm').textContent = isAdmin
-          ? 'Toàn quyền thêm / sửa / xóa'
-          : 'Áp dụng bảng giá chuẩn công ty';
-      }
-      if (document.getElementById('dashProfileVat')) {
-        document.getElementById('dashProfileVat').textContent = `${(masterData.company && masterData.company.vatRate !== undefined) ? masterData.company.vatRate : 8}%`;
+      if (document.getElementById('dashMetricAvgQuoteValue')) {
+        document.getElementById('dashMetricAvgQuoteValue').textContent = `${formatVND(avgQuoteValue)} đ`;
       }
 
-      // 4. Bảng Báo giá gần đây trên Bàn làm việc
+      // 3. Bảng kiểm soát số lượng báo giá của Nhân viên (Sale) & Lãnh đạo (Admin) — Mặc định 0
+      const staffTableBody = document.getElementById('dashStaffStatsTableBody');
+      if (staffTableBody) {
+        staffTableBody.innerHTML = '';
+        staffStats.forEach(st => {
+          const isLeaderRow = st.role === 'admin';
+          const roleBadge = isLeaderRow
+            ? '<span class="px-2 py-0.5 rounded-md text-[10px] font-extrabold bg-red-50 text-[#D62828] border border-red-200">Lãnh Đạo / Admin</span>'
+            : '<span class="px-2 py-0.5 rounded-md text-[10px] font-extrabold bg-slate-100 text-[#1E293B] border border-slate-300">Nhân Viên Sale</span>';
+
+          const tr = document.createElement('tr');
+          tr.className = 'hover:bg-[#F8FAFC] transition';
+          tr.innerHTML = `
+            <td class="py-3 px-4 font-bold text-[#0F172A]">
+              <div class="flex items-center gap-2">
+                <span class="w-2 h-2 rounded-full ${st.count > 0 ? 'bg-[#D62828]' : 'bg-slate-300'}"></span>
+                <span>${escapeHtml(st.name)}</span>
+              </div>
+            </td>
+            <td class="py-3 px-3 text-center whitespace-nowrap">${roleBadge}</td>
+            <td class="py-3 px-3 text-center whitespace-nowrap">
+              <span class="inline-flex items-center justify-center min-w-[36px] px-2.5 py-0.5 rounded-lg font-black text-xs tabular-nums ${st.count > 0 ? 'bg-red-50 text-[#D62828] border border-red-200' : 'bg-slate-100 text-slate-600 border border-slate-200'}">
+                ${st.count}
+              </span>
+            </td>
+            <td class="py-3 px-3 text-right font-extrabold text-[#0F172A] tabular-nums whitespace-nowrap">${formatVND(st.totalValue)} đ</td>
+            <td class="py-3 px-4 text-right font-bold text-slate-600 tabular-nums whitespace-nowrap">${formatVND(st.maxValue)} đ</td>
+          `;
+          staffTableBody.appendChild(tr);
+        });
+      }
+
+      // 4. Bảng Báo Giá Có Giá Trị Lớn Cần Quan Tâm
+      const highValueBadge = document.getElementById('dashHighValueBadge');
+      if (highValueBadge) {
+        highValueBadge.textContent = `${highValueQuotes.length} báo giá`;
+      }
+      const highValueTbody = document.getElementById('dashboardHighValueQuotesBody');
+      if (highValueTbody) {
+        highValueTbody.innerHTML = '';
+        const listToShow = highValueQuotes.length > 0 ? highValueQuotes.slice(0, 6) : sortedByValue.slice(0, 5);
+        if (listToShow.length === 0) {
+          highValueTbody.innerHTML = `
+            <tr>
+              <td colspan="4" class="py-8 text-center text-slate-400 text-xs">
+                Hiện có <b>0</b> báo giá giá trị lớn. Dữ liệu sẽ tự động thống kê khi nhân viên hoặc lãnh đạo lưu báo giá.
+              </td>
+            </tr>
+          `;
+        } else {
+          listToShow.forEach(q => {
+            const tr = document.createElement('tr');
+            tr.className = 'hover:bg-[#F8FAFC] transition';
+            tr.innerHTML = `
+              <td class="py-3 px-4 font-black text-[#D62828] tabular-nums whitespace-nowrap">
+                <span class="px-2 py-0.5 rounded-lg bg-red-50 border border-red-100">${escapeHtml(q.quoteCode)}</span>
+              </td>
+              <td class="py-3 px-3">
+                <div class="font-bold text-[#0F172A] text-xs">${escapeHtml(q.customerName)}</div>
+                <div class="text-[10.5px] text-slate-500">Người lập: <b>${escapeHtml(q.createdBy || 'SANWAY')}</b></div>
+              </td>
+              <td class="py-3 px-3 text-right font-black text-[#D62828] tabular-nums whitespace-nowrap">${formatVND(q.grandTotal || 0)} đ</td>
+              <td class="py-3 px-4 text-right whitespace-nowrap">
+                <button type="button" onclick="loadQuotationToEditor('${escapeHtml(q.id)}')" class="px-2.5 py-1 rounded-lg bg-[#1E293B] hover:bg-[#0F172A] text-white font-bold text-[11px] transition">
+                  Xem
+                </button>
+              </td>
+            `;
+            highValueTbody.appendChild(tr);
+          });
+        }
+      }
+
+      // 5. Bảng Báo giá gần đây trên Bàn làm việc
       if (document.getElementById('dashRecentQuotesHeading')) {
         document.getElementById('dashRecentQuotesHeading').textContent = isAdmin
           ? 'Danh Sách Báo Giá Mới Nhất (Tất Cả Nhân Sự)'
@@ -2086,7 +2308,7 @@
           recentTbody.innerHTML = `
             <tr>
               <td colspan="5" class="py-8 text-center text-slate-400 text-xs">
-                Bạn chưa tạo bản báo giá nào. Hãy nhấn <b>"+ Lập Báo Giá Mới"</b> để bắt đầu!
+                Chưa có bản báo giá nào (Số lượng: <b>0</b>). Nhấn <b>"+ Lập Báo Giá Mới"</b> để bắt đầu!
               </td>
             </tr>
           `;
@@ -2095,7 +2317,7 @@
             const tr = document.createElement('tr');
             tr.className = 'hover:bg-[#F8FAFC] transition';
             tr.innerHTML = `
-              <td class="py-3 px-3.5 font-black text-[#D62828] tabular-nums whitespace-nowrap">
+              <td class="py-3 px-4 font-black text-[#D62828] tabular-nums whitespace-nowrap">
                 <span class="px-2 py-0.5 rounded-lg bg-red-50 border border-red-100">${escapeHtml(q.quoteCode)}</span>
               </td>
               <td class="py-3 px-3.5 font-bold text-[#0F172A]">${escapeHtml(q.customerName)}</td>
@@ -2105,12 +2327,12 @@
                 </span>
               </td>
               <td class="py-3 px-3 text-right font-extrabold text-[#0F172A] tabular-nums whitespace-nowrap">${formatVND(q.grandTotal || 0)} đ</td>
-              <td class="py-3 px-3.5 text-right whitespace-nowrap">
+              <td class="py-3 px-4 text-right whitespace-nowrap">
                 <div class="inline-flex items-center gap-1">
                   <button type="button" onclick="loadQuotationToEditor('${escapeHtml(q.id)}')" class="px-2.5 py-1 rounded-lg bg-[#1E293B] hover:bg-[#0F172A] text-white font-bold text-[11px] transition">
-                    Mở & Sửa
+                    Mở
                   </button>
-                  <button type="button" onclick="printSavedQuotation('${escapeHtml(q.id)}')" class="px-2 py-1 rounded-lg bg-[#D62828] hover:bg-[#B91C1C] text-white font-bold text-[11px] transition" title="In PDF">
+                  <button type="button" onclick="printSavedQuotation('${escapeHtml(q.id)}')" class="px-2 py-1 rounded-lg bg-[#D62828] hover:bg-[#B91C1C] text-white font-bold text-[11px] transition" title="In Báo Giá">
                     <i class="fa-solid fa-print"></i>
                   </button>
                 </div>
@@ -2118,43 +2340,6 @@
             `;
             recentTbody.appendChild(tr);
           });
-        }
-      }
-
-      // 5. Thống kê theo từng Nhân sự (Dành riêng cho Admin)
-      const staffStatsCard = document.getElementById('dashAdminStaffStatsCard');
-      const staffStatsList = document.getElementById('dashStaffStatsList');
-      if (staffStatsCard && staffStatsList) {
-        if (!isAdmin) {
-          staffStatsCard.classList.add('hidden');
-        } else {
-          staffStatsCard.classList.remove('hidden');
-          const byStaff = {};
-          visibleQuotes.forEach(q => {
-            const creator = q.createdBy || 'Nhân sự SANWAY';
-            if (!byStaff[creator]) byStaff[creator] = { count: 0, total: 0 };
-            byStaff[creator].count += 1;
-            byStaff[creator].total += (parseFloat(q.grandTotal) || 0);
-          });
-          const entries = Object.entries(byStaff);
-          if (entries.length === 0) {
-            staffStatsList.innerHTML = `<div class="text-xs text-slate-400 py-2">Chưa có dữ liệu báo giá.</div>`;
-          } else {
-            staffStatsList.innerHTML = entries.map(([name, st]) => `
-              <div class="p-3 rounded-xl bg-[#F8FAFC] border border-slate-200/80 flex items-center justify-between gap-2">
-                <div class="min-w-0">
-                  <div class="text-xs font-extrabold text-[#0F172A] truncate">${escapeHtml(name)}</div>
-                  <div class="text-[11px] text-slate-500 font-medium">${st.count} bản báo giá đã lập</div>
-                </div>
-                <div class="text-right shrink-0">
-                  <div class="text-xs font-black text-[#D62828] tabular-nums">${formatVND(st.total)} đ</div>
-                  <button type="button" onclick="filterQuotesByCreator('${escapeHtml(name)}')" class="text-[10px] font-bold text-[#1E293B] hover:text-[#D62828] hover:underline">
-                    Xem danh sách →
-                  </button>
-                </div>
-              </div>
-            `).join('');
-          }
         }
       }
     }
@@ -2171,16 +2356,8 @@
     // ==================== QUẢN LÝ MÃ BÁO GIÁ TỰ ĐỘNG (BGSW/YYYY/NNN) & LƯU HỒ SƠ BÁO GIÁ ====================
     function generateNextQuoteCode() {
       const year = new Date().getFullYear();
-      const quotes = Array.isArray(masterData.quotes) ? masterData.quotes : [];
+      const quotes = Array.isArray(masterData.quotes) ? masterData.quotes.filter(q => q && q.id !== 'q_default_001') : [];
       let maxSeq = 0;
-
-      if (masterData.nextQuoteCode) {
-        const nm = String(masterData.nextQuoteCode).match(/BGSW\/(\d{4})\/(\d+)/i);
-        if (nm) {
-          const s = parseInt(nm[2], 10) - 1;
-          if (s > maxSeq) maxSeq = s;
-        }
-      }
 
       quotes.forEach(q => {
         const m = String(q.quoteCode || '').match(/BGSW\/(\d{4})\/(\d+)/i);
@@ -2189,13 +2366,6 @@
           if (seq > maxSeq) maxSeq = seq;
         }
       });
-
-      const currentInp = document.getElementById('inputQuoteCode')?.value || '';
-      const curMatch = currentInp.match(/BGSW\/(\d{4})\/(\d+)/i);
-      if (curMatch) {
-        const curSeq = parseInt(curMatch[2], 10);
-        if (curSeq > maxSeq) maxSeq = curSeq;
-      }
 
       const nextSeq = String(maxSeq + 1).padStart(3, '0');
       return `BGSW/${year}/${nextSeq}`;
@@ -2213,7 +2383,7 @@
       const nextCode = generateNextQuoteCode();
       currentEditingQuoteId = 'q_' + Date.now();
       document.getElementById('inputQuoteCode').value = nextCode;
-      syncDraftBadges(nextCode, 'Mã mới chưa lưu');
+      setQuoteSavedState(false, 'Mã mới chưa lưu');
       scheduleLivePreview();
       showToast(`Đã cấp mã báo giá mới: ${nextCode}`);
     }
@@ -2223,10 +2393,10 @@
       const existing = getVisibleQuotesForCurrentUser().find(q => q.quoteCode === code);
       if (existing) {
         currentEditingQuoteId = existing.id;
-        syncDraftBadges(code, 'Trùng mã đã lưu (Sẽ ghi đè)');
+        setQuoteSavedState(false, 'Trùng mã đã lưu (Cần lưu lại)');
       } else {
         currentEditingQuoteId = 'q_' + Date.now();
-        syncDraftBadges(code || 'BGSW/...', 'Bản nháp mới');
+        setQuoteSavedState(false, 'Bản nháp chưa lưu');
       }
       scheduleLivePreview();
     }
@@ -2252,7 +2422,7 @@
         price: item.default_price !== undefined ? item.default_price : 0
       }));
 
-      syncDraftBadges(nextCode, 'Bản báo giá mới');
+      setQuoteSavedState(false, 'Bản nháp mới chưa lưu');
       switchTab('form');
       renderFormTable();
       updateFormSummary();
@@ -2334,13 +2504,16 @@
           if (res.status === 403 && data.suggestedNextCode) {
             document.getElementById('inputQuoteCode').value = data.suggestedNextCode;
             currentEditingQuoteId = 'q_' + Date.now();
-            syncDraftBadges(data.suggestedNextCode, 'Đã đổi sang mã mới');
+            setQuoteSavedState(false, 'Đã đổi sang mã mới');
             showToast(data.error, true);
             return;
           }
           if (res.ok && data.ok) {
             if (Array.isArray(data.quotes)) {
-              masterData.quotes = data.quotes;
+              masterData.quotes = data.quotes.filter(q => q && q.id !== 'q_default_001');
+            }
+            if (Array.isArray(data.staffStats)) {
+              masterData.staffStats = data.staffStats;
             }
             if (data.nextQuoteCode) {
               masterData.nextQuoteCode = data.nextQuoteCode;
@@ -2352,8 +2525,8 @@
             renderSavedQuotesTable();
             renderDashboardOverview();
             updateSidebarCounters();
-            syncDraftBadges(quoteCode, 'Đã lưu vào hệ thống');
-            showToast(`Đã lưu báo giá ${quoteCode} (${customerName}) thành công!`);
+            setQuoteSavedState(true, 'Đã lưu • Sẵn sàng in');
+            showToast(`Đã lưu & tạo báo giá ${quoteCode} thành công! Bây giờ bạn có thể In ngay.`);
             return;
           }
         } catch (err) {
@@ -2377,8 +2550,8 @@
       renderSavedQuotesTable();
       renderDashboardOverview();
       updateSidebarCounters();
-      syncDraftBadges(quoteCode, 'Đã lưu vào hệ thống');
-      showToast(`Đã tạo & lưu báo giá ${quoteCode} thành công!`);
+      setQuoteSavedState(true, 'Đã lưu • Sẵn sàng in');
+      showToast(`Đã lưu & tạo báo giá ${quoteCode} thành công! Bây giờ bạn có thể In ngay.`);
     }
 
     function loadQuotationToEditor(quoteId) {
@@ -2400,13 +2573,13 @@
         itemsData = JSON.parse(JSON.stringify(target.itemsSnapshot));
       }
 
-      syncDraftBadges(target.quoteCode, 'Đang mở hồ sơ đã lưu');
+      setQuoteSavedState(true, 'Hồ sơ đã lưu • Sẵn sàng in');
       initCategoryFilter();
       renderFormTable();
       updateFormSummary();
       switchTab('form');
       scheduleLivePreview();
-      showToast(`Đã nạp báo giá ${target.quoteCode} (${target.customerName})`);
+      showToast(`Đã mở báo giá ${target.quoteCode} (${target.customerName})`);
     }
 
     function duplicateQuotationWithNewCode(quoteId) {
@@ -2418,7 +2591,7 @@
       currentEditingQuoteId = 'q_' + Date.now();
       document.getElementById('inputQuoteCode').value = nextCode;
       document.getElementById('inputQuoteDate').value = formatTodayVietnamese();
-      syncDraftBadges(nextCode, 'Nhân bản sang mã mới');
+      setQuoteSavedState(false, 'Nhân bản sang mã mới (Cần lưu)');
       scheduleLivePreview();
       showToast(`Đã nhân bản sang mã báo giá mới: ${nextCode}`);
     }
@@ -2909,7 +3082,8 @@
       const saleBanner = document.getElementById('saleRoleBanner');
       const sidebarAdminSection = document.getElementById('sidebarAdminSection');
       const mobTabProducts = document.getElementById('mobTabProducts');
-      const mobTabAdmin = document.getElementById('mobTabAdmin');
+      const mobTabCompany = document.getElementById('mobTabCompany');
+      const mobTabStaff = document.getElementById('mobTabStaff');
       const mobileNavGrid = document.getElementById('mobileNavGrid');
       const btnQuickCatalogInForm = document.getElementById('btnQuickCatalogInForm');
       const btnAddItem = document.getElementById('btnAdminAddItem');
@@ -2922,21 +3096,18 @@
       const quotesPageSubtitle = document.getElementById('quotesPageSubtitle');
       const quoteCreatorFilterWrapper = document.getElementById('quoteCreatorFilterWrapper');
       const quotesRoleScopeHint = document.getElementById('quotesRoleScopeHint');
-      const dashQuickQuotesBtnTitle = document.getElementById('dashQuickQuotesBtnTitle');
 
       if (isManager) {
         if (saleBanner) saleBanner.classList.add('hidden');
         if (sidebarAdminSection) sidebarAdminSection.classList.remove('hidden');
-        if (mobTabProducts) {
-          mobTabProducts.classList.remove('hidden');
-          mobTabProducts.classList.add('flex');
-        }
-        if (mobTabAdmin) {
-          mobTabAdmin.classList.remove('hidden');
-          mobTabAdmin.classList.add('flex');
-        }
+        [mobTabProducts, mobTabCompany, mobTabStaff].forEach(el => {
+          if (el) {
+            el.classList.remove('hidden');
+            el.classList.add('flex');
+          }
+        });
         if (mobileNavGrid) {
-          mobileNavGrid.className = 'grid grid-cols-5 gap-1 px-2 pt-1.5';
+          mobileNavGrid.className = 'grid grid-cols-6 gap-1 px-1.5 pt-1.5';
         }
         if (btnQuickCatalogInForm) {
           btnQuickCatalogInForm.classList.remove('hidden');
@@ -2951,14 +3122,13 @@
           btnSaveCatalog.classList.add('flex');
         }
         if (thDeleteCol) thDeleteCol.classList.remove('hidden');
-        if (sidebarQuotesLabel) sidebarQuotesLabel.textContent = 'Tất Cả Báo Giá';
+        if (sidebarQuotesLabel) sidebarQuotesLabel.textContent = 'Quản Lý Báo Giá';
         if (quotesPageTitle) quotesPageTitle.textContent = 'Quản Lý Tất Cả Báo Giá Đã Lập (Toàn Công Ty)';
         if (quotesPageSubtitle) {
-          quotesPageSubtitle.innerHTML = 'Quyền Admin: Xem tất cả báo giá của mọi nhân sự theo mã <b class="text-[#D62828]">BGSW/YYYY/NNN</b> — Mở lại chỉnh sửa, nhân bản hoặc xuất PDF';
+          quotesPageSubtitle.innerHTML = 'Quyền Admin: Xem tất cả báo giá của mọi nhân sự theo mã <b class="text-[#D62828]">BGSW/YYYY/NNN</b> — Mở lại chỉnh sửa, nhân bản hoặc in báo giá';
         }
         if (quoteCreatorFilterWrapper) quoteCreatorFilterWrapper.classList.remove('hidden');
         if (quotesRoleScopeHint) quotesRoleScopeHint.textContent = 'Phạm vi: Tất cả mọi người (All)';
-        if (dashQuickQuotesBtnTitle) dashQuickQuotesBtnTitle.textContent = 'Tất Cả Báo Giá';
         if (catalogSubtitle) {
           catalogSubtitle.textContent = 'Chế độ Admin: Toàn quyền chọn hạng mục, chỉnh khối lượng và sửa trực tiếp đơn giá — Bản A4 bên phải cập nhật ngay.';
         }
@@ -2968,14 +3138,12 @@
       } else {
         if (saleBanner) saleBanner.classList.remove('hidden');
         if (sidebarAdminSection) sidebarAdminSection.classList.add('hidden');
-        if (mobTabProducts) {
-          mobTabProducts.classList.add('hidden');
-          mobTabProducts.classList.remove('flex');
-        }
-        if (mobTabAdmin) {
-          mobTabAdmin.classList.add('hidden');
-          mobTabAdmin.classList.remove('flex');
-        }
+        [mobTabProducts, mobTabCompany, mobTabStaff].forEach(el => {
+          if (el) {
+            el.classList.add('hidden');
+            el.classList.remove('flex');
+          }
+        });
         if (mobileNavGrid) {
           mobileNavGrid.className = 'grid grid-cols-3 gap-1 px-2 pt-1.5';
         }
@@ -2992,14 +3160,13 @@
           btnSaveCatalog.classList.remove('flex');
         }
         if (thDeleteCol) thDeleteCol.classList.add('hidden');
-        if (sidebarQuotesLabel) sidebarQuotesLabel.textContent = 'Báo Giá Của Tôi';
+        if (sidebarQuotesLabel) sidebarQuotesLabel.textContent = 'Quản Lý Báo Giá';
         if (quotesPageTitle) quotesPageTitle.textContent = 'Danh Sách Báo Giá Đã Lập Của Tôi';
         if (quotesPageSubtitle) {
-          quotesPageSubtitle.innerHTML = `Hiển thị danh sách các bản báo giá do <b class="text-[#D62828]">${escapeHtml(currentUser ? currentUser.name : 'bạn')}</b> đã lập — Bấm để xem lại, sửa hoặc in PDF`;
+          quotesPageSubtitle.innerHTML = `Hiển thị danh sách các bản báo giá do <b class="text-[#D62828]">${escapeHtml(currentUser ? currentUser.name : 'bạn')}</b> đã lập — Bấm để xem lại, sửa hoặc in báo giá`;
         }
         if (quoteCreatorFilterWrapper) quoteCreatorFilterWrapper.classList.add('hidden');
         if (quotesRoleScopeHint) quotesRoleScopeHint.textContent = 'Phạm vi: Báo giá của tôi';
-        if (dashQuickQuotesBtnTitle) dashQuickQuotesBtnTitle.textContent = 'Báo Giá Của Tôi';
         if (catalogSubtitle) {
           catalogSubtitle.textContent = 'Chế độ Sale: Tích chọn hạng mục và chỉnh Khối lượng — Bản A4 bên phải cập nhật trực tiếp.';
         }
@@ -3455,7 +3622,8 @@
     }
 
     function switchTab(tab) {
-      if ((tab === 'admin' || tab === 'products') && !isManagerRole()) {
+      const adminOnlyTabs = ['products', 'company', 'staff', 'config', 'admin'];
+      if (adminOnlyTabs.includes(tab) && !isManagerRole()) {
         showToast('Chỉ Quản trị viên (Admin / Lãnh đạo) mới có quyền truy cập mục này!', true);
         return;
       }
@@ -3464,43 +3632,52 @@
       const sectionForm = document.getElementById('sectionForm');
       const sectionQuotes = document.getElementById('sectionQuotes');
       const sectionProducts = document.getElementById('sectionProducts');
-      const sectionAdmin = document.getElementById('sectionAdmin');
+      const sectionCompany = document.getElementById('sectionCompany');
+      const sectionStaff = document.getElementById('sectionStaff');
+      const sectionConfig = document.getElementById('sectionConfig');
 
       const btnDashboard = document.getElementById('tabBtnDashboard');
       const btnForm = document.getElementById('tabBtnForm');
       const btnQuotes = document.getElementById('tabBtnQuotes');
       const btnProducts = document.getElementById('tabBtnProducts');
-      const btnAdmin = document.getElementById('tabBtnAdmin');
+      const btnCompany = document.getElementById('tabBtnCompany');
+      const btnStaff = document.getElementById('tabBtnStaff');
+      const btnConfig = document.getElementById('tabBtnConfig');
 
       const mobTabDashboard = document.getElementById('mobTabDashboard');
       const mobTabForm = document.getElementById('mobTabForm');
       const mobTabQuotes = document.getElementById('mobTabQuotes');
       const mobTabProducts = document.getElementById('mobTabProducts');
-      const mobTabAdmin = document.getElementById('mobTabAdmin');
+      const mobTabCompany = document.getElementById('mobTabCompany');
+      const mobTabStaff = document.getElementById('mobTabStaff');
 
       const sidebarInactive = "wb-nav-item w-full px-3 py-2.5 rounded-xl text-xs font-semibold flex items-center justify-between group";
       const sidebarActive = "wb-nav-item active w-full px-3 py-2.5 rounded-xl text-xs font-bold flex items-center justify-between group";
 
-      const mobInactive = "py-1.5 px-1.5 rounded-xl text-[10.5px] font-semibold text-slate-500 hover:text-slate-900 flex flex-col items-center justify-center gap-0.5 transition";
-      const mobActive = "py-1.5 px-1.5 rounded-xl text-[10.5px] font-bold bg-red-50 text-[#D62828] flex flex-col items-center justify-center gap-0.5 transition";
+      const mobInactive = "py-1.5 px-1 rounded-xl text-[10px] font-semibold text-slate-500 hover:text-slate-900 flex flex-col items-center justify-center gap-0.5 transition";
+      const mobActive = "py-1.5 px-1 rounded-xl text-[10px] font-bold bg-red-50 text-[#D62828] flex flex-col items-center justify-center gap-0.5 transition";
 
-      if (sectionDashboard) sectionDashboard.classList.add('hidden');
-      if (sectionForm) sectionForm.classList.add('hidden');
-      if (sectionQuotes) sectionQuotes.classList.add('hidden');
-      if (sectionProducts) sectionProducts.classList.add('hidden');
-      if (sectionAdmin) sectionAdmin.classList.add('hidden');
+      [sectionDashboard, sectionForm, sectionQuotes, sectionProducts, sectionCompany, sectionStaff, sectionConfig].forEach(sec => {
+        if (sec) sec.classList.add('hidden');
+      });
 
-      if (btnDashboard) btnDashboard.className = sidebarInactive;
-      if (btnForm) btnForm.className = sidebarInactive;
-      if (btnQuotes) btnQuotes.className = sidebarInactive;
-      if (btnProducts && isManagerRole()) btnProducts.className = sidebarInactive;
-      if (btnAdmin && isManagerRole()) btnAdmin.className = sidebarInactive;
+      [btnDashboard, btnForm, btnQuotes].forEach(b => {
+        if (b) b.className = sidebarInactive;
+      });
+      if (isManagerRole()) {
+        [btnProducts, btnCompany, btnStaff, btnConfig].forEach(b => {
+          if (b) b.className = sidebarInactive;
+        });
+      }
 
-      if (mobTabDashboard) mobTabDashboard.className = mobInactive;
-      if (mobTabForm) mobTabForm.className = mobInactive;
-      if (mobTabQuotes) mobTabQuotes.className = mobInactive;
-      if (mobTabProducts && isManagerRole()) mobTabProducts.className = mobInactive;
-      if (mobTabAdmin && isManagerRole()) mobTabAdmin.className = mobInactive;
+      [mobTabDashboard, mobTabForm, mobTabQuotes].forEach(b => {
+        if (b) b.className = mobInactive;
+      });
+      if (isManagerRole()) {
+        [mobTabProducts, mobTabCompany, mobTabStaff].forEach(b => {
+          if (b) b.className = mobInactive;
+        });
+      }
 
       if (tab === 'dashboard') {
         if (sectionDashboard) sectionDashboard.classList.remove('hidden');
@@ -3517,11 +3694,18 @@
         if (btnProducts) btnProducts.className = sidebarActive;
         if (mobTabProducts) mobTabProducts.className = mobActive;
         renderProductCatalogManager();
-      } else if (tab === 'admin') {
-        if (sectionAdmin) sectionAdmin.classList.remove('hidden');
-        if (btnAdmin) btnAdmin.className = sidebarActive;
-        if (mobTabAdmin) mobTabAdmin.className = mobActive;
+      } else if (tab === 'company' || tab === 'admin') {
+        if (sectionCompany) sectionCompany.classList.remove('hidden');
+        if (btnCompany) btnCompany.className = sidebarActive;
+        if (mobTabCompany) mobTabCompany.className = mobActive;
+      } else if (tab === 'staff') {
+        if (sectionStaff) sectionStaff.classList.remove('hidden');
+        if (btnStaff) btnStaff.className = sidebarActive;
+        if (mobTabStaff) mobTabStaff.className = mobActive;
         renderStaffPasswordsTable();
+      } else if (tab === 'config') {
+        if (sectionConfig) sectionConfig.classList.remove('hidden');
+        if (btnConfig) btnConfig.className = sidebarActive;
       } else {
         if (sectionForm) sectionForm.classList.remove('hidden');
         if (btnForm) btnForm.className = sidebarActive;
@@ -3701,6 +3885,7 @@
 
     function toggleItemSelect(index, isChecked) {
       itemsData[index].selected = isChecked;
+      setQuoteSavedState(false);
       renderFormTable();
       updateFormSummary();
       scheduleLivePreview();
@@ -3714,6 +3899,7 @@
         return;
       }
       itemsData[index][field] = value;
+      setQuoteSavedState(false);
       if (field === 'category') initCategoryFilter();
       renderFormTable();
       renderProductCatalogManager();
@@ -3740,6 +3926,7 @@
 
     function selectAll(val) {
       itemsData.forEach(item => item.selected = val);
+      setQuoteSavedState(false);
       renderFormTable();
       updateFormSummary();
       scheduleLivePreview();
@@ -4256,6 +4443,10 @@
     }
 
     function handlePrint() {
+      if (!isCurrentQuoteSaved) {
+        showToast('Vui lòng nhấn "Lưu & Tạo Báo Giá" trước khi in để tránh tạo báo giá mà không lưu lại!', true);
+        return;
+      }
       if (document.getElementById('sectionForm')?.classList.contains('hidden')) {
         switchTab('form');
       }
