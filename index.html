@@ -654,178 +654,178 @@
       <div class="w-full p-3 sm:p-4 lg:p-5 space-y-4">
 
         <!-- ==================== MÀN HÌNH 0: BÀN LÀM VIỆC (DASHBOARD KIỂM SOÁT SỐ LƯỢNG & CHỈ SỐ BÁO GIÁ) ==================== -->
-        <div id="sectionDashboard" class="no-print space-y-4">
+        <div id="sectionDashboard" class="no-print space-y-5">
 
-          <!-- Banner Gradient Đỏ thuần túy 12 Cột Gọn Gàng (Trái: Tiêu đề + Thao tác nhanh | Phải: 4 Ô Chỉ Số Cốt Lõi Mặc Định = 0) -->
-          <div class="rounded-2xl bg-gradient-to-r from-[#D62828] via-[#B91C1C] to-[#991B1B] text-white p-4 sm:p-5 shadow-[0_12px_28px_-8px_rgba(214,40,40,0.35)]">
-            <div class="grid grid-cols-1 xl:grid-cols-12 gap-4 items-center">
+          <!-- Banner Gradient Đỏ thuần túy (100% Red Gradient - Cân đối 12 cột) -->
+          <div class="rounded-2xl bg-gradient-to-r from-[#D62828] via-[#B91C1C] to-[#991B1B] text-white p-5 sm:p-6 shadow-[0_12px_30px_-8px_rgba(214,40,40,0.35)]">
+            <div class="grid grid-cols-1 xl:grid-cols-12 gap-5 items-center">
               <!-- Cột trái Banner (5/12) -->
-              <div class="xl:col-span-5 flex flex-col justify-between gap-3">
+              <div class="xl:col-span-5 space-y-3">
                 <div>
-                  <div class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-white/15 text-[10px] font-extrabold uppercase tracking-wider mb-1.5">
+                  <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/15 text-[10.5px] font-extrabold uppercase tracking-wider mb-2">
                     <i class="fa-solid fa-chart-line"></i>
                     <span id="dashScopeBadgeText">Trung Tâm Kiểm Soát Báo Giá Toàn Hệ Thống</span>
                   </div>
-                  <h1 class="text-base sm:text-xl font-black tracking-tight leading-snug">
+                  <h1 class="text-lg sm:text-2xl font-black tracking-tight leading-snug">
                     Bàn Làm Việc & Thống Kê Báo Giá SANWAY
                   </h1>
-                  <p class="text-[11.5px] text-white/85 mt-0.5 leading-relaxed">
-                    Kiểm soát số lượng báo giá từ nhân viên Sale & lãnh đạo/Admin, doanh số dự toán và các báo giá giá trị lớn.
+                  <p class="text-xs text-white/85 mt-1 leading-relaxed">
+                    Kiểm soát số lượng báo giá từ nhân viên Sale & lãnh đạo/Admin, doanh số dự toán và các hồ sơ báo giá giá trị lớn cần quan tâm.
                   </p>
                 </div>
-                <div class="flex flex-wrap items-center gap-2 pt-0.5">
-                  <button type="button" onclick="startNewQuotationWithNextCode()" class="px-3.5 py-2 rounded-xl bg-white text-[#D62828] hover:bg-red-50 text-xs font-extrabold shadow-xs transition flex items-center gap-1.5">
+                <div class="flex flex-wrap items-center gap-2.5 pt-1">
+                  <button type="button" onclick="startNewQuotationWithNextCode()" class="px-4 py-2.5 rounded-xl bg-white text-[#D62828] hover:bg-red-50 text-xs font-extrabold shadow-sm transition flex items-center gap-2">
                     <i class="fa-solid fa-plus-circle"></i>
                     <span>+ Lập Báo Giá Mới</span>
                   </button>
-                  <button type="button" onclick="switchTab('quotes')" class="px-3.5 py-2 rounded-xl bg-black/20 hover:bg-black/30 text-white border border-white/20 text-xs font-bold transition flex items-center gap-1.5">
+                  <button type="button" onclick="switchTab('quotes')" class="px-4 py-2.5 rounded-xl bg-black/20 hover:bg-black/30 text-white border border-white/20 text-xs font-bold transition flex items-center gap-1.5">
                     <i class="fa-solid fa-folder-open"></i>
                     <span>Danh Sách Báo Giá</span>
                   </button>
                 </div>
               </div>
 
-              <!-- Cột phải Banner (7/12): 4 Thẻ Glassmorphic lấp đầy không gian ngang (Mặc định = 0) -->
-              <div class="xl:col-span-7 grid grid-cols-2 sm:grid-cols-4 gap-2.5">
-                <div class="rounded-xl bg-white/12 border border-white/15 p-3 backdrop-blur-xs">
-                  <div class="flex items-center justify-between text-white/80 text-[10.5px] font-bold">
+              <!-- Cột phải Banner (7/12): 4 Thẻ Chỉ Số Cốt Lõi (Mặc định = 0) -->
+              <div class="xl:col-span-7 grid grid-cols-2 sm:grid-cols-4 gap-3">
+                <div class="rounded-2xl bg-white/12 border border-white/15 p-3.5 sm:p-4 backdrop-blur-xs">
+                  <div class="flex items-center justify-between text-white/80 text-[11px] font-bold">
                     <span id="dashBannerQuotesTitle">Tổng Báo Giá</span>
-                    <i class="fa-solid fa-file-invoice text-xs"></i>
+                    <i class="fa-solid fa-file-invoice text-sm"></i>
                   </div>
-                  <div id="dashBannerQuotesCount" class="text-lg sm:text-xl font-black tracking-tight tabular-nums mt-1.5">0 Hồ sơ</div>
-                  <div class="text-[10px] text-white/70 mt-0.5">Mặc định khởi tạo: 0</div>
+                  <div id="dashBannerQuotesCount" class="text-xl sm:text-2xl font-black tracking-tight tabular-nums mt-2">0 Hồ sơ</div>
+                  <div class="text-[10.5px] text-white/75 mt-1">Mặc định khởi tạo: 0</div>
                 </div>
 
-                <div class="rounded-xl bg-white/12 border border-white/15 p-3 backdrop-blur-xs">
-                  <div class="flex items-center justify-between text-white/80 text-[10.5px] font-bold">
+                <div class="rounded-2xl bg-white/12 border border-white/15 p-3.5 sm:p-4 backdrop-blur-xs">
+                  <div class="flex items-center justify-between text-white/80 text-[11px] font-bold">
                     <span id="dashBannerRevenueTitle">Tổng Giá Trị</span>
-                    <i class="fa-solid fa-coins text-xs"></i>
+                    <i class="fa-solid fa-coins text-sm"></i>
                   </div>
-                  <div id="dashBannerRevenueValue" class="text-base sm:text-lg font-black tracking-tight tabular-nums truncate mt-1.5">0 đ</div>
-                  <div class="text-[10px] text-white/70 mt-0.5">Đã gồm thuế VAT</div>
+                  <div id="dashBannerRevenueValue" class="text-lg sm:text-xl font-black tracking-tight tabular-nums truncate mt-2">0 đ</div>
+                  <div class="text-[10.5px] text-white/75 mt-1">Đã gồm thuế VAT</div>
                 </div>
 
-                <div class="rounded-xl bg-white/12 border border-white/15 p-3 backdrop-blur-xs">
-                  <div class="flex items-center justify-between text-white/80 text-[10.5px] font-bold">
+                <div class="rounded-2xl bg-white/12 border border-white/15 p-3.5 sm:p-4 backdrop-blur-xs">
+                  <div class="flex items-center justify-between text-white/80 text-[11px] font-bold">
                     <span>BG Giá Trị Lớn</span>
-                    <i class="fa-solid fa-star text-xs"></i>
+                    <i class="fa-solid fa-star text-sm"></i>
                   </div>
-                  <div id="dashBannerHighValueCount" class="text-lg sm:text-xl font-black tracking-tight tabular-nums mt-1.5">0 Hồ sơ</div>
-                  <div class="text-[10px] text-white/70 mt-0.5">Hồ sơ ≥ 20.000.000 đ</div>
+                  <div id="dashBannerHighValueCount" class="text-xl sm:text-2xl font-black tracking-tight tabular-nums mt-2">0 Hồ sơ</div>
+                  <div class="text-[10.5px] text-white/75 mt-1">Hồ sơ ≥ 20.000.000 đ</div>
                 </div>
 
-                <div class="rounded-xl bg-white/12 border border-white/15 p-3 backdrop-blur-xs">
-                  <div class="flex items-center justify-between text-white/80 text-[10.5px] font-bold">
+                <div class="rounded-2xl bg-white/12 border border-white/15 p-3.5 sm:p-4 backdrop-blur-xs">
+                  <div class="flex items-center justify-between text-white/80 text-[11px] font-bold">
                     <span>Mã Tiếp Theo</span>
-                    <i class="fa-solid fa-barcode text-xs"></i>
+                    <i class="fa-solid fa-barcode text-sm"></i>
                   </div>
-                  <div id="dashBannerNextCode" class="text-base sm:text-lg font-black tracking-tight tabular-nums mt-1.5">BGSW/2026/001</div>
-                  <div class="text-[10px] text-white/70 mt-0.5">Tự động nhảy số</div>
+                  <div id="dashBannerNextCode" class="text-lg sm:text-xl font-black tracking-tight tabular-nums mt-2">BGSW/2026/001</div>
+                  <div class="text-[10.5px] text-white/75 mt-1">Tự động nhảy số</div>
                 </div>
               </div>
             </div>
           </div>
 
-          <!-- 4 Thẻ Chỉ Số Báo Giá Chi Tiết (Bố cục cân đối, có thanh trạng thái chân thẻ, không bị trống giữa) -->
-          <div class="grid grid-cols-2 lg:grid-cols-4 gap-3.5">
-            <div class="erp-card p-3.5 sm:p-4 flex flex-col justify-between">
-              <div class="flex items-start justify-between gap-2">
+          <!-- 4 Thẻ Chỉ Số Báo Giá Chi Tiết (Mặc định = 0) -->
+          <div class="grid grid-cols-2 lg:grid-cols-4 gap-4">
+            <div class="erp-card p-4 sm:p-5 flex flex-col justify-between">
+              <div class="flex items-start justify-between gap-3">
                 <div>
-                  <div class="text-[10.5px] font-extrabold text-slate-400 uppercase tracking-wider">Báo Giá Của Nhân Viên Sale</div>
-                  <div class="flex items-baseline gap-1.5 mt-1">
-                    <span id="dashMetricSaleCount" class="text-xl sm:text-2xl font-black text-[#0F172A] tabular-nums">0</span>
-                    <span class="text-[11px] font-bold text-slate-400">bản báo giá</span>
+                  <div class="text-[11px] font-extrabold text-slate-400 uppercase tracking-wider">Báo Giá Nhân Viên Sale</div>
+                  <div class="flex items-baseline gap-1.5 mt-1.5">
+                    <span id="dashMetricSaleCount" class="text-2xl font-black text-[#0F172A] tabular-nums">0</span>
+                    <span class="text-xs font-bold text-slate-400">hồ sơ</span>
                   </div>
                 </div>
-                <div class="w-9 h-9 rounded-xl bg-red-50 border border-red-100 text-[#D62828] flex items-center justify-center text-sm shrink-0">
+                <div class="w-10 h-10 rounded-xl bg-red-50 border border-red-100 text-[#D62828] flex items-center justify-center text-sm shrink-0">
                   <i class="fa-solid fa-user-tie"></i>
                 </div>
               </div>
-              <div class="mt-2.5 pt-2 border-t border-slate-100 flex items-center justify-between text-[11px]">
-                <span class="text-slate-500 font-medium">Doanh số báo giá Sale:</span>
+              <div class="mt-3 pt-2.5 border-t border-slate-100 flex items-center justify-between text-xs">
+                <span class="text-slate-500 font-medium">Tổng giá trị Sale:</span>
                 <span id="dashMetricSaleValue" class="font-extrabold text-[#D62828] tabular-nums">0 đ</span>
               </div>
             </div>
 
-            <div class="erp-card p-3.5 sm:p-4 flex flex-col justify-between">
-              <div class="flex items-start justify-between gap-2">
+            <div class="erp-card p-4 sm:p-5 flex flex-col justify-between">
+              <div class="flex items-start justify-between gap-3">
                 <div>
-                  <div class="text-[10.5px] font-extrabold text-slate-400 uppercase tracking-wider">Báo Giá Của Lãnh Đạo / Admin</div>
-                  <div class="flex items-baseline gap-1.5 mt-1">
-                    <span id="dashMetricAdminCount" class="text-xl sm:text-2xl font-black text-[#0F172A] tabular-nums">0</span>
-                    <span class="text-[11px] font-bold text-slate-400">bản báo giá</span>
+                  <div class="text-[11px] font-extrabold text-slate-400 uppercase tracking-wider">Báo Giá Lãnh Đạo / Admin</div>
+                  <div class="flex items-baseline gap-1.5 mt-1.5">
+                    <span id="dashMetricAdminCount" class="text-2xl font-black text-[#0F172A] tabular-nums">0</span>
+                    <span class="text-xs font-bold text-slate-400">hồ sơ</span>
                   </div>
                 </div>
-                <div class="w-9 h-9 rounded-xl bg-slate-100 border border-slate-200 text-[#1E293B] flex items-center justify-center text-sm shrink-0">
+                <div class="w-10 h-10 rounded-xl bg-slate-100 border border-slate-200 text-[#1E293B] flex items-center justify-center text-sm shrink-0">
                   <i class="fa-solid fa-crown"></i>
                 </div>
               </div>
-              <div class="mt-2.5 pt-2 border-t border-slate-100 flex items-center justify-between text-[11px]">
-                <span class="text-slate-500 font-medium">Doanh số báo giá Admin:</span>
+              <div class="mt-3 pt-2.5 border-t border-slate-100 flex items-center justify-between text-xs">
+                <span class="text-slate-500 font-medium">Tổng giá trị Admin:</span>
                 <span id="dashMetricAdminValue" class="font-extrabold text-[#1E293B] tabular-nums">0 đ</span>
               </div>
             </div>
 
-            <div class="erp-card p-3.5 sm:p-4 flex flex-col justify-between">
-              <div class="flex items-start justify-between gap-2">
+            <div class="erp-card p-4 sm:p-5 flex flex-col justify-between">
+              <div class="flex items-start justify-between gap-3">
                 <div class="min-w-0">
-                  <div class="text-[10.5px] font-extrabold text-slate-400 uppercase tracking-wider">Báo Giá Giá Trị Cao Nhất</div>
-                  <div id="dashMetricMaxQuoteValue" class="text-lg sm:text-xl font-black text-[#D62828] tabular-nums mt-1 truncate">0 đ</div>
+                  <div class="text-[11px] font-extrabold text-slate-400 uppercase tracking-wider">Báo Giá Giá Trị Cao Nhất</div>
+                  <div id="dashMetricMaxQuoteValue" class="text-xl sm:text-2xl font-black text-[#D62828] tabular-nums mt-1.5 truncate">0 đ</div>
                 </div>
-                <div class="w-9 h-9 rounded-xl bg-red-50 border border-red-100 text-[#D62828] flex items-center justify-center text-sm shrink-0">
+                <div class="w-10 h-10 rounded-xl bg-red-50 border border-red-100 text-[#D62828] flex items-center justify-center text-sm shrink-0">
                   <i class="fa-solid fa-arrow-trend-up"></i>
                 </div>
               </div>
-              <div class="mt-2.5 pt-2 border-t border-slate-100 flex items-center justify-between text-[11px] gap-2">
+              <div class="mt-3 pt-2.5 border-t border-slate-100 flex items-center justify-between text-xs gap-2">
                 <span class="text-slate-500 font-medium shrink-0">Hồ sơ:</span>
                 <span id="dashMetricMaxQuoteSub" class="font-bold text-slate-700 truncate">Mặc định: 0 đ</span>
               </div>
             </div>
 
-            <div class="erp-card p-3.5 sm:p-4 flex flex-col justify-between">
-              <div class="flex items-start justify-between gap-2">
+            <div class="erp-card p-4 sm:p-5 flex flex-col justify-between">
+              <div class="flex items-start justify-between gap-3">
                 <div class="min-w-0">
-                  <div class="text-[10.5px] font-extrabold text-slate-400 uppercase tracking-wider">Trung Bình / Báo Giá</div>
-                  <div id="dashMetricAvgQuoteValue" class="text-lg sm:text-xl font-black text-[#0F172A] tabular-nums mt-1 truncate">0 đ</div>
+                  <div class="text-[11px] font-extrabold text-slate-400 uppercase tracking-wider">Trung Bình / Báo Giá</div>
+                  <div id="dashMetricAvgQuoteValue" class="text-xl sm:text-2xl font-black text-[#0F172A] tabular-nums mt-1.5 truncate">0 đ</div>
                 </div>
-                <div class="w-9 h-9 rounded-xl bg-slate-100 border border-slate-200 text-[#1E293B] flex items-center justify-center text-sm shrink-0">
+                <div class="w-10 h-10 rounded-xl bg-slate-100 border border-slate-200 text-[#1E293B] flex items-center justify-center text-sm shrink-0">
                   <i class="fa-solid fa-scale-balanced"></i>
                 </div>
               </div>
-              <div class="mt-2.5 pt-2 border-t border-slate-100 flex items-center justify-between text-[11px]">
-                <span class="text-slate-500 font-medium">Nhân sự phát sinh BG:</span>
-                <span id="dashMetricActiveStaffCount" class="font-bold text-[#1E293B]">0 nhân sự</span>
+              <div class="mt-3 pt-2.5 border-t border-slate-100 flex items-center justify-between text-xs">
+                <span class="text-slate-500 font-medium">Nhân sự đã lập BG:</span>
+                <span id="dashMetricActiveStaffCount" class="font-bold text-[#1E293B]">0/4 nhân sự</span>
               </div>
             </div>
           </div>
 
-          <!-- Lưới 3 Khu Vực Cân Đối Trên Màn Hình Full-Width (Trái 5/12: Nhân sự | Phải 7/12: Báo giá giá trị lớn & Báo giá mới nhất) -->
-          <div class="grid grid-cols-1 lg:grid-cols-12 gap-4 items-stretch">
+          <!-- Lưới 2 Cột Cân Đối 6/6: (Trái) Thống Kê Số Lượng Báo Giá Theo Nhân Sự | (Phải) Báo Giá Giá Trị Lớn Cần Quan Tâm -->
+          <div class="grid grid-cols-1 lg:grid-cols-12 gap-5 items-stretch">
 
-            <!-- Cột Trái (5/12): Bảng Kiểm Soát Số Lượng Báo Giá Của Nhân Viên & Lãnh Đạo (Đầy đủ 5 cột khớp Header) -->
-            <div class="lg:col-span-5 erp-card p-4 flex flex-col justify-between gap-3">
-              <div class="space-y-3">
+            <!-- Cột Trái (6/12): Bảng Kiểm Soát Số Lượng Báo Giá Của Nhân Viên & Lãnh Đạo -->
+            <div class="lg:col-span-6 erp-card p-5 flex flex-col justify-between gap-4">
+              <div class="space-y-3.5">
                 <div class="flex items-center justify-between gap-2">
-                  <div class="flex items-center gap-2.5">
-                    <span class="w-8 h-8 rounded-xl bg-red-50 text-[#D62828] border border-red-100 flex items-center justify-center text-xs shrink-0">
+                  <div class="flex items-center gap-3">
+                    <span class="w-9 h-9 rounded-xl bg-red-50 text-[#D62828] border border-red-100 flex items-center justify-center text-xs shrink-0">
                       <i class="fa-solid fa-users-viewfinder"></i>
                     </span>
                     <div>
-                      <h3 class="text-xs sm:text-sm font-extrabold text-[#0F172A]">Kiểm Soát Số Lượng Báo Giá Theo Nhân Sự</h3>
-                      <p class="text-[11px] text-slate-500">Thống kê từ nhân viên Sale đến Lãnh đạo/Admin (Mặc định: 0)</p>
+                      <h3 class="text-sm sm:text-base font-extrabold text-[#0F172A]">Kiểm Soát Số Lượng Báo Giá Theo Nhân Sự</h3>
+                      <p class="text-xs text-slate-500">Thống kê từ nhân viên Sale đến Lãnh đạo/Admin (Mặc định: 0)</p>
                     </div>
                   </div>
                 </div>
 
                 <div tabindex="0" role="region" aria-label="Bảng thống kê số lượng báo giá theo nhân sự" class="overflow-x-auto border rounded-xl border-slate-200/80">
                   <table class="w-full text-left border-collapse text-xs">
-                    <thead class="bg-[#F8FAFC] text-slate-600 uppercase font-extrabold text-[10px] tracking-wider border-b border-slate-200/80">
+                    <thead class="bg-[#F8FAFC] text-slate-600 uppercase font-extrabold text-[10.5px] tracking-wider border-b border-slate-200/80">
                       <tr>
-                        <th class="py-2.5 px-3">Nhân Sự</th>
-                        <th class="py-2.5 px-2 text-center">Vai Trò</th>
-                        <th class="py-2.5 px-2 text-center">Số BG</th>
-                        <th class="py-2.5 px-2.5 text-right">Tổng Giá Trị</th>
-                        <th class="py-2.5 px-3 text-right">BG Cao Nhất</th>
+                        <th class="py-3 px-3.5">Nhân Sự</th>
+                        <th class="py-3 px-2.5 text-center">Vai Trò</th>
+                        <th class="py-3 px-2.5 text-center">Số Lượng BG</th>
+                        <th class="py-3 px-3 text-right">Tổng Giá Trị</th>
+                        <th class="py-3 px-3.5 text-right">BG Cao Nhất</th>
                       </tr>
                     </thead>
                     <tbody id="dashStaffStatsTableBody" class="divide-y divide-slate-100 bg-white">
@@ -835,71 +835,56 @@
                 </div>
               </div>
 
-              <div class="px-3 py-2 rounded-xl bg-[#F8FAFC] border border-slate-200/70 flex items-center justify-between text-[11px] text-slate-500">
-                <span><i class="fa-solid fa-circle-check text-[#D62828] mr-1"></i>Tự động cộng dồn khi nhấn <b>Lưu & Tạo Báo Giá</b></span>
-                <button type="button" onclick="switchTab('quotes')" class="font-bold text-[#1E293B] hover:text-[#D62828] transition">Tra cứu chi tiết →</button>
+              <div class="px-3.5 py-2.5 rounded-xl bg-[#F8FAFC] border border-slate-200/70 flex items-center justify-between text-xs text-slate-500">
+                <span><i class="fa-solid fa-circle-check text-[#D62828] mr-1.5"></i>Tự động cộng dồn khi nhấn <b>Lưu & Tạo Báo Giá</b></span>
+                <button type="button" onclick="switchTab('quotes')" class="font-bold text-[#1E293B] hover:text-[#D62828] transition">Quản lý báo giá →</button>
               </div>
             </div>
 
-            <!-- Cột Phải (7/12): Chia 2 Bảng Song Song (Trên XL) Hoặc Xếp Gọn (Báo Giá Giá Trị Lớn & Báo Giá Mới Nhất) -->
-            <div class="lg:col-span-7 grid grid-cols-1 2xl:grid-cols-2 gap-4 items-stretch">
-
-              <!-- Bảng 1: Các Báo Giá Có Giá Trị Lớn Cần Quan Tâm -->
-              <div class="erp-card p-4 flex flex-col justify-between gap-3">
-                <div class="space-y-3">
-                  <div class="flex items-center justify-between gap-2">
-                    <div class="flex items-center gap-2">
-                      <span class="w-8 h-8 rounded-xl bg-red-50 text-[#D62828] border border-red-100 flex items-center justify-center text-xs shrink-0">
-                        <i class="fa-solid fa-fire-flame-curved"></i>
-                      </span>
-                      <div>
-                        <div class="flex items-center gap-1.5">
-                          <h3 class="text-xs sm:text-sm font-extrabold text-[#0F172A]">Báo Giá Giá Trị Lớn Cần Quan Tâm</h3>
-                          <span id="dashHighValueBadge" class="text-[10px] font-extrabold px-2 py-0.5 rounded-full bg-red-50 text-[#D62828] border border-red-200">0 báo giá</span>
-                        </div>
-                        <p class="text-[11px] text-slate-500">Xếp hạng từ cao xuống thấp theo tổng thanh toán</p>
+            <!-- Cột Phải (6/12): Báo Giá Giá Trị Lớn Cần Quan Tâm & Báo Giá Mới Nhất -->
+            <div class="lg:col-span-6 erp-card p-5 flex flex-col justify-between gap-4">
+              <div class="space-y-4">
+                <div class="flex flex-wrap items-center justify-between gap-2">
+                  <div class="flex items-center gap-3">
+                    <span class="w-9 h-9 rounded-xl bg-red-50 text-[#D62828] border border-red-100 flex items-center justify-center text-xs shrink-0">
+                      <i class="fa-solid fa-fire-flame-curved"></i>
+                    </span>
+                    <div>
+                      <div class="flex items-center gap-2">
+                        <h3 class="text-sm sm:text-base font-extrabold text-[#0F172A]">Báo Giá Giá Trị Lớn Cần Quan Tâm</h3>
+                        <span id="dashHighValueBadge" class="text-[10.5px] font-extrabold px-2.5 py-0.5 rounded-full bg-red-50 text-[#D62828] border border-red-200">0 báo giá</span>
                       </div>
+                      <p class="text-xs text-slate-500">Xếp hạng từ cao xuống thấp theo tổng giá trị thanh toán</p>
                     </div>
                   </div>
-
-                  <div tabindex="0" role="region" aria-label="Danh sách báo giá giá trị lớn cần quan tâm" class="overflow-x-auto border rounded-xl border-slate-200/80">
-                    <table class="w-full text-left border-collapse text-xs">
-                      <thead class="bg-[#F8FAFC] text-slate-600 uppercase font-extrabold text-[10px] tracking-wider border-b border-slate-200/80">
-                        <tr>
-                          <th class="py-2.5 px-3">Mã BG</th>
-                          <th class="py-2.5 px-2.5">Khách Hàng & Người Lập</th>
-                          <th class="py-2.5 px-2.5 text-right">Tổng Thanh Toán</th>
-                          <th class="py-2.5 px-3 text-right">Mở</th>
-                        </tr>
-                      </thead>
-                      <tbody id="dashboardHighValueQuotesBody" class="divide-y divide-slate-100 bg-white">
-                        <!-- Rendered by renderDashboardOverview() -->
-                      </tbody>
-                    </table>
-                  </div>
+                  <button type="button" onclick="switchTab('quotes')" class="text-xs font-extrabold text-[#D62828] hover:underline flex items-center gap-1">
+                    <span>Xem tất cả</span>
+                    <i class="fa-solid fa-arrow-right text-[10px]"></i>
+                  </button>
                 </div>
 
-                <div class="px-3 py-2 rounded-xl bg-[#F8FAFC] border border-slate-200/70 flex items-center justify-between text-[11px] text-slate-500">
-                  <span>Ngưỡng ưu tiên: <b class="text-[#0F172A]">≥ 20.000.000 đ</b></span>
-                  <button type="button" onclick="switchTab('quotes')" class="font-bold text-[#D62828] hover:underline">Xem tất cả →</button>
+                <div tabindex="0" role="region" aria-label="Danh sách báo giá giá trị lớn cần quan tâm" class="overflow-x-auto border rounded-xl border-slate-200/80">
+                  <table class="w-full text-left border-collapse text-xs">
+                    <thead class="bg-[#F8FAFC] text-slate-600 uppercase font-extrabold text-[10.5px] tracking-wider border-b border-slate-200/80">
+                      <tr>
+                        <th class="py-3 px-3.5">Mã BG</th>
+                        <th class="py-3 px-3">Khách Hàng & Người Lập</th>
+                        <th class="py-3 px-3 text-right">Tổng Thanh Toán</th>
+                        <th class="py-3 px-3.5 text-right">Thao Tác</th>
+                      </tr>
+                    </thead>
+                    <tbody id="dashboardHighValueQuotesBody" class="divide-y divide-slate-100 bg-white">
+                      <!-- Rendered by renderDashboardOverview() -->
+                    </tbody>
+                  </table>
                 </div>
-              </div>
 
-              <!-- Bảng 2: Danh Sách Báo Giá Mới Nhất -->
-              <div class="erp-card p-4 flex flex-col justify-between gap-3">
-                <div class="space-y-3">
-                  <div class="flex items-center justify-between gap-2">
-                    <div class="flex items-center gap-2">
-                      <span class="w-8 h-8 rounded-xl bg-slate-100 text-[#1E293B] border border-slate-200 flex items-center justify-center text-xs shrink-0">
-                        <i class="fa-solid fa-clock-rotate-left"></i>
-                      </span>
-                      <div>
-                        <h3 id="dashRecentQuotesHeading" class="text-xs sm:text-sm font-extrabold text-[#0F172A]">Danh Sách Báo Giá Mới Nhất</h3>
-                        <p class="text-[11px] text-slate-500">Các hồ sơ báo giá vừa được lưu gần đây</p>
-                      </div>
-                    </div>
+                <!-- Danh sách báo giá mới nhất (Gọn gàng ngay bên dưới) -->
+                <div class="pt-2 border-t border-slate-100 space-y-2.5">
+                  <div class="flex items-center justify-between">
+                    <h4 id="dashRecentQuotesHeading" class="text-xs font-extrabold text-[#0F172A] uppercase tracking-wider">Danh Sách Báo Giá Mới Nhất</h4>
+                    <button type="button" onclick="startNewQuotationWithNextCode()" class="text-xs font-extrabold text-[#D62828] hover:underline">+ Lập báo giá mới</button>
                   </div>
-
                   <div tabindex="0" role="region" aria-label="Báo giá mới nhất trên bàn làm việc" class="overflow-x-auto border rounded-xl border-slate-200/80">
                     <table class="w-full text-left border-collapse text-xs">
                       <thead class="bg-[#F8FAFC] text-slate-600 uppercase font-extrabold text-[10px] tracking-wider border-b border-slate-200/80">
@@ -908,7 +893,7 @@
                           <th class="py-2.5 px-2.5">Khách Hàng</th>
                           <th class="py-2.5 px-2">Người Lập</th>
                           <th class="py-2.5 px-2.5 text-right">Tổng Tiền</th>
-                          <th class="py-2.5 px-3 text-right">Thao Tác</th>
+                          <th class="py-2.5 px-3 text-right">Mở / In</th>
                         </tr>
                       </thead>
                       <tbody id="dashboardRecentQuotesBody" class="divide-y divide-slate-100 bg-white">
@@ -917,216 +902,186 @@
                     </table>
                   </div>
                 </div>
-
-                <div class="px-3 py-2 rounded-xl bg-[#F8FAFC] border border-slate-200/70 flex items-center justify-between text-[11px] text-slate-500">
-                  <span>Lưu trữ theo mã <b class="text-[#D62828]">BGSW/YYYY/NNN</b></span>
-                  <button type="button" onclick="startNewQuotationWithNextCode()" class="font-extrabold text-[#D62828] hover:underline">+ Lập báo giá mới →</button>
-                </div>
               </div>
-
             </div>
 
           </div>
 
         </div>
 
-        <!-- ==================== MÀN HÌNH 1: LẬP BÁO GIÁ & LIVE PREVIEW A4 SONG SONG (TỐI ƯU FULL-WIDTH) ==================== -->
-        <div id="sectionForm" class="hidden space-y-3.5">
+        <!-- ==================== MÀN HÌNH 1: LẬP BÁO GIÁ & LIVE PREVIEW A4 SONG SONG (CHUẨN SPLIT-SCREEN TỪ ĐỈNH TRANG) ==================== -->
+        <div id="sectionForm" class="hidden">
 
-          <!-- Thanh Toolbar Gộp Nhất: Tiêu đề + 4 Chỉ Số Tóm Tắt Inline + Nút "Lưu & Tạo Báo Giá" (Không để khoảng trống giữa thanh) -->
-          <div class="no-print erp-card p-3 sm:px-4 flex flex-col 2xl:flex-row 2xl:items-center justify-between gap-3 bg-white">
-            <!-- Khối Trái: Tiêu đề & Trạng thái -->
-            <div class="flex items-center gap-2.5 shrink-0">
-              <div class="w-9 h-9 rounded-xl bg-red-50 text-[#D62828] border border-red-100 flex items-center justify-center text-sm shrink-0">
-                <i class="fa-solid fa-file-invoice"></i>
-              </div>
-              <div>
-                <div class="flex flex-wrap items-center gap-1.5">
-                  <h2 class="text-sm font-extrabold text-[#0F172A]">Lập Báo Giá</h2>
-                  <span id="currentDraftCodeBadge" class="text-[11px] font-black px-2 py-0.5 rounded-md bg-red-50 text-[#D62828] border border-red-200 tabular-nums">BGSW/2026/001</span>
-                  <span id="currentDraftStatusBadge" class="text-[10.5px] font-bold px-2 py-0.5 rounded-md bg-slate-100 text-[#1E293B] border border-slate-200">Chưa lưu</span>
-                </div>
-                <p class="text-[11px] text-slate-500">Xem trực tiếp A4 bên phải • Nhấn <b>"Lưu & Tạo Báo Giá"</b> để lưu hồ sơ trước khi in</p>
-              </div>
-            </div>
+          <!-- BỐ CỤC CHIA ĐÔI MÀN HÌNH NGAY TỪ ĐỈNH TRANG (TRÁI 7/12: SOẠN BÁO GIÁ | PHẢI 5/12: BẢN XEM TRƯỚC A4 VỪA KHÍT KHUNG) -->
+          <div id="workspaceSplitGrid" class="grid grid-cols-1 lg:grid-cols-12 gap-5 items-start">
 
-            <!-- Khối Giữa: 4 Chỉ Số Báo Giá Inline (Lấp đầy khoảng trống ngang một cách hữu ích) -->
-            <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 flex-1 max-w-3xl">
-              <div class="px-3 py-1.5 rounded-xl bg-[#F8FAFC] border border-slate-200/80 flex items-center gap-2">
-                <i class="fa-solid fa-layer-group text-[#D62828] text-xs"></i>
-                <div class="min-w-0">
-                  <div class="text-[9.5px] font-bold uppercase text-slate-400 leading-none">Hạng mục chọn</div>
-                  <div class="text-xs font-extrabold text-[#0F172A] tabular-nums mt-0.5">
-                    <span id="kpiSelectedCount" class="text-[#D62828]">47</span>/<span id="kpiTotalCount">47</span> mục
-                  </div>
-                </div>
-              </div>
+            <!-- CỘT TRÁI (7/12): TOÀN BỘ HEADER, KPI, THÔNG TIN KHÁCH HÀNG & BẢNG CHỌN VẬT TƯ NẰM GỌN TRONG CỘT TRÁI -->
+            <div class="no-print lg:col-span-7 space-y-4 min-w-0">
 
-              <div class="px-3 py-1.5 rounded-xl bg-[#F8FAFC] border border-slate-200/80 flex items-center gap-2">
-                <i class="fa-solid fa-calculator text-slate-500 text-xs"></i>
-                <div class="min-w-0">
-                  <div class="text-[9.5px] font-bold uppercase text-slate-400 leading-none">Trước thuế</div>
-                  <div id="kpiSubtotal" class="text-xs font-extrabold text-[#0F172A] tabular-nums truncate mt-0.5">190.010.000 đ</div>
-                </div>
-              </div>
-
-              <div class="px-3 py-1.5 rounded-xl bg-[#F8FAFC] border border-slate-200/80 flex items-center gap-2">
-                <i class="fa-solid fa-percent text-slate-500 text-xs"></i>
-                <div class="min-w-0">
-                  <div class="text-[9.5px] font-bold uppercase text-slate-400 leading-none">VAT (<span id="kpiVatRate">8%</span>)</div>
-                  <div id="kpiVatAmount" class="text-xs font-extrabold text-[#0F172A] tabular-nums truncate mt-0.5">15.200.800 đ</div>
-                </div>
-              </div>
-
-              <div class="px-3 py-1.5 rounded-xl bg-red-50/70 border border-red-200 flex items-center gap-2">
-                <i class="fa-solid fa-coins text-[#D62828] text-xs"></i>
-                <div class="min-w-0">
-                  <div class="text-[9.5px] font-extrabold uppercase text-[#D62828] leading-none">Tổng thanh toán</div>
-                  <div id="kpiGrandTotal" class="text-xs font-black text-[#D62828] tabular-nums truncate mt-0.5">205.210.800 đ</div>
-                </div>
-              </div>
-            </div>
-
-            <!-- Khối Phải: Cụm Nút Thao Tác Quy Chuẩn -->
-            <div class="flex flex-wrap items-center gap-2 shrink-0">
-              <button type="button" onclick="startNewQuotationWithNextCode()" class="px-3 py-2 rounded-xl border border-slate-300 bg-white hover:bg-slate-50 text-slate-700 text-xs font-bold transition flex items-center gap-1.5">
-                <i class="fa-solid fa-rotate text-[#D62828]"></i>
-                <span>Làm Mới</span>
-              </button>
-              <button type="button" id="btnPrimarySaveQuote" onclick="saveCurrentQuotation()" class="px-4 py-2 rounded-xl bg-gradient-to-r from-[#D62828] to-[#B91C1C] hover:from-[#B91C1C] hover:to-[#991B1B] active:scale-[0.99] text-white text-xs font-extrabold shadow-sm transition flex items-center gap-1.5">
-                <i id="btnPrimarySaveIcon" class="fa-solid fa-floppy-disk"></i>
-                <span id="btnPrimarySaveText">Lưu & Tạo Báo Giá</span>
-              </button>
-              <button type="button" id="btnPrintAfterSave" onclick="handlePrint()" class="hidden px-3.5 py-2 rounded-xl bg-[#1E293B] hover:bg-[#0F172A] text-white text-xs font-extrabold shadow-sm transition items-center gap-1.5">
-                <i class="fa-solid fa-print"></i>
-                <span>In Báo Giá Ngay</span>
-              </button>
-            </div>
-          </div>
-
-          <!-- BỐ CỤC CHIA ĐÔI MÀN HÌNH TỪ LG TRỞ LÊN (TRÁI 7/12: NHẬP LIỆU & CHỌN VẬT TƯ | PHẢI 5/12: LIVE PREVIEW A4) -->
-          <div id="workspaceSplitGrid" class="grid grid-cols-1 lg:grid-cols-12 gap-4 items-start">
-
-            <!-- CỘT TRÁI (7/12): THÔNG TIN KHÁCH HÀNG & CHỌN VẬT TƯ BÁO GIÁ -->
-            <div class="no-print lg:col-span-7 space-y-3.5 min-w-0">
-
-              <!-- Banner thông báo chế độ phân quyền cho Sale (Gọn gàng) -->
-              <div id="saleRoleBanner" class="hidden bg-[#1E293B] text-white rounded-xl py-2.5 px-3.5 shadow-xs flex flex-wrap items-center justify-between gap-2 border border-slate-700">
-                <div class="flex items-center gap-2">
-                  <span class="w-6 h-6 rounded-lg bg-[#D62828] text-white flex items-center justify-center text-[11px] shrink-0">
+              <!-- Banner thông báo chế độ phân quyền cho Sale -->
+              <div id="saleRoleBanner" class="hidden bg-[#1E293B] text-white rounded-xl py-2.5 px-4 shadow-xs flex flex-wrap items-center justify-between gap-2 border border-slate-700">
+                <div class="flex items-center gap-2.5">
+                  <span class="w-7 h-7 rounded-lg bg-[#D62828] text-white flex items-center justify-center text-xs shrink-0">
                     <i class="fa-solid fa-user-check"></i>
                   </span>
                   <div class="text-xs">
                     <span class="font-bold text-white">Chế độ Sale</span>
-                    <span class="text-slate-300 ml-1">• Áp dụng bảng giá chuẩn <b id="saleBannerCompanyName" class="text-white">CÔNG TY CỔ PHẦN SANWAY</b></span>
+                    <span class="text-slate-300 ml-1">• Áp dụng bảng giá niêm yết <b id="saleBannerCompanyName" class="text-white">CÔNG TY CỔ PHẦN SANWAY</b></span>
                   </div>
                 </div>
-                <span class="text-[10px] px-2 py-0.5 rounded bg-slate-800 text-slate-200 border border-slate-600 font-semibold">
+                <span class="text-[10.5px] px-2.5 py-0.5 rounded bg-slate-800 text-slate-200 border border-slate-600 font-semibold">
                   <i class="fa-solid fa-lock text-[9px] mr-1 text-[#D62828]"></i>Khóa đơn giá gốc
                 </span>
               </div>
 
-              <!-- Card 1: Thông tin Khách hàng & Hồ sơ Báo giá (Bố cục Lưới 12 cột 2 hàng gọn gàng, không bị kéo dài lê thê) -->
-              <div class="erp-card p-4">
-                <div class="flex flex-wrap items-center justify-between pb-2.5 border-b border-slate-100 mb-3 gap-2">
-                  <div class="flex items-center gap-2">
-                    <span class="w-7 h-7 rounded-lg bg-red-50 text-[#D62828] border border-red-100 flex items-center justify-center text-xs">
-                      <i class="fa-solid fa-file-contract"></i>
-                    </span>
-                    <h3 class="text-xs sm:text-sm font-extrabold text-[#0F172A]">1. Thông Tin Khách Hàng & Mã Hồ Sơ Báo Giá</h3>
-                  </div>
-                  <button type="button" onclick="assignNextQuoteCode()" class="text-[11px] bg-red-50 hover:bg-red-100 text-[#D62828] font-bold px-2.5 py-1 rounded-lg border border-red-200 transition flex items-center gap-1" title="Tự động nhảy sang số báo giá tiếp theo">
-                    <i class="fa-solid fa-rotate"></i>
-                    <span>Cấp mã BGSW mới</span>
-                  </button>
-                </div>
-
-                <!-- 6 trường chia thành 2 hàng x 3 cột trên màn hình rộng -->
-                <div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-12 gap-3">
-                  <div class="xl:col-span-5">
-                    <label class="erp-label">
-                      <i class="fa-solid fa-building-user text-[#D62828]"></i>
-                      <span>Kính gửi Khách hàng / Đối tác <span class="text-[#D62828]">*</span></span>
-                    </label>
-                    <input type="text" id="inputCustomerName" oninput="markQuoteDirtyAndPreview()" value="CÔNG TY TNHH TÂN HUY HOÀNG" placeholder="Nhập tên công ty khách hàng..." class="erp-input py-2 font-bold text-xs">
-                  </div>
-
-                  <div class="xl:col-span-4">
-                    <label class="erp-label">
-                      <i class="fa-solid fa-hashtag text-[#D62828]"></i>
-                      <span>Số / Mã Báo Giá (Tự động tăng)</span>
-                    </label>
-                    <div class="flex gap-1">
-                      <input type="text" id="inputQuoteCode" oninput="handleQuoteCodeManualChange()" value="BGSW/2026/001" class="erp-input py-2 font-black text-[#D62828] tracking-wide text-xs">
-                      <button type="button" onclick="assignNextQuoteCode()" title="Sinh mã báo giá mới tiếp theo" class="px-2.5 rounded-xl border border-slate-300 hover:bg-slate-100 text-slate-700 text-xs font-bold shrink-0 transition">
-                        <i class="fa-solid fa-plus"></i>
-                      </button>
+              <!-- KHỐI 1: HEADER TÁC VỤ + 4 Ô TÓM TẮT + THÔNG TIN KHÁCH HÀNG (GỘP LIỀN MẠCH TRONG CỘT TRÁI - KHÔNG BỊ TRỐNG GIỮA) -->
+              <div class="erp-card p-5 space-y-4">
+                <!-- Hàng đầu: Tiêu đề + Mã BGSW + Cụm nút Lưu & Tạo Báo Giá -->
+                <div class="flex flex-wrap items-center justify-between gap-3 pb-4 border-b border-slate-100">
+                  <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 rounded-xl bg-red-50 text-[#D62828] border border-red-100 flex items-center justify-center text-base shrink-0">
+                      <i class="fa-solid fa-file-invoice"></i>
+                    </div>
+                    <div>
+                      <div class="flex flex-wrap items-center gap-2">
+                        <h2 class="text-base font-extrabold text-[#0F172A]">Lập Báo Giá Mới</h2>
+                        <span id="currentDraftCodeBadge" class="text-xs font-black px-2.5 py-0.5 rounded-lg bg-red-50 text-[#D62828] border border-red-200 tabular-nums">BGSW/2026/001</span>
+                        <span id="currentDraftStatusBadge" class="text-[11px] font-bold px-2 py-0.5 rounded-md bg-slate-100 text-[#1E293B] border border-slate-200">Chưa lưu</span>
+                      </div>
+                      <p class="text-xs text-slate-500 mt-0.5">Nhấn <b>"Lưu & Tạo Báo Giá"</b> để ghi nhận hồ sơ trước khi hiển thị nút In.</p>
                     </div>
                   </div>
 
-                  <div class="xl:col-span-3">
-                    <label class="erp-label">
-                      <i class="fa-regular fa-calendar-check text-slate-400"></i>
-                      <span>Địa điểm & Ngày lập</span>
-                    </label>
-                    <input type="text" id="inputQuoteDate" oninput="markQuoteDirtyAndPreview()" value="Hải Phòng, 21/10/2026" class="erp-input py-2 font-medium text-xs">
+                  <div class="flex flex-wrap items-center gap-2">
+                    <button type="button" onclick="startNewQuotationWithNextCode()" class="px-3.5 py-2.5 rounded-xl border border-slate-300 bg-white hover:bg-slate-50 text-slate-700 text-xs font-bold transition flex items-center gap-1.5">
+                      <i class="fa-solid fa-rotate text-[#D62828]"></i>
+                      <span>Mã Tiếp Theo</span>
+                    </button>
+                    <button type="button" id="btnPrimarySaveQuote" onclick="saveCurrentQuotation()" class="px-5 py-2.5 rounded-xl bg-gradient-to-r from-[#D62828] to-[#B91C1C] hover:from-[#B91C1C] hover:to-[#991B1B] active:scale-[0.99] text-white text-xs font-extrabold shadow-md shadow-red-600/20 transition flex items-center gap-2">
+                      <i id="btnPrimarySaveIcon" class="fa-solid fa-floppy-disk"></i>
+                      <span id="btnPrimarySaveText">Lưu & Tạo Báo Giá</span>
+                    </button>
+                    <button type="button" id="btnPrintAfterSave" onclick="handlePrint()" class="hidden px-4 py-2.5 rounded-xl bg-[#1E293B] hover:bg-[#0F172A] text-white text-xs font-extrabold shadow-md transition items-center gap-1.5">
+                      <i class="fa-solid fa-print"></i>
+                      <span>In Báo Giá Ngay</span>
+                    </button>
+                  </div>
+                </div>
+
+                <!-- 4 Ô KPI nằm gọn trong Cột Trái (7/12) -> Vừa khít kích thước, không bị giãn rộng -->
+                <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
+                  <div class="p-3 rounded-xl bg-[#F8FAFC] border border-slate-200/80">
+                    <div class="text-[10.5px] font-bold uppercase tracking-wider text-slate-400">Hạng mục chọn</div>
+                    <div class="text-sm sm:text-base font-black text-[#0F172A] tabular-nums mt-1">
+                      <span id="kpiSelectedCount" class="text-[#D62828]">47</span>
+                      <span class="text-xs font-semibold text-slate-400">/ <span id="kpiTotalCount">47</span> mục</span>
+                    </div>
                   </div>
 
-                  <div class="xl:col-span-5">
-                    <label class="erp-label">
-                      <i class="fa-solid fa-fire-extinguisher text-[#D62828]"></i>
-                      <span>Tên hạng mục báo giá (Tiếng Việt)</span>
-                    </label>
-                    <input type="text" id="inputProjectTitle" oninput="markQuoteDirtyAndPreview()" value="BẢO DƯỠNG HỆ THỐNG PCCC" class="erp-input py-2 font-semibold text-xs">
+                  <div class="p-3 rounded-xl bg-[#F8FAFC] border border-slate-200/80">
+                    <div class="text-[10.5px] font-bold uppercase tracking-wider text-slate-400">Trước thuế</div>
+                    <div id="kpiSubtotal" class="text-sm sm:text-base font-black text-[#0F172A] tabular-nums truncate mt-1">190.010.000 đ</div>
                   </div>
 
-                  <div class="xl:col-span-4">
-                    <label class="erp-label">
-                      <i class="fa-solid fa-globe text-slate-400"></i>
-                      <span>Tiêu đề phụ Tiếng Anh</span>
-                    </label>
-                    <input type="text" id="inputProjectTitleEn" oninput="markQuoteDirtyAndPreview()" value="FIRE PROTECTION SYSTEM MAINTENANCE QUOTATION" class="erp-input py-2 text-slate-600 font-medium text-xs">
+                  <div class="p-3 rounded-xl bg-[#F8FAFC] border border-slate-200/80">
+                    <div class="text-[10.5px] font-bold uppercase tracking-wider text-slate-400">VAT (<span id="kpiVatRate">8%</span>)</div>
+                    <div id="kpiVatAmount" class="text-sm sm:text-base font-black text-[#0F172A] tabular-nums truncate mt-1">15.200.800 đ</div>
                   </div>
 
-                  <div class="xl:col-span-3">
-                    <label class="erp-label">
-                      <i class="fa-solid fa-stamp text-[#D62828]"></i>
-                      <span>Con dấu mộc đỏ PDF</span>
-                    </label>
-                    <select id="inputShowStamp" onchange="markQuoteDirtyAndPreview()" class="erp-input py-2 font-semibold cursor-pointer text-xs">
-                      <option value="yes" selected>Có đóng dấu đỏ</option>
-                      <option value="no">Không đóng dấu</option>
-                    </select>
+                  <div class="p-3 rounded-xl bg-red-50/70 border border-red-200">
+                    <div class="text-[10.5px] font-extrabold uppercase tracking-wider text-[#D62828]">Tổng thanh toán</div>
+                    <div id="kpiGrandTotal" class="text-sm sm:text-base font-black text-[#D62828] tabular-nums truncate mt-1">205.210.800 đ</div>
+                  </div>
+                </div>
+
+                <!-- Lưới nhập Thông tin Khách hàng & Hồ sơ Báo giá (Chia tỷ lệ 7 : 5 cân đối tuyệt đối) -->
+                <div class="pt-2 border-t border-slate-100">
+                  <div class="grid grid-cols-1 md:grid-cols-12 gap-3.5">
+                    <div class="md:col-span-7">
+                      <label class="erp-label">
+                        <i class="fa-solid fa-building-user text-[#D62828]"></i>
+                        <span>Kính gửi Khách hàng / Đối tác <span class="text-[#D62828]">*</span></span>
+                      </label>
+                      <input type="text" id="inputCustomerName" oninput="markQuoteDirtyAndPreview()" value="CÔNG TY TNHH TÂN HUY HOÀNG" placeholder="Nhập tên công ty khách hàng..." class="erp-input font-bold">
+                    </div>
+
+                    <div class="md:col-span-5">
+                      <label class="erp-label">
+                        <i class="fa-solid fa-hashtag text-[#D62828]"></i>
+                        <span>Số / Mã Báo Giá (Tự động tăng)</span>
+                      </label>
+                      <div class="flex gap-1.5">
+                        <input type="text" id="inputQuoteCode" oninput="handleQuoteCodeManualChange()" value="BGSW/2026/001" class="erp-input font-black text-[#D62828] tracking-wide">
+                        <button type="button" onclick="assignNextQuoteCode()" title="Sinh mã báo giá mới tiếp theo" class="px-3.5 rounded-xl border border-slate-300 hover:bg-slate-100 text-slate-700 text-xs font-bold shrink-0 transition">
+                          <i class="fa-solid fa-plus"></i>
+                        </button>
+                      </div>
+                    </div>
+
+                    <div class="md:col-span-7">
+                      <label class="erp-label">
+                        <i class="fa-solid fa-fire-extinguisher text-[#D62828]"></i>
+                        <span>Tên hạng mục báo giá (Tiếng Việt)</span>
+                      </label>
+                      <input type="text" id="inputProjectTitle" oninput="markQuoteDirtyAndPreview()" value="BẢO DƯỠNG HỆ THỐNG PCCC" class="erp-input font-semibold">
+                    </div>
+
+                    <div class="md:col-span-5">
+                      <label class="erp-label">
+                        <i class="fa-solid fa-globe text-slate-400"></i>
+                        <span>Tiêu đề phụ Tiếng Anh</span>
+                      </label>
+                      <input type="text" id="inputProjectTitleEn" oninput="markQuoteDirtyAndPreview()" value="FIRE PROTECTION SYSTEM MAINTENANCE QUOTATION" class="erp-input text-slate-600 font-medium">
+                    </div>
+
+                    <div class="md:col-span-7">
+                      <label class="erp-label">
+                        <i class="fa-regular fa-calendar-check text-slate-400"></i>
+                        <span>Địa điểm & Ngày lập báo giá</span>
+                      </label>
+                      <input type="text" id="inputQuoteDate" oninput="markQuoteDirtyAndPreview()" value="Hải Phòng, 21/10/2026" class="erp-input font-medium">
+                    </div>
+
+                    <div class="md:col-span-5">
+                      <label class="erp-label">
+                        <i class="fa-solid fa-stamp text-[#D62828]"></i>
+                        <span>Hiển thị con dấu mộc đỏ khi xuất PDF</span>
+                      </label>
+                      <select id="inputShowStamp" onchange="markQuoteDirtyAndPreview()" class="erp-input font-semibold cursor-pointer">
+                        <option value="yes" selected>Có đóng dấu mộc đỏ công ty</option>
+                        <option value="no">Không đóng dấu (Để trống ký tươi)</option>
+                      </select>
+                    </div>
                   </div>
                 </div>
               </div>
 
-              <!-- Card 2: Chọn Hạng Mục Vật Tư & Khối Lượng -->
-              <div class="erp-card p-4">
-                <div class="flex flex-col sm:flex-row sm:items-center justify-between pb-2.5 border-b border-slate-100 gap-2">
-                  <div class="flex items-center gap-2">
-                    <span class="w-7 h-7 rounded-lg bg-slate-100 text-[#1E293B] border border-slate-200/80 flex items-center justify-center text-xs shrink-0">
+              <!-- KHỐI 2: CHỌN HẠNG MỤC VẬT TƯ & KHỐI LƯỢNG -->
+              <div class="erp-card p-5">
+                <div class="flex flex-col sm:flex-row sm:items-center justify-between pb-3.5 border-b border-slate-100 gap-3">
+                  <div class="flex items-center gap-2.5">
+                    <span class="w-9 h-9 rounded-xl bg-slate-100 text-[#1E293B] border border-slate-200/80 flex items-center justify-center text-xs shrink-0">
                       <i class="fa-solid fa-list-check"></i>
                     </span>
                     <div>
-                      <div class="flex flex-wrap items-center gap-1.5">
-                        <h3 class="text-xs sm:text-sm font-extrabold text-[#0F172A]">2. Chọn Hạng Mục Sản Phẩm & Khối Lượng</h3>
-                        <span id="selectedBadgeCount" class="bg-red-50 text-[#D62828] text-[10.5px] px-2 py-0.5 rounded-md font-bold border border-red-200">47 mục</span>
+                      <div class="flex flex-wrap items-center gap-2">
+                        <h3 class="text-sm sm:text-base font-extrabold text-[#0F172A]">Danh Mục Sản Phẩm & Khối Lượng Báo Giá</h3>
+                        <span id="selectedBadgeCount" class="bg-red-50 text-[#D62828] text-xs px-2.5 py-0.5 rounded-md font-bold border border-red-200">47 mục</span>
                       </div>
-                      <p id="catalogRoleSubtitle" class="text-[10.5px] text-slate-500">Tích chọn sản phẩm và chỉnh số lượng — Bản A4 bên phải cập nhật trực tiếp.</p>
+                      <p id="catalogRoleSubtitle" class="text-xs text-slate-500 mt-0.5">Tích chọn sản phẩm và chỉnh số lượng — Bản A4 bên phải cập nhật trực tiếp.</p>
                     </div>
                   </div>
 
                   <div class="flex flex-wrap items-center gap-1.5">
-                    <button type="button" onclick="selectAll(true)" class="text-[11px] px-2.5 py-1 rounded-lg border border-slate-200 bg-white hover:bg-slate-50 text-slate-700 font-semibold transition flex items-center gap-1">
+                    <button type="button" onclick="selectAll(true)" class="text-xs px-3 py-1.5 rounded-lg border border-slate-200 bg-white hover:bg-slate-50 text-slate-700 font-semibold transition flex items-center gap-1.5">
                       <i class="fa-solid fa-check-double text-[#D62828]"></i>
                       <span>Chọn hết</span>
                     </button>
-                    <button type="button" onclick="selectAll(false)" class="text-[11px] px-2.5 py-1 rounded-lg border border-slate-200 bg-white hover:bg-slate-50 text-slate-700 font-semibold transition flex items-center gap-1">
+                    <button type="button" onclick="selectAll(false)" class="text-xs px-3 py-1.5 rounded-lg border border-slate-200 bg-white hover:bg-slate-50 text-slate-700 font-semibold transition flex items-center gap-1.5">
                       <i class="fa-regular fa-square-minus text-slate-400"></i>
                       <span>Bỏ hết</span>
                     </button>
-                    <button type="button" id="btnQuickCatalogInForm" onclick="switchTab('products')" class="hidden text-[11px] px-2.5 py-1 rounded-lg bg-slate-100 hover:bg-slate-200 text-[#0F172A] font-bold transition items-center gap-1">
+                    <button type="button" id="btnQuickCatalogInForm" onclick="switchTab('products')" class="hidden text-xs px-3 py-1.5 rounded-lg bg-slate-100 hover:bg-slate-200 text-[#0F172A] font-bold transition items-center gap-1.5">
                       <i class="fa-solid fa-boxes-stacked text-[#D62828]"></i>
                       <span>Kho Sản Phẩm</span>
                     </button>
@@ -1134,24 +1089,24 @@
                 </div>
 
                 <!-- Bộ lọc phân loại, tìm kiếm & chỉ hiện mục đã chọn -->
-                <div class="my-3 grid grid-cols-1 sm:grid-cols-12 gap-2">
+                <div class="my-3.5 grid grid-cols-1 sm:grid-cols-12 gap-2.5">
                   <div class="sm:col-span-5 relative">
-                    <span class="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none text-xs">
+                    <span class="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none text-xs">
                       <i class="fa-solid fa-layer-group"></i>
                     </span>
-                    <select id="categoryFilter" onchange="filterTable()" class="erp-input pl-8 py-1.5 text-xs font-semibold cursor-pointer">
+                    <select id="categoryFilter" onchange="filterTable()" class="erp-input pl-9 py-2 text-xs font-semibold cursor-pointer">
                       <option value="ALL">-- Tất cả phân nhóm hệ thống --</option>
                     </select>
                   </div>
                   <div class="sm:col-span-5 relative">
-                    <span class="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none text-xs">
+                    <span class="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none text-xs">
                       <i class="fa-solid fa-magnifying-glass"></i>
                     </span>
-                    <input type="text" id="searchItemInput" oninput="filterTable()" placeholder="Tìm nhanh vật tư, thiết bị..." class="erp-input pl-8 py-1.5 text-xs">
+                    <input type="text" id="searchItemInput" oninput="filterTable()" placeholder="Tìm nhanh vật tư, thiết bị..." class="erp-input pl-9 py-2 text-xs">
                   </div>
                   <div class="sm:col-span-2 flex items-center">
-                    <label class="w-full h-full px-2 py-1.5 rounded-xl border border-slate-200 bg-slate-50 hover:bg-slate-100 cursor-pointer flex items-center justify-center gap-1.5 text-xs font-semibold text-slate-700 select-none transition">
-                      <input type="checkbox" id="onlySelectedFilter" onchange="filterTable()" class="w-3.5 h-3.5 rounded text-[#D62828] focus:ring-[#D62828]">
+                    <label class="w-full h-full px-3 py-2 rounded-xl border border-slate-200 bg-slate-50 hover:bg-slate-100 cursor-pointer flex items-center justify-center gap-2 text-xs font-semibold text-slate-700 select-none transition">
+                      <input type="checkbox" id="onlySelectedFilter" onchange="filterTable()" class="w-4 h-4 rounded text-[#D62828] focus:ring-[#D62828]">
                       <span>Đã chọn</span>
                     </label>
                   </div>
@@ -1161,14 +1116,14 @@
                 <div tabindex="0" role="region" aria-label="Bảng chọn hạng mục báo giá" class="hidden md:block overflow-x-auto custom-scroll border rounded-xl border-slate-200 max-h-[540px]">
                   <table class="w-full text-left border-collapse text-xs">
                     <thead class="sticky top-0 bg-[#1E293B] text-white z-10 shadow-xs">
-                      <tr class="text-[10.5px] uppercase font-bold tracking-wider">
-                        <th class="py-2 px-2 text-center w-9">Chọn</th>
-                        <th class="py-2 px-1.5 w-9 text-center">STT</th>
-                        <th class="py-2 px-2.5">Hạng mục vật tư / Thiết bị</th>
-                        <th class="py-2 px-1.5 w-14 text-center">ĐVT</th>
-                        <th class="py-2 px-2 w-28 text-center">Khối lượng</th>
-                        <th class="py-2 px-2.5 w-26 text-right">Đơn giá</th>
-                        <th class="py-2 px-2.5 w-28 text-right">Thành tiền</th>
+                      <tr class="text-[11px] uppercase font-bold tracking-wider">
+                        <th class="py-3 px-2.5 text-center w-11">Chọn</th>
+                        <th class="py-3 px-2 w-11 text-center">STT</th>
+                        <th class="py-3 px-3">Hạng mục vật tư / Thiết bị</th>
+                        <th class="py-3 px-2 w-20 text-center">ĐVT</th>
+                        <th class="py-3 px-2.5 w-32 text-center">Khối lượng</th>
+                        <th class="py-3 px-3 w-32 text-right">Đơn giá</th>
+                        <th class="py-3 px-3 w-32 text-right">Thành tiền</th>
                       </tr>
                     </thead>
                     <tbody id="quoteItemsTableBody" class="divide-y divide-slate-100 bg-white">
@@ -1183,23 +1138,23 @@
                 </div>
 
                 <!-- Thanh tổng kết & Nút Lưu & Tạo Báo Giá dưới chân bảng -->
-                <div class="mt-3 bg-[#1E293B] text-white p-3.5 rounded-xl flex flex-col sm:flex-row items-center justify-between gap-3 shadow-md">
+                <div class="mt-4 bg-[#1E293B] text-white p-4 rounded-xl flex flex-col sm:flex-row items-center justify-between gap-3 shadow-md">
                   <div class="flex flex-wrap items-center gap-3 text-xs w-full sm:w-auto justify-between sm:justify-start">
                     <span class="text-slate-300">Đã chọn: <b id="statSelectedItems" class="text-white">47</b>/<span id="statTotalItems">47</span></span>
                     <span class="text-slate-300">Trước thuế: <b id="statSubtotal" class="text-white tabular-nums">190.010.000 đ</b></span>
                     <span class="text-slate-300 hidden sm:inline">VAT (<span id="statVatPercent">8%</span>): <b id="statVatAmount" class="text-white tabular-nums">15.200.800 đ</b></span>
-                    <div class="bg-white/10 border border-white/15 px-2.5 py-1 rounded-lg">
+                    <div class="bg-white/10 border border-white/15 px-3 py-1 rounded-lg">
                       <span class="text-slate-300 text-[11px]">Tổng cộng:</span>
                       <span id="statGrandTotal" class="text-sm font-black text-white ml-1 tabular-nums">205.210.800 đ</span>
                     </div>
                   </div>
 
                   <div class="flex items-center gap-2 w-full sm:w-auto">
-                    <button type="button" id="btnBottomSaveQuote" onclick="saveCurrentQuotation()" class="flex-1 sm:flex-none px-4 py-2 rounded-xl bg-gradient-to-r from-[#D62828] to-[#B91C1C] hover:from-[#B91C1C] hover:to-[#991B1B] text-white font-extrabold text-xs shadow-md transition flex items-center justify-center gap-1.5">
+                    <button type="button" id="btnBottomSaveQuote" onclick="saveCurrentQuotation()" class="flex-1 sm:flex-none px-5 py-2.5 rounded-xl bg-gradient-to-r from-[#D62828] to-[#B91C1C] hover:from-[#B91C1C] hover:to-[#991B1B] text-white font-extrabold text-xs shadow-md transition flex items-center justify-center gap-1.5">
                       <i class="fa-solid fa-floppy-disk"></i>
                       <span id="btnBottomSaveText">Lưu & Tạo Báo Giá</span>
                     </button>
-                    <button type="button" id="btnBottomPrintAfterSave" onclick="handlePrint()" class="hidden px-3.5 py-2 rounded-xl bg-white text-[#0F172A] hover:bg-slate-100 font-extrabold text-xs shadow-md transition items-center justify-center gap-1.5">
+                    <button type="button" id="btnBottomPrintAfterSave" onclick="handlePrint()" class="hidden px-4 py-2.5 rounded-xl bg-white text-[#0F172A] hover:bg-slate-100 font-extrabold text-xs shadow-md transition items-center justify-center gap-1.5">
                       <i class="fa-solid fa-print text-[#D62828]"></i>
                       <span>In Ngay</span>
                     </button>
@@ -1208,25 +1163,25 @@
               </div>
             </div>
 
-            <!-- CỘT PHẢI (5/12): KHUNG XEM TRƯỚC BẢN IN A4 TRỰC TIẾP (LUÔN NẰM CẠNH FORM TỪ MÀN HÌNH LG) -->
+            <!-- CỘT PHẢI (5/12): KHUNG XEM TRƯỚC BẢN IN A4 TRỰC TIẾP (BẮT ĐẦU NGAY TỪ ĐỈNH TRANG, TỰ ĐỘNG PHÓNG VỪA KHÍT KHUNG) -->
             <div id="sectionPreview" class="lg:col-span-5 lg:sticky lg:top-4 print:block min-w-0">
-              <div class="no-print bg-[#1E293B] text-white px-3.5 py-2.5 rounded-t-2xl border border-slate-700 flex flex-wrap items-center justify-between gap-2 shadow-md">
-                <div class="flex items-center gap-2">
-                  <span class="w-2 h-2 rounded-full bg-[#D62828] animate-pulse"></span>
+              <div class="no-print bg-[#1E293B] text-white px-4 py-3 rounded-t-2xl border border-slate-700 flex flex-wrap items-center justify-between gap-2 shadow-sm">
+                <div class="flex items-center gap-2.5">
+                  <span class="w-2.5 h-2.5 rounded-full bg-[#D62828] animate-pulse"></span>
                   <span class="text-xs font-extrabold uppercase tracking-wider">Bản Xem Trước A4 Trực Tiếp</span>
-                  <span id="livePreviewPageCount" class="text-[10px] font-bold px-2 py-0.5 rounded-md bg-slate-800 text-slate-200 border border-slate-700">3 trang</span>
+                  <span id="livePreviewPageCount" class="text-[10.5px] font-bold px-2.5 py-0.5 rounded-md bg-slate-800 text-slate-200 border border-slate-700">3 trang A4</span>
                 </div>
                 <div class="flex items-center gap-1.5">
-                  <button type="button" onclick="togglePreviewZoomMode()" id="btnZoomMode" class="px-2.5 py-1 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200 text-[11px] font-semibold border border-slate-700 transition flex items-center gap-1" title="Chuyển chế độ thu phóng">
+                  <button type="button" onclick="togglePreviewZoomMode()" id="btnZoomMode" class="px-2.5 py-1 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200 text-[11px] font-semibold border border-slate-700 transition flex items-center gap-1.5" title="Chuyển chế độ thu phóng">
                     <i class="fa-solid fa-magnifying-glass-plus text-[10px] text-slate-300"></i>
                     <span id="zoomModeLabel">Vừa khung</span>
                   </button>
                 </div>
               </div>
 
-              <!-- Khung cuộn hiển thị các tờ giấy A4 thời gian thực -->
-              <div id="livePreviewViewport" class="bg-slate-800/90 border-x border-b border-slate-800 rounded-b-2xl p-2.5 sm:p-3 max-h-[calc(100vh-120px)] overflow-y-auto custom-scroll shadow-inner flex flex-col items-center">
-                <div id="pagesContainer" class="space-y-4 print:space-y-0">
+              <!-- Khung nền xám sáng thanh lịch hiển thị tờ giấy A4 vừa khít chiều ngang cột phải -->
+              <div id="livePreviewViewport" class="bg-[#E2E8F0] border-x border-b border-slate-300 rounded-b-2xl p-3 sm:p-4 max-h-[calc(100vh-88px)] overflow-y-auto custom-scroll shadow-inner flex flex-col items-center">
+                <div id="pagesContainer" class="space-y-5 print:space-y-0">
                   <!-- Rendered dynamically by renderPreview() -->
                 </div>
               </div>
@@ -3842,39 +3797,39 @@
 
         const qtyStepperHtml = `
           <div class="inline-flex items-center border border-slate-300 rounded-lg bg-white overflow-hidden shadow-2xs">
-            <button type="button" onclick="stepItemQty(${index}, -1)" class="w-6 h-6 flex items-center justify-center text-slate-500 hover:bg-slate-100 hover:text-[#0F172A] transition text-[10px]">
+            <button type="button" onclick="stepItemQty(${index}, -1)" class="w-7 h-7 flex items-center justify-center text-slate-500 hover:bg-slate-100 hover:text-[#0F172A] transition text-[10px]">
               <i class="fa-solid fa-minus"></i>
             </button>
-            <input type="number" value="${item.quantity}" min="1" onchange="updateItemField(${index}, 'quantity', Math.max(1, parseFloat(this.value) || 1))" class="w-11 h-6 text-center font-bold text-xs text-[#0F172A] border-x border-slate-200 focus:outline-none tabular-nums">
-            <button type="button" onclick="stepItemQty(${index}, 1)" class="w-6 h-6 flex items-center justify-center text-slate-500 hover:bg-slate-100 hover:text-[#D62828] transition text-[10px]">
+            <input type="number" value="${item.quantity}" min="1" onchange="updateItemField(${index}, 'quantity', Math.max(1, parseFloat(this.value) || 1))" class="w-12 h-7 text-center font-bold text-xs text-[#0F172A] border-x border-slate-200 focus:outline-none tabular-nums">
+            <button type="button" onclick="stepItemQty(${index}, 1)" class="w-7 h-7 flex items-center justify-center text-slate-500 hover:bg-slate-100 hover:text-[#D62828] transition text-[10px]">
               <i class="fa-solid fa-plus"></i>
             </button>
           </div>
         `;
 
         const priceCellHtml = isManager
-          ? `<input type="number" value="${item.price}" min="0" step="1000" onchange="updateItemField(${index}, 'price', parseFloat(this.value) || 0)" class="w-24 text-right font-bold text-xs text-[#0F172A] bg-white border border-slate-300 focus:border-[#D62828] focus:outline-none rounded-lg px-2 py-1 tabular-nums">`
-          : `<span class="text-[11px] font-semibold text-slate-700 tabular-nums">${formatVND(item.price)}</span>`;
+          ? `<input type="number" value="${item.price}" min="0" step="1000" onchange="updateItemField(${index}, 'price', parseFloat(this.value) || 0)" class="w-28 text-right font-bold text-xs text-[#0F172A] bg-white border border-slate-300 focus:border-[#D62828] focus:outline-none rounded-lg px-2.5 py-1.5 tabular-nums">`
+          : `<span class="text-xs font-semibold text-slate-700 tabular-nums">${formatVND(item.price)}</span>`;
 
         tr.innerHTML = `
-          <td class="py-2 px-2 text-center">
+          <td class="py-2.5 px-2.5 text-center">
             <input type="checkbox" ${item.selected ? 'checked' : ''} onchange="toggleItemSelect(${index}, this.checked)" class="w-4 h-4 rounded text-[#D62828] focus:ring-[#D62828] cursor-pointer">
           </td>
-          <td class="py-2 px-1.5 text-center text-xs font-semibold text-slate-400 tabular-nums">${displayIndex}</td>
-          <td class="py-2 px-2.5">
-            <div class="text-xs font-bold text-[#0F172A] leading-snug">${escapeHtml(item.name)}</div>
-            <div class="text-[10px] font-medium text-slate-400 truncate max-w-[260px]">${escapeHtml(item.category)}</div>
+          <td class="py-2.5 px-2 text-center text-xs font-bold text-slate-400 tabular-nums">${displayIndex}</td>
+          <td class="py-2.5 px-3">
+            <div class="text-xs sm:text-[13px] font-bold text-[#0F172A] leading-snug">${escapeHtml(item.name)}</div>
+            <div class="text-[11px] font-medium text-slate-400 mt-0.5">${escapeHtml(item.category)}</div>
           </td>
-          <td class="py-2 px-1.5 text-center">
-            <span class="text-[11px] text-slate-600 font-medium bg-slate-100 px-2 py-0.5 rounded">${escapeHtml(item.unit)}</span>
+          <td class="py-2.5 px-2 text-center">
+            <span class="text-xs text-slate-600 font-semibold bg-slate-100 px-2.5 py-0.5 rounded-md border border-slate-200/70">${escapeHtml(item.unit)}</span>
           </td>
-          <td class="py-2 px-2 text-center">
+          <td class="py-2.5 px-2.5 text-center">
             ${qtyStepperHtml}
           </td>
-          <td class="py-2 px-2.5 text-right">
+          <td class="py-2.5 px-3 text-right">
             ${priceCellHtml}
           </td>
-          <td class="py-2 px-2.5 text-right font-extrabold text-[#0F172A] text-xs tabular-nums">
+          <td class="py-2.5 px-3 text-right font-extrabold text-[#0F172A] text-xs sm:text-[13px] tabular-nums">
             ${formatVND(subtotal)}
           </td>
         `;
@@ -4456,7 +4411,7 @@
       }
     }
 
-    // Tự động thu phóng tờ A4 (210mm x 297mm = 794px x 1123px) vừa khít khung Live Preview bên phải hoặc màn hình điện thoại
+    // Tự động thu phóng tờ A4 (210mm x 297mm = 794px x 1123px) vừa khít khung Live Preview bên phải (cả phóng to trên màn hình rộng lẫn thu nhỏ trên laptop/mobile)
     function updateMobileA4Scale() {
       const wrappers = document.querySelectorAll('.a4-page-scale-wrapper');
       if (!wrappers.length) return;
@@ -4465,7 +4420,7 @@
       const a4HeightPx = 1123; // 297mm ở 96 DPI
       const viewportEl = document.getElementById('livePreviewViewport');
 
-      if (previewZoomMode === 'actual' && window.innerWidth >= 820) {
+      if ((previewZoomMode === '100' || previewZoomMode === 'actual') && window.innerWidth >= 820) {
         resetA4ScaleForPrint();
         return;
       }
@@ -4476,9 +4431,9 @@
       }
 
       const availableW = Math.max(250, containerWidth - 28);
-      const scale = Math.min(1, Math.max(0.32, availableW / a4WidthPx));
+      const scale = Math.min(1.4, Math.max(0.32, availableW / a4WidthPx));
 
-      if (scale < 0.995) {
+      if (Math.abs(scale - 1) > 0.008) {
         const scaledW = Math.ceil(a4WidthPx * scale);
         const scaledH = Math.ceil(a4HeightPx * scale);
 
