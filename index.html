@@ -445,37 +445,65 @@
       </div>
 
       <form onsubmit="submitAddItemModal(event)" class="p-5 sm:p-6 space-y-4">
-        <div>
-          <label class="erp-label">
-            <i class="fa-solid fa-layer-group text-[#D62828]"></i>
-            <span>Phân nhóm hệ thống (Chọn nhóm có sẵn hoặc nhập nhóm mới)</span>
-          </label>
-          <input type="text" id="modalItemCategory" list="existingCategoriesList" required placeholder="VD: HỆ THỐNG GIAI ĐOẠN I - BÁO CHÁY" class="erp-input font-semibold">
-          <datalist id="existingCategoriesList"></datalist>
+        <div class="grid grid-cols-1 sm:grid-cols-12 gap-3">
+          <div class="sm:col-span-8">
+            <label class="erp-label">
+              <i class="fa-solid fa-layer-group text-[#D62828]"></i>
+              <span>Phân nhóm hệ thống <span class="text-[#D62828]">*</span></span>
+            </label>
+            <input type="text" id="modalItemCategory" list="existingCategoriesList" required placeholder="VD: Hệ thống báo cháy tự động" class="erp-input font-semibold">
+            <datalist id="existingCategoriesList"></datalist>
+          </div>
+          <div class="sm:col-span-4">
+            <label class="erp-label">
+              <i class="fa-solid fa-barcode text-slate-400"></i>
+              <span>Mã nhóm</span>
+            </label>
+            <input type="text" id="modalItemGroupCode" placeholder="FA, FE, SP..." class="erp-input uppercase font-bold text-center">
+          </div>
         </div>
 
         <div>
           <label class="erp-label">
-            <i class="fa-solid fa-screwdriver-wrench text-[#D62828]"></i>
-            <span>Tên sản phẩm, hạng mục vật tư thiết bị <span class="text-[#D62828]">*</span></span>
+            <i class="fa-solid fa-box text-[#D62828]"></i>
+            <span>Tên sản phẩm / thiết bị <span class="text-[#D62828]">*</span></span>
           </label>
-          <input type="text" id="modalItemName" required placeholder="VD: Kiểm tra, bảo dưỡng đầu báo khói địa chỉ" class="erp-input font-semibold">
+          <input type="text" id="modalItemName" required placeholder="VD: Bình bột ABC-MFZL4" class="erp-input font-semibold">
         </div>
 
-        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-          <div>
+        <div class="grid grid-cols-1 sm:grid-cols-12 gap-3">
+          <div class="sm:col-span-8">
+            <label class="erp-label">
+              <i class="fa-solid fa-language text-slate-400"></i>
+              <span>Tên tiếng Anh (English Name)</span>
+            </label>
+            <input type="text" id="modalItemNameEn" placeholder="VD: ABC Dry Powder Extinguisher" class="erp-input text-xs">
+          </div>
+          <div class="sm:col-span-4">
             <label class="erp-label">
               <i class="fa-solid fa-scale-balanced text-slate-400"></i>
               <span>Đơn vị tính (ĐVT) <span class="text-[#D62828]">*</span></span>
             </label>
-            <input type="text" id="modalItemUnit" required value="Chiếc" placeholder="Chiếc, Bộ, HT..." class="erp-input text-center font-semibold">
+            <input type="text" id="modalItemUnit" required value="Cái" placeholder="Cái, Bình, Cuộn..." class="erp-input text-center font-semibold">
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3.5 p-3.5 rounded-2xl bg-slate-50 border border-slate-200">
+          <div>
+            <label class="erp-label text-blue-700">
+              <i class="fa-solid fa-wrench text-blue-600"></i>
+              <span>Đơn giá Bảo Dưỡng (VNĐ)</span>
+            </label>
+            <input type="number" id="modalItemPriceMaintenance" min="0" step="1000" value="0" placeholder="0" class="erp-input text-right font-bold text-blue-700 tabular-nums">
+            <span class="text-[10.5px] text-slate-400 mt-1 block">Chi phí kiểm tra, bảo trì, nạp sạc</span>
           </div>
           <div>
-            <label class="erp-label">
-              <i class="fa-solid fa-tag text-[#D62828]"></i>
-              <span>Đơn giá niêm yết (VNĐ) <span class="text-[#D62828]">*</span></span>
+            <label class="erp-label text-amber-700">
+              <i class="fa-solid fa-box-open text-amber-600"></i>
+              <span>Đơn giá SP Mới / Vật Tư (VNĐ)</span>
             </label>
-            <input type="number" id="modalItemPrice" required min="0" step="1000" value="150000" class="erp-input text-right font-bold text-[#D62828] tabular-nums">
+            <input type="number" id="modalItemPriceNew" min="0" step="1000" value="0" placeholder="0" class="erp-input text-right font-bold text-amber-700 tabular-nums">
+            <span class="text-[10.5px] text-slate-400 mt-1 block">Chi phí cung cấp mua mới, thay thế</span>
           </div>
         </div>
 
@@ -1041,12 +1069,18 @@
                   </div>
 
                   <div class="flex flex-wrap items-center gap-2">
-                    <div class="relative w-full sm:w-56">
+                    <div class="relative w-full sm:w-52">
                       <span class="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none text-xs">
                         <i class="fa-solid fa-magnifying-glass"></i>
                       </span>
                       <input type="text" id="searchItemInput" oninput="filterTable()" placeholder="Tìm nhanh vật tư, thiết bị..." class="erp-input !pl-9 !pr-3 !py-2 text-xs">
                     </div>
+
+                    <select id="quoteTypeFilter" onchange="filterTable()" class="erp-input !py-2 !px-2.5 text-xs font-semibold cursor-pointer w-auto bg-slate-50 border-slate-200">
+                      <option value="ALL">-- Tất cả phân loại --</option>
+                      <option value="maintenance">🔧 Bảo dưỡng</option>
+                      <option value="new">✨ Sản phẩm mới</option>
+                    </select>
 
                     <label class="px-3 py-2 rounded-xl border border-slate-200 bg-slate-50 hover:bg-slate-100 cursor-pointer flex items-center gap-2 text-xs font-semibold text-slate-700 select-none transition">
                       <input type="checkbox" id="onlySelectedFilter" onchange="filterTable()" class="w-4 h-4 rounded text-[#D62828] focus:ring-[#D62828]">
@@ -1114,6 +1148,7 @@
                         <th class="py-3.5 px-3 text-center w-12">Chọn</th>
                         <th class="py-3.5 px-2.5 w-12 text-center">STT</th>
                         <th class="py-3.5 px-3.5 min-w-[210px]">Hạng mục vật tư / Thiết bị</th>
+                        <th class="py-3.5 px-3 w-36 text-center">Phân loại</th>
                         <th class="py-3.5 px-2.5 w-20 text-center">ĐVT</th>
                         <th class="py-3.5 px-3 w-32 text-center">Số lượng</th>
                         <th class="py-3.5 px-3.5 w-32 text-right">Đơn giá (đ)</th>
@@ -1306,11 +1341,22 @@
                   <option value="ALL">-- Tất cả phân nhóm hệ thống --</option>
                 </select>
               </div>
-              <div class="md:col-span-7 relative">
+              <div class="md:col-span-3 relative">
+                <span class="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400 text-xs">
+                  <i class="fa-solid fa-filter"></i>
+                </span>
+                <select id="productManagerTypeFilter" onchange="renderProductCatalogManager()" class="erp-input pl-9 py-2 text-xs font-semibold cursor-pointer">
+                  <option value="ALL">-- Tất cả phân loại --</option>
+                  <option value="maintenance">🔧 Chỉ SP có giá Bảo dưỡng</option>
+                  <option value="new">✨ Chỉ SP có giá Mua mới</option>
+                  <option value="both">⚡ Có cả 2 mức giá</option>
+                </select>
+              </div>
+              <div class="md:col-span-4 relative">
                 <span class="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400 text-xs">
                   <i class="fa-solid fa-magnifying-glass"></i>
                 </span>
-                <input type="text" id="productManagerSearchInput" oninput="renderProductCatalogManager()" placeholder="Tìm kiếm tên sản phẩm, vật tư, đầu báo, bình chữa cháy..." class="erp-input pl-9 py-2 text-xs">
+                <input type="text" id="productManagerSearchInput" oninput="renderProductCatalogManager()" placeholder="Tìm kiếm tên, tiếng Anh, mã nhóm..." class="erp-input pl-9 py-2 text-xs">
               </div>
             </div>
 
@@ -1318,12 +1364,23 @@
               <table class="w-full text-left border-collapse text-xs">
                 <thead class="sticky top-0 bg-[#F8FAFC] text-slate-600 uppercase font-extrabold text-[10.5px] tracking-wider border-b border-slate-200 z-10">
                   <tr>
-                    <th class="py-3.5 px-3 w-14 text-center">STT</th>
-                    <th class="py-3.5 px-4">Tên Sản Phẩm / Hạng Mục Vật Tư Thiết Bị</th>
-                    <th class="py-3.5 px-4 w-72">Phân Nhóm Hệ Thống</th>
-                    <th class="py-3.5 px-3 w-28 text-center">ĐVT</th>
-                    <th class="py-3.5 px-4 w-44 text-right">Đơn Giá Niêm Yết (VNĐ)</th>
-                    <th id="thAdminDeleteCol" class="py-3.5 px-3 w-16 text-center">Xóa</th>
+                    <th class="py-3.5 px-3 w-16 text-center">STT / Mã</th>
+                    <th class="py-3.5 px-4 min-w-[200px]">Tên Sản Phẩm / Hạng Mục</th>
+                    <th class="py-3.5 px-4 w-60">Phân Nhóm Hệ Thống</th>
+                    <th class="py-3.5 px-2.5 w-20 text-center">ĐVT</th>
+                    <th class="py-3.5 px-3.5 w-40 text-right bg-blue-50/70 text-blue-800 border-x border-blue-100">
+                      <div class="flex items-center justify-end gap-1">
+                        <i class="fa-solid fa-wrench text-[10px]"></i>
+                        <span>Giá Bảo Dưỡng</span>
+                      </div>
+                    </th>
+                    <th class="py-3.5 px-3.5 w-40 text-right bg-amber-50/70 text-amber-800 border-r border-amber-100">
+                      <div class="flex items-center justify-end gap-1">
+                        <i class="fa-solid fa-box-open text-[10px]"></i>
+                        <span>Giá SP Mới / Vật Tư</span>
+                      </div>
+                    </th>
+                    <th id="thAdminDeleteCol" class="py-3.5 px-3 w-14 text-center">Xóa</th>
                   </tr>
                 </thead>
                 <tbody id="productCatalogManagerBody" class="divide-y divide-slate-100 bg-white">
@@ -2084,13 +2141,27 @@
       }
 
       // Mặc định số lượng = 0 và chưa chọn mục nào khi mở phiên làm việc mới
-      itemsData = JSON.parse(JSON.stringify(masterData.catalog)).map(item => ({
-        ...item,
-        selected: false,
-        quantity: 0,
-        note: item.note || '',
-        price: item.default_price !== undefined ? item.default_price : (item.price || 0)
-      }));
+      itemsData = JSON.parse(JSON.stringify(masterData.catalog)).map(item => {
+        const pMaint = parseFloat(item.price_maintenance) || 0;
+        const pNew = parseFloat(item.price_new) || 0;
+        const defaultType = (pMaint > 0 || pNew === 0) ? 'maintenance' : 'new';
+        const defaultPrice = (defaultType === 'new')
+          ? (pNew || item.default_price || item.price || 0)
+          : (pMaint || item.default_price || item.price || 0);
+
+        return {
+          ...item,
+          group_code: item.group_code || '',
+          name_en: item.name_en || '',
+          price_maintenance: pMaint,
+          price_new: pNew,
+          item_type: item.item_type || defaultType,
+          price: defaultPrice,
+          selected: false,
+          quantity: 0,
+          note: item.note || ''
+        };
+      });
 
       initCategoryFilter();
       renderFormTable();
@@ -2454,13 +2525,27 @@
       document.getElementById('inputQuoteDate').value = formatTodayVietnamese();
 
       // Mặc định toàn bộ số lượng = 0 hết khi khởi tạo báo giá mới
-      itemsData = JSON.parse(JSON.stringify(masterData.catalog)).map(item => ({
-        ...item,
-        selected: false,
-        quantity: 0,
-        note: '',
-        price: item.default_price !== undefined ? item.default_price : (item.price || 0)
-      }));
+      itemsData = JSON.parse(JSON.stringify(masterData.catalog)).map(item => {
+        const pMaint = parseFloat(item.price_maintenance) || 0;
+        const pNew = parseFloat(item.price_new) || 0;
+        const defaultType = (pMaint > 0 || pNew === 0) ? 'maintenance' : 'new';
+        const defaultPrice = (defaultType === 'new')
+          ? (pNew || item.default_price || item.price || 0)
+          : (pMaint || item.default_price || item.price || 0);
+
+        return {
+          ...item,
+          group_code: item.group_code || '',
+          name_en: item.name_en || '',
+          price_maintenance: pMaint,
+          price_new: pNew,
+          item_type: item.item_type || defaultType,
+          price: defaultPrice,
+          selected: false,
+          quantity: 0,
+          note: ''
+        };
+      });
 
       setQuoteSavedState(false, 'Bản nháp mới chưa lưu');
       switchTab('form');
@@ -2784,6 +2869,7 @@
       if (!tbody) return;
 
       const catFilter = document.getElementById('productManagerCategoryFilter')?.value || 'ALL';
+      const typeFilter = document.getElementById('productManagerTypeFilter')?.value || 'ALL';
       const searchTxt = (document.getElementById('productManagerSearchInput')?.value || '').toLowerCase().trim();
       const isManager = isManagerRole();
 
@@ -2792,26 +2878,50 @@
 
       itemsData.forEach((item, index) => {
         if (catFilter !== 'ALL' && item.category !== catFilter) return;
-        if (searchTxt && !item.name.toLowerCase().includes(searchTxt) && !item.category.toLowerCase().includes(searchTxt)) return;
+
+        const pMaint = parseFloat(item.price_maintenance) || 0;
+        const pNew = parseFloat(item.price_new) || 0;
+        if (typeFilter === 'maintenance' && pMaint <= 0) return;
+        if (typeFilter === 'new' && pNew <= 0) return;
+        if (typeFilter === 'both' && (pMaint <= 0 || pNew <= 0)) return;
+
+        if (searchTxt &&
+            !item.name.toLowerCase().includes(searchTxt) &&
+            !String(item.name_en || '').toLowerCase().includes(searchTxt) &&
+            !item.category.toLowerCase().includes(searchTxt) &&
+            !String(item.group_code || '').toLowerCase().includes(searchTxt)) {
+          return;
+        }
 
         displaySeq++;
         const tr = document.createElement('tr');
         tr.className = 'hover:bg-slate-50 transition';
 
+        const codeBadge = item.group_code
+          ? `<span class="px-1.5 py-0.5 rounded bg-slate-100 text-slate-600 font-extrabold text-[10px] border border-slate-200">${escapeHtml(item.group_code)}</span>`
+          : '';
+
         if (isManager) {
           tr.innerHTML = `
-            <td class="py-3 px-3 text-center font-bold text-slate-400 tabular-nums">${displaySeq}</td>
-            <td class="py-3 px-4">
-              <input type="text" value="${escapeHtml(item.name)}" onchange="updateItemField(${index}, 'name', this.value)" class="w-full text-xs font-bold text-[#0F172A] bg-slate-50/70 hover:bg-white focus:bg-white border border-slate-200 focus:border-[#D62828] rounded-xl px-3 py-2 focus:outline-none">
+            <td class="py-3 px-3 text-center font-bold text-slate-400 tabular-nums">
+              <div>#${displaySeq}</div>
+              ${codeBadge ? `<div class="mt-0.5">${codeBadge}</div>` : ''}
             </td>
             <td class="py-3 px-4">
-              <input type="text" list="existingCategoriesList" value="${escapeHtml(item.category)}" onchange="updateItemField(${index}, 'category', this.value)" class="w-full text-xs font-semibold text-slate-700 bg-slate-50/70 hover:bg-white focus:bg-white border border-slate-200 focus:border-[#D62828] rounded-xl px-3 py-2 focus:outline-none">
+              <input type="text" value="${escapeHtml(item.name)}" onchange="updateItemField(${index}, 'name', this.value)" class="w-full text-xs font-bold text-[#0F172A] bg-slate-50/70 hover:bg-white focus:bg-white border border-slate-200 focus:border-[#D62828] rounded-xl px-3 py-1.5 focus:outline-none">
+              <input type="text" value="${escapeHtml(item.name_en || '')}" placeholder="Tên tiếng Anh (English name)..." onchange="updateItemField(${index}, 'name_en', this.value)" class="w-full text-[11px] italic text-slate-500 bg-transparent hover:bg-white focus:bg-white border-b border-transparent focus:border-slate-300 px-2 py-0.5 mt-1 focus:outline-none">
             </td>
-            <td class="py-3 px-3 text-center">
-              <input type="text" value="${escapeHtml(item.unit)}" onchange="updateItemField(${index}, 'unit', this.value)" class="w-24 text-center text-xs font-semibold text-slate-700 bg-slate-50/70 focus:bg-white border border-slate-200 focus:border-[#D62828] rounded-xl px-2.5 py-2 focus:outline-none">
+            <td class="py-3 px-4">
+              <input type="text" list="existingCategoriesList" value="${escapeHtml(item.category)}" onchange="updateItemField(${index}, 'category', this.value)" class="w-full text-xs font-semibold text-slate-700 bg-slate-50/70 hover:bg-white focus:bg-white border border-slate-200 focus:border-[#D62828] rounded-xl px-3 py-1.5 focus:outline-none">
             </td>
-            <td class="py-3 px-4 text-right">
-              <input type="number" min="0" step="1000" value="${item.price}" onchange="updateItemField(${index}, 'price', Math.max(0, parseFloat(this.value) || 0))" class="w-36 text-right text-xs font-extrabold text-[#D62828] bg-white border border-slate-300 focus:border-[#D62828] rounded-xl px-3 py-2 tabular-nums focus:outline-none">
+            <td class="py-3 px-2 text-center">
+              <input type="text" value="${escapeHtml(item.unit)}" onchange="updateItemField(${index}, 'unit', this.value)" class="w-20 text-center text-xs font-semibold text-slate-700 bg-slate-50/70 focus:bg-white border border-slate-200 focus:border-[#D62828] rounded-xl px-2 py-1.5 focus:outline-none">
+            </td>
+            <td class="py-3 px-3 text-right bg-blue-50/20">
+              <input type="number" min="0" step="1000" value="${item.price_maintenance || 0}" onchange="updateItemPriceMaintenance(${index}, Math.max(0, parseFloat(this.value) || 0))" class="w-32 text-right text-xs font-extrabold text-blue-700 bg-white border border-blue-200 focus:border-blue-500 rounded-xl px-2.5 py-1.5 tabular-nums focus:outline-none">
+            </td>
+            <td class="py-3 px-3 text-right bg-amber-50/20">
+              <input type="number" min="0" step="1000" value="${item.price_new || 0}" onchange="updateItemPriceNew(${index}, Math.max(0, parseFloat(this.value) || 0))" class="w-32 text-right text-xs font-extrabold text-amber-700 bg-white border border-amber-200 focus:border-amber-500 rounded-xl px-2.5 py-1.5 tabular-nums focus:outline-none">
             </td>
             <td class="py-3 px-3 text-center">
               <button type="button" onclick="deleteItem(${index})" class="w-8 h-8 rounded-xl text-slate-400 hover:text-[#D62828] hover:bg-red-50 transition inline-flex items-center justify-center" title="Xóa sản phẩm khỏi danh mục">
@@ -2821,22 +2931,64 @@
           `;
         } else {
           tr.innerHTML = `
-            <td class="py-3.5 px-3 text-center font-bold text-slate-400 tabular-nums">${displaySeq}</td>
-            <td class="py-3.5 px-4 font-bold text-[#0F172A]">${escapeHtml(item.name)}</td>
+            <td class="py-3.5 px-3 text-center font-bold text-slate-400 tabular-nums">
+              <div>#${displaySeq}</div>
+              ${codeBadge ? `<div class="mt-0.5">${codeBadge}</div>` : ''}
+            </td>
+            <td class="py-3.5 px-4">
+              <div class="font-bold text-[#0F172A]">${escapeHtml(item.name)}</div>
+              ${item.name_en ? `<div class="text-[11px] italic text-slate-400">${escapeHtml(item.name_en)}</div>` : ''}
+            </td>
             <td class="py-3.5 px-4">
               <span class="px-2.5 py-1 rounded-lg bg-slate-100 text-slate-700 font-semibold text-[11px] border border-slate-200">${escapeHtml(item.category)}</span>
             </td>
-            <td class="py-3.5 px-3 text-center font-semibold text-slate-600">${escapeHtml(item.unit)}</td>
-            <td class="py-3.5 px-4 text-right font-extrabold text-[#0F172A] tabular-nums">
-              <span class="px-3 py-1 rounded-lg bg-slate-100 border border-slate-200 inline-flex items-center gap-1.5">
-                <i class="fa-solid fa-lock text-[9px] text-slate-400"></i>
-                ${formatVND(item.price)} đ
+            <td class="py-3.5 px-2 text-center font-semibold text-slate-600">${escapeHtml(item.unit)}</td>
+            <td class="py-3.5 px-3 text-right tabular-nums bg-blue-50/20">
+              <span class="px-2 py-1 rounded-lg font-bold text-xs ${pMaint > 0 ? 'bg-blue-50 text-blue-700 border border-blue-200' : 'text-slate-400'}">
+                ${pMaint > 0 ? formatVND(pMaint) + ' đ' : '—'}
               </span>
             </td>
+            <td class="py-3.5 px-3 text-right tabular-nums bg-amber-50/20">
+              <span class="px-2 py-1 rounded-lg font-bold text-xs ${pNew > 0 ? 'bg-amber-50 text-amber-700 border border-amber-200' : 'text-slate-400'}">
+                ${pNew > 0 ? formatVND(pNew) + ' đ' : '—'}
+              </span>
+            </td>
+            <td class="py-3.5 px-3 text-center text-slate-300">—</td>
           `;
         }
         tbody.appendChild(tr);
       });
+
+      const badge = document.getElementById('productsHeaderCountBadge');
+      if (badge) {
+        badge.textContent = `${itemsData.length} sản phẩm`;
+      }
+    }
+
+    function updateItemPriceMaintenance(index, val) {
+      if (!isManagerRole()) return;
+      itemsData[index].price_maintenance = val;
+      if (itemsData[index].item_type !== 'new') {
+        itemsData[index].price = val;
+      }
+      setQuoteSavedState(false);
+      saveMasterSystemData(false);
+      renderFormTable();
+      updateFormSummary();
+      scheduleLivePreview();
+    }
+
+    function updateItemPriceNew(index, val) {
+      if (!isManagerRole()) return;
+      itemsData[index].price_new = val;
+      if (itemsData[index].item_type === 'new') {
+        itemsData[index].price = val;
+      }
+      setQuoteSavedState(false);
+      saveMasterSystemData(false);
+      renderFormTable();
+      updateFormSummary();
+      scheduleLivePreview();
     }
 
     async function saveMasterSystemData(notify = true) {
@@ -2857,11 +3009,15 @@
 
       masterData.catalog = itemsData.map(it => ({
         id: it.id,
+        group_code: it.group_code || '',
         category: it.category,
         name: it.name,
+        name_en: it.name_en || '',
         unit: it.unit,
+        price_maintenance: parseFloat(it.price_maintenance) || 0,
+        price_new: parseFloat(it.price_new) || 0,
         default_qty: 0,
-        default_price: it.price
+        default_price: parseFloat(it.price_maintenance) || parseFloat(it.price_new) || (it.price || 0)
       }));
 
       masterData.updatedAt = new Date().toISOString();
@@ -3776,10 +3932,17 @@
     function shortenCategoryLabel(catName) {
       if (!catName) return '';
       return catName
-        .replace(/^Hệ thống Giai đoạn\s+/i, 'GĐ ')
-        .replace(/^HỆ THỐNG GIAI ĐOẠN\s+/i, 'GĐ ')
+        .replace(/^Hệ thống báo cháy tự động/i, 'Báo cháy')
+        .replace(/^Hệ thống họng nước chữa cháy/i, 'Họng nước')
+        .replace(/^Hệ thống chữa cháy Sprinkler/i, 'Sprinkler')
+        .replace(/^Hệ thống bơm chữa cháy và tủ điều khiển/i, 'Bơm & Tủ ĐK')
+        .replace(/^Bình chữa cháy xách tay và tự động/i, 'Bình chữa cháy')
+        .replace(/^Hệ thống chữa cháy bằng khí/i, 'Chữa cháy khí')
+        .replace(/^Chiếu sáng sự cố và chỉ dẫn thoát nạn/i, 'Sự cố & Thoát nạn')
+        .replace(/^Bể nước và hạ tầng cấp nước chữa cháy/i, 'Bể & Cấp nước')
+        .replace(/^Chi phí phụ trợ và dịch vụ/i, 'Phụ trợ & Dịch vụ')
         .replace(/^Hệ thống\s+/i, 'HT ')
-        .replace(/^Xưởng số\s+/i, 'Xưởng ');
+        .replace(/^Chi phí\s+/i, '');
     }
 
     function initCategoryFilter() {
@@ -3946,10 +4109,55 @@
       scheduleLivePreview();
     }
 
+    function changeItemType(index, newType) {
+      const item = itemsData[index];
+      if (!item) return;
+      item.item_type = newType;
+      if (newType === 'new') {
+        if (parseFloat(item.price_new) > 0) {
+          item.price = parseFloat(item.price_new);
+        }
+      } else {
+        if (parseFloat(item.price_maintenance) > 0) {
+          item.price = parseFloat(item.price_maintenance);
+        }
+      }
+      setQuoteSavedState(false);
+      renderFormTable();
+      updateFormSummary();
+      scheduleLivePreview();
+    }
+
+    function duplicateItemWithAlternateType(index) {
+      const src = itemsData[index];
+      if (!src) return;
+      const targetType = (src.item_type === 'new') ? 'maintenance' : 'new';
+      const targetPrice = (targetType === 'new')
+        ? (parseFloat(src.price_new) || parseFloat(src.price) || 0)
+        : (parseFloat(src.price_maintenance) || parseFloat(src.price) || 0);
+
+      const clone = {
+        ...JSON.parse(JSON.stringify(src)),
+        id: 'dup_' + Date.now() + '_' + Math.floor(Math.random() * 1000),
+        item_type: targetType,
+        price: targetPrice,
+        quantity: 0,
+        selected: false,
+        note: ''
+      };
+      itemsData.splice(index + 1, 0, clone);
+      setQuoteSavedState(false);
+      renderFormTable();
+      updateFormSummary();
+      scheduleLivePreview();
+      showToast(`Đã thêm dòng "${src.name}" (${targetType === 'new' ? 'Sản phẩm mới' : 'Bảo dưỡng'})`);
+    }
+
     function renderFormTable() {
       const tbody = document.getElementById('quoteItemsTableBody');
       const mobileList = document.getElementById('quoteItemsMobileList');
       const catFilter = document.getElementById('categoryFilter')?.value || 'ALL';
+      const typeFilter = document.getElementById('quoteTypeFilter')?.value || 'ALL';
       const searchTxt = (document.getElementById('searchItemInput')?.value || '').toLowerCase().trim();
       const onlySelected = document.getElementById('onlySelectedFilter') && document.getElementById('onlySelectedFilter').checked;
       const isManager = isManagerRole();
@@ -3964,16 +4172,21 @@
       itemsData.forEach((item, index) => {
         const qtyVal = parseFloat(item.quantity) || 0;
         const isItemActive = Boolean(item.selected && qtyVal > 0);
+        const isNewType = (item.item_type === 'new');
+
+        // Lọc theo phân loại
+        if (typeFilter === 'maintenance' && isNewType) return;
+        if (typeFilter === 'new' && !isNewType) return;
 
         // Nếu người dùng đang gõ ô tìm kiếm thì tìm trên toàn bộ danh mục để tiện tra cứu nhanh
         if (!searchTxt && catFilter !== 'ALL' && item.category !== catFilter) return;
         if (onlySelected && !isItemActive) return;
-        if (searchTxt && !item.name.toLowerCase().includes(searchTxt) && !item.category.toLowerCase().includes(searchTxt) && !String(item.note || '').toLowerCase().includes(searchTxt)) return;
+        if (searchTxt && !item.name.toLowerCase().includes(searchTxt) && !String(item.name_en || '').toLowerCase().includes(searchTxt) && !item.category.toLowerCase().includes(searchTxt) && !String(item.note || '').toLowerCase().includes(searchTxt)) return;
 
         displayIndex++;
         const subtotal = qtyVal * (parseFloat(item.price) || 0);
 
-        // 1. RENDER TRÊN BẢNG MÁY TÍNH (THOÁNG ĐÃNG, RÕ RÀNG, CÓ CỘT GHI CHÚ)
+        // 1. RENDER TRÊN BẢNG MÁY TÍNH (THOÁNG ĐÃNG, RÕ RÀNG, CÓ CỘT PHÂN LOẠI & GHI CHÚ)
         const tr = document.createElement('tr');
         tr.className = isItemActive
           ? "bg-red-50/20 hover:bg-red-50/40 transition"
@@ -3987,6 +4200,18 @@
             <input type="number" value="${qtyVal}" min="0" onchange="updateItemField(${index}, 'quantity', Math.max(0, parseFloat(this.value) || 0))" class="w-12 h-8 text-center font-extrabold text-xs ${isItemActive ? 'text-[#D62828] bg-white' : 'text-slate-500 bg-transparent'} border-x border-slate-200/80 focus:outline-none tabular-nums">
             <button type="button" onclick="stepItemQty(${index}, 1)" class="w-8 h-8 flex items-center justify-center text-slate-500 hover:bg-red-50 hover:text-[#D62828] transition text-[10px]">
               <i class="fa-solid fa-plus"></i>
+            </button>
+          </div>
+        `;
+
+        const typeColHtml = `
+          <div class="inline-flex items-center gap-1 justify-center">
+            <div class="inline-flex items-center rounded-lg p-0.5 bg-slate-100 border border-slate-200 shadow-2xs">
+              <button type="button" onclick="changeItemType(${index}, 'maintenance')" class="px-2 py-1 rounded text-[10px] font-extrabold transition ${!isNewType ? 'bg-blue-600 text-white shadow-2xs' : 'text-slate-500 hover:text-blue-600'}" title="Áp dụng giá bảo dưỡng">Bảo dưỡng</button>
+              <button type="button" onclick="changeItemType(${index}, 'new')" class="px-2 py-1 rounded text-[10px] font-extrabold transition ${isNewType ? 'bg-amber-600 text-white shadow-2xs' : 'text-slate-500 hover:text-amber-600'}" title="Áp dụng giá sản phẩm mới / vật tư">SP Mới</button>
+            </div>
+            <button type="button" onclick="duplicateItemWithAlternateType(${index})" class="w-6 h-6 rounded-lg text-slate-400 hover:text-[#D62828] hover:bg-red-50 flex items-center justify-center transition" title="Thêm dòng ${isNewType ? 'Bảo dưỡng' : 'SP Mới'} cho sản phẩm này">
+              <i class="fa-solid fa-plus text-[10px]"></i>
             </button>
           </div>
         `;
@@ -4006,7 +4231,11 @@
           <td class="py-3.5 px-2.5 text-center text-xs font-bold text-slate-400 tabular-nums">${displayIndex}</td>
           <td class="py-3.5 px-3.5">
             <div class="text-xs sm:text-[13px] font-bold ${isItemActive ? 'text-[#0F172A]' : 'text-slate-600'} leading-relaxed">${escapeHtml(item.name)}</div>
-            ${(catFilter === 'ALL' || searchTxt) ? `<div class="text-[11px] font-medium text-slate-400 mt-0.5">${escapeHtml(item.category)}</div>` : ''}
+            ${item.name_en ? `<div class="text-[11px] italic text-slate-400 leading-tight">${escapeHtml(item.name_en)}</div>` : ''}
+            ${(catFilter === 'ALL' || searchTxt) ? `<div class="text-[10.5px] font-medium text-slate-400 mt-0.5">${escapeHtml(item.category)}</div>` : ''}
+          </td>
+          <td class="py-3.5 px-3 text-center">
+            ${typeColHtml}
           </td>
           <td class="py-3.5 px-2.5 text-center">
             <span class="text-xs text-slate-600 font-semibold bg-slate-100 px-2.5 py-1 rounded-lg border border-slate-200/70">${escapeHtml(item.unit)}</span>
@@ -4040,21 +4269,33 @@
                 <span class="text-xs font-extrabold text-slate-400 tabular-nums shrink-0">#${displayIndex}</span>
                 <span class="text-[11px] font-bold text-slate-600 bg-slate-100 px-2.5 py-0.5 rounded-lg border border-slate-200/70 truncate">${escapeHtml(item.category)}</span>
               </label>
-              <span class="text-xs font-semibold text-slate-600 bg-slate-100 px-2.5 py-0.5 rounded-lg border border-slate-200/60 shrink-0">${escapeHtml(item.unit)}</span>
+              <div class="flex items-center gap-1.5 shrink-0">
+                <span class="text-xs font-semibold text-slate-600 bg-slate-100 px-2 py-0.5 rounded-lg border border-slate-200/60">${escapeHtml(item.unit)}</span>
+                <button type="button" onclick="duplicateItemWithAlternateType(${index})" class="w-6 h-6 rounded-lg text-slate-400 hover:text-[#D62828] hover:bg-red-50 flex items-center justify-center transition" title="Thêm dòng phân loại khác">
+                  <i class="fa-solid fa-plus text-[10px]"></i>
+                </button>
+              </div>
             </div>
 
-            <div class="text-sm font-bold text-[#0F172A] leading-relaxed">
-              ${escapeHtml(item.name)}
+            <div class="space-y-1">
+              <div class="text-sm font-bold text-[#0F172A] leading-relaxed">
+                ${escapeHtml(item.name)}
+              </div>
+              ${item.name_en ? `<div class="text-[11px] italic text-slate-400">${escapeHtml(item.name_en)}</div>` : ''}
             </div>
 
             <div class="flex items-center justify-between gap-2 pt-2 border-t border-slate-100">
-              <div>
-                <div class="text-[10px] font-semibold text-slate-400 uppercase">Đơn giá</div>
-                <div class="text-xs font-bold text-slate-700 tabular-nums mt-0.5">${formatVND(item.price)} đ</div>
+              <div class="flex items-center gap-2">
+                <div class="inline-flex items-center rounded-lg p-0.5 bg-slate-100 border border-slate-200">
+                  <button type="button" onclick="changeItemType(${index}, 'maintenance')" class="px-2 py-1 rounded text-[10px] font-bold ${!isNewType ? 'bg-blue-600 text-white' : 'text-slate-500'}">Bảo dưỡng</button>
+                  <button type="button" onclick="changeItemType(${index}, 'new')" class="px-2 py-1 rounded text-[10px] font-bold ${isNewType ? 'bg-amber-600 text-white' : 'text-slate-500'}">SP Mới</button>
+                </div>
+                <div>
+                  <div class="text-xs font-bold text-slate-700 tabular-nums">${formatVND(item.price)} đ</div>
+                </div>
               </div>
 
               <div class="text-center">
-                <div class="text-[10px] font-semibold text-slate-400 uppercase mb-1">Số lượng</div>
                 <div class="inline-flex items-center border border-slate-300 rounded-xl bg-white overflow-hidden shadow-2xs">
                   <button type="button" onclick="stepItemQty(${index}, -1)" class="w-8 h-8 flex items-center justify-center text-slate-600 active:bg-slate-100 transition text-xs">
                     <i class="fa-solid fa-minus"></i>
@@ -4065,6 +4306,7 @@
                   </button>
                 </div>
               </div>
+            </div>
 
               <div class="text-right">
                 <div class="text-[10px] font-semibold text-slate-400 uppercase">Thành tiền</div>
@@ -4125,7 +4367,7 @@
     }
 
     function updateItemField(index, field, value) {
-      if ((field === 'price' || field === 'name' || field === 'unit' || field === 'category') && !isManagerRole()) {
+      if ((field === 'price' || field === 'name' || field === 'unit' || field === 'category' || field === 'name_en' || field === 'price_maintenance' || field === 'price_new') && !isManagerRole()) {
         showToast('Nhân viên Sale chỉ được phép cập nhật Số lượng và Ghi chú!', true);
         renderFormTable();
         renderProductCatalogManager();
@@ -4146,7 +4388,7 @@
       renderProductCatalogManager();
       updateFormSummary();
       scheduleLivePreview();
-      if (isManagerRole() && (field === 'price' || field === 'name' || field === 'unit' || field === 'category')) {
+      if (isManagerRole() && (field === 'price' || field === 'name' || field === 'unit' || field === 'category' || field === 'name_en' || field === 'price_maintenance' || field === 'price_new')) {
         saveMasterSystemData(false);
       }
     }
@@ -4187,10 +4429,13 @@
       const currentCat = document.getElementById('productManagerCategoryFilter')?.value || document.getElementById('categoryFilter')?.value;
       document.getElementById('modalItemCategory').value = (currentCat && currentCat !== 'ALL')
         ? currentCat
-        : (itemsData[0]?.category || 'HỆ THỐNG GIAI ĐOẠN I - BÁO CHÁY');
+        : (itemsData[0]?.category || 'Hệ thống báo cháy tự động');
+      if (document.getElementById('modalItemGroupCode')) document.getElementById('modalItemGroupCode').value = '';
       document.getElementById('modalItemName').value = '';
-      document.getElementById('modalItemUnit').value = 'Chiếc';
-      document.getElementById('modalItemPrice').value = 150000;
+      if (document.getElementById('modalItemNameEn')) document.getElementById('modalItemNameEn').value = '';
+      document.getElementById('modalItemUnit').value = 'Cái';
+      if (document.getElementById('modalItemPriceMaintenance')) document.getElementById('modalItemPriceMaintenance').value = 0;
+      if (document.getElementById('modalItemPriceNew')) document.getElementById('modalItemPriceNew').value = 0;
       modal.classList.remove('hidden');
       modal.classList.add('flex');
       setTimeout(() => document.getElementById('modalItemName').focus(), 80);
@@ -4207,21 +4452,32 @@
       if (!isManagerRole()) return;
 
       const cat = document.getElementById('modalItemCategory').value.trim();
+      const groupCode = (document.getElementById('modalItemGroupCode')?.value || '').trim().toUpperCase();
       const name = document.getElementById('modalItemName').value.trim();
-      const unit = document.getElementById('modalItemUnit').value.trim() || 'Chiếc';
-      const price = Math.max(0, parseFloat(document.getElementById('modalItemPrice').value) || 0);
+      const nameEn = (document.getElementById('modalItemNameEn')?.value || '').trim();
+      const unit = document.getElementById('modalItemUnit').value.trim() || 'Cái';
+      const priceMaint = Math.max(0, parseFloat(document.getElementById('modalItemPriceMaintenance')?.value) || 0);
+      const priceNew = Math.max(0, parseFloat(document.getElementById('modalItemPriceNew')?.value) || 0);
 
       if (!cat || !name) return;
 
+      const defaultType = (priceMaint > 0 || priceNew === 0) ? 'maintenance' : 'new';
+      const defaultPrice = (defaultType === 'new') ? (priceNew || 0) : (priceMaint || priceNew || 0);
+
       const newItem = {
         id: Date.now(),
+        group_code: groupCode,
         category: cat,
         name: name,
+        name_en: nameEn,
         unit: unit,
-        default_price: price,
+        item_type: defaultType,
+        price_maintenance: priceMaint,
+        price_new: priceNew,
+        default_price: defaultPrice,
         default_qty: 0,
         quantity: 0,
-        price: price,
+        price: defaultPrice,
         note: '',
         selected: false
       };
@@ -4319,6 +4575,8 @@
             type: 'item',
             index: subIndex++,
             name: item.name,
+            name_en: item.name_en || '',
+            item_type: item.item_type || 'maintenance',
             unit: item.unit,
             quantity: item.quantity,
             price: item.price,
@@ -4412,9 +4670,17 @@
           const noteText = (row.note && String(row.note).trim()) ? escapeHtml(String(row.note).trim()) : '—';
           const noteAlign = (row.note && String(row.note).trim()) ? 'left' : 'center';
           const noteColor = (row.note && String(row.note).trim()) ? '#334155' : '#94A3B8';
+          const typeBadgeHtml = (row.item_type === 'new')
+            ? `<span style="display: inline-block; font-size: 7pt; font-weight: 800; color: #b45309; background: #fffbeb; border: 1px solid #fde68a; border-radius: 3px; padding: 1px 4px; margin-left: 4px; vertical-align: middle;">VẬT TƯ MỚI</span>`
+            : `<span style="display: inline-block; font-size: 7pt; font-weight: 800; color: #1d4ed8; background: #eff6ff; border: 1px solid #bfdbfe; border-radius: 3px; padding: 1px 4px; margin-left: 4px; vertical-align: middle;">BẢO DƯỠNG</span>`;
+
           tr.innerHTML = `
             <td class="tabular-nums" style="text-align: center; color: #334155; font-size: 8.5pt; font-weight: 600;">${row.index}</td>
-            <td style="padding-left: 7px; padding-right: 5px; font-weight: 500; color: #0F172A;">${escapeHtml(row.name)}</td>
+            <td style="padding-left: 7px; padding-right: 5px; font-weight: 500; color: #0F172A;">
+              <span>${escapeHtml(row.name)}</span>
+              ${typeBadgeHtml}
+              ${row.name_en ? `<div style="font-size: 7.5pt; color: #64748b; font-style: italic; line-height: 1.2;">${escapeHtml(row.name_en)}</div>` : ''}
+            </td>
             <td style="text-align: center; color: #334155; font-size: 8.5pt; font-weight: 500;">${escapeHtml(row.unit)}</td>
             <td class="tabular-nums" style="text-align: center; font-weight: 700; color: #0F172A;">${row.quantity}</td>
             <td class="tabular-nums" style="text-align: right; padding-right: 6px; color: #1E293B; font-weight: 600;">${formatVND(row.price)}</td>

@@ -592,11 +592,16 @@ async function requestHandler(req, res) {
         if (Array.isArray(body.catalog)) {
           db.catalog = body.catalog.map((it, idx) => ({
             id: it.id || (idx + 1),
+            group_code: String(it.group_code || '').trim(),
             category: String(it.category || '').trim(),
             name: String(it.name || '').trim(),
+            name_en: String(it.name_en || '').trim(),
             unit: String(it.unit || '').trim(),
-            default_qty: parseFloat(it.default_qty !== undefined ? it.default_qty : it.quantity) || 1,
-            default_price: parseFloat(it.default_price !== undefined ? it.default_price : it.price) || 0
+            item_type: String(it.item_type || it.type || '').trim(),
+            price_maintenance: parseFloat(it.price_maintenance) || 0,
+            price_new: parseFloat(it.price_new) || 0,
+            default_qty: parseFloat(it.default_qty !== undefined ? it.default_qty : it.quantity) || 0,
+            default_price: parseFloat(it.default_price !== undefined ? it.default_price : (it.price_maintenance || it.price)) || 0
           }));
         }
         if (body.customAssets && typeof body.customAssets === 'object') {
