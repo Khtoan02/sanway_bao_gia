@@ -4751,6 +4751,15 @@
         }
       });
 
+      // Kiểm tra xem toàn bộ báo giá có lẫn cả mục Bảo dưỡng và mục Lắp đặt / Vật tư mới không
+      let hasAnyMaint = false;
+      let hasAnyNew = false;
+      itemsData.forEach(item => {
+        if ((parseFloat(item.qty_maintenance) || 0) > 0) hasAnyMaint = true;
+        if ((parseFloat(item.qty_new) || 0) > 0) hasAnyNew = true;
+      });
+      const hasMixedTypes = (hasAnyMaint && hasAnyNew);
+
       const romanNumerals = ["I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX", "X", "XI", "XII", "XIII", "XIV", "XV"];
       let romanIndex = 0;
       let allRows = [];
@@ -4766,64 +4775,83 @@
         });
 
         let subIndex = 1;
+        const maintItems = [];
+        const newItems = [];
+        const legacyItems = [];
+
         catItems.forEach(item => {
           const qM = parseFloat(item.qty_maintenance) || 0;
+          const qN = parseFloat(item.qty_new) || 0;
+          if (qM > 0) maintItems.push(item);
+          if (qN > 0) newItems.push(item);
+          if (qM <= 0 && qN <= 0 && item.selected && (parseFloat(item.quantity) || 0) > 0) {
+            legacyItems.push(item);
+          }
+        });
+
+        // 1. Gom toàn bộ các hạng mục BẢO DƯỠNG trong nhóm lên trước
+        maintItems.forEach(item => {
+          const qM = parseFloat(item.qty_maintenance) || 0;
           const pM = parseFloat(item.price_maintenance) || 0;
+          const serviceLabel = hasMixedTypes ? 'Bảo dưỡng' : '';
+          allRows.push({
+            type: 'item',
+            index: subIndex++,
+            name: item.name,
+            name_en: item.name_en || '',
+            serviceLabel: serviceLabel,
+            item_type: 'maintenance',
+            unit: item.unit,
+            quantity: qM,
+            price: pM,
+            subtotal: qM * pM,
+            note: item.note || '',
+            groupRoman: roman,
+            groupName: catName
+          });
+        });
+
+        // 2. Gom toàn bộ các hạng mục CUNG CẤP & LẮP ĐẶT VẬT TƯ MỚI trong nhóm xuống sau
+        newItems.forEach(item => {
           const qN = parseFloat(item.qty_new) || 0;
           const pN = parseFloat(item.price_new) || 0;
+          const serviceLabel = 'Lắp mới / Vật tư';
+          allRows.push({
+            type: 'item',
+            index: subIndex++,
+            name: item.name,
+            name_en: item.name_en || '',
+            serviceLabel: serviceLabel,
+            item_type: 'new',
+            unit: item.unit,
+            quantity: qN,
+            price: pN,
+            subtotal: qN * pN,
+            note: item.note || '',
+            groupRoman: roman,
+            groupName: catName
+          });
+        });
 
-          if (qM > 0) {
-            allRows.push({
-              type: 'item',
-              index: subIndex++,
-              name: item.name,
-              name_en: item.name_en || '',
-              item_type: 'maintenance',
-              unit: item.unit,
-              quantity: qM,
-              price: pM,
-              subtotal: qM * pM,
-              note: item.note || '',
-              groupRoman: roman,
-              groupName: catName
-            });
-          }
-
-          if (qN > 0) {
-            allRows.push({
-              type: 'item',
-              index: subIndex++,
-              name: item.name,
-              name_en: item.name_en || '',
-              item_type: 'new',
-              unit: item.unit,
-              quantity: qN,
-              price: pN,
-              subtotal: qN * pN,
-              note: item.note || '',
-              groupRoman: roman,
-              groupName: catName
-            });
-          }
-
-          if (qM <= 0 && qN <= 0 && item.selected && (parseFloat(item.quantity) || 0) > 0) {
-            const legacyQty = parseFloat(item.quantity) || 0;
-            const legacyPrice = parseFloat(item.price) || 0;
-            allRows.push({
-              type: 'item',
-              index: subIndex++,
-              name: item.name,
-              name_en: item.name_en || '',
-              item_type: item.item_type || 'maintenance',
-              unit: item.unit,
-              quantity: legacyQty,
-              price: legacyPrice,
-              subtotal: legacyQty * legacyPrice,
-              note: item.note || '',
-              groupRoman: roman,
-              groupName: catName
-            });
-          }
+        // 3. Các mục legacy cũ nếu có
+        legacyItems.forEach(item => {
+          const legacyQty = parseFloat(item.quantity) || 0;
+          const legacyPrice = parseFloat(item.price) || 0;
+          allRows.push({
+            type: 'item',
+            index: subIndex++,
+            name: item.name,
+            name_en: item.name_en || '',
+            serviceLabel: item.item_type === 'new' ? 'Lắp mới / Vật tư' : (hasMixedTypes ? 'Bảo dưỡng' : ''),
+            item_type: item.item_type || 'maintenance',
+            unit: item.unit,
+            quantity: legacyQty,
+            price: legacyPrice,
+            subtotal: legacyQty * legacyPrice,
+            note: item.note || '',
+            groupRoman: roman,
+            groupName: catName
+          });
         });
       }
 
@@ -4909,15 +4937,16 @@
           const noteText = (row.note && String(row.note).trim()) ? escapeHtml(String(row.note).trim()) : '—';
           const noteAlign = (row.note && String(row.note).trim()) ? 'left' : 'center';
           const noteColor = (row.note && String(row.note).trim()) ? '#334155' : '#94A3B8';
-          const typeBadgeHtml = (row.item_type === 'new')
-            ? `<span style="display: inline-block; font-size: 7pt; font-weight: 800; color: #b45309; background: #fffbeb; border: 1px solid #fde68a; border-radius: 3px; padding: 1px 4px; margin-left: 4px; vertical-align: middle;">VẬT TƯ MỚI</span>`
-            : `<span style="display: inline-block; font-size: 7pt; font-weight: 800; color: #1d4ed8; background: #eff6ff; border: 1px solid #bfdbfe; border-radius: 3px; padding: 1px 4px; margin-left: 4px; vertical-align: middle;">BẢO DƯỠNG</span>`;
+          
+          let nameHtml = `<span>${escapeHtml(row.name)}</span>`;
+          if (row.serviceLabel) {
+            nameHtml += ` <span style="font-size: 8pt; font-weight: 600; color: #475569; font-style: italic;">(${escapeHtml(row.serviceLabel)})</span>`;
+          }
 
           tr.innerHTML = `
             <td class="tabular-nums" style="text-align: center; color: #334155; font-size: 8.5pt; font-weight: 600;">${row.index}</td>
             <td style="padding-left: 7px; padding-right: 5px; font-weight: 500; color: #0F172A;">
-              <span>${escapeHtml(row.name)}</span>
-              ${typeBadgeHtml}
+              <div>${nameHtml}</div>
               ${row.name_en ? `<div style="font-size: 7.5pt; color: #64748b; font-style: italic; line-height: 1.2;">${escapeHtml(row.name_en)}</div>` : ''}
             </td>
             <td style="text-align: center; color: #334155; font-size: 8.5pt; font-weight: 500;">${escapeHtml(row.unit)}</td>
