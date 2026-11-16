@@ -953,38 +953,46 @@
                 </span>
               </div>
 
-              <!-- KHỐI 1: THÔNG TIN KHÁCH HÀNG & MÃ HỒ SƠ BÁO GIÁ (BỐ CỤC THOÁNG ĐÃNG, CÂN ĐỐI) -->
-              <div class="erp-card p-5 sm:p-6 space-y-5">
-                <!-- Hàng đầu: Tiêu đề + Mã BGSW + Cụm nút Lưu & Tạo Báo Giá -->
-                <div class="flex flex-wrap items-center justify-between gap-3 pb-4 border-b border-slate-100">
-                  <div class="flex items-center gap-3">
-                    <div class="w-10 h-10 rounded-xl bg-red-50 text-[#D62828] border border-red-100 flex items-center justify-center text-sm shrink-0">
+              <!-- KHỐI 1: THÔNG TIN KHÁCH HÀNG & MÃ HỒ SƠ BÁO GIÁ (THIẾT KẾ COMPACT HIGH-DENSITY, CÓ THỂ THU GỌN) -->
+              <div class="erp-card p-3 sm:p-3.5 space-y-2.5">
+                <!-- Hàng đầu: Tiêu đề + Mã BGSW + Nút Thu gọn + Cụm nút Lưu & Tạo Báo Giá -->
+                <div class="flex flex-wrap items-center justify-between gap-2.5 pb-2.5 border-b border-slate-100">
+                  <div class="flex items-center gap-2.5">
+                    <div class="w-8 h-8 rounded-lg bg-red-50 text-[#D62828] border border-red-100 flex items-center justify-center text-xs shrink-0">
                       <i class="fa-solid fa-file-invoice"></i>
                     </div>
                     <div>
-                      <div class="flex flex-wrap items-center gap-2.5">
-                        <h2 class="text-base font-extrabold text-[#0F172A]">Thông Tin Hồ Sơ Báo Giá</h2>
-                        <span id="currentDraftCodeBadge" class="text-xs font-black px-2.5 py-0.5 rounded-lg bg-red-50 text-[#D62828] border border-red-200 tabular-nums">BGSW/2026/001</span>
-                        <span id="currentDraftStatusBadge" class="text-[11px] font-bold px-2.5 py-0.5 rounded-lg bg-slate-100 text-[#1E293B] border border-slate-200">Chưa lưu</span>
+                      <div class="flex flex-wrap items-center gap-2">
+                        <h2 class="text-sm font-extrabold text-[#0F172A]">Hồ Sơ Báo Giá</h2>
+                        <span id="currentDraftCodeBadge" class="text-xs font-black px-2 py-0.5 rounded bg-red-50 text-[#D62828] border border-red-200 tabular-nums">BGSW/2026/001</span>
+                        <span id="currentDraftStatusBadge" class="text-[10.5px] font-bold px-2 py-0.5 rounded bg-slate-100 text-[#1E293B] border border-slate-200">Chưa lưu</span>
                       </div>
-                      <p class="text-xs text-slate-500 mt-1">Điền thông tin khách hàng, nhập số lượng & ghi chú bên dưới rồi nhấn <b>Lưu & Tạo Báo Giá</b></p>
                     </div>
                   </div>
 
-                  <div class="flex flex-wrap items-center gap-2">
-                    <button type="button" onclick="startNewQuotationWithNextCode()" class="px-3.5 py-2 rounded-xl border border-slate-300 bg-white hover:bg-slate-50 text-slate-700 text-xs font-bold transition flex items-center gap-2">
-                      <i class="fa-solid fa-rotate text-[#D62828]"></i>
-                      <span>Làm Mới & Mã Tiếp Theo</span>
+                  <div class="flex flex-wrap items-center gap-1.5">
+                    <button type="button" onclick="toggleCustomerInfoCollapse()" id="btnToggleCustomerInfo" class="px-2.5 py-1.5 rounded-lg border border-slate-200 bg-slate-50 hover:bg-slate-100 text-slate-700 text-xs font-semibold transition flex items-center gap-1.5" title="Thu gọn / Mở rộng thông tin khách hàng">
+                      <i id="iconCollapseCustomerInfo" class="fa-solid fa-chevron-up text-[10px]"></i>
+                      <span id="labelCollapseCustomerInfo" class="hidden sm:inline">Thu gọn</span>
                     </button>
-                    <button type="button" id="btnPrimarySaveQuote" onclick="saveCurrentQuotation()" class="px-4 py-2 rounded-xl bg-gradient-to-r from-[#D62828] to-[#B91C1C] hover:from-[#B91C1C] hover:to-[#991B1B] active:scale-[0.99] text-white text-xs font-extrabold shadow-sm shadow-red-600/15 transition flex items-center gap-2">
-                      <i id="btnPrimarySaveIcon" class="fa-solid fa-floppy-disk"></i>
-                      <span id="btnPrimarySaveText">Lưu & Tạo Báo Giá</span>
+                    <button type="button" onclick="startNewQuotationWithNextCode()" class="px-2.5 py-1.5 rounded-lg border border-slate-300 bg-white hover:bg-slate-50 text-slate-700 text-xs font-bold transition flex items-center gap-1.5" title="Làm mới form và sinh mã tiếp theo">
+                      <i class="fa-solid fa-rotate text-[#D62828] text-[11px]"></i>
+                      <span class="hidden sm:inline">Làm Mới</span>
                     </button>
-                    <button type="button" id="btnPrintAfterSave" onclick="handlePrint()" class="hidden px-4 py-2 rounded-xl bg-[#1E293B] hover:bg-[#0F172A] text-white text-xs font-extrabold shadow-sm transition items-center gap-2">
-                      <i class="fa-solid fa-print"></i>
-                      <span>In Báo Giá Ngay</span>
+                    <button type="button" id="btnPrimarySaveQuote" onclick="saveCurrentQuotation()" class="px-3.5 py-1.5 rounded-lg bg-gradient-to-r from-[#D62828] to-[#B91C1C] hover:from-[#B91C1C] hover:to-[#991B1B] active:scale-[0.99] text-white text-xs font-extrabold shadow-xs transition flex items-center gap-1.5">
+                      <i id="btnPrimarySaveIcon" class="fa-solid fa-floppy-disk text-[11px]"></i>
+                      <span id="btnPrimarySaveText">Lưu Báo Giá</span>
+                    </button>
+                    <button type="button" id="btnPrintAfterSave" onclick="handlePrint()" class="hidden px-3 py-1.5 rounded-lg bg-[#1E293B] hover:bg-[#0F172A] text-white text-xs font-extrabold shadow-xs transition items-center gap-1.5">
+                      <i class="fa-solid fa-print text-[11px]"></i>
+                      <span>In Ngay</span>
                     </button>
                   </div>
+                </div>
+
+                <!-- Thanh tóm tắt 1 dòng khi thu gọn -->
+                <div id="customerInfoSummaryBar" onclick="toggleCustomerInfoCollapse()" class="hidden p-2 rounded-lg bg-slate-50 border border-slate-200 text-xs text-slate-600 flex items-center justify-between cursor-pointer hover:bg-slate-100 transition">
+                  <!-- filled by JS -->
                 </div>
 
                 <!-- Ẩn các node đồng bộ phụ -->
@@ -997,53 +1005,53 @@
                   <span id="kpiGrandTotal">0 đ</span>
                 </div>
 
-                <!-- Lưới nhập Thông tin Khách hàng & Hồ sơ Báo giá: 2 Hàng × 3 Cột thoáng đãng -->
-                <div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-12 gap-x-5 gap-y-4">
+                <!-- Lưới nhập Thông tin Khách hàng & Hồ sơ Báo giá: 2 Hàng × 3 Cột COMPACT -->
+                <div id="customerInfoInputsGrid" class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-12 gap-x-3 gap-y-2.5">
                   <div class="xl:col-span-5">
-                    <label class="block text-xs font-bold text-slate-700 mb-1.5">
+                    <label class="block text-[11px] font-bold text-slate-700 mb-1">
                       Kính gửi Khách hàng / Đối tác <span class="text-[#D62828]">*</span>
                     </label>
-                    <input type="text" id="inputCustomerName" oninput="markQuoteDirtyAndPreview()" value="CÔNG TY TNHH TÂN HUY HOÀNG" placeholder="Nhập tên công ty khách hàng..." class="erp-input !py-2.5 !px-3.5 text-xs font-bold">
+                    <input type="text" id="inputCustomerName" oninput="markQuoteDirtyAndPreview()" value="CÔNG TY TNHH TÂN HUY HOÀNG" placeholder="Nhập tên công ty khách hàng..." class="erp-input !py-1.5 !px-2.5 text-xs font-bold rounded-lg">
                   </div>
 
                   <div class="xl:col-span-4">
-                    <label class="block text-xs font-bold text-slate-700 mb-1.5">
+                    <label class="block text-[11px] font-bold text-slate-700 mb-1">
                       Tên hạng mục báo giá (Tiếng Việt)
                     </label>
-                    <input type="text" id="inputProjectTitle" oninput="markQuoteDirtyAndPreview()" value="BẢO DƯỠNG HỆ THỐNG PCCC" class="erp-input !py-2.5 !px-3.5 text-xs font-semibold">
+                    <input type="text" id="inputProjectTitle" oninput="markQuoteDirtyAndPreview()" value="BẢO DƯỠNG HỆ THỐNG PCCC" class="erp-input !py-1.5 !px-2.5 text-xs font-semibold rounded-lg">
                   </div>
 
                   <div class="xl:col-span-3">
-                    <label class="block text-xs font-bold text-slate-700 mb-1.5">
+                    <label class="block text-[11px] font-bold text-slate-700 mb-1">
                       Số / Mã Báo Giá
                     </label>
-                    <div class="flex gap-1.5">
-                      <input type="text" id="inputQuoteCode" oninput="handleQuoteCodeManualChange()" value="BGSW/2026/001" class="erp-input !py-2.5 !px-3.5 text-xs font-black text-[#D62828] tracking-wide">
-                      <button type="button" onclick="assignNextQuoteCode()" title="Sinh mã báo giá mới tiếp theo" class="px-3 rounded-xl border border-slate-300 hover:bg-slate-100 text-slate-700 text-xs font-bold shrink-0 transition">
-                        <i class="fa-solid fa-plus"></i>
+                    <div class="flex gap-1">
+                      <input type="text" id="inputQuoteCode" oninput="handleQuoteCodeManualChange()" value="BGSW/2026/001" class="erp-input !py-1.5 !px-2.5 text-xs font-black text-[#D62828] tracking-wide rounded-lg">
+                      <button type="button" onclick="assignNextQuoteCode()" title="Sinh mã báo giá mới tiếp theo" class="px-2 rounded-lg border border-slate-300 hover:bg-slate-100 text-slate-700 text-xs font-bold shrink-0 transition">
+                        <i class="fa-solid fa-plus text-[10px]"></i>
                       </button>
                     </div>
                   </div>
 
                   <div class="xl:col-span-5">
-                    <label class="block text-xs font-bold text-slate-600 mb-1.5">
+                    <label class="block text-[11px] font-bold text-slate-600 mb-1">
                       Tiêu đề phụ Tiếng Anh
                     </label>
-                    <input type="text" id="inputProjectTitleEn" oninput="markQuoteDirtyAndPreview()" value="FIRE PROTECTION SYSTEM MAINTENANCE QUOTATION" class="erp-input !py-2.5 !px-3.5 text-xs text-slate-600 font-medium">
+                    <input type="text" id="inputProjectTitleEn" oninput="markQuoteDirtyAndPreview()" value="FIRE PROTECTION SYSTEM MAINTENANCE QUOTATION" class="erp-input !py-1.5 !px-2.5 text-xs text-slate-600 font-medium rounded-lg">
                   </div>
 
                   <div class="xl:col-span-4">
-                    <label class="block text-xs font-bold text-slate-600 mb-1.5">
+                    <label class="block text-[11px] font-bold text-slate-600 mb-1">
                       Địa điểm & Ngày lập báo giá
                     </label>
-                    <input type="text" id="inputQuoteDate" oninput="markQuoteDirtyAndPreview()" value="Hải Phòng, 21/10/2026" class="erp-input !py-2.5 !px-3.5 text-xs font-medium">
+                    <input type="text" id="inputQuoteDate" oninput="markQuoteDirtyAndPreview()" value="Hải Phòng, 21/10/2026" class="erp-input !py-1.5 !px-2.5 text-xs font-medium rounded-lg">
                   </div>
 
                   <div class="xl:col-span-3">
-                    <label class="block text-xs font-bold text-slate-600 mb-1.5">
+                    <label class="block text-[11px] font-bold text-slate-600 mb-1">
                       Hiển thị con dấu mộc đỏ
                     </label>
-                    <select id="inputShowStamp" onchange="markQuoteDirtyAndPreview()" class="erp-input !py-2.5 !px-3.5 text-xs font-semibold cursor-pointer">
+                    <select id="inputShowStamp" onchange="markQuoteDirtyAndPreview()" class="erp-input !py-1.5 !px-2 text-xs font-semibold cursor-pointer rounded-lg">
                       <option value="yes" selected>Có đóng dấu mộc đỏ</option>
                       <option value="no">Không đóng dấu (Ký tươi)</option>
                     </select>
@@ -1051,49 +1059,48 @@
                 </div>
               </div>
 
-              <!-- KHỐI 2: CHỌN HẠNG MỤC VẬT TƯ, SỐ LƯỢNG & GHI CHÚ THEO TỪNG TAB NHÓM (THOÁNG ĐÃNG, DỄ QUAN SÁT) -->
-              <div class="erp-card p-5 sm:p-6 space-y-5">
-                <!-- Hàng 1: Tiêu đề + Ô tìm kiếm & Bộ lọc -->
-                <div class="flex flex-col xl:flex-row xl:items-center justify-between gap-3.5 pb-4 border-b border-slate-100">
-                  <div class="flex items-center gap-3">
-                    <span class="w-10 h-10 rounded-xl bg-slate-100 text-[#1E293B] border border-slate-200 flex items-center justify-center text-sm shrink-0">
+              <!-- KHỐI 2: CHỌN HẠNG MỤC VẬT TƯ, SỐ LƯỢNG & GHI CHÚ THEO TỪNG TAB NHÓM (COMPACT HIGH-DENSITY) -->
+              <div class="erp-card p-3 sm:p-3.5 space-y-2.5 flex flex-col">
+                <!-- Hàng 1: Tiêu đề + Ô tìm kiếm & Bộ lọc (Gọn 1 dòng) -->
+                <div class="flex flex-wrap items-center justify-between gap-2 pb-2.5 border-b border-slate-100">
+                  <div class="flex items-center gap-2">
+                    <span class="w-8 h-8 rounded-lg bg-slate-100 text-[#1E293B] border border-slate-200 flex items-center justify-center text-xs shrink-0">
                       <i class="fa-solid fa-layer-group"></i>
                     </span>
                     <div>
-                      <div class="flex flex-wrap items-center gap-2.5">
-                        <h3 class="text-base font-extrabold text-[#0F172A]">Danh Mục Sản Phẩm, Số Lượng & Ghi Chú</h3>
-                        <span id="selectedBadgeCount" class="bg-red-50 text-[#D62828] text-xs px-2.5 py-0.5 rounded-lg font-extrabold border border-red-200">0 mục đã chọn</span>
+                      <div class="flex items-center gap-2">
+                        <h3 class="text-sm font-extrabold text-[#0F172A]">Danh Mục Sản Phẩm</h3>
+                        <span id="selectedBadgeCount" class="bg-red-50 text-[#D62828] text-[11px] px-2 py-0.2 rounded font-extrabold border border-red-200">0 mục</span>
                       </div>
-                      <p id="catalogRoleSubtitle" class="text-xs text-slate-500 mt-1">Số lượng mặc định là <b>0</b> — Nhập số lượng <b>&gt; 0</b> hoặc tích chọn để đưa hạng mục vào báo giá.</p>
                     </div>
                   </div>
 
-                  <div class="flex flex-wrap items-center gap-2">
-                    <div class="relative w-full sm:w-52">
-                      <span class="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none text-xs">
+                  <div class="flex flex-wrap items-center gap-1.5">
+                    <div class="relative w-40 sm:w-48">
+                      <span class="absolute left-2.5 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none text-xs">
                         <i class="fa-solid fa-magnifying-glass"></i>
                       </span>
-                      <input type="text" id="searchItemInput" oninput="filterTable()" placeholder="Tìm nhanh vật tư, thiết bị..." class="erp-input !pl-9 !pr-3 !py-2 text-xs">
+                      <input type="text" id="searchItemInput" oninput="filterTable()" placeholder="Tìm nhanh SP..." class="erp-input !pl-7 !pr-2 !py-1 text-xs rounded-lg">
                     </div>
 
-                    <select id="quoteTypeFilter" onchange="filterTable()" class="erp-input !py-2 !px-2.5 text-xs font-semibold cursor-pointer w-auto bg-slate-50 border-slate-200">
-                      <option value="ALL">-- Tất cả phân loại --</option>
-                      <option value="maintenance">🔧 Đang chọn Bảo dưỡng</option>
-                      <option value="new">✨ Đang chọn Lắp đặt / Mới</option>
-                      <option value="both">⚡ Đang chọn Cả hai</option>
+                    <select id="quoteTypeFilter" onchange="filterTable()" class="erp-input !py-1 !px-2 text-xs font-semibold cursor-pointer w-auto bg-slate-50 border-slate-200 rounded-lg">
+                      <option value="ALL">Tất cả loại</option>
+                      <option value="maintenance">🔧 Bảo dưỡng</option>
+                      <option value="new">✨ Lắp mới</option>
+                      <option value="both">⚡ Cả hai</option>
                     </select>
 
-                    <label class="px-3 py-2 rounded-xl border border-slate-200 bg-slate-50 hover:bg-slate-100 cursor-pointer flex items-center gap-2 text-xs font-semibold text-slate-700 select-none transition">
-                      <input type="checkbox" id="onlySelectedFilter" onchange="filterTable()" class="w-4 h-4 rounded text-[#D62828] focus:ring-[#D62828]">
-                      <span>Mục đã chọn</span>
+                    <label class="px-2 py-1 rounded-lg border border-slate-200 bg-slate-50 hover:bg-slate-100 cursor-pointer flex items-center gap-1.5 text-xs font-semibold text-slate-700 select-none transition">
+                      <input type="checkbox" id="onlySelectedFilter" onchange="filterTable()" class="w-3.5 h-3.5 rounded text-[#D62828] focus:ring-[#D62828]">
+                      <span>Đã chọn</span>
                     </label>
 
-                    <button type="button" onclick="selectAll(false)" class="text-xs px-3 py-2 rounded-xl border border-slate-200 bg-white hover:bg-red-50 hover:text-[#D62828] hover:border-red-200 text-slate-600 font-semibold transition flex items-center gap-1.5" title="Đưa toàn bộ số lượng về 0">
-                      <i class="fa-solid fa-rotate-left text-[11px]"></i>
-                      <span>Đặt lại về 0</span>
+                    <button type="button" onclick="selectAll(false)" class="text-xs px-2 py-1 rounded-lg border border-slate-200 bg-white hover:bg-red-50 hover:text-[#D62828] hover:border-red-200 text-slate-600 font-semibold transition flex items-center gap-1" title="Đưa toàn bộ số lượng về 0">
+                      <i class="fa-solid fa-rotate-left text-[10px]"></i>
+                      <span class="hidden sm:inline">Về 0</span>
                     </button>
 
-                    <button type="button" id="btnQuickCatalogInForm" onclick="switchTab('products')" class="hidden text-xs px-3 py-2 rounded-xl bg-slate-100 hover:bg-slate-200 text-[#0F172A] font-bold transition items-center gap-1.5">
+                    <button type="button" id="btnQuickCatalogInForm" onclick="switchTab('products')" class="hidden text-xs px-2 py-1 rounded-lg bg-slate-100 hover:bg-slate-200 text-[#0F172A] font-bold transition items-center gap-1">
                       <i class="fa-solid fa-boxes-stacked text-[#D62828]"></i>
                       <span>Kho SP</span>
                     </button>
@@ -1105,65 +1112,71 @@
                   <option value="ALL">-- Tất cả phân nhóm hệ thống --</option>
                 </select>
 
-                <!-- Hàng 2: Danh sách Tab Nhóm Hạng Mục (Nhóm 1, 2, 3...) thoáng đãng -->
-                <div class="space-y-3">
-                  <div class="flex flex-wrap items-center justify-between gap-2">
-                    <div class="flex items-center gap-2">
-                      <span id="activeGroupIndexBadge" class="px-2.5 py-1 rounded-lg bg-red-50 text-[#D62828] border border-red-200 font-black text-xs shrink-0">NHÓM 1</span>
-                      <span id="activeGroupNameTitle" class="font-extrabold text-[#0F172A] text-sm">Hệ thống Giai đoạn I - Báo cháy</span>
-                      <span id="activeGroupStatBadge" class="text-xs text-slate-500 font-semibold">(Đã chọn 0/9 mục)</span>
+                <!-- Hàng 2: Thanh Tab 9 Nhóm Hệ Thống (Thanh trượt ngang 1 dòng mỏng, có nút cuộn < và >) -->
+                <div class="space-y-1.5">
+                  <div class="flex items-center justify-between gap-2 text-xs">
+                    <div class="flex items-center gap-1.5 truncate">
+                      <span id="activeGroupIndexBadge" class="px-2 py-0.5 rounded bg-red-50 text-[#D62828] border border-red-200 font-black text-[11px] shrink-0">NHÓM 1</span>
+                      <span id="activeGroupNameTitle" class="font-extrabold text-[#0F172A] text-xs truncate">Hệ thống Báo cháy tự động</span>
+                      <span id="activeGroupStatBadge" class="text-[11px] text-slate-500 font-semibold shrink-0">(0/17)</span>
                     </div>
 
-                    <div class="flex flex-wrap items-center gap-1.5">
-                      <button type="button" onclick="toggleCurrentCategoryGroup(true)" class="px-3 py-1.5 rounded-lg border border-slate-200 bg-white hover:bg-slate-50 text-slate-700 text-xs font-bold transition flex items-center gap-1.5">
+                    <div class="flex items-center gap-1 shrink-0">
+                      <button type="button" onclick="toggleCurrentCategoryGroup(true)" class="px-2 py-0.5 rounded-md border border-slate-200 bg-white hover:bg-slate-50 text-slate-700 text-[11px] font-bold transition flex items-center gap-1" title="Chọn toàn bộ nhóm này">
                         <i class="fa-solid fa-check text-[#D62828]"></i>
-                        <span>Chọn nhóm này</span>
+                        <span class="hidden sm:inline">Chọn nhóm</span>
                       </button>
-                      <button type="button" onclick="toggleCurrentCategoryGroup(false)" class="px-3 py-1.5 rounded-lg border border-slate-200 bg-white hover:bg-slate-50 text-slate-500 hover:text-slate-800 text-xs font-semibold transition flex items-center gap-1.5">
+                      <button type="button" onclick="toggleCurrentCategoryGroup(false)" class="px-2 py-0.5 rounded-md border border-slate-200 bg-white hover:bg-slate-50 text-slate-500 hover:text-slate-800 text-[11px] font-semibold transition flex items-center gap-1" title="Bỏ chọn nhóm này">
                         <i class="fa-solid fa-xmark"></i>
-                        <span>Bỏ nhóm này</span>
+                        <span class="hidden sm:inline">Bỏ nhóm</span>
                       </button>
-                      <div class="h-4 w-px bg-slate-200 mx-0.5 hidden sm:block"></div>
-                      <button type="button" onclick="stepCategoryTab(-1)" class="px-2.5 py-1.5 rounded-lg border border-slate-200 bg-white hover:bg-slate-50 text-slate-700 text-xs font-bold transition flex items-center gap-1" title="Chuyển về nhóm trước">
-                        <i class="fa-solid fa-chevron-left text-[10px]"></i>
-                        <span>Trước</span>
+                      <div class="h-3.5 w-px bg-slate-200 mx-0.5"></div>
+                      <button type="button" onclick="stepCategoryTab(-1)" class="w-6 h-6 rounded-md border border-slate-200 bg-white hover:bg-slate-50 text-slate-700 text-xs font-bold transition flex items-center justify-center" title="Nhóm trước">
+                        <i class="fa-solid fa-chevron-left text-[9px]"></i>
                       </button>
-                      <button type="button" onclick="stepCategoryTab(1)" class="px-2.5 py-1.5 rounded-lg bg-[#1E293B] hover:bg-[#0F172A] text-white text-xs font-bold transition flex items-center gap-1" title="Chuyển sang nhóm tiếp theo">
-                        <span>Tiếp theo</span>
-                        <i class="fa-solid fa-chevron-right text-[10px]"></i>
+                      <button type="button" onclick="stepCategoryTab(1)" class="w-6 h-6 rounded-md bg-[#1E293B] hover:bg-[#0F172A] text-white text-xs font-bold transition flex items-center justify-center" title="Nhóm tiếp">
+                        <i class="fa-solid fa-chevron-right text-[9px]"></i>
                       </button>
                     </div>
                   </div>
 
-                  <!-- Các nút Tab Nhóm 1, 2, 3... rộng rãi, có khoảng thở -->
-                  <div id="categoryTabsContainer" class="flex flex-wrap gap-2 p-2.5 rounded-2xl bg-[#F8FAFC] border border-slate-200/80">
-                    <!-- Rendered dynamically by renderCategoryGroupTabs() -->
+                  <!-- Container cuộn ngang 9 nhóm 1 dòng duy nhất -->
+                  <div class="relative flex items-center">
+                    <button type="button" onclick="scrollCategoryTabs(-180)" class="absolute -left-1 z-10 w-5 h-7 rounded bg-white/95 border border-slate-300 shadow-xs text-slate-600 hover:text-[#D62828] flex items-center justify-center text-[10px]" title="Cuộn trái">
+                      <i class="fa-solid fa-chevron-left"></i>
+                    </button>
+                    <div id="categoryTabsContainer" class="w-full flex items-center gap-1.5 p-1 px-5 rounded-xl bg-slate-100/90 border border-slate-200/80 overflow-x-auto whitespace-nowrap custom-scroll no-scrollbar scroll-smooth">
+                      <!-- Rendered dynamically by renderCategoryGroupTabs() -->
+                    </div>
+                    <button type="button" onclick="scrollCategoryTabs(180)" class="absolute -right-1 z-10 w-5 h-7 rounded bg-white/95 border border-slate-300 shadow-xs text-slate-600 hover:text-[#D62828] flex items-center justify-center text-[10px]" title="Cuộn phải">
+                      <i class="fa-solid fa-chevron-right"></i>
+                    </button>
                   </div>
                 </div>
 
-                <!-- Hàng 3: Bảng chọn hạng mục sản phẩm (Sáng sủa, thoáng mắt, có cột GHI CHÚ) -->
-                <div tabindex="0" role="region" aria-label="Bảng chọn hạng mục báo giá" class="hidden md:block overflow-x-auto custom-scroll border rounded-2xl border-slate-200/90 max-h-[420px]">
+                <!-- Hàng 3: Bảng chọn hạng mục sản phẩm (Chiều cao tối ưu hiển thị 15-18 dòng trên 1080p) -->
+                <div tabindex="0" role="region" aria-label="Bảng chọn hạng mục báo giá" class="hidden md:block overflow-x-auto custom-scroll border rounded-xl border-slate-200/90 max-h-[calc(100vh-325px)] min-h-[360px]">
                   <table class="w-full text-left border-collapse text-xs">
-                    <thead class="sticky top-0 bg-[#F8FAFC] text-slate-600 z-10 border-b border-slate-200">
-                      <tr class="text-[11px] uppercase font-extrabold tracking-wider">
-                        <th class="py-3.5 px-3 text-center w-12">Chọn</th>
-                        <th class="py-3.5 px-2.5 w-12 text-center">STT</th>
-                        <th class="py-3.5 px-3.5 min-w-[200px]">Hạng mục vật tư / Thiết bị</th>
-                        <th class="py-3.5 px-2 w-16 text-center">ĐVT</th>
-                        <th class="py-3.5 px-3 min-w-[210px] text-center bg-blue-50/70 text-blue-900 border-x border-blue-100">
-                          <div class="flex items-center justify-center gap-1.5">
-                            <i class="fa-solid fa-wrench text-[10px] text-blue-600"></i>
+                    <thead class="sticky top-0 bg-[#F8FAFC] text-slate-700 z-10 border-b border-slate-200 shadow-2xs">
+                      <tr class="text-[10.5px] uppercase font-extrabold tracking-wider">
+                        <th class="py-2 px-2 text-center w-10">Chọn</th>
+                        <th class="py-2 px-2 w-10 text-center">STT</th>
+                        <th class="py-2 px-2.5 min-w-[190px]">Tên Hạng mục / Vật tư</th>
+                        <th class="py-2 px-1.5 w-14 text-center">ĐVT</th>
+                        <th class="py-2 px-2 min-w-[185px] text-center bg-blue-50/70 text-blue-900 border-x border-blue-100">
+                          <div class="flex items-center justify-center gap-1">
+                            <i class="fa-solid fa-wrench text-[9px] text-blue-600"></i>
                             <span>Bảo Dưỡng (SL x Giá)</span>
                           </div>
                         </th>
-                        <th class="py-3.5 px-3 min-w-[210px] text-center bg-amber-50/70 text-amber-900 border-r border-amber-100">
-                          <div class="flex items-center justify-center gap-1.5">
-                            <i class="fa-solid fa-box-open text-[10px] text-amber-600"></i>
-                            <span>Lắp Đặt / SP Mới (SL x Giá)</span>
+                        <th class="py-2 px-2 min-w-[185px] text-center bg-amber-50/70 text-amber-900 border-r border-amber-100">
+                          <div class="flex items-center justify-center gap-1">
+                            <i class="fa-solid fa-box-open text-[9px] text-amber-600"></i>
+                            <span>Lắp Đặt / SP Mới</span>
                           </div>
                         </th>
-                        <th class="py-3.5 px-3.5 w-32 text-right">Tổng Tiền</th>
-                        <th class="py-3.5 px-3.5 w-40">Ghi chú</th>
+                        <th class="py-2 px-2.5 w-28 text-right">Tổng Tiền</th>
+                        <th class="py-2 px-2 w-32">Ghi chú</th>
                       </tr>
                     </thead>
                     <tbody id="quoteItemsTableBody" class="divide-y divide-slate-100 bg-white">
@@ -1173,45 +1186,45 @@
                 </div>
 
                 <!-- Danh sách thẻ trên Mobile -->
-                <div id="quoteItemsMobileList" class="md:hidden space-y-3 max-h-[55vh] overflow-y-auto custom-scroll pr-0.5">
+                <div id="quoteItemsMobileList" class="md:hidden space-y-2.5 max-h-[55vh] overflow-y-auto custom-scroll pr-0.5">
                   <!-- Rendered by JS -->
                 </div>
 
-                <!-- Thanh tổng kết & Nút Lưu & Tạo Báo Giá dưới chân bảng (GHIM CỐ ĐỊNH, KHOẢNG CÁCH RÕ RÀNG) -->
-                <div class="sticky bottom-2 z-20 mt-4 bg-[#1E293B] text-white px-5 py-4 rounded-2xl flex flex-col xl:flex-row items-center justify-between gap-4 shadow-lg border border-slate-700/80">
-                  <div class="flex flex-wrap items-center gap-x-6 gap-y-2 text-xs w-full xl:w-auto justify-between xl:justify-start">
-                    <div class="flex items-center gap-2">
-                      <span class="text-slate-400">Hạng mục chọn:</span>
-                      <span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg bg-slate-800 border border-slate-700 font-bold text-white tabular-nums">
+                <!-- Thanh tổng kết tài chính & Lưu báo giá: SLIM DOCKED FOOTER GẮN CHÂN CARD (KHÔNG CHE BẢNG) -->
+                <div class="-mx-3 -mb-3 sm:-mx-3.5 sm:-mb-3.5 p-2 sm:p-2.5 rounded-b-xl bg-[#0F172A] text-white border-t border-slate-700/80 flex flex-wrap items-center justify-between gap-2 shadow-sm">
+                  <div class="flex flex-wrap items-center gap-x-4 gap-y-1 text-xs">
+                    <div class="flex items-center gap-1.5">
+                      <span class="text-slate-400 text-[11px]">Đã chọn:</span>
+                      <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded bg-slate-800 border border-slate-700 font-bold text-white text-xs tabular-nums">
                         <b id="statSelectedItems" class="text-[#D62828] font-black">0</b>
                         <span class="text-slate-400">/</span>
                         <span id="statTotalItems">100</span>
                       </span>
                     </div>
 
-                    <div class="flex items-center gap-1.5">
-                      <span class="text-slate-400">Trước thuế:</span>
-                      <b id="statSubtotal" class="text-white font-bold tabular-nums">0 đ</b>
+                    <div class="flex items-center gap-1">
+                      <span class="text-slate-400 text-[11px]">Trước thuế:</span>
+                      <b id="statSubtotal" class="text-white font-bold tabular-nums text-xs">0 đ</b>
                     </div>
 
-                    <div class="hidden sm:flex items-center gap-1.5">
-                      <span class="text-slate-400">VAT (<span id="statVatPercent">8%</span>):</span>
-                      <b id="statVatAmount" class="text-white font-bold tabular-nums">0 đ</b>
+                    <div class="hidden sm:flex items-center gap-1">
+                      <span class="text-slate-400 text-[11px]">VAT (<span id="statVatPercent">8%</span>):</span>
+                      <b id="statVatAmount" class="text-slate-300 font-semibold tabular-nums text-xs">0 đ</b>
                     </div>
 
-                    <div class="bg-red-600/20 border border-red-500/40 px-3.5 py-1.5 rounded-xl flex items-center gap-2">
-                      <span class="text-red-200 text-xs font-bold">Tổng thanh toán:</span>
-                      <span id="statGrandTotal" class="text-sm sm:text-base font-black text-white tabular-nums">0 đ</span>
+                    <div class="bg-red-600/20 border border-red-500/40 px-2.5 py-0.5 rounded-lg flex items-center gap-1.5">
+                      <span class="text-red-200 text-[11px] font-bold">Tổng thanh toán:</span>
+                      <span id="statGrandTotal" class="text-xs sm:text-sm font-black text-white tabular-nums">0 đ</span>
                     </div>
                   </div>
 
-                  <div class="flex items-center gap-2.5 w-full xl:w-auto shrink-0">
-                    <button type="button" id="btnBottomSaveQuote" onclick="saveCurrentQuotation()" class="flex-1 xl:flex-none px-5 py-2.5 rounded-xl bg-gradient-to-r from-[#D62828] to-[#B91C1C] hover:from-[#B91C1C] hover:to-[#991B1B] text-white font-extrabold text-xs shadow-md transition flex items-center justify-center gap-2">
-                      <i class="fa-solid fa-floppy-disk"></i>
+                  <div class="flex items-center gap-1.5 shrink-0 ml-auto">
+                    <button type="button" id="btnBottomSaveQuote" onclick="saveCurrentQuotation()" class="px-3.5 py-1.5 rounded-lg bg-gradient-to-r from-[#D62828] to-[#B91C1C] hover:from-[#B91C1C] hover:to-[#991B1B] text-white font-extrabold text-xs shadow-sm transition flex items-center gap-1.5">
+                      <i class="fa-solid fa-floppy-disk text-[11px]"></i>
                       <span id="btnBottomSaveText">Lưu & Tạo Báo Giá</span>
                     </button>
-                    <button type="button" id="btnBottomPrintAfterSave" onclick="handlePrint()" class="hidden px-4 py-2.5 rounded-xl bg-white text-[#0F172A] hover:bg-slate-100 font-extrabold text-xs shadow-md transition items-center justify-center gap-2">
-                      <i class="fa-solid fa-print text-[#D62828]"></i>
+                    <button type="button" id="btnBottomPrintAfterSave" onclick="handlePrint()" class="hidden px-2.5 py-1.5 rounded-lg bg-white text-[#0F172A] hover:bg-slate-100 font-extrabold text-xs shadow-sm transition items-center gap-1.5">
+                      <i class="fa-solid fa-print text-[#D62828] text-[11px]"></i>
                       <span>In Ngay</span>
                     </button>
                   </div>
@@ -1221,14 +1234,14 @@
 
             <!-- CỘT PHẢI (5/12): KHUNG XEM TRƯỚC BẢN IN A4 TRỰC TIẾP (BẮT ĐẦU NGAY TỪ ĐỈNH TRANG, TỰ ĐỘNG PHÓNG VỪA KHÍT KHUNG) -->
             <div id="sectionPreview" class="lg:col-span-5 lg:sticky lg:top-4 print:block min-w-0">
-              <div class="no-print bg-[#1E293B] text-white px-4 py-3 rounded-t-2xl border border-slate-700 flex flex-wrap items-center justify-between gap-2 shadow-sm">
-                <div class="flex items-center gap-2.5">
-                  <span class="w-2.5 h-2.5 rounded-full bg-[#D62828] animate-pulse"></span>
-                  <span class="text-xs font-extrabold uppercase tracking-wider">Bản Xem Trước A4 Trực Tiếp</span>
-                  <span id="livePreviewPageCount" class="text-[10.5px] font-bold px-2.5 py-0.5 rounded-md bg-slate-800 text-slate-200 border border-slate-700">3 trang A4</span>
+              <div class="no-print bg-[#1E293B] text-white px-3.5 py-2 rounded-t-xl border border-slate-700 flex flex-wrap items-center justify-between gap-2 shadow-xs">
+                <div class="flex items-center gap-2">
+                  <span class="w-2 h-2 rounded-full bg-[#D62828] animate-pulse"></span>
+                  <span class="text-xs font-extrabold uppercase tracking-wider">Xem Trước A4 Trực Tiếp</span>
+                  <span id="livePreviewPageCount" class="text-[10px] font-bold px-2 py-0.5 rounded bg-slate-800 text-slate-200 border border-slate-700">3 trang A4</span>
                 </div>
                 <div class="flex items-center gap-1.5">
-                  <button type="button" onclick="togglePreviewZoomMode()" id="btnZoomMode" class="px-2.5 py-1 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200 text-[11px] font-semibold border border-slate-700 transition flex items-center gap-1.5" title="Chuyển chế độ thu phóng">
+                  <button type="button" onclick="togglePreviewZoomMode()" id="btnZoomMode" class="px-2 py-1 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200 text-[11px] font-semibold border border-slate-700 transition flex items-center gap-1.5" title="Chuyển chế độ thu phóng">
                     <i class="fa-solid fa-magnifying-glass-plus text-[10px] text-slate-300"></i>
                     <span id="zoomModeLabel">Vừa khung</span>
                   </button>
@@ -1236,8 +1249,8 @@
               </div>
 
               <!-- Khung nền xám sáng thanh lịch hiển thị tờ giấy A4 vừa khít chiều ngang cột phải -->
-              <div id="livePreviewViewport" class="bg-[#E2E8F0] border-x border-b border-slate-300 rounded-b-2xl p-3 sm:p-4 max-h-[calc(100vh-88px)] overflow-y-auto custom-scroll shadow-inner flex flex-col items-center">
-                <div id="pagesContainer" class="space-y-5 print:space-y-0">
+              <div id="livePreviewViewport" class="bg-[#E2E8F0] border-x border-b border-slate-300 rounded-b-xl p-2 sm:p-2.5 max-h-[calc(100vh-80px)] overflow-y-auto custom-scroll shadow-inner flex flex-col items-center">
+                <div id="pagesContainer" class="space-y-4 print:space-y-0">
                   <!-- Rendered dynamically by renderPreview() -->
                 </div>
               </div>
@@ -4108,6 +4121,37 @@
       renderCategoryGroupTabs();
     }
 
+    let isCustomerInfoCollapsed = false;
+    function toggleCustomerInfoCollapse() {
+      isCustomerInfoCollapsed = !isCustomerInfoCollapsed;
+      const grid = document.getElementById('customerInfoInputsGrid');
+      const summary = document.getElementById('customerInfoSummaryBar');
+      const icon = document.getElementById('iconCollapseCustomerInfo');
+      const label = document.getElementById('labelCollapseCustomerInfo');
+      if (isCustomerInfoCollapsed) {
+        if (grid) grid.classList.add('hidden');
+        if (summary) {
+          const cust = document.getElementById('inputCustomerName')?.value || '—';
+          const proj = document.getElementById('inputProjectTitle')?.value || '—';
+          const code = document.getElementById('inputQuoteCode')?.value || '—';
+          summary.innerHTML = `<span class="truncate"><i class="fa-solid fa-circle-info text-[#D62828] mr-1.5"></i><b>Khách:</b> ${escapeHtml(cust)} | <b>Mục:</b> ${escapeHtml(proj)} | <b>Mã:</b> <b class="text-[#D62828]">${escapeHtml(code)}</b></span><span class="text-blue-600 font-bold ml-2 shrink-0 hover:underline text-[11px]"><i class="fa-solid fa-pen-to-square mr-1"></i>Sửa hồ sơ</span>`;
+          summary.classList.remove('hidden');
+        }
+        if (icon) icon.className = 'fa-solid fa-chevron-down text-[10px]';
+        if (label) label.textContent = 'Mở rộng';
+      } else {
+        if (grid) grid.classList.remove('hidden');
+        if (summary) summary.classList.add('hidden');
+        if (icon) icon.className = 'fa-solid fa-chevron-up text-[10px]';
+        if (label) label.textContent = 'Thu gọn';
+      }
+    }
+
+    function scrollCategoryTabs(offset) {
+      const c = document.getElementById('categoryTabsContainer');
+      if (c) c.scrollBy({ left: offset, behavior: 'smooth' });
+    }
+
     function renderCategoryGroupTabs() {
       const container = document.getElementById('categoryTabsContainer');
       const select = document.getElementById('categoryFilter');
@@ -4127,18 +4171,18 @@
         btn.onclick = () => selectCategoryTab(cat);
         btn.title = `${cat} (Đã chọn ${selectedCount}/${groupItems.length} mục)`;
         btn.className = isActive
-          ? 'px-3.5 py-2 rounded-xl bg-gradient-to-r from-[#D62828] to-[#B91C1C] text-white text-xs font-extrabold shadow-sm transition flex items-center gap-2 border border-[#B91C1C]'
-          : 'px-3.5 py-2 rounded-xl bg-white hover:bg-slate-100 text-slate-700 text-xs font-semibold transition flex items-center gap-2 border border-slate-200/90 shadow-2xs';
+          ? 'px-2.5 py-1 rounded-lg bg-gradient-to-r from-[#D62828] to-[#B91C1C] text-white text-xs font-extrabold shadow-2xs transition flex items-center gap-1.5 border border-[#B91C1C] shrink-0'
+          : 'px-2.5 py-1 rounded-lg bg-white hover:bg-slate-50 text-slate-700 text-xs font-semibold transition flex items-center gap-1.5 border border-slate-200/90 shadow-2xs shrink-0';
 
         const badgeClass = isActive
-          ? 'px-2 py-0.5 rounded-md bg-white/20 text-white text-[10.5px] font-black tabular-nums'
+          ? 'px-1.5 py-0.2 rounded bg-white/20 text-white text-[10px] font-black tabular-nums'
           : (selectedCount > 0
-              ? 'px-2 py-0.5 rounded-md bg-red-50 text-[#D62828] border border-red-200 text-[10.5px] font-extrabold tabular-nums'
-              : 'px-2 py-0.5 rounded-md bg-slate-100 text-slate-400 text-[10.5px] font-bold tabular-nums');
+              ? 'px-1.5 py-0.2 rounded bg-red-50 text-[#D62828] border border-red-200 text-[10px] font-extrabold tabular-nums'
+              : 'px-1.5 py-0.2 rounded bg-slate-100 text-slate-400 text-[10px] font-bold tabular-nums');
 
         btn.innerHTML = `
-          <span class="${isActive ? 'text-white font-black' : 'text-[#D62828] font-extrabold'}">${idx + 1}.</span>
-          <span class="truncate max-w-[170px] sm:max-w-[210px]">${escapeHtml(shortenCategoryLabel(cat))}</span>
+          <span class="${isActive ? 'text-white font-black' : 'text-[#D62828] font-extrabold'} text-[11px]">${idx + 1}.</span>
+          <span class="truncate max-w-[150px] sm:max-w-[190px]">${escapeHtml(shortenCategoryLabel(cat))}</span>
           <span class="${badgeClass}">${selectedCount}/${groupItems.length}</span>
         `;
         container.appendChild(btn);
@@ -4150,13 +4194,14 @@
       const allBtn = document.createElement('button');
       allBtn.type = 'button';
       allBtn.onclick = () => selectCategoryTab('ALL');
+      allBtn.title = `Tất cả danh mục (${totalSelected}/${itemsData.length})`;
       allBtn.className = isAllActive
-        ? 'px-3.5 py-2 rounded-xl bg-[#1E293B] text-white text-xs font-extrabold shadow-sm transition flex items-center gap-2 border border-slate-800'
-        : 'px-3.5 py-2 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold transition flex items-center gap-2 border border-slate-200';
+        ? 'px-2.5 py-1 rounded-lg bg-[#1E293B] text-white text-xs font-extrabold shadow-2xs transition flex items-center gap-1.5 border border-slate-800 shrink-0'
+        : 'px-2.5 py-1 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold transition flex items-center gap-1.5 border border-slate-200 shrink-0';
       allBtn.innerHTML = `
-        <i class="fa-solid fa-table-list text-[11px]"></i>
+        <i class="fa-solid fa-table-list text-[10px]"></i>
         <span>Tất cả</span>
-        <span class="px-2 py-0.5 rounded-md ${isAllActive ? 'bg-white/20 text-white' : 'bg-white text-slate-700'} text-[10.5px] font-black tabular-nums">${totalSelected}/${itemsData.length}</span>
+        <span class="px-1.5 py-0.2 rounded ${isAllActive ? 'bg-white/20 text-white' : 'bg-white text-slate-700'} text-[10px] font-black tabular-nums">${totalSelected}/${itemsData.length}</span>
       `;
       container.appendChild(allBtn);
 
@@ -4168,14 +4213,14 @@
       if (currentCat === 'ALL') {
         if (indexBadge) indexBadge.textContent = `TẤT CẢ (${categories.length} NHÓM)`;
         if (nameTitle) nameTitle.textContent = 'Toàn bộ danh mục hệ thống PCCC';
-        if (statBadge) statBadge.textContent = `(Đã chọn ${totalSelected}/${itemsData.length} mục)`;
+        if (statBadge) statBadge.textContent = `(${totalSelected}/${itemsData.length})`;
       } else {
         const activeIdx = categories.indexOf(currentCat);
         const groupItems = itemsData.filter(i => i.category === currentCat);
         const selectedCount = groupItems.filter(i => (parseFloat(i.qty_maintenance) || 0) > 0 || (parseFloat(i.qty_new) || 0) > 0 || (i.selected && (parseFloat(i.quantity) || 0) > 0)).length;
         if (indexBadge) indexBadge.textContent = `NHÓM ${activeIdx + 1}/${categories.length}`;
         if (nameTitle) nameTitle.textContent = currentCat;
-        if (statBadge) statBadge.textContent = `(Đã chọn ${selectedCount}/${groupItems.length} mục)`;
+        if (statBadge) statBadge.textContent = `(${selectedCount}/${groupItems.length})`;
       }
     }
 
@@ -4314,26 +4359,26 @@
 
         displayIndex++;
 
-        // 1. RENDER TRÊN BẢNG MÁY TÍNH (THOÁNG ĐÃNG, RÕ RÀNG, CÓ CẢ 2 CỘT BẢO DƯỠNG & LẮP ĐẶT)
+        // 1. RENDER TRÊN BẢNG MÁY TÍNH (THIẾT KẾ HIGH-DENSITY COMPACT CHUẨN MÀN HÌNH FULL-HD 1080P)
         const tr = document.createElement('tr');
         tr.className = isItemActive
-          ? "bg-red-50/20 hover:bg-red-50/40 transition"
+          ? "bg-red-50/25 hover:bg-red-50/45 transition"
           : "hover:bg-slate-50/80 transition";
 
         const maintCellHtml = `
-          <div class="flex items-center justify-center gap-2">
-            <div class="inline-flex items-center border ${qMaint > 0 ? 'border-blue-400 bg-white ring-2 ring-blue-100' : 'border-slate-200 bg-slate-50/70'} rounded-xl overflow-hidden shadow-2xs">
-              <button type="button" onclick="stepItemQtyMaint(${index}, -1)" class="w-7 h-7 flex items-center justify-center text-slate-500 hover:bg-blue-50 hover:text-blue-600 transition text-[9px]" title="Giảm số lượng bảo dưỡng">
+          <div class="flex items-center justify-center gap-1.5">
+            <div class="inline-flex items-center border ${qMaint > 0 ? 'border-blue-400 bg-white ring-1 ring-blue-200' : 'border-slate-200 bg-slate-50/70'} rounded-lg overflow-hidden shadow-2xs">
+              <button type="button" onclick="stepItemQtyMaint(${index}, -1)" class="w-6 h-6 flex items-center justify-center text-slate-500 hover:bg-blue-50 hover:text-blue-600 transition text-[9px]" title="Giảm SL bảo dưỡng">
                 <i class="fa-solid fa-minus"></i>
               </button>
-              <input type="number" value="${qMaint}" min="0" onchange="updateItemQtyMaint(${index}, Math.max(0, parseFloat(this.value) || 0))" class="w-11 h-7 text-center font-extrabold text-xs ${qMaint > 0 ? 'text-blue-700 bg-white font-black' : 'text-slate-400 bg-transparent'} border-x border-slate-200/80 focus:outline-none tabular-nums">
-              <button type="button" onclick="stepItemQtyMaint(${index}, 1)" class="w-7 h-7 flex items-center justify-center text-slate-500 hover:bg-blue-50 hover:text-blue-600 transition text-[9px]" title="Tăng số lượng bảo dưỡng">
+              <input type="number" value="${qMaint}" min="0" onchange="updateItemQtyMaint(${index}, Math.max(0, parseFloat(this.value) || 0))" class="w-9 h-6 text-center font-extrabold text-xs ${qMaint > 0 ? 'text-blue-700 bg-white font-black' : 'text-slate-400 bg-transparent'} border-x border-slate-200/80 focus:outline-none tabular-nums">
+              <button type="button" onclick="stepItemQtyMaint(${index}, 1)" class="w-6 h-6 flex items-center justify-center text-slate-500 hover:bg-blue-50 hover:text-blue-600 transition text-[9px]" title="Tăng SL bảo dưỡng">
                 <i class="fa-solid fa-plus"></i>
               </button>
             </div>
-            <div class="w-24 text-right">
+            <div class="w-20 text-right">
               ${isManager
-                ? `<input type="number" min="0" step="1000" value="${pMaint}" onchange="updateItemPriceMaint(${index}, Math.max(0, parseFloat(this.value) || 0))" class="w-24 text-right font-bold text-xs text-blue-700 bg-white border border-blue-200 focus:border-blue-500 focus:outline-none rounded-xl px-2 py-1 tabular-nums" title="Đơn giá bảo dưỡng">`
+                ? `<input type="number" min="0" step="1000" value="${pMaint}" onchange="updateItemPriceMaint(${index}, Math.max(0, parseFloat(this.value) || 0))" class="w-20 text-right font-bold text-xs text-blue-700 bg-white border border-blue-200 focus:border-blue-500 focus:outline-none rounded-lg px-1.5 py-0.5 tabular-nums" title="Đơn giá bảo dưỡng">`
                 : `<span class="text-xs font-semibold tabular-nums ${pMaint > 0 ? 'text-blue-700' : 'text-slate-300'}">${pMaint > 0 ? formatVND(pMaint) + ' đ' : '—'}</span>`
               }
             </div>
@@ -4341,19 +4386,19 @@
         `;
 
         const newCellHtml = `
-          <div class="flex items-center justify-center gap-2">
-            <div class="inline-flex items-center border ${qNew > 0 ? 'border-amber-400 bg-white ring-2 ring-amber-100' : 'border-slate-200 bg-slate-50/70'} rounded-xl overflow-hidden shadow-2xs">
-              <button type="button" onclick="stepItemQtyNew(${index}, -1)" class="w-7 h-7 flex items-center justify-center text-slate-500 hover:bg-amber-50 hover:text-amber-600 transition text-[9px]" title="Giảm số lượng lắp đặt / SP mới">
+          <div class="flex items-center justify-center gap-1.5">
+            <div class="inline-flex items-center border ${qNew > 0 ? 'border-amber-400 bg-white ring-1 ring-amber-200' : 'border-slate-200 bg-slate-50/70'} rounded-lg overflow-hidden shadow-2xs">
+              <button type="button" onclick="stepItemQtyNew(${index}, -1)" class="w-6 h-6 flex items-center justify-center text-slate-500 hover:bg-amber-50 hover:text-amber-600 transition text-[9px]" title="Giảm SL lắp đặt">
                 <i class="fa-solid fa-minus"></i>
               </button>
-              <input type="number" value="${qNew}" min="0" onchange="updateItemQtyNew(${index}, Math.max(0, parseFloat(this.value) || 0))" class="w-11 h-7 text-center font-extrabold text-xs ${qNew > 0 ? 'text-amber-700 bg-white font-black' : 'text-slate-400 bg-transparent'} border-x border-slate-200/80 focus:outline-none tabular-nums">
-              <button type="button" onclick="stepItemQtyNew(${index}, 1)" class="w-7 h-7 flex items-center justify-center text-slate-500 hover:bg-amber-50 hover:text-amber-600 transition text-[9px]" title="Tăng số lượng lắp đặt / SP mới">
+              <input type="number" value="${qNew}" min="0" onchange="updateItemQtyNew(${index}, Math.max(0, parseFloat(this.value) || 0))" class="w-9 h-6 text-center font-extrabold text-xs ${qNew > 0 ? 'text-amber-700 bg-white font-black' : 'text-slate-400 bg-transparent'} border-x border-slate-200/80 focus:outline-none tabular-nums">
+              <button type="button" onclick="stepItemQtyNew(${index}, 1)" class="w-6 h-6 flex items-center justify-center text-slate-500 hover:bg-amber-50 hover:text-amber-600 transition text-[9px]" title="Tăng SL lắp đặt">
                 <i class="fa-solid fa-plus"></i>
               </button>
             </div>
-            <div class="w-24 text-right">
+            <div class="w-20 text-right">
               ${isManager
-                ? `<input type="number" min="0" step="1000" value="${pNew}" onchange="updateItemPriceNewFromForm(${index}, Math.max(0, parseFloat(this.value) || 0))" class="w-24 text-right font-bold text-xs text-amber-700 bg-white border border-amber-200 focus:border-amber-500 focus:outline-none rounded-xl px-2 py-1 tabular-nums" title="Đơn giá SP mới / lắp đặt">`
+                ? `<input type="number" min="0" step="1000" value="${pNew}" onchange="updateItemPriceNewFromForm(${index}, Math.max(0, parseFloat(this.value) || 0))" class="w-20 text-right font-bold text-xs text-amber-700 bg-white border border-amber-200 focus:border-amber-500 focus:outline-none rounded-lg px-1.5 py-0.5 tabular-nums" title="Đơn giá SP mới / lắp đặt">`
                 : `<span class="text-xs font-semibold tabular-nums ${pNew > 0 ? 'text-amber-700' : 'text-slate-300'}">${pNew > 0 ? formatVND(pNew) + ' đ' : '—'}</span>`
               }
             </div>
@@ -4361,32 +4406,32 @@
         `;
 
         const noteCellHtml = `
-          <input type="text" value="${escapeHtml(item.note || '')}" placeholder="Ghi chú..." onchange="updateItemField(${index}, 'note', this.value)" class="w-full text-xs text-slate-700 bg-slate-50/70 hover:bg-white focus:bg-white border border-slate-200 focus:border-[#D62828] focus:outline-none rounded-xl px-3 py-1.5 transition">
+          <input type="text" value="${escapeHtml(item.note || '')}" placeholder="Ghi chú..." onchange="updateItemField(${index}, 'note', this.value)" class="w-full text-xs text-slate-700 bg-slate-50/70 hover:bg-white focus:bg-white border border-slate-200 focus:border-[#D62828] focus:outline-none rounded-lg px-2 py-0.5 transition">
         `;
 
         tr.innerHTML = `
-          <td class="py-3.5 px-3 text-center">
-            <input type="checkbox" ${isItemActive ? 'checked' : ''} onchange="toggleItemSelect(${index}, this.checked)" class="w-4 h-4 rounded text-[#D62828] focus:ring-[#D62828] cursor-pointer">
+          <td class="py-1.5 px-2 text-center">
+            <input type="checkbox" ${isItemActive ? 'checked' : ''} onchange="toggleItemSelect(${index}, this.checked)" class="w-3.5 h-3.5 rounded text-[#D62828] focus:ring-[#D62828] cursor-pointer">
           </td>
-          <td class="py-3.5 px-2.5 text-center text-xs font-bold text-slate-400 tabular-nums">${displayIndex}</td>
-          <td class="py-3.5 px-3.5">
-            <div class="text-xs sm:text-[13px] font-bold ${isItemActive ? 'text-[#0F172A]' : 'text-slate-600'} leading-relaxed">${escapeHtml(item.name)}</div>
-            ${item.name_en ? `<div class="text-[11px] italic text-slate-400 leading-tight">${escapeHtml(item.name_en)}</div>` : ''}
-            ${(catFilter === 'ALL' || searchTxt) ? `<div class="text-[10.5px] font-medium text-slate-400 mt-0.5">${escapeHtml(item.category)}</div>` : ''}
+          <td class="py-1.5 px-1.5 text-center text-[11px] font-bold text-slate-400 tabular-nums">${displayIndex}</td>
+          <td class="py-1.5 px-2.5">
+            <div class="text-xs font-bold ${isItemActive ? 'text-[#0F172A]' : 'text-slate-700'} leading-tight">${escapeHtml(item.name)}</div>
+            ${item.name_en ? `<div class="text-[10px] italic text-slate-400 leading-tight">${escapeHtml(item.name_en)}</div>` : ''}
+            ${(catFilter === 'ALL' || searchTxt) ? `<div class="text-[9.5px] font-medium text-slate-400">${escapeHtml(item.category)}</div>` : ''}
           </td>
-          <td class="py-3.5 px-2 text-center">
-            <span class="text-xs text-slate-600 font-semibold bg-slate-100 px-2.5 py-1 rounded-lg border border-slate-200/70">${escapeHtml(item.unit)}</span>
+          <td class="py-1.5 px-1.5 text-center">
+            <span class="text-[11px] text-slate-600 font-semibold bg-slate-100 px-1.5 py-0.5 rounded border border-slate-200/70">${escapeHtml(item.unit)}</span>
           </td>
-          <td class="py-3.5 px-3 text-center bg-blue-50/20 border-x border-blue-100/60">
+          <td class="py-1 px-2 text-center bg-blue-50/20 border-x border-blue-100/60">
             ${maintCellHtml}
           </td>
-          <td class="py-3.5 px-3 text-center bg-amber-50/20 border-r border-amber-100/60">
+          <td class="py-1 px-2 text-center bg-amber-50/20 border-r border-amber-100/60">
             ${newCellHtml}
           </td>
-          <td class="py-3.5 px-3.5 text-right font-extrabold ${isItemActive ? 'text-[#D62828]' : 'text-slate-400'} text-xs sm:text-[13px] tabular-nums">
+          <td class="py-1.5 px-2.5 text-right font-extrabold ${isItemActive ? 'text-[#D62828]' : 'text-slate-400'} text-xs tabular-nums">
             ${formatVND(subtotal)}
           </td>
-          <td class="py-3.5 px-3.5">
+          <td class="py-1 px-2">
             ${noteCellHtml}
           </td>
         `;
