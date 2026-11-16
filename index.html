@@ -111,6 +111,68 @@
       border-radius: 0 4px 4px 0;
     }
 
+    /* ==================== COLLAPSIBLE SIDEBAR ERGONOMIC RULES ==================== */
+    #erpSidebar {
+      transition: width 0.22s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    #erpMainContent {
+      transition: padding-left 0.22s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .sidebar-collapsed #erpSidebar {
+      width: 72px !important;
+    }
+    .sidebar-collapsed #erpMainContent {
+      padding-left: 72px !important;
+    }
+    .sidebar-collapsed .sidebar-text,
+    .sidebar-collapsed .sidebar-badge,
+    .sidebar-collapsed .sidebar-group-title {
+      display: none !important;
+    }
+    .sidebar-collapsed .sidebar-header-box {
+      flex-direction: column !important;
+      align-items: center !important;
+      padding: 0.75rem 0.25rem 0.5rem 0.25rem !important;
+      gap: 0.5rem !important;
+    }
+    .sidebar-collapsed .sidebar-btn-new-quote {
+      width: 44px !important;
+      height: 44px !important;
+      padding: 0 !important;
+      margin: 0 auto !important;
+      border-radius: 14px !important;
+      justify-content: center !important;
+    }
+    .sidebar-collapsed .wb-nav-item {
+      justify-content: center !important;
+      padding: 0.55rem 0 !important;
+      width: 46px !important;
+      margin-left: auto !important;
+      margin-right: auto !important;
+    }
+    .sidebar-collapsed .wb-nav-item.active::before {
+      display: none !important;
+    }
+    .sidebar-collapsed .wb-nav-item.active {
+      background: rgba(214, 40, 40, 0.12) !important;
+    }
+    .sidebar-collapsed .sidebar-account-container {
+      padding: 0.75rem 0.25rem !important;
+    }
+    .sidebar-collapsed .sidebar-account-box {
+      flex-direction: column !important;
+      align-items: center !important;
+      gap: 0.5rem !important;
+    }
+    .sidebar-collapsed #currentUserAvatar {
+      width: 36px !important;
+      height: 36px !important;
+    }
+    .sidebar-collapsed .sidebar-logout-btn {
+      width: 32px !important;
+      height: 32px !important;
+    }
+
     /* INPUT & FORM ELEMENTS CHUYÊN NGHIỆP */
     .erp-input {
       width: 100%;
@@ -523,121 +585,127 @@
   <!-- ==================== TRANG QUẢN TRỊ WORKBENCH (CHỈ HIỂN THỊ SAU KHI ĐĂNG NHẬP) ==================== -->
   <div id="erpAppShell" class="hidden min-h-screen flex flex-col lg:flex-row bg-[#EEF2F6]">
 
-    <!-- SIDEBAR TRÁI PHONG CÁCH WORKBENCH (TÁCH RIÊNG TỪNG CHỨC NĂNG RÕ RÀNG) -->
-    <aside class="no-print hidden lg:flex lg:flex-col lg:w-64 lg:fixed lg:inset-y-0 lg:left-0 bg-white border-r border-slate-200/80 shadow-[4px_0_24px_rgba(15,23,42,0.03)] z-40 select-none">
+    <!-- SIDEBAR TRÁI PHONG CÁCH WORKBENCH (HỖ TRỢ THU GỌN / MỞ RỘNG COMPACT) -->
+    <aside id="erpSidebar" class="no-print hidden lg:flex lg:flex-col lg:w-64 lg:fixed lg:inset-y-0 lg:left-0 bg-white border-r border-slate-200/80 shadow-[4px_0_24px_rgba(15,23,42,0.03)] z-40 select-none">
       <!-- Brand Header -->
-      <div class="px-5 pt-5 pb-4 flex items-center gap-3">
-        <div class="bg-[#F8FAFC] border border-slate-200/80 px-2.5 py-1.5 rounded-2xl flex items-center shrink-0">
-          <img id="navLogo" src="" alt="SANWAY Logo" class="h-7 w-auto object-contain">
-        </div>
-        <div class="min-w-0">
-          <div class="flex items-center gap-1.5">
-            <span class="text-xs font-black tracking-tight uppercase text-[#0F172A] truncate">SANWAY</span>
-            <span id="sidebarRoleChip" class="text-[9px] font-extrabold px-1.5 py-0.5 rounded-md bg-red-50 text-[#D62828] border border-red-200">ADMIN</span>
+      <div class="px-4 pt-4 pb-3 flex items-center justify-between gap-2 border-b border-slate-100/80 sidebar-header-box">
+        <div class="flex items-center gap-2.5 min-w-0">
+          <div class="bg-[#F8FAFC] border border-slate-200/80 px-2 py-1.5 rounded-2xl flex items-center shrink-0">
+            <img id="navLogo" src="" alt="SANWAY Logo" class="h-6 w-auto object-contain">
           </div>
-          <p class="text-[10.5px] text-slate-500 font-medium truncate mt-0.5">Hệ Thống Quản Trị Báo Giá</p>
+          <div class="min-w-0 sidebar-text">
+            <div class="flex items-center gap-1.5">
+              <span class="text-xs font-black tracking-tight uppercase text-[#0F172A] truncate">SANWAY</span>
+              <span id="sidebarRoleChip" class="text-[9px] font-extrabold px-1.5 py-0.5 rounded-md bg-red-50 text-[#D62828] border border-red-200">ADMIN</span>
+            </div>
+            <p class="text-[10px] text-slate-500 font-medium truncate mt-0.5">Hệ Thống Quản Trị Báo Giá</p>
+          </div>
         </div>
+        <!-- Nút toggle thu gọn / mở rộng sidebar -->
+        <button type="button" onclick="toggleSidebarCollapse()" id="btnToggleSidebar" title="Thu gọn Sidebar" class="w-7 h-7 rounded-lg border border-slate-200 bg-slate-50 hover:bg-red-50 hover:text-[#D62828] text-slate-500 transition flex items-center justify-center text-xs shrink-0">
+          <i id="iconToggleSidebar" class="fa-solid fa-angles-left text-[11px]"></i>
+        </button>
       </div>
 
       <!-- Nút Tạo Báo Giá Mới (Sinh mã BGSW mới ngay lập tức) -->
-      <div class="px-4 pb-3">
-        <button type="button" onclick="startNewQuotationWithNextCode()" class="w-full py-2.5 px-3.5 rounded-2xl bg-gradient-to-r from-[#D62828] to-[#B91C1C] hover:from-[#B91C1C] hover:to-[#991B1B] active:scale-[0.99] text-white font-extrabold text-xs shadow-md shadow-red-600/20 transition flex items-center justify-center gap-2">
-          <i class="fa-solid fa-plus-circle text-sm"></i>
-          <span>+ Lập Báo Giá Mới</span>
+      <div class="px-3 pb-2 pt-3 sidebar-new-quote-wrap">
+        <button type="button" onclick="startNewQuotationWithNextCode()" title="Lập Báo Giá Mới" class="sidebar-btn-new-quote w-full py-2.5 px-3 rounded-xl bg-gradient-to-r from-[#D62828] to-[#B91C1C] hover:from-[#B91C1C] hover:to-[#991B1B] active:scale-[0.99] text-white font-extrabold text-xs shadow-md shadow-red-600/20 transition flex items-center justify-center gap-2">
+          <i class="fa-solid fa-plus-circle text-sm shrink-0"></i>
+          <span class="sidebar-text truncate">+ Lập Báo Giá Mới</span>
         </button>
       </div>
 
       <!-- Danh mục điều hướng chính (Tách riêng từng Tab chức năng, ẩn/hiện theo quyền Admin hoặc Sale) -->
-      <div class="flex-1 overflow-y-auto px-3 py-3 space-y-1">
-        <div class="px-3 pb-1.5 text-[10px] font-extrabold uppercase tracking-wider text-slate-400">Nghiệp vụ báo giá</div>
+      <div class="flex-1 overflow-y-auto px-2.5 py-2 space-y-1 custom-scroll">
+        <div class="px-3 pb-1 text-[10px] font-extrabold uppercase tracking-wider text-slate-400 sidebar-group-title">Nghiệp vụ báo giá</div>
 
-        <button id="tabBtnDashboard" onclick="switchTab('dashboard')" class="wb-nav-item active">
-          <span class="flex items-center gap-3">
-            <span class="w-7 h-7 rounded-lg bg-red-50 text-[#D62828] border border-red-100 flex items-center justify-center text-xs">
+        <button id="tabBtnDashboard" onclick="switchTab('dashboard')" class="wb-nav-item active" title="Bàn Làm Việc">
+          <span class="flex items-center gap-2.5">
+            <span class="w-7 h-7 rounded-lg bg-red-50 text-[#D62828] border border-red-100 flex items-center justify-center text-xs shrink-0">
               <i class="fa-solid fa-chart-pie"></i>
             </span>
-            <span>Bàn Làm Việc</span>
+            <span class="sidebar-text">Bàn Làm Việc</span>
           </span>
         </button>
 
-        <button id="tabBtnForm" onclick="switchTab('form')" class="wb-nav-item">
-          <span class="flex items-center gap-3">
-            <span class="w-7 h-7 rounded-lg bg-slate-100 text-[#1E293B] border border-slate-200/80 flex items-center justify-center text-xs">
+        <button id="tabBtnForm" onclick="switchTab('form')" class="wb-nav-item" title="Lập Báo Giá">
+          <span class="flex items-center gap-2.5">
+            <span class="w-7 h-7 rounded-lg bg-slate-100 text-[#1E293B] border border-slate-200/80 flex items-center justify-center text-xs shrink-0">
               <i class="fa-solid fa-file-signature"></i>
             </span>
-            <span>Lập Báo Giá</span>
+            <span class="sidebar-text">Lập Báo Giá</span>
           </span>
-          <span class="text-[9.5px] px-1.5 py-0.5 rounded-md bg-red-50 text-[#D62828] border border-red-100 font-bold">A4 Live</span>
+          <span class="sidebar-text sidebar-badge text-[9.5px] px-1.5 py-0.5 rounded-md bg-red-50 text-[#D62828] border border-red-100 font-bold">A4 Live</span>
         </button>
 
-        <button id="tabBtnQuotes" onclick="switchTab('quotes')" class="wb-nav-item">
-          <span class="flex items-center gap-3">
-            <span class="w-7 h-7 rounded-lg bg-slate-100 text-[#1E293B] border border-slate-200/80 flex items-center justify-center text-xs">
+        <button id="tabBtnQuotes" onclick="switchTab('quotes')" class="wb-nav-item" title="Quản Lý Báo Giá">
+          <span class="flex items-center gap-2.5">
+            <span class="w-7 h-7 rounded-lg bg-slate-100 text-[#1E293B] border border-slate-200/80 flex items-center justify-center text-xs shrink-0">
               <i class="fa-solid fa-folder-open"></i>
             </span>
-            <span id="sidebarQuotesLabel">Quản Lý Báo Giá</span>
+            <span id="sidebarQuotesLabel" class="sidebar-text">Quản Lý Báo Giá</span>
           </span>
-          <span id="sidebarQuotesCount" class="text-[10px] px-2 py-0.5 rounded-full bg-slate-100 text-[#1E293B] border border-slate-200 font-extrabold tabular-nums">0</span>
+          <span id="sidebarQuotesCount" class="sidebar-text sidebar-badge text-[10px] px-2 py-0.5 rounded-full bg-slate-100 text-[#1E293B] border border-slate-200 font-extrabold tabular-nums">0</span>
         </button>
 
         <!-- Khu vực Dành riêng cho Admin (Tách riêng: Sản phẩm, Thông tin công ty, Nhân sự, Config Website) -->
-        <div id="sidebarAdminSection" class="pt-4 mt-4 border-t border-slate-100 space-y-1 hidden">
-          <div class="px-3 pb-1.5 text-[10px] font-extrabold uppercase tracking-wider text-slate-400">Quản trị hệ thống (Admin)</div>
+        <div id="sidebarAdminSection" class="pt-3 mt-3 border-t border-slate-100 space-y-1 hidden">
+          <div class="px-3 pb-1 text-[10px] font-extrabold uppercase tracking-wider text-slate-400 sidebar-group-title">Quản trị hệ thống (Admin)</div>
 
-          <button id="tabBtnProducts" onclick="switchTab('products')" class="wb-nav-item">
-            <span class="flex items-center gap-3">
-              <span class="w-7 h-7 rounded-lg bg-slate-100 text-[#1E293B] border border-slate-200/80 flex items-center justify-center text-xs">
+          <button id="tabBtnProducts" onclick="switchTab('products')" class="wb-nav-item" title="Quản Lý Sản Phẩm">
+            <span class="flex items-center gap-2.5">
+              <span class="w-7 h-7 rounded-lg bg-slate-100 text-[#1E293B] border border-slate-200/80 flex items-center justify-center text-xs shrink-0">
                 <i class="fa-solid fa-boxes-stacked"></i>
               </span>
-              <span>Quản Lý Sản Phẩm</span>
+              <span class="sidebar-text">Quản Lý Sản Phẩm</span>
             </span>
-            <span id="sidebarProductsCount" class="text-[10px] px-2 py-0.5 rounded-full bg-slate-100 text-[#1E293B] border border-slate-200 font-extrabold tabular-nums">100</span>
+            <span id="sidebarProductsCount" class="sidebar-text sidebar-badge text-[10px] px-2 py-0.5 rounded-full bg-slate-100 text-[#1E293B] border border-slate-200 font-extrabold tabular-nums">100</span>
           </button>
 
-          <button id="tabBtnCompany" onclick="switchTab('company')" class="wb-nav-item">
-            <span class="flex items-center gap-3">
-              <span class="w-7 h-7 rounded-lg bg-slate-100 text-[#1E293B] border border-slate-200/80 flex items-center justify-center text-xs">
+          <button id="tabBtnCompany" onclick="switchTab('company')" class="wb-nav-item" title="Thông Tin Công Ty">
+            <span class="flex items-center gap-2.5">
+              <span class="w-7 h-7 rounded-lg bg-slate-100 text-[#1E293B] border border-slate-200/80 flex items-center justify-center text-xs shrink-0">
                 <i class="fa-solid fa-building-shield"></i>
               </span>
-              <span>Thông Tin Công Ty</span>
+              <span class="sidebar-text">Thông Tin Công Ty</span>
             </span>
           </button>
 
-          <button id="tabBtnStaff" onclick="switchTab('staff')" class="wb-nav-item">
-            <span class="flex items-center gap-3">
-              <span class="w-7 h-7 rounded-lg bg-slate-100 text-[#1E293B] border border-slate-200/80 flex items-center justify-center text-xs">
+          <button id="tabBtnStaff" onclick="switchTab('staff')" class="wb-nav-item" title="Quản Lý Nhân Sự">
+            <span class="flex items-center gap-2.5">
+              <span class="w-7 h-7 rounded-lg bg-slate-100 text-[#1E293B] border border-slate-200/80 flex items-center justify-center text-xs shrink-0">
                 <i class="fa-solid fa-users-gear"></i>
               </span>
-              <span>Quản Lý Nhân Sự</span>
+              <span class="sidebar-text">Quản Lý Nhân Sự</span>
             </span>
-            <span id="sidebarStaffCount" class="text-[10px] px-2 py-0.5 rounded-full bg-slate-100 text-[#1E293B] border border-slate-200 font-extrabold tabular-nums">4</span>
+            <span id="sidebarStaffCount" class="sidebar-text sidebar-badge text-[10px] px-2 py-0.5 rounded-full bg-slate-100 text-[#1E293B] border border-slate-200 font-extrabold tabular-nums">4</span>
           </button>
 
-          <button id="tabBtnConfig" onclick="switchTab('config')" class="wb-nav-item">
-            <span class="flex items-center gap-3">
-              <span class="w-7 h-7 rounded-lg bg-red-50 text-[#D62828] border border-red-100 flex items-center justify-center text-xs">
+          <button id="tabBtnConfig" onclick="switchTab('config')" class="wb-nav-item" title="Config Website">
+            <span class="flex items-center gap-2.5">
+              <span class="w-7 h-7 rounded-lg bg-red-50 text-[#D62828] border border-red-100 flex items-center justify-center text-xs shrink-0">
                 <i class="fa-solid fa-server"></i>
               </span>
-              <span>Config Website</span>
+              <span class="sidebar-text">Config Website</span>
             </span>
-            <span class="text-[9px] px-1.5 py-0.5 rounded-md bg-red-50 text-[#D62828] border border-red-200 font-bold">Admin</span>
+            <span class="sidebar-text sidebar-badge text-[9px] px-1.5 py-0.5 rounded-md bg-red-50 text-[#D62828] border border-red-200 font-bold">Admin</span>
           </button>
         </div>
       </div>
 
-      <!-- Thẻ Tài khoản tinh gọn dưới đáy Sidebar (Không hiện thông số kỹ thuật DB ở đây) -->
-      <div class="p-4 border-t border-slate-100">
-        <div class="flex items-center justify-between gap-2">
+      <!-- Thẻ Tài khoản tinh gọn dưới đáy Sidebar -->
+      <div class="p-3 border-t border-slate-100 sidebar-account-container">
+        <div class="flex items-center justify-between gap-2 sidebar-account-box">
           <div class="flex items-center gap-2.5 min-w-0">
-            <div id="currentUserAvatar" class="w-9 h-9 rounded-2xl bg-red-50 border border-red-100 flex items-center justify-center text-xs font-extrabold text-[#D62828] shrink-0">
+            <div id="currentUserAvatar" class="w-8 h-8 rounded-xl bg-red-50 border border-red-100 flex items-center justify-center text-xs font-extrabold text-[#D62828] shrink-0" title="Tài khoản">
               <i class="fa-solid fa-user-shield"></i>
             </div>
-            <div class="min-w-0 leading-tight">
+            <div class="min-w-0 leading-tight sidebar-text">
               <div id="currentUserName" class="text-xs font-extrabold text-[#0F172A] truncate">Chưa đăng nhập</div>
-              <div id="currentUserRoleBadge" class="text-[10px] font-bold text-[#D62828] uppercase tracking-wider mt-0.5">—</div>
+              <div id="currentUserRoleBadge" class="text-[9.5px] font-bold text-[#D62828] uppercase tracking-wider mt-0.5">—</div>
             </div>
           </div>
-          <button onclick="handleLogout()" title="Đăng xuất" class="w-8 h-8 rounded-xl bg-slate-100 hover:bg-red-50 text-slate-600 hover:text-[#D62828] transition flex items-center justify-center text-xs shrink-0">
+          <button onclick="handleLogout()" title="Đăng xuất" class="sidebar-logout-btn w-7 h-7 rounded-lg bg-slate-100 hover:bg-red-50 text-slate-600 hover:text-[#D62828] transition flex items-center justify-center text-xs shrink-0">
             <i class="fa-solid fa-right-from-bracket"></i>
           </button>
         </div>
@@ -3305,7 +3373,10 @@
       document.getElementById('loginModal').classList.add('hidden');
       const appShell = document.getElementById('erpAppShell');
       const mobBar = document.getElementById('mobileBottomBar');
-      if (appShell) appShell.classList.remove('hidden');
+      if (appShell) {
+        appShell.classList.remove('hidden');
+        applySidebarCollapseState();
+      }
       if (mobBar) mobBar.classList.remove('hidden');
 
       const isAdmin = (normalizedRole === 'admin');
@@ -3921,8 +3992,36 @@
       }
     }
 
+    let isSidebarCollapsed = localStorage.getItem('sanway_sidebar_collapsed') === 'true';
+
+    function applySidebarCollapseState() {
+      const shell = document.getElementById('erpAppShell');
+      const icon = document.getElementById('iconToggleSidebar');
+      const btn = document.getElementById('btnToggleSidebar');
+      if (!shell) return;
+      if (isSidebarCollapsed) {
+        shell.classList.add('sidebar-collapsed');
+        if (icon) icon.className = 'fa-solid fa-angles-right text-[11px]';
+        if (btn) btn.title = 'Mở rộng Sidebar';
+      } else {
+        shell.classList.remove('sidebar-collapsed');
+        if (icon) icon.className = 'fa-solid fa-angles-left text-[11px]';
+        if (btn) btn.title = 'Thu gọn Sidebar';
+      }
+    }
+
+    function toggleSidebarCollapse() {
+      isSidebarCollapsed = !isSidebarCollapsed;
+      localStorage.setItem('sanway_sidebar_collapsed', isSidebarCollapsed ? 'true' : 'false');
+      applySidebarCollapseState();
+      setTimeout(() => {
+        updateMobileA4Scale();
+      }, 260);
+    }
+
     document.addEventListener('DOMContentLoaded', () => {
       initSystemDatabase();
+      applySidebarCollapseState();
       window.addEventListener('resize', () => {
         updateMobileA4Scale();
       });
