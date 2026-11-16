@@ -591,7 +591,7 @@
               </span>
               <span>Quản Lý Sản Phẩm</span>
             </span>
-            <span id="sidebarProductsCount" class="text-[10px] px-2 py-0.5 rounded-full bg-slate-100 text-[#1E293B] border border-slate-200 font-extrabold tabular-nums">47</span>
+            <span id="sidebarProductsCount" class="text-[10px] px-2 py-0.5 rounded-full bg-slate-100 text-[#1E293B] border border-slate-200 font-extrabold tabular-nums">100</span>
           </button>
 
           <button id="tabBtnCompany" onclick="switchTab('company')" class="wb-nav-item">
@@ -990,7 +990,7 @@
                 <!-- Ẩn các node đồng bộ phụ -->
                 <div class="hidden">
                   <span id="kpiSelectedCount">0</span>
-                  <span id="kpiTotalCount">47</span>
+                  <span id="kpiTotalCount">100</span>
                   <span id="kpiSubtotal">0 đ</span>
                   <span id="kpiVatRate">8%</span>
                   <span id="kpiVatAmount">0 đ</span>
@@ -1185,7 +1185,7 @@
                       <span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg bg-slate-800 border border-slate-700 font-bold text-white tabular-nums">
                         <b id="statSelectedItems" class="text-[#D62828] font-black">0</b>
                         <span class="text-slate-400">/</span>
-                        <span id="statTotalItems">47</span>
+                        <span id="statTotalItems">100</span>
                       </span>
                     </div>
 
@@ -1324,13 +1324,17 @@
                 <div>
                   <div class="flex flex-wrap items-center gap-2">
                     <h2 class="text-sm sm:text-base font-extrabold text-[#0F172A] tracking-tight">Quản Lý Danh Mục Sản Phẩm & Bảng Giá Vật Tư</h2>
-                    <span id="productsHeaderCountBadge" class="text-[11px] font-extrabold px-2.5 py-0.5 rounded-full bg-red-50 text-[#D62828] border border-red-200">47 sản phẩm</span>
+                    <span id="productsHeaderCountBadge" class="text-[11px] font-extrabold px-2.5 py-0.5 rounded-full bg-red-50 text-[#D62828] border border-red-200">100 sản phẩm</span>
                   </div>
                   <p id="productsHeaderSubtitle" class="text-xs text-slate-500 mt-0.5">Quản lý tập trung toàn bộ danh mục thiết bị, vật tư PCCC, đơn vị tính và đơn giá niêm yết</p>
                 </div>
               </div>
 
               <div class="flex flex-wrap items-center gap-2 shrink-0">
+                <button type="button" onclick="forceRestoreNew100Catalog()" class="px-3.5 py-2 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold transition flex items-center gap-1.5 border border-slate-200" title="Khôi phục nạp lại toàn bộ 100 sản phẩm mới từ BOQ chuẩn">
+                  <i class="fa-solid fa-arrows-rotate text-blue-600"></i>
+                  <span>Nạp Lại 100 SP Chuẩn</span>
+                </button>
                 <button type="button" id="btnAdminAddItem" onclick="openAddItemModal()" class="hidden px-3.5 py-2 rounded-xl bg-[#D62828] hover:bg-[#B91C1C] text-white text-xs font-extrabold shadow-xs transition items-center gap-1.5">
                   <i class="fa-solid fa-plus"></i>
                   <span>Thêm Sản Phẩm Mới</span>
@@ -1687,11 +1691,11 @@
       <div class="min-w-0">
         <div class="flex items-center gap-1.5 text-[10px] text-slate-500 font-semibold">
           <span class="w-1.5 h-1.5 rounded-full bg-[#D62828]"></span>
-          <span>Đã chọn <b id="mobileBarSelectedCount" class="text-[#0F172A]">47</b> mục</span>
+          <span>Đã chọn <b id="mobileBarSelectedCount" class="text-[#0F172A]">0</b> mục</span>
           <span>•</span>
           <span>Đã gồm VAT</span>
         </div>
-        <div id="mobileBarGrandTotal" class="text-sm font-black text-[#D62828] tabular-nums truncate">205.210.800 đ</div>
+        <div id="mobileBarGrandTotal" class="text-sm font-black text-[#D62828] tabular-nums truncate">0 đ</div>
       </div>
       <div class="flex items-center gap-1.5">
         <button type="button" onclick="saveCurrentQuotation()" class="px-3.5 py-2 rounded-xl bg-[#D62828] text-white text-xs font-extrabold flex items-center gap-1.5 shrink-0">
@@ -1741,17 +1745,29 @@
 
   <script>
     // ==================== HỆ THỐNG BẢO MẬT BACKEND API & MÃ HÓA AES-256-GCM (KHÔNG LƯU MẬT KHẨU RÕ Ở FRONTEND) ====================
-    const STORAGE_KEY_MASTER = 'SANWAY_PUBLIC_CACHE_V2';
-    const STORAGE_KEY_QUOTES = 'SANWAY_SAVED_QUOTES_V2';
+    const STORAGE_KEY_MASTER = 'SANWAY_PUBLIC_CACHE_V3';
+    const STORAGE_KEY_QUOTES = 'SANWAY_SAVED_QUOTES_V3';
     const STORAGE_KEY_VAULT = 'SANWAY_ENC_VAULT_V2';
     const STORAGE_KEY_TOKEN = 'SANWAY_AUTH_TOKEN_V2';
     const STORAGE_KEY_CLOUD = 'SANWAY_CLOUD_CONFIG_V1';
 
-    // Xóa sạch mọi dữ liệu plaintext cũ (nếu từng tồn tại ở phiên bản trước trong trình duyệt)
+    // Xóa sạch toàn bộ dữ liệu cache cũ (V1, V2) ngay khi tải trang
     try {
       localStorage.removeItem('SANWAY_MASTER_DATA_V1');
+      localStorage.removeItem('SANWAY_PUBLIC_CACHE_V1');
+      localStorage.removeItem('SANWAY_PUBLIC_CACHE_V2');
+      localStorage.removeItem('SANWAY_SAVED_QUOTES_V2');
       sessionStorage.removeItem('SANWAY_AUTH_SESSION_V1');
     } catch (e) {}
+
+    function isLegacyCatalog(catalog) {
+      if (!Array.isArray(catalog) || catalog.length < 100) return true;
+      return catalog.some(it => {
+        const cat = String(it.category || '').toLowerCase();
+        const name = String(it.name || '').toLowerCase();
+        return cat.includes('xưởng') || name.includes('xưởng');
+      });
+    }
 
     // Bản ghi mã hóa AES-256-GCM + PBKDF2-SHA256 (100.000 vòng) dùng khi chạy độc lập không có Node Server
     // Tuyệt đối không chứa bất kỳ mật khẩu dạng rõ (plaintext) nào trong mã nguồn HTML/JS
@@ -2005,7 +2021,13 @@
         sessionStorage.setItem(STORAGE_KEY_TOKEN, authToken);
       }
       if (payload.company) masterData.company = payload.company;
-      if (Array.isArray(payload.catalog)) masterData.catalog = payload.catalog;
+      if (Array.isArray(payload.catalog)) {
+        if (!isLegacyCatalog(payload.catalog)) {
+          masterData.catalog = payload.catalog;
+        } else {
+          masterData.catalog = JSON.parse(JSON.stringify(INITIAL_CATALOG));
+        }
+      }
       if (payload.nextQuoteCode) masterData.nextQuoteCode = payload.nextQuoteCode;
       if (Array.isArray(payload.quotes)) {
         masterData.quotes = payload.quotes.filter(q => q && q.id !== 'q_default_001');
@@ -2114,10 +2136,20 @@
           const parsed = JSON.parse(savedLocal);
           if (parsed && parsed.company && Array.isArray(parsed.catalog)) {
             masterData.company = parsed.company;
-            masterData.catalog = parsed.catalog;
+            if (!isLegacyCatalog(parsed.catalog)) {
+              masterData.catalog = parsed.catalog;
+            } else {
+              masterData.catalog = JSON.parse(JSON.stringify(INITIAL_CATALOG));
+            }
             masterData.customAssets = parsed.customAssets || { stamp: null, logo_horizontal: null, logo_official: null };
           }
         } catch (e) {}
+      } else {
+        masterData.catalog = JSON.parse(JSON.stringify(INITIAL_CATALOG));
+      }
+
+      if (isLegacyCatalog(masterData.catalog)) {
+        masterData.catalog = JSON.parse(JSON.stringify(INITIAL_CATALOG));
       }
 
       const cloudCfgRaw = localStorage.getItem(STORAGE_KEY_CLOUD);
@@ -2133,11 +2165,18 @@
         } catch (e) {}
       }
 
+      if (isLegacyCatalog(masterData.catalog)) {
+        masterData.catalog = JSON.parse(JSON.stringify(INITIAL_CATALOG));
+      }
+
       syncBrandingImages();
       showLoginModal();
     }
 
     function applyMasterDataToWorkspace() {
+      if (isLegacyCatalog(masterData.catalog)) {
+        masterData.catalog = JSON.parse(JSON.stringify(INITIAL_CATALOG));
+      }
       const c = masterData.company || DEFAULT_COMPANY;
       document.getElementById('inputCompanyFullName').value = c.fullName || DEFAULT_COMPANY.fullName;
       document.getElementById('inputCompanyHotline').value = c.hotline || DEFAULT_COMPANY.hotline;
@@ -2526,6 +2565,9 @@
     }
 
     function startNewQuotationWithNextCode() {
+      if (isLegacyCatalog(masterData.catalog)) {
+        masterData.catalog = JSON.parse(JSON.stringify(INITIAL_CATALOG));
+      }
       const nextCode = generateNextQuoteCode();
       currentEditingQuoteId = 'q_' + Date.now();
       document.getElementById('inputQuoteCode').value = nextCode;
@@ -3817,9 +3859,23 @@
       }
     }
 
+    async function forceRestoreNew100Catalog() {
+      if (confirm('Làm mới và nạp lại toàn bộ 100 sản phẩm theo BOQ chuẩn PCCC (thay thế toàn bộ danh mục cũ)?')) {
+        localStorage.removeItem('SANWAY_PUBLIC_CACHE_V1');
+        localStorage.removeItem('SANWAY_PUBLIC_CACHE_V2');
+        localStorage.removeItem(STORAGE_KEY_MASTER);
+        masterData.catalog = JSON.parse(JSON.stringify(INITIAL_CATALOG));
+        applyMasterDataToWorkspace();
+        if (isManagerRole()) {
+          await saveMasterSystemData(false);
+        }
+        showToast('Đã cập nhật toàn bộ 100 sản phẩm mới từ BOQ chuẩn PCCC!');
+      }
+    }
+
     async function resetToFactoryDefaults() {
       if (!isManagerRole()) return;
-      if (confirm('Khôi phục toàn bộ thông tin công ty, danh mục 47 sản phẩm và mã PIN 4 số về mặc định ban đầu?')) {
+      if (confirm('Khôi phục toàn bộ thông tin công ty, danh mục 100 sản phẩm mới và mã PIN 4 số về mặc định ban đầu?')) {
         if (backendAvailable) {
           try {
             const res = await fetch('/api/system/reset', {
@@ -3835,6 +3891,8 @@
             }
           } catch (e) {}
         }
+        localStorage.removeItem('SANWAY_PUBLIC_CACHE_V1');
+        localStorage.removeItem('SANWAY_PUBLIC_CACHE_V2');
         localStorage.removeItem(STORAGE_KEY_MASTER);
         localStorage.removeItem(STORAGE_KEY_VAULT);
         masterData = {
@@ -3846,7 +3904,7 @@
         };
         applyMasterDataToWorkspace();
         syncBrandingImages();
-        showToast('Đã khôi phục dữ liệu gốc mặc định!');
+        showToast('Đã khôi phục danh mục 100 sản phẩm gốc mặc định!');
       }
     }
 
@@ -4018,7 +4076,7 @@
         });
 
         if (selectId === 'categoryFilter') {
-          // Mặc định mở ngay Nhóm 1 để người dùng thấy từng tab nhóm 1 mà không phải cuộn dài 47 dòng
+          // Mặc định mở ngay Nhóm 1 để người dùng thấy từng tab nhóm 1 mà không phải cuộn dài danh sách
           if (currentVal && currentVal !== 'ALL' && categories.includes(currentVal)) {
             select.value = currentVal;
           } else if (currentVal === 'ALL' && hasUserExplicitlyChosenAllTab) {

@@ -93,10 +93,22 @@ function createInitialDb() {
   };
 }
 
+function isLegacyCatalog(catalog) {
+  if (!Array.isArray(catalog) || catalog.length < 100) return true;
+  return catalog.some(it => {
+    const cat = String(it.category || '').toLowerCase();
+    const name = String(it.name || '').toLowerCase();
+    return cat.includes('xưởng') || name.includes('xưởng');
+  });
+}
+
 function normalizeDbStructure(db) {
   if (!db || typeof db !== 'object') return createInitialDb();
   if (!db.company) db.company = createInitialDb().company;
-  if (!Array.isArray(db.catalog)) db.catalog = getDefaultCatalog();
+  const defaultCatalog = getDefaultCatalog();
+  if (!Array.isArray(db.catalog) || isLegacyCatalog(db.catalog)) {
+    db.catalog = defaultCatalog;
+  }
   if (!Array.isArray(db.quotes)) {
     db.quotes = [];
   } else {
